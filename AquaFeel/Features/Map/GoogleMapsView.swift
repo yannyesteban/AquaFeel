@@ -1,18 +1,18 @@
 //
-//  LoginScreen2.swift
+//  GoogleMapsView.swift
 //  AquaFeel
 //
-//  Created by Yanny Esteban on 19/1/24.
+//  Created by Yanny Esteban on 30/1/24.
 //
 
 import SwiftUI
 
-struct LoginScreen2: View {
+struct GoogleMapsView: View {
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
 
 #Preview {
-    LoginScreen2()
+    GoogleMapsView()
 }
