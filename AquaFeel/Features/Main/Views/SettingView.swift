@@ -10,6 +10,20 @@ import SwiftUI
 struct SettingView: View {
     @State var isDarkModeEnabled: Bool = true
     @State var downloadViaWifiEnabled: Bool = false
+    @State var language = "English"
+    @State private var isShowingDialog = false
+
+    @EnvironmentObject var store: MainStore<UserData>
+    
+    
+    var languages: [String] = ["English", "Spanish", "German"]
+    
+    
+    @State var mapApi = "Google Maps"
+    var apis: [String] = ["Google Maps", "Open Street", "Apple Map"]
+    
+    @State var name = ""
+    @State var user = ""
     
     var body: some View {
         NavigationStack {
@@ -20,9 +34,12 @@ struct SettingView: View {
                         VStack {
                             Image(systemName: "person.fill")
                                 .font(.system(size: 20, weight: .light))
-                            Text("Wolf Knight")
+                            
+                            
+                            Text("\(store.firstName) \(store.lastName)")
+                            
                                 .font(.title)
-                            Text("WolfKnight@kingdom.tv")
+                            Text(user)
                                 .font(.subheadline)
                                 .foregroundColor(.gray)
                             Spacer()
@@ -59,35 +76,51 @@ struct SettingView: View {
                         Text("Profile")
                     }
                     
+                    HStack{
+                        Image(systemName: "map")
+                            .font(.system(size: 20, weight: .light))
+                        Picker("Map Api", selection: $mapApi){
+                            ForEach(apis, id: \.self){ item in
+                                Text(item)
+                            }
+                        }
+                    }
+                    
                 })
                 
                 Section(header: Text("PREFRENCES"), content: {
                     HStack{
                         Image(systemName: "globe")
                             .font(.system(size: 20, weight: .light))
-                        Text("Language")
-                        Spacer()
-                        Text("English")
-                            .fontWeight(.bold)
+                        
+                        Picker("Languaje", selection: $language){
+                            ForEach(languages, id: \.self){ item in
+                                Text(item)
+                            }
+                        }
+                        
+                        
+                        
                     }
+                    
                     HStack{
                         Image(systemName: "moon.stars")
                             .font(.system(size: 20, weight: .light))
                         Toggle(isOn: $isDarkModeEnabled) {
-                            Text("Dark Mode")
+                            Text("Dark mode")
                         }
                     }
                     HStack{
                         Image(systemName: "antenna.radiowaves.left.and.right.slash")
                             .font(.system(size: 20, weight: .light))
                         Toggle(isOn: $downloadViaWifiEnabled) {
-                            Text("offline")
+                            Text("Offline")
                         }
                     }
                     HStack{
                         Image(systemName: "link")
                             .font(.system(size: 20, weight: .light))
-                        Text("Play in Background")
+                        Text("Play in background")
                     }
                     
                 })
@@ -96,12 +129,35 @@ struct SettingView: View {
                         .font(.system(size: 20, weight: .light))
                     Text("Log out")
                 }
+                .onTapGesture {
+                    isShowingDialog = true
+                }
+                .confirmationDialog(
+                    "are you sure to leave?",
+                    isPresented: $isShowingDialog
+                ) {
+                    Button("Quit", role: .destructive) {
+                        store.userData.auth = false
+                    }
+                    Button("Cancel", role: .cancel) {
+                        isShowingDialog = false
+                    }
+                }
+                
             }
             .navigationBarTitle("Settings")
+            .onAppear{
+                print(".......-----")
+                user = "\(store.user)"
+                name = "\(store.firstName) \(store.lastName)"
+                print(store.firstName)
+                print("TEST \(store.test)")
+            }
         }
     }
 }
-
+/*
 #Preview {
     SettingView()
 }
+*/

@@ -8,11 +8,27 @@
 import SwiftUI
 
 struct MainScreen: View {
+    
+    @State private var showOption = false
+    @EnvironmentObject var store: MainStore<UserData>
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack{
+            
+            Text("xx")
+            
+            Button("quit"){
+                //store.userData.auth = false
+                showOption = true
+            }
+        }.sheet(isPresented: $showOption) {
+            SettingView()
+        }
+        
+        
     }
 }
 
 #Preview {
-    MainScreen()
+    
+    MainScreen().environmentObject(MainStore<UserData>())
 }

@@ -8,8 +8,48 @@
 import SwiftUI
 
 struct PassView: View {
+    @State var oldPass = ""
+    @State var newPass = ""
+    @State var confirmPass = ""
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            
+            Form{
+                
+                Section(""){
+                    SecureField("Old Password", text: $oldPass)
+                    
+                }
+                .font(.headline)
+                .autocapitalization(.none)
+                .disableAutocorrection(true)
+               
+                Section(""){
+                    SecureField("New Password", text: $newPass)
+                    SecureField("Confirm New Password", text: $confirmPass)
+                    
+                }
+                .font(.headline)
+                
+                .autocapitalization(.none)
+                .disableAutocorrection(true)
+                
+
+            }
+            
+            .navigationTitle("Change Password")
+            
+            .toolbar{
+                ToolbarItemGroup(placement: .navigationBarTrailing){
+                    
+                    Button("SAVE"){
+                        
+                    }
+                    
+                }
+            }
+        }
     }
 }
 

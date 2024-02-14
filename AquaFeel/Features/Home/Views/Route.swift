@@ -8,8 +8,35 @@
 import SwiftUI
 
 struct Route: View {
+    @State private var date = Date()
+    
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack{
+            Form{
+                
+                
+                Text("Appointments")
+                DatePicker(
+                    "Start Date",
+                    selection: $date,
+                    displayedComponents: [.date]
+                )
+                .datePickerStyle(.graphical)
+                
+                NavigationLink("Routes"){
+                    Text("NO")
+                }
+                
+                NavigationLink("Leads"){
+                    testLeadList()
+                }
+            }
+            
+           
+        }
+        
+        
     }
 }
 

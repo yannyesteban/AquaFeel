@@ -11,6 +11,19 @@ struct MyTab: View {
     var body: some View {
         TabView {
             TabA()
+                .tabItem{
+                    Image(systemName: "house")
+                    Text("Home")
+                }
+            TabB().tabItem{
+                Image(systemName: "person")
+                Text("Account")
+            }
+            
+            TabC().tabItem{
+                Image(systemName: "cart")
+                Text("Cart")
+            }
         }
     }
 }

@@ -14,6 +14,18 @@ class MyViewModel: ObservableObject {
    
 }
 
+struct TextWithIcon: View {
+    let text: String
+    
+    var body: some View {
+        HStack {
+           
+            SuperIconViewViewWrapper(status: getStatusType(from: "NHO"))
+                .frame(width: 30, height: 30)
+        }
+    }
+}
+
 struct DatePickerString: View {
     var title: String
     @Binding var text:String
@@ -53,13 +65,124 @@ struct DatePickerString: View {
     }
 }
 
+struct MyStatus: View {
+    @Binding var status: StatusId
+    
+    @State var sta: StatusType = .appt
+    @State private var isModalPresented = false
+    
+    var statusList : [StatusId]
+    var body: some View {
+        
+        HStack {
+            
+            VStack{
+                SuperIcon2(status: $sta)
+                
+                
+                    .frame(width: 50, height: 50)
+                Text(status.name)
+                    .frame(width: 50, height: 30)
+            }.onTapGesture {
+                isModalPresented.toggle()
+            }
+            .onAppear(){
+                print(status.name, "*********")
+                sta = getStatusType(from: status.name)
+            }
+            .onChange(of: status.name) { newStatus in
+                print(status.name, "...........................", newStatus)
+                sta = getStatusType(from: newStatus)
+                
+            }
+            
+            ScrollView(.horizontal) {
+                HStack {
+                    ForEach(statusList, id: \._id) { item in
+                        // Utiliza Label para combinar una imagen y un texto
+                        VStack{
+                            
+                            SuperIconViewViewWrapper(status: getStatusType(from: item.name))
+                            
+                            
+                                .frame(width: 30, height: 30)
+                                .padding(5)
+                                .onTapGesture{
+                                    status = item
+                                }
+                            Text(item.name)
+                                .frame(width: 50, height: 30)
+                                .foregroundColor(.blue)
+                        }
+                        
+                        
+                        
+                    }
+                }
+            }
+            .padding(5)
+            //.background(.gray.opacity(0.2))
+        }.padding(0)
+            .sheet(isPresented: $isModalPresented) {
+                // Contenido de la modal, por ejemplo, una lista de SuperIconViewViewWrapper
+                VStack{
+                    SuperIcon2(status: $sta)
+                    
+                    
+                        .frame(width: 50, height: 50)
+                    Text("Status: \(status.name)")
+                        //.frame(width: 50, height: 30)
+                }
+                .padding(10)
+                Divider()
+                ScrollView() {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))], spacing: 10) {
+                        ForEach(statusList, id: \._id) { item in
+                            VStack{
+                                SuperIconViewViewWrapper(status: getStatusType(from: item.name))
+                                    .frame(width: 50, height: 50)
+                                    .padding(5)
+                                    .onTapGesture {
+                                        status = item
+                                        isModalPresented.toggle()
+                                    }
+                                
+                                Text(item.name)
+                                    .frame(width: 50, height: 30)
+                                    //.foregroundColor(.blue)
+                            }.padding(0)
+                            
+                        }
+                    }
+                    
+                   
+                }
+                .padding(30)
+                    
+                Button("back"){
+                    isModalPresented.toggle()
+                }
+            }.padding(0)
+        
+        
+    }
+}
+
 struct CreateLead: View {
     @State private var texto = ""
     @State private var date = Date()
     
     
     @Binding var lead: LeadModel
-    @State var address: AddressProtocol = LeadModel()
+    //@StateObject var model1: LeadModel = LeadModel()
+    @StateObject private var lead2 = LeadViewModel(first_name: "Juan", last_name: "")
+    
+    @State var deleteConfirm = false;
+    
+    @State var mode: Int = 2
+    private func loadDataAndProcess() {
+        lead2.statusAll()
+    }
     var body: some View {
         
         NavigationStack {
@@ -106,9 +229,31 @@ struct CreateLead: View {
                 //.accentColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
                 //.foregroundColor(.red)
                 
-                Section("Address"){
-                    AddressView(label: "write a address", leadAddress: $lead)
+                Section("Status") {
+                    HStack {
+                        MyStatus(status: $lead.status_id, statusList: lead2.statusList)
+                    }
+                        
                 }
+                
+                
+                
+                
+                
+                
+                Section("Address"){
+                    AddressView<LeadModel>(label: "write a address", leadAddress: $lead)
+                }
+               
+                /*
+                Section("Address"){
+                    AddressView(label: "write a address", leadAddress: Binding(
+                        get: { address  },
+                        set: { address = $0 }
+                    ))
+                }
+                
+                */
                 
                 Section("Appointment / Callback time"){
                     DatePickerString(title: "Date", text: $lead.appointment_date)
@@ -119,35 +264,98 @@ struct CreateLead: View {
                 
                 
                 Section("Note") {
-                    TextField("", text: $texto, axis: .vertical)
+                    TextField("", text: $lead.note, axis: .vertical)
                         .lineLimit(2...4)
                                
                         
                 }
                 
             }
+            .onChange(of: mode) { newMode in
+                if newMode == 1 {
+                    lead = LeadModel() // Reinicia el valor de lead cuando mode es 1
+                }
+            }
             .background(.blue)
             .navigationTitle("Create Lead")
             
             .toolbar{
                 ToolbarItemGroup(placement: .navigationBarTrailing){
-                    
-                    Button("SAVE"){
+                    Button{
+                        //lead2.save(body: lead)
+                        mode = 1
                         
+                        let user = UserModel()
+                        
+                        let query = LeadQuery()
+                            .add(.id,"AHXrBjRDi")
+                        
+                        user.get(query: query)
+                        
+                    } label : {
+                        Label("new", systemImage: "plus")
+                            .font(.title)
+                            .foregroundColor(.blue)
                     }
                     Button{
+                        if mode == 1 {
+                            lead.created_by._id = "AHXrBjRDi"
+                            lead2.save(body: lead, mode: .add)
+                        }else {
+                            lead2.save(body: lead)
+                        }
                         
+                    } label : {
+                        Label("Guardar", systemImage: "square.and.arrow.down")
+                            .font(.title)
+                            .foregroundColor(.blue)
+                    }
+                    Button{
+                        deleteConfirm = true
                     }label: {
-                        Image(systemName: "square.and.arrow.down.on.square")
-                                        //.symbolRenderingMode(.palette)
-                                        .foregroundStyle(Color.pink, Color.green)
+                        Label("Eliminar", systemImage: "trash")
+                            .font(.title)
+                            .foregroundColor(.red)
                     }
                 }
             }
         }
         //.background(Color.orange)
         //.accentColor(Color.yellow)
+        .onAppear {
+            loadDataAndProcess()
+            
+            
+        }
         
+        
+        /*.confirmationDialog(
+            "are you sure to delete record?",
+            isPresented: $deleteConfirm
+        ) {
+            Button("Delete", role: .destructive) {
+                lead2.delete(body: lead)
+            }
+            Button("Cancel", role: .cancel) {
+                deleteConfirm = false
+            }
+        }*/
+        .confirmationDialog(
+            "Eliminar Elemento",
+            isPresented: $deleteConfirm,
+            actions: {
+                Button("Eliminar", role: .destructive) {
+                    print("delete \(lead.id)")
+                    let leadQuery = LeadQuery()
+                        
+                        .add(.id, lead.id)
+                    lead2.delete(query: leadQuery)
+                }
+            },
+            message: {
+                Text("are you sure to delete record?")
+            }
+        )
         
     }
     
@@ -158,10 +366,10 @@ struct TestCreateLead: View {
     //@State var lead = LeadModel()
     @State var nombrecito = "Juancito"
     @State var lead: LeadModel = LeadModel(
-        _id: "65c56f5ff4a97859d1955f89",
+        id: "65c56f5ff4a97859d1955f89",
         business_name: "N/A",
-        first_name: "Fuentes María",
-        last_name: "Roxana e",
+        first_name: "Nuñez",
+        last_name: "Yanny E",
         phone: "",
         phone2: "",
         email: "",
@@ -190,7 +398,7 @@ struct TestCreateLead: View {
                
                
             }
-        Text(lead.appointment_date)
+        //Text(lead.appointment_date)
         Text(lead.appointment_time)
     }
 }

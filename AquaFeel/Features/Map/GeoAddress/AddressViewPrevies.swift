@@ -23,38 +23,12 @@ struct PlaceDetailsResult: Codable {
 
 
 
-struct ModalView: View {
-    @State private var modalTextField = ""
-    let items = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"]
-    
-    var body: some View {
-        VStack {
-            TextField("Escribe aquí", text: $modalTextField)
-                .padding()
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-            
-            List(items, id: \.self) { item in
-                Text(item)
-            }
-            .listStyle(PlainListStyle())
-            
-            // Botón de cierre de la pantalla modal
-            Button("Cerrar") {
-                // Realizar acciones de cierre y cerrar la pantalla modal
-                // Por ejemplo, puedes almacenar los datos ingresados y actualizar la vista principal
-                // y luego cerrar la pantalla modal
-            }
-            .padding()
-        }
-        .padding()
-        .navigationTitle("Modal")
-    }
-}
+
 
 struct LocationTextField: View {
     @Binding var text: String
     @StateObject private var viewModel = LocationViewModel()
-    
+    @State private var isLocationVisible = false
     var body: some View {
         HStack {
             TextField("Ingrese texto.", text: $text)
@@ -63,15 +37,29 @@ struct LocationTextField: View {
                 .background(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
             
             Button(action: {
-               viewModel.requestLocation()
+                viewModel.start()
+                viewModel.requestLocation()
                 print(999)
+                isLocationVisible.toggle()
             }) {
                 Image(systemName: "location.circle.fill")
                     .foregroundColor(.blue)
                     .padding(8)
             }
         }
-        .padding(.horizontal, 16)
+        
+        
+            Group {
+                if let location = viewModel.location {
+                    Text("\(location.latitude)")
+                        .padding(.horizontal, 16)
+                        .opacity(isLocationVisible ? 1.0 : 0.0) // Controla la opacidad del Text
+                        .animation(.easeInOut(duration: 0.5)) // Agrega una animación a la opacidad
+                }
+            }
+        
+       
+        
     }
 }
 
@@ -147,12 +135,7 @@ struct AddressViewPrevies: View {
                     // Muestra la pantalla modal cuando el TextField obtiene el foco
                     isModalPresented = true
                 }
-                .sheet(isPresented: $isModalPresented) {
-                    // Pantalla modal
-                    ModalView()
-                        .presentationDetents([.fraction(0.30), .medium, .large])
-                        .presentationContentInteraction(.scrolls)
-                }
+                
             TextField("Escribe una dirección", text: $searchText, onCommit: {
                 searchPlaces()
                 showAutocomplete = !searchText.isEmpty
@@ -174,7 +157,7 @@ struct AddressViewPrevies: View {
             }
             
             
-            TextField("Escribe una dirección", text: $searchText)
+            TextField("Escribe una dirección 3.0", text: $searchText)
                 .onChange(of: searchText, perform: {newSearchText in
                     searchTimer?.invalidate()
                     // Inicia un nuevo temporizador con un retraso de 1.5 segundos

@@ -1,5 +1,760 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "" : {
+
+    },
+    "!" : {
+
+    },
+    "%@" : {
+
+    },
+    "%@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@"
+          }
+        }
+      }
+    },
+    "%lf" : {
+
+    },
+    "%lld" : {
+
+    },
+    "2.0" : {
+
+    },
+    "Account" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perfil"
+          }
+        }
+      }
+    },
+    "Address" : {
+
+    },
+    "All Time" : {
+
+    },
+    "Alternative Number" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Número Alternativo"
+          }
+        }
+      }
+    },
+    "Appointment / Callback time" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cita / Hora"
+          }
+        }
+      }
+    },
+    "Appointment Date" : {
+
+    },
+    "Appointments" : {
+
+    },
+    "Apt / Suite" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apto / Suite"
+          }
+        }
+      }
+    },
+    "Aquafeel" : {
+
+    },
+    "are you sure to delete record?" : {
+
+    },
+    "are you sure to leave?" : {
+
+    },
+    "back" : {
+
+    },
+    "Basic Info" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Información Básica"
+          }
+        }
+      }
+    },
+    "Campo 1" : {
+
+    },
+    "Campo 2" : {
+
+    },
+    "Cancel" : {
+
+    },
+    "Cart" : {
+
+    },
+    "Change Password" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cambiar Clave"
+          }
+        }
+      }
+    },
+    "Change World!" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cambia al Mundo!"
+          }
+        }
+      }
+    },
+    "City" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ciudad"
+          }
+        }
+      }
+    },
+    "Close" : {
+
+    },
+    "Configuración" : {
+
+    },
+    "Confirm New Password" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirme Clave"
+          }
+        }
+      }
+    },
+    "Contact Info" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Información de Contacto"
+          }
+        }
+      }
+    },
+    "CONTENT" : {
+
+    },
+    "Country" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "País"
+          }
+        }
+      }
+    },
+    "Create Lead" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crear Cita"
+          }
+        }
+      }
+    },
+    "Custom" : {
+
+    },
+    "Dark mode" : {
+
+    },
+    "Dark Mode" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modo Oscuro"
+          }
+        }
+      }
+    },
+    "Date" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fecha"
+          }
+        }
+      }
+    },
+    "Date Created" : {
+
+    },
+    "Date Range" : {
+
+    },
+    "Delete" : {
+
+    },
+    "Edit Profile" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Editar Perfil"
+          }
+        }
+      }
+    },
+    "Eliminar" : {
+
+    },
+    "Eliminar Elemento" : {
+
+    },
+    "email" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Correo Electrónico"
+          }
+        }
+      }
+    },
+    "Email" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Correo"
+          }
+        }
+      }
+    },
+    "Email Number" : {
+
+    },
+    "Encabezado u otros contenidos" : {
+
+    },
+    "English" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inglés"
+          }
+        }
+      }
+    },
+    "Error" : {
+
+    },
+    "Escribe una dirección" : {
+
+    },
+    "Escribe una dirección 3.0" : {
+
+    },
+    "Favorites" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Favoritos"
+          }
+        }
+      }
+    },
+    "Filter Date" : {
+
+    },
+    "Filter Date By" : {
+
+    },
+    "Filter Options" : {
+
+    },
+    "First Name" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre"
+          }
+        }
+      }
+    },
+    "Forgot Password?" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Olvidó su clave?"
+          }
+        }
+      }
+    },
+    "From Date" : {
+
+    },
+    "Guardar" : {
+
+    },
+    "Hello, OptionA!" : {
+
+    },
+    "Hello, OptionB!" : {
+
+    },
+    "Hello, World!" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hola a Todos"
+          }
+        }
+      }
+    },
+    "Hola" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hola"
+          }
+        }
+      }
+    },
+    "Home" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inicio"
+          }
+        }
+      }
+    },
+    "Ingrese texto" : {
+
+    },
+    "Ingrese texto." : {
+
+    },
+    "Language" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lenguaje"
+          }
+        }
+      }
+    },
+    "Languaje" : {
+
+    },
+    "Lasso Options ................ %llu" : {
+
+    },
+    "Last Name" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apellido"
+          }
+        }
+      }
+    },
+    "Last Updated" : {
+
+    },
+    "Latitud: %lf, Longitud: %lf" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Latitud: %1$lf, Longitud: %2$lf"
+          }
+        }
+      }
+    },
+    "Lead" : {
+
+    },
+    "Leads" : {
+
+    },
+    "Leads List" : {
+
+    },
+    "Loading..." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Espere..."
+          }
+        }
+      }
+    },
+    "Log in" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acceder"
+          }
+        }
+      }
+    },
+    "Log out" : {
+
+    },
+    "Logging in..." : {
+
+    },
+    "Map Api" : {
+
+    },
+    "Modal" : {
+
+    },
+    "new" : {
+
+    },
+    "New Password" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clave"
+          }
+        }
+      }
+    },
+    "NO" : {
+
+    },
+    "No hay datos disponibles" : {
+
+    },
+    "Note" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nota"
+          }
+        }
+      }
+    },
+    "Obteniendo ubicación..." : {
+
+    },
+    "Offline" : {
+
+    },
+    "Ok" : {
+
+    },
+    "Old Password" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clave Anterior"
+          }
+        }
+      }
+    },
+    "Opción %lld" : {
+
+    },
+    "Owner" : {
+
+    },
+    "Password" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clave"
+          }
+        }
+      }
+    },
+    "Phone Number" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Número de Teléfono"
+          }
+        }
+      }
+    },
+    "Pick a Date" : {
+
+    },
+    "Pie de página u otros contenidos" : {
+
+    },
+    "Play in background" : {
+
+    },
+    "PREFRENCES" : {
+
+    },
+    "Profile" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perfil"
+          }
+        }
+      }
+    },
+    "Quick Date" : {
+
+    },
+    "quit" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "salir"
+          }
+        }
+      }
+    },
+    "Quit" : {
+
+    },
+    "Received" : {
+
+    },
+    "Register" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cree una Cuenta"
+          }
+        }
+      }
+    },
+    "RoadMap" : {
+
+    },
+    "Route" : {
+
+    },
+    "Routes" : {
+
+    },
+    "Save" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuar"
+          }
+        }
+      }
+    },
+    "SAVE" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guardar"
+          }
+        }
+      }
+    },
+    "search by..." : {
+
+    },
+    "Select Date" : {
+
+    },
+    "Select Status" : {
+
+    },
+    "Selected Symbols: %@" : {
+
+    },
+    "Settings" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Configuración"
+          }
+        }
+      }
+    },
+    "Start Date" : {
+
+    },
+    "State" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estado"
+          }
+        }
+      }
+    },
+    "Statics" : {
+
+    },
+    "Status" : {
+
+    },
+    "Status: %@" : {
+
+    },
+    "Street Address" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dirección"
+          }
+        }
+      }
+    },
+    "System access was denied" : {
+
+    },
+    "Test" : {
+
+    },
+    "Texto ingresado: %@" : {
+
+    },
+    "This Week" : {
+
+    },
+    "To Date" : {
+
+    },
+    "Today" : {
+
+    },
+    "Ubicación actual: Latitud %lf, Longitud %lf" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Ubicación actual: Latitud %1$lf, Longitud %2$lf"
+          }
+        }
+      }
+    },
+    "Update Profile" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actualizar Perfil"
+          }
+        }
+      }
+    },
+    "View Settings" : {
+
+    },
+    "Welcome back" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bienvenido"
+          }
+        }
+      }
+    },
+    "Welcome back!" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bienvenido!"
+          }
+        }
+      }
+    },
+    "xx" : {
+
+    },
+    "Yesterday" : {
+
+    },
+    "Zip Code" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Código Postal"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

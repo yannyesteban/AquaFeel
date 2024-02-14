@@ -6,12 +6,30 @@
 //
 
 import SwiftUI
+import GoogleMaps
 
 @main
 struct AquaFeelApp: App {
+    
+    @UIApplicationDelegateAdaptor(AppDelegateq.self) var appDelegate
+    @Environment(\.scenePhase) private var scenePhase
+    
+    @State private var store = MainStore<UserData>() //AppStore()
+    
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            
+            //testLeadList()
+            
+            //ContentView()
+            
+           MainAppScreen()
+                .environmentObject(store)
+                
+            
+            
+            
         }
     }
 }

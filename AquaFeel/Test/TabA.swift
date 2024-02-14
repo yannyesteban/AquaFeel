@@ -9,7 +9,17 @@ import SwiftUI
 
 struct TabA: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Circle()
+                .frame(width: 200, height: 200)
+            .foregroundColor(.yellow)
+            Text("\(1)")
+                .foregroundColor(.white)
+                .font(.system(size: 70, weight: .bold))
+           
+        }
+       
+        
     }
 }
 

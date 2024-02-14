@@ -97,13 +97,14 @@ class MapMenuView: UIView {
     init(size: CGFloat, items: [MapMenuItem]) {
         self.size = size
         super.init(frame: .zero)
-        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.isUserInteractionEnabled = true
         stackView.isUserInteractionEnabled = true
         stackView.axis = .vertical
         stackView.alignment = .leading
         stackView.spacing = 10
         stackView.isLayoutMarginsRelativeArrangement = true
-        
+        stackView.backgroundColor = .red
         items.forEach { item in
             let button = UIButton(type: .system)
             let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: 20, weight: .regular)
@@ -116,11 +117,11 @@ class MapMenuView: UIView {
             button.layer.borderWidth = 0.5
             button.layer.borderColor = item.color.cgColor
             button.isUserInteractionEnabled = true
-            stackView.isUserInteractionEnabled = true
+            button.isUserInteractionEnabled = true
             stackView.addArrangedSubview(button)
             button.widthAnchor.constraint(equalToConstant: size).isActive = true
             button.heightAnchor.constraint(equalTo: button.widthAnchor).isActive = true
-            
+            //addSubview(button)
             if let action = item.action {
                 button.addAction(UIAction(handler: { _ in action() }), for: .touchUpInside)
             } else {
@@ -143,13 +144,14 @@ class MapMenuView: UIView {
         stackView.addArrangedSubview(button2)
         
         addSubview(stackView)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         
+        /*
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
             stackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20),
             stackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -20),
         ])
+         */
     }
     
     required init?(coder: NSCoder) {
@@ -168,7 +170,7 @@ class MapMenuView: UIView {
 
 
 
-class MapMenuViewController1: UIViewController {
+class MapMenuViewController: UIViewController {
     
     private var size: CGFloat
     // Puedes agregar propiedades y métodos personalizados según tus necesidades
@@ -191,7 +193,7 @@ class MapMenuViewController1: UIViewController {
         // ...
         
         // Ejemplo: establecer el tamaño de la vista
-        self.view.frame.size = CGSize(width: size, height: size)
+        //self.view.frame.size = CGSize(width: size, height: size)
         
         // Configura otras propiedades o métodos según sea necesario
     }
@@ -209,7 +211,7 @@ class MapMenuViewController1: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         stackView.isUserInteractionEnabled = true
-        //view.translatesAutoresizingMaskIntoConstraints = false
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         // Configuración del stack view
         stackView.axis = .vertical
         stackView.alignment = .leading
@@ -246,7 +248,7 @@ class MapMenuViewController1: UIViewController {
             if let action = item.action {
                 button.addAction(UIAction(handler: { _ in action() }), for: .touchUpInside)
             }else{
-                button.addTarget(self, action: #selector(defaultTouche), for: .touchUpInside)
+                //button.addTarget(self, action: #selector(defaultTouche), for: .touchUpInside)
                 button.addAction(UIAction(handler: { _ in
                         print("nothing")
                 }), for: .touchUpInside)
@@ -266,13 +268,13 @@ class MapMenuViewController1: UIViewController {
         
         // Configura las restricciones para el stack view
         stackView.translatesAutoresizingMaskIntoConstraints = false
-         */
+        
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
         ])
-       
+       */
         
         
         

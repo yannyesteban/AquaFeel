@@ -16,8 +16,11 @@ struct LoginView<MT: LoginMV>: View {
     @EnvironmentObject var store: MainStore<UserData>
     
     @State private var alert = false;
-    @State private var texto = "yanny"
-        
+    @State private var texto = ""
+       
+    
+    @State private var isLoading = false
+    
     var body: some View {
                 
         VStack {
@@ -52,7 +55,16 @@ struct LoginView<MT: LoginMV>: View {
                 //.frame(maxWidth: .infinity, maxHeight: 40)
                 
                 Button(
-                    action: loginModel.login,
+                    action: {
+                        if isLoading {
+                            return
+                        }
+                        isLoading = true
+                        loginModel.login{
+                            isLoading = false
+                           
+                        }
+                    },
                     label: {
                         Text("Log in")
                     }
@@ -65,6 +77,12 @@ struct LoginView<MT: LoginMV>: View {
                 //.frame(maxWidth: .infinity, alignment: .center)
                 
                 
+            }
+            
+            if isLoading {
+                ProgressView("Logging in...")
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .padding()
             }
         }
                 
