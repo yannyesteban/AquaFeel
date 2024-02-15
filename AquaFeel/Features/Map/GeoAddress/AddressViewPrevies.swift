@@ -7,7 +7,7 @@
 
 import SwiftUI
 import GoogleMaps
-import GooglePlaces
+//import GooglePlaces
 
 struct PlaceResult: Codable {
     let predictions: [Place]
