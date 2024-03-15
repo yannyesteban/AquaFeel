@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ProfileScreen: View {
+struct ProfileView: View {
     
     @State var firstName = ""
     @State var lastName = ""
@@ -17,7 +17,8 @@ struct ProfileScreen: View {
         NavigationStack {
             
             Form{
-                
+                AvatarView(imageURL: URL(string: "avatar) ?? URL(string: "defaultAvatarURL")!)
+                    .padding()
                 Section("Basic Info"){
                     TextField("First Name", text: $firstName)
                     TextField("Last Name", text: $lastName)
@@ -75,5 +76,5 @@ struct ProfileScreen: View {
 }
 
 #Preview {
-    ProfileScreen()
+    ProfileView()
 }

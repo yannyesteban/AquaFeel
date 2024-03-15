@@ -9,19 +9,20 @@ import Foundation
 import GoogleMaps
 
 
-class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
+class PlaceManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var location: CLLocationCoordinate2D?
     private var locationManager = CLLocationManager()
     
     override init() {
         super.init()
-        print("INIT")
-        //setupLocationManager()
+        print("INIT setupLocationManager")
+        setupLocationManager()
     }
     
     func start(){
         print("start")
-        setupLocationManager()
+        //setupLocationManager()
+        requestLocation()
     }
     
     private func setupLocationManager() {
@@ -29,11 +30,12 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        locationManager.startUpdatingLocation()
+        //locationManager.startUpdatingLocation()
     }
     
     func requestLocation() {
         print("requestLocation")
+        
         locationManager.requestLocation()
     }
     
