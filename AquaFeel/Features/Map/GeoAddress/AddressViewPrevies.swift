@@ -9,13 +9,6 @@ import SwiftUI
 import GoogleMaps
 //import GooglePlaces
 
-struct PlaceResult: Codable {
-    let predictions: [Place]
-}
-
-struct PlaceDetailsResult: Codable {
-    let result: PlaceDetails?
-}
 
 
 
@@ -27,7 +20,7 @@ struct PlaceDetailsResult: Codable {
 
 struct LocationTextField: View {
     @Binding var text: String
-    @StateObject private var viewModel = LocationViewModel()
+    @StateObject private var viewModel = PlaceManager()
     @State private var isLocationVisible = false
     var body: some View {
         HStack {
@@ -54,7 +47,7 @@ struct LocationTextField: View {
                     Text("\(location.latitude)")
                         .padding(.horizontal, 16)
                         .opacity(isLocationVisible ? 1.0 : 0.0) // Controla la opacidad del Text
-                        .animation(.easeInOut(duration: 0.5)) // Agrega una animación a la opacidad
+                        //.animation(.easeInOut(duration: 0.5)) // Agrega una animación a la opacidad
                 }
             }
         
@@ -116,7 +109,7 @@ struct AddressViewPrevies: View {
     @State private var searchText = ""
     @State private var places = [Place]()
     
-    @StateObject private var viewModel = LocationViewModel()
+    @StateObject private var viewModel = PlaceManager()
     @State private var locationText = ""
     @State private var showAutocomplete = false
     

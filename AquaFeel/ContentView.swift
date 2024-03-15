@@ -87,12 +87,12 @@ struct MapView: UIViewRepresentable {
         
         func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
             // Se llama cuando se toca la ventana de información de un marcador específico
-            print(marker.title)
+            //print(marker.title)
             //mapView.settings.setAllGesturesEnabled(false)
         }
         
         func mapView(_ mapView: GMSMapView, didTap overlay: GMSOverlay) {
-            print(overlay.zIndex)
+            //print(overlay.zIndex)
             
             // Se llama cuando se toca una superposición en el mapa
         }

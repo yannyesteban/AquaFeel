@@ -19,7 +19,14 @@ func getIconInfo(status: StatusType) -> IconInfo {
     switch status {
     case .uc:
         color = ColorFromHex("#CC6F3F")
-        image = "truck.box.fill"
+        if #available(iOS 17.0, *) {
+            // Usa un símbolo específico de iOS 15 o posterior
+            image = "truck.box.fill"
+        } else {
+            // Usa un símbolo diferente para versiones anteriores
+            image = "hammer.fill"
+        }
+        
     case .ni:
         color = .black
         image = "trash.fill"
@@ -50,6 +57,12 @@ func getIconInfo(status: StatusType) -> IconInfo {
     case .mycl:
         color = ColorFromHex("#00ACD3")
         image = "checkmark"
+    case .nm:
+        color = ColorFromHex("#00ff00")
+        image = "house.fill"
+    case .r2:
+        color = ColorFromHex("#00ffff")
+        image = "arrow.counterclockwise"
         
     }
     
@@ -143,6 +156,10 @@ func getStatusType(from statusString: String) -> StatusType {
         return .sm
     case "mycl":
         return .mycl
+    case "nm":
+        return .nm
+    case "r2":
+        return .r2
     default:
         return .uc
     }
@@ -179,6 +196,9 @@ enum StatusType{
     case nho // home yellow #FFE000
     case sm // wifi purple #6769AF
     case mycl // checklist blue.. #00ACD3
+    
+    case nm // home  #00ff00
+    case r2 // arrow anti clocl green #00ffff
 }
 
 final class StatusUIView: CircleIconView, UIViewRepresentable{
@@ -191,7 +211,14 @@ final class StatusUIView: CircleIconView, UIViewRepresentable{
         switch status {
         case .uc:
             color = ColorFromHex("#CC6F3F")
-            image = "truck.box.fill"
+            //image = "truck.box.fill"
+            if #available(iOS 17.0, *) {
+                // Usa un símbolo específico de iOS 15 o posterior
+                image = "truck.box.fill"
+            } else {
+                // Usa un símbolo diferente para versiones anteriores
+                image = "hammer.fill"
+            }
         case .ni:
             color = .black
             image = "trash.fill"
@@ -222,6 +249,12 @@ final class StatusUIView: CircleIconView, UIViewRepresentable{
         case .mycl:
             color = ColorFromHex("#00ACD3")
             image = "checkmark"
+        case .nm:
+            color = ColorFromHex("#00ff00")
+            image = "house.fill"
+        case .r2:
+            color = ColorFromHex("#00ffff")
+            image = "arrow.counterclockwise"
         }
         //return CircleIconView(systemName: image, color:color)
         
@@ -273,7 +306,14 @@ struct SuperIconView {
         switch status {
         case .uc:
             color = ColorFromHex("#CC6F3F")
-            image = "truck.box.fill"
+            //image = "truck.box.fill"
+            if #available(iOS 17.0, *) {
+                // Usa un símbolo específico de iOS 15 o posterior
+                image = "truck.box.fill"
+            } else {
+                // Usa un símbolo diferente para versiones anteriores
+                image = "hammer.fill"
+            }
         case .ni:
             color = .black
             image = "trash.fill"
@@ -304,7 +344,14 @@ struct SuperIconView {
         case .mycl:
             color = ColorFromHex("#00ACD3")
             image = "checkmark"
+        case .nm:
+            color = ColorFromHex("#00ff00")
+            image = "house.fill"
+        case .r2:
+            color = ColorFromHex("#00ffff")
+            image = "arrow.counterclockwise"
         }
+        
         return CircleIconView(systemName: image, color:color)
     }
     
@@ -427,18 +474,24 @@ struct IconView: UIViewRepresentable {
 
 
 struct SuperIconViewViewWrapper: UIViewRepresentable {
-    let status:StatusType
+    var status:StatusType
     init(status:StatusType){
         self.status = status
     }
     func makeUIView(context: Context) -> CircleIconView {
-        return SuperIconView(status: self.status).get()
+        
+        return SuperIconView(status: status).get()
             
     }
     
     func updateUIView(_ uiView: CircleIconView, context: Context) {
-        // Implementa actualizaciones si es necesario
-        uiView.layoutSubviews()
+        
+        
+        let info = getIconInfo(status: status)
+        uiView.color = info.color
+        uiView.image = info.image
+        //uiView.layoutSubviews()
+        uiView.configureView(systemName: info.image)
     }
 }
 
@@ -490,7 +543,7 @@ struct ContentView10: View {
 struct ContentView_Previews10: PreviewProvider {
     static var previews: some View {
         //ContentView10()
-        StatusUIView(status: .nho).toView().frame(width: 50, height: 50)
+        StatusUIView(status: .r2).toView().frame(width: 50, height: 50)
     }
 }
 

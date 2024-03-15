@@ -8,11 +8,38 @@
 import SwiftUI
 
 struct PhoneView: View {
+    let label: String
+    @Binding var text: String
+    let action: () -> Void
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            HStack {
+                TextField(label, text: $text)
+                
+                if text != ""{
+                    Button(action: {
+                        action()
+                    }) {
+                        Image(systemName: "phone")
+                            .foregroundColor(.blue)
+                    }
+                    .buttonStyle(BorderlessButtonStyle())
+                }
+                
+            }
+        }
+    }
+    
+    init(_ label: String, text: Binding<String>, action: @escaping () -> Void) {
+        self.label = label
+        self._text = text
+        self.action = action
     }
 }
 
 #Preview {
-    PhoneView()
+    PhoneView("telefono", text: .constant("yanny")){
+        print("my phone")
+    }
 }

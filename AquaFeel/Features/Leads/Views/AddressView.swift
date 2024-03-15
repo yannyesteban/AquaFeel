@@ -38,6 +38,7 @@ struct ModalView<T: AddressProtocol>: View {
                     //self.placeViewModel.searchPlaces(searchText: newSearchText)
                     DispatchQueue.main.async {
                         if text != ""{
+                            print("newSearchText: ", newSearchText)
                             self.placeViewModel.searchPlaces(searchText: newSearchText)
                         }
                         
@@ -58,7 +59,7 @@ struct ModalView<T: AddressProtocol>: View {
             }
             
             .listStyle(PlainListStyle())
-            
+            /*
             
             Button("Test") {
                 //placesCount = placeViewModel.places.count
@@ -67,7 +68,7 @@ struct ModalView<T: AddressProtocol>: View {
             
             .padding()
             
-            
+            */
         }
         .padding()
         .navigationTitle("Modal")
@@ -120,7 +121,7 @@ struct AddressView<T: AddressProtocol>: View {
     @State var value = 0
     @Binding var leadAddress: T
     
-    @StateObject private var location = LocationViewModel()
+    @StateObject private var location = PlaceManager()
     @ObservedObject private var placeViewModel = PlaceViewModel()
     
     
@@ -162,7 +163,7 @@ struct AddressView<T: AddressProtocol>: View {
                 location.start()
             }) {
                 Image(systemName: "location.circle.fill")
-                    .foregroundColor(.blue)
+                    .foregroundColor(.red)
                     .padding(8)
             }
         }
@@ -179,7 +180,7 @@ struct AddressView<T: AddressProtocol>: View {
             .onReceive(location.$location) { newValue in
                 
                 if let place = newValue {
-                    print("El valor de count ha cambiado a \(newValue?.latitude)")
+                    
                     
                     placeViewModel.getPlaceDetailsByCoordinates(latitude: place.latitude, longitude: place.longitude)
                 }
@@ -238,7 +239,7 @@ struct TestAddressView: View {
 }
 
 #Preview("testLeadList") {
-    testLeadList()
+    LeadListScreen(profile: ProfileManager())
 }
 
 

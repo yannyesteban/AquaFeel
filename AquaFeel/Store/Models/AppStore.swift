@@ -55,12 +55,16 @@ protocol SimplyInitializable {
 
 
 @MainActor
-class MainStore<T: SimplyInitializable & Identifiable & Codable>: ObservableObject {
+class MainStore<T: SimplyInitializable & Codable>: ObservableObject {
     @Published var userData: T = T()
     @Published var auth = Authentication()
+    @Published var id = "********************"
     @Published var user = ""
     @Published var firstName = ""
     @Published var lastName = ""
+    @Published var role = ""
+    @Published var token = ""
+    @Published var avatar = ""
     @Published var test = "one"
     
     //@Published var user = LoginModelViewVM()

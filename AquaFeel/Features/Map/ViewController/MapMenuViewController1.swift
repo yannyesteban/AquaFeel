@@ -11,13 +11,7 @@ import UIKit
 
 
 
-struct MapMenuItem {
-    var title: String
-    var image: String
-    var color: UIColor
-    var action: (() -> Void)?
-    
-}
+
 
 class XXX: UIViewController {
     
@@ -122,14 +116,15 @@ class MapMenuView: UIView {
             button.widthAnchor.constraint(equalToConstant: size).isActive = true
             button.heightAnchor.constraint(equalTo: button.widthAnchor).isActive = true
             //addSubview(button)
-            if let action = item.action {
-                button.addAction(UIAction(handler: { _ in action() }), for: .touchUpInside)
+            /*if let action = item.action {
+                button.addAction(UIAction(handler: { _ in action(button) }), for: .touchUpInside)
             } else {
                 button.addAction(UIAction(handler: { _ in
                     print("nothing")
                     self.delegate?.buttonTapped(title: item.title)
                 }), for: .touchUpInside)
             }
+             */
         }
         
         let button2 = UIButton(type: .system)
@@ -244,16 +239,16 @@ class MapMenuViewController: UIViewController {
             // Aplicar restricciones al botón
             button.widthAnchor.constraint(equalToConstant: size).isActive = true
             button.heightAnchor.constraint(equalTo: button.widthAnchor).isActive = true
-            
+            /*
             if let action = item.action {
-                button.addAction(UIAction(handler: { _ in action() }), for: .touchUpInside)
+                button.addAction(UIAction(handler: { _ in action(button) }), for: .touchUpInside)
             }else{
                 //button.addTarget(self, action: #selector(defaultTouche), for: .touchUpInside)
                 button.addAction(UIAction(handler: { _ in
                         print("nothing")
                 }), for: .touchUpInside)
             }
-            
+            */
             stackView.addArrangedSubview(button)
          
         }

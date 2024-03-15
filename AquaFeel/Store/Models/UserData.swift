@@ -8,9 +8,9 @@
 import Foundation
 
 
-struct UserData: Identifiable, Codable, SimplyInitializable {
+struct UserData:  Codable, SimplyInitializable {
     
-    let id: UUID
+    var id: String
     var name: String
     var user: String
     var pass: String
@@ -22,12 +22,14 @@ struct UserData: Identifiable, Codable, SimplyInitializable {
     var auth: Bool
     var test:String = "yanny Nuñez TEST One"
    
+    var info: User = User()
+    
     init() {
             // Llama al inicializador principal con un valor predeterminado
             self.init(name: "")
         }
     
-    init(id: UUID = UUID(), name: String = "", email: String = "", password: String = "", token: String = "", role: String = "", isBlocked: Bool = true, isVerified: Bool = false, auth: Bool = false) {
+    init(id: String = "", name: String = "", email: String = "", password: String = "", token: String = "", role: String = "", isBlocked: Bool = true, isVerified: Bool = false, auth: Bool = false) {
         self.id = id
         self.name = name
         self.user = email

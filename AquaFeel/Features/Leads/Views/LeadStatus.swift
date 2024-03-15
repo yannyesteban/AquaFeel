@@ -150,6 +150,7 @@ struct StatusListView: View {
                     
                     Text(selected)
                         .frame(width: 50, height: 30)
+                        .foregroundColor(.red)
                 }
                
                 
@@ -239,13 +240,25 @@ struct LeadStatus2: View {
             return ColorFromHex("#6769AF")
         case .mycl:
             return ColorFromHex("#00ACD3")
+        case .nm:
+            return ColorFromHex("#00ff00")
+        case .r2:
+            return ColorFromHex("#00ffff")
+            
         }
     }
     
     var image: String {
         switch status {
         case .uc:
-            return "truck.box.fill"
+            //return "truck.box.fill"
+            if #available(iOS 17.0, *) {
+                // Usa un símbolo específico de iOS 15 o posterior
+                return "truck.box.fill"
+            } else {
+                // Usa un símbolo diferente para versiones anteriores
+                return "hammer.fill"
+            }
         case .ni:
             return "trash.fill"
         case .ingl:
@@ -266,6 +279,10 @@ struct LeadStatus2: View {
             return "dot.radiowaves.up.forward"
         case .mycl:
             return "checkmark"
+        case .nm:
+            return "house.fill"
+        case .r2:
+            return "arrow.counterclockwise"
         }
     }
     

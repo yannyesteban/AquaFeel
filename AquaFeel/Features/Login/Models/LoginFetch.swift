@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct LoginFetch: Encodable {
+struct LoginFetch: Codable {
     let email: String
     let password: String
 }

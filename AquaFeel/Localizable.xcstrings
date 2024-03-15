@@ -4,7 +4,13 @@
     "" : {
 
     },
-    "!" : {
+    " " : {
+
+    },
+    " ...yanny " : {
+
+    },
+    "*" : {
 
     },
     "%@" : {
@@ -26,6 +32,9 @@
     "%lld" : {
 
     },
+    "0" : {
+
+    },
     "2.0" : {
 
     },
@@ -39,11 +48,48 @@
         }
       }
     },
-    "Address" : {
+    "Account Created Successfully" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cuenta creada correctamente"
+          }
+        }
+      }
+    },
+    "Add" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agregar"
+          }
+        }
+      }
+    },
+    "Add Leads" : {
 
     },
+    "Address" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dirección"
+          }
+        }
+      }
+    },
     "All Time" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todas"
+          }
+        }
+      }
     },
     "Alternative Number" : {
       "localizations" : {
@@ -66,10 +112,30 @@
       }
     },
     "Appointment Date" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cita / Fecha"
+          }
+        }
+      }
+    },
+    "Appointment Set Past 30 Days" : {
+
+    },
+    "Appointment Set Today" : {
 
     },
     "Appointments" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cita"
+          }
+        }
+      }
     },
     "Apt / Suite" : {
       "localizations" : {
@@ -85,13 +151,34 @@
 
     },
     "are you sure to delete record?" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seguro de eliminar el Registro?"
+          }
+        }
+      }
     },
     "are you sure to leave?" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seguro de salir?"
+          }
+        }
+      }
     },
     "back" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "atrás"
+          }
+        }
+      }
     },
     "Basic Info" : {
       "localizations" : {
@@ -103,6 +190,20 @@
         }
       }
     },
+    "call" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Llamar"
+          }
+        }
+      }
+    },
+    "Calle: %@" : {
+
+    },
     "Campo 1" : {
 
     },
@@ -110,9 +211,19 @@
 
     },
     "Cancel" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volver"
+          }
+        }
+      }
     },
     "Cart" : {
+
+    },
+    "Change" : {
 
     },
     "Change Password" : {
@@ -145,10 +256,20 @@
         }
       }
     },
-    "Close" : {
+    "Ciudad: %@" : {
 
     },
-    "Configuración" : {
+    "Close" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cerrar"
+          }
+        }
+      }
+    },
+    "Confirm new Password" : {
 
     },
     "Confirm New Password" : {
@@ -157,6 +278,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Confirme Clave"
+          }
+        }
+      }
+    },
+    "Confirm Password" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirme la Clave"
           }
         }
       }
@@ -189,7 +320,17 @@
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Crear Cita"
+            "value" : "Crear Lead"
+          }
+        }
+      }
+    },
+    "Created By: %@" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Creado por %@"
           }
         }
       }
@@ -198,7 +339,14 @@
 
     },
     "Dark mode" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modo Oscuro"
+          }
+        }
+      }
     },
     "Dark Mode" : {
       "extractionState" : "stale",
@@ -223,15 +371,60 @@
       }
     },
     "Date Created" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Creado"
+          }
+        }
+      }
     },
     "Date Range" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desde / Hasta"
+          }
+        }
+      }
     },
     "Delete" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminar"
+          }
+        }
+      }
+    },
+    "Delete record" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminar registro"
+          }
+        }
+      }
+    },
+    "Edad: %lld" : {
 
     },
+    "Edit" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Editar"
+          }
+        }
+      }
+    },
     "Edit Profile" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es-419" : {
           "stringUnit" : {
@@ -240,12 +433,6 @@
           }
         }
       }
-    },
-    "Eliminar" : {
-
-    },
-    "Eliminar Elemento" : {
-
     },
     "email" : {
       "extractionState" : "stale",
@@ -271,6 +458,9 @@
     "Email Number" : {
 
     },
+    "Email: %@" : {
+
+    },
     "Encabezado u otros contenidos" : {
 
     },
@@ -285,6 +475,22 @@
         }
       }
     },
+    "Enter names, separated by commas" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombres separados por coma"
+          }
+        }
+      }
+    },
+    "EQ First Name" : {
+
+    },
+    "EQ phone" : {
+
+    },
     "Error" : {
 
     },
@@ -292,6 +498,9 @@
 
     },
     "Escribe una dirección 3.0" : {
+
+    },
+    "Extra" : {
 
     },
     "Favorites" : {
@@ -307,11 +516,18 @@
     "Filter Date" : {
 
     },
-    "Filter Date By" : {
-
-    },
     "Filter Options" : {
 
+    },
+    "Find By" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buscar por"
+          }
+        }
+      }
     },
     "First Name" : {
       "localizations" : {
@@ -333,10 +549,7 @@
         }
       }
     },
-    "From Date" : {
-
-    },
-    "Guardar" : {
+    "Formulario SwiftUI" : {
 
     },
     "Hello, OptionA!" : {
@@ -395,7 +608,7 @@
     "Languaje" : {
 
     },
-    "Lasso Options ................ %llu" : {
+    "Lasso Options" : {
 
     },
     "Last Name" : {
@@ -421,10 +634,13 @@
         }
       }
     },
-    "Lead" : {
+    "Lead Created Today" : {
 
     },
     "Leads" : {
+
+    },
+    "Leads %@" : {
 
     },
     "Leads List" : {
@@ -451,9 +667,26 @@
       }
     },
     "Log out" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cerrar sesión"
+          }
+        }
+      }
     },
     "Logging in..." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entrando"
+          }
+        }
+      }
+    },
+    "Map" : {
 
     },
     "Map Api" : {
@@ -462,8 +695,18 @@
     "Modal" : {
 
     },
-    "new" : {
+    "My Appointments" : {
 
+    },
+    "Name: %@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Name: %1$@ %2$@"
+          }
+        }
+      }
     },
     "New Password" : {
       "localizations" : {
@@ -475,10 +718,10 @@
         }
       }
     },
-    "NO" : {
+    "No Data" : {
 
     },
-    "No hay datos disponibles" : {
+    "Nombre: %@" : {
 
     },
     "Note" : {
@@ -491,6 +734,9 @@
         }
       }
     },
+    "Note: %@" : {
+
+    },
     "Obteniendo ubicación..." : {
 
     },
@@ -498,6 +744,9 @@
 
     },
     "Ok" : {
+
+    },
+    "OK" : {
 
     },
     "Old Password" : {
@@ -514,6 +763,16 @@
 
     },
     "Owner" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Propietario"
+          }
+        }
+      }
+    },
+    "Owners List" : {
 
     },
     "Password" : {
@@ -526,6 +785,12 @@
         }
       }
     },
+    "Password updated sucessfully" : {
+
+    },
+    "Passwords do not match" : {
+
+    },
     "Phone Number" : {
       "localizations" : {
         "es-419" : {
@@ -536,13 +801,19 @@
         }
       }
     },
-    "Pick a Date" : {
+    "Phone: %@" : {
+
+    },
+    "Phone2: %@" : {
 
     },
     "Pie de página u otros contenidos" : {
 
     },
     "Play in background" : {
+
+    },
+    "Please wait while we are verifying your details" : {
 
     },
     "PREFRENCES" : {
@@ -559,7 +830,14 @@
       }
     },
     "Quick Date" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fecha Rápida"
+          }
+        }
+      }
     },
     "quit" : {
       "localizations" : {
@@ -572,20 +850,27 @@
       }
     },
     "Quit" : {
-
-    },
-    "Received" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salir"
+          }
+        }
+      }
     },
     "Register" : {
       "localizations" : {
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cree una Cuenta"
+            "value" : "Registrar"
           }
         }
       }
+    },
+    "Reset" : {
+
     },
     "RoadMap" : {
 
@@ -593,11 +878,32 @@
     "Route" : {
 
     },
+    "Route Info" : {
+
+    },
+    "Route it" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enrutar"
+          }
+        }
+      }
+    },
+    "Route It" : {
+
+    },
+    "Route List" : {
+
+    },
+    "Route Name" : {
+
+    },
     "Routes" : {
 
     },
     "Save" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -624,16 +930,61 @@
       }
     },
     "search by..." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buscar..."
+          }
+        }
+      }
+    },
+    "Search by..." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buscar..."
+          }
+        }
+      }
+    },
+    "Selecciona un avatar" : {
 
     },
-    "Select Date" : {
+    "Seleccionar Avatar" : {
 
     },
     "Select Status" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seleccione un Estatus"
+          }
+        }
+      }
     },
-    "Selected Symbols: %@" : {
-
+    "Select Users" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seleccione un Usuario"
+          }
+        }
+      }
+    },
+    "Send SMS" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enviar Mensaje"
+          }
+        }
+      }
     },
     "Settings" : {
       "localizations" : {
@@ -644,6 +995,9 @@
           }
         }
       }
+    },
+    "Sign Up" : {
+
     },
     "Start Date" : {
 
@@ -658,13 +1012,13 @@
         }
       }
     },
-    "Statics" : {
-
-    },
     "Status" : {
 
     },
     "Status: %@" : {
+
+    },
+    "Stop: %lld" : {
 
     },
     "Street Address" : {
@@ -678,22 +1032,56 @@
         }
       }
     },
-    "System access was denied" : {
+    "Street Address: %@" : {
 
     },
-    "Test" : {
+    "System access was denied" : {
 
     },
     "Texto ingresado: %@" : {
 
     },
-    "This Week" : {
-
+    "This Month" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este mes"
+          }
+        }
+      }
     },
-    "To Date" : {
-
+    "This Week" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta Semana"
+          }
+        }
+      }
+    },
+    "This Year" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este Año"
+          }
+        }
+      }
     },
     "Today" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hoy"
+          }
+        }
+      }
+    },
+    "Total Leads %lld" : {
 
     },
     "Ubicación actual: Latitud %lf, Longitud %lf" : {
@@ -702,6 +1090,17 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Ubicación actual: Latitud %1$lf, Longitud %2$lf"
+          }
+        }
+      }
+    },
+    "Under Construction" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "en Construcción"
           }
         }
       }
@@ -717,7 +1116,14 @@
       }
     },
     "View Settings" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Configuración"
+          }
+        }
+      }
     },
     "Welcome back" : {
       "localizations" : {
@@ -742,8 +1148,18 @@
     "xx" : {
 
     },
-    "Yesterday" : {
+    "xxxx" : {
 
+    },
+    "Yesterday" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ayer"
+          }
+        }
+      }
     },
     "Zip Code" : {
       "localizations" : {

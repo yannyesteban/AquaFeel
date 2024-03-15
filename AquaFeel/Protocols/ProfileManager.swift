@@ -39,6 +39,9 @@ struct Profile: Codable {
     }
 }
 
+
+let SuperToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InhMdjR3STJUTSIsImVtYWlsIjoieWFubnllc3RlYmFuQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTcwNTYxMDY3NCwiZXhwIjoxNzEwNzk0Njc0fQ.5nPyOfuwOF3jOxm2lziG-_4jtDEqQmp9i3a6yBjIFCE"
+
 class ProfileManager: LoginProtocol, ObservableObject {
     @Published var leadFilters = LeadFilter()
 
@@ -48,8 +51,9 @@ class ProfileManager: LoginProtocol, ObservableObject {
     @Published var begin: Bool = false
     @Published var isLoading = false
 
-    @Published var token: String = ""
-    @Published var role: String = ""
+    @Published var userId: String = "xLv4wI2TM"
+    @Published var token: String = SuperToken
+    @Published var role: String = "ADMIN"
     @Published var id: String = ""
 
     @Published var info: User = User()
@@ -123,6 +127,7 @@ class ProfileManager: LoginProtocol, ObservableObject {
                     self.token = response.token ?? ""
                     self.role = response.user?.role ?? ""
                     self.id = response.user?._id ?? ""
+                    self.userId = response.user?._id ?? ""
 
                     if let filters = userData.leadFilters {
                         self.leadFilters = filters

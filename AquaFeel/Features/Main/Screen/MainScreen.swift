@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MainScreen: View {
-    
+   
     @State private var showOption = false
     @EnvironmentObject var store: MainStore<UserData>
     var body: some View {
@@ -20,8 +20,7 @@ struct MainScreen: View {
                 //store.userData.auth = false
                 showOption = true
             }
-        }.sheet(isPresented: $showOption) {
-            SettingView()
+       
         }
         
         

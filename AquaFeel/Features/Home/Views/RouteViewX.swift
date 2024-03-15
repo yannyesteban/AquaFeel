@@ -47,13 +47,13 @@ struct RouteX: View {
                     Label("Routes", systemImage: "arrow.triangle.swap")
                 }
                 
-                
+                /*
                 NavigationLink {
-                    LeadListScreen()
+                    LeadListScreen(profie: ProfileManager(), userId: "xLv4wI2TM", role: "ADMIN")
                 } label: {
                     Label("Lead", systemImage: "person.badge.plus")
                 }
-                
+                */
                 
                 NavigationLink {
                     Text(" ...yanny ")

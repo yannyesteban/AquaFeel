@@ -5,36 +5,154 @@
 //  Created by Yanny Esteban on 29/1/24.
 //
 /*
- 
+
  mapView.settings.scrollGestures = false
  mapView.settings.zoomGestures = false
  mapView.settings.tiltGestures = false
  mapView.settings.rotateGestures = false
  */
 
-
-
-
-
-
-
 import GoogleMaps
-import UIKit
-import SwiftUI
 import GoogleMapsUtils
+import SwiftUI
+import UIKit
 import UIKit.UIGestureRecognizerSubclass
+struct MapMenuItem {
+    var title: String
+    var image: String
 
-var clusterManager: GMUClusterManager!
-var c:MapViewCoordinator!
+    var imageOff: String = ""
+    var color: UIColor
+    var action: ((MapButton) -> Void)?
+}
 
-var start: Bool = false
+class MapButton: UIButton {
+    enum ButtonState {
+        case normal
+        case active
+    }
+
+    // Properties
+    private let image: String
+    private let activeImage: String
+    private let color: UIColor
+    var action: ((MapButton) -> Void)?
+    
+    var currentState: ButtonState = .active
+
+    let button: UIButton
+
+    // Optional action closure for button press
+   
+    
+   
+
+    // Initializer with image name, color, and optional action closure
+    init(image: String, offImage: String, color: UIColor, currentState: ButtonState = .normal, action: ((MapButton) -> Void)? = nil) {
+        self.image = image
+        self.activeImage = offImage
+        self.color = color
+        self.currentState = .normal
+        self.action = action
+       
+        // Initialize UIButton
+        button = UIButton(type: .system)
+        super.init(frame: .zero) // Call superclass initializer with zero frame
+        setupButton()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // Function to configure the button's appearance and behavior
+    private func setupButton() {
+        let size: CGFloat = 40.0
+
+        // Configure button image and color
+        // let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: 15, weight: .regular)
+        // let buttonImage = UIImage(systemName: image, withConfiguration: symbolConfiguration)
+        // button.setImage(buttonImage, for: .normal)
+        button.tintColor = color
+
+        // Enable user interaction
+        button.isUserInteractionEnabled = true
+
+        // Set button appearance (background, corner radius, border)
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 0.5 * size
+        button.layer.borderWidth = 0.5
+        button.layer.borderColor = color.cgColor
+
+        // Add target for button press (optional action execution)
+        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+
+        // Add button as subview
+        addSubview(button)
+
+        // Set button constraints (optional, adjust as needed)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            button.widthAnchor.constraint(equalToConstant: size),
+            button.heightAnchor.constraint(equalTo: button.widthAnchor),
+            button.centerXAnchor.constraint(equalTo: centerXAnchor),
+            button.centerYAnchor.constraint(equalTo: centerYAnchor),
+        ])
+
+        updateButton()
+    }
+
+    // Function to handle button press, update state, and call optional action
+    @objc func buttonPressed() {
+        currentState = currentState == .normal ? .active : .normal
+        updateButton()
+        action?(self) // Optionally execute the action closure with the button
+    }
+
+    // Function to update button image based on current state
+    func updateButton() {
+        let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: 15, weight: .regular)
+        var image = UIImage(systemName: image, withConfiguration: symbolConfiguration)
+        if activeImage != "" && currentState == .active {
+            image = UIImage(systemName: activeImage, withConfiguration: symbolConfiguration)
+        }
+
+        button.setImage(image, for: .normal)
+    }
+}
+
+enum MapMode {
+    case normal
+    case mark
+    case polygon
+}
+
+struct MapViewState {
+    var leads: [LeadModel]
+    var path: GMSMutablePath
+    var mode: Bool
+    var leadSelected: LeadModel?
+}
+
+// var clusterManager: GMUClusterManager!
+// var c:MapViewCoordinator!
+
+// var start: Bool = false
 
 class AquaFeelModel: ObservableObject {
     @Published var path = GMSMutablePath()
     @Published var mode = false
-    
-    
-    
+    @Published var newLead = false
+    @Published var newPosition: CLLocationCoordinate2D?
+}
+
+class POIItem: NSObject, GMUClusterItem {
+    var position: CLLocationCoordinate2D
+    var name: String!
+    init(position: CLLocationCoordinate2D, name: String) {
+        self.position = position
+        self.name = name
+    }
 }
 
 protocol MapDraw {
@@ -45,599 +163,658 @@ protocol MapDraw {
     func reset()
 }
 
-class Draw: MapDraw{
-    
-    let path = GMSMutablePath()
-    var path2 = GMSMutablePath()
-    var polygon = GMSPolyline()
-    let mapView: GMSMapView
-    let poly = GMSPolygon()
-    let line = GMSPolyline()
-    
-    var start =  false
-    /*
-    var line: GMSPolyline {
-        let polyline = GMSPolyline()
-        polyline.path = path
-        // Configura el estilo del polígono (opcional)
-        polyline.strokeColor = color
-        polyline.strokeWidth = CGFloat(strokeWidth)
-        polyline.geodesic = true
-        return polyline
-    }
-    
-    */
-    let strokeWidth = 2.0
-    var color: UIColor = UIColor.orange
-    
-    
-    init(map: GMSMapView) {
-        
-        print("INIT MapDraw")
-        self.mapView = map
-        
-        poly.path = path
-        poly.strokeColor = color
-        poly.strokeWidth = strokeWidth
-        poly.fillColor = color.withAlphaComponent(0.2)
-        poly.isTappable = true
-        
-        line.path = path
-        line.strokeColor = color
-        line.strokeWidth = strokeWidth
-        
-    }
-    
-    func doLine(_ path: GMSMutablePath){
-        
-        line.path = path
-        // Configura el estilo del polígono (opcional)
-        line.strokeColor = color
-        line.strokeWidth = strokeWidth
-        
-        line.geodesic = true
-        
-        line.map = mapView
-        
-    }
-    
-    func bye(){
-        /*
-        if !start {
-            
-            return
-        }
-        start = false
-        */
-        //path.removeAllCoordinates()
-        
-        path.add(path.coordinate(at: 0))
-        //line.map = nil
-        //doGeofence()
-        
-        //doLine2(path)
-        
-        doGeofence()
-        path2 = GMSMutablePath(path: path)
-        
-        
-        path.removeAllCoordinates()
-        
-        
-    }
-    
-    func doGeofence(){
-        
-        poly.path = path
-        poly.strokeColor = color
-        poly.strokeWidth = strokeWidth
-        poly.fillColor = color.withAlphaComponent(0.2)
-        poly.map = mapView
-        
-        
-    }
-    
-    func doLine2(_ path: GMSMutablePath){
-        
-        line.path = path
-        // Configura el estilo del polígono (opcional)
-        line.strokeColor = color
-        line.strokeWidth = strokeWidth
-        
-        line.geodesic = true
-        
-        
-        
-        let image = UIImage(systemName: "circle.fill")!.withTintColor(.red, renderingMode: .alwaysOriginal)
-        
-        
-        image.withTintColor(.red)
-        //image.withTintColor(.cyan)
-        let stampStyle = GMSSpriteStyle(image: image)
-        
-        let transparentStampStroke = GMSStrokeStyle.transparentStroke(withStamp: stampStyle)
-        
-        
-        let span = GMSStyleSpan(style: transparentStampStroke)
-        /*
-         let redWithStamp = GMSStrokeStyle.solidColor(.red)
-         let image = UIImage(systemName: "circle.fill")! // Image could be from anywhere
-         redWithStamp.stampStyle = GMSTextureStyle(image: image)
-         let span = GMSStyleSpan(style: redWithStamp)
-         
-         */
-        line.spans = [span]
-        
-        line.map = mapView
-    }
-    
-    func doPoly(_ path: GMSMutablePath){
-        
-        poly.path = path
-        // Configura el estilo del polígono (opcional)
-        poly.strokeColor = color
-        poly.strokeWidth = strokeWidth
-        poly.fillColor = color.withAlphaComponent(0.01)
-        //polygon.fillColor = UIColor.blue.withAlphaComponent(0.5)
-        poly.geodesic = false
-        
-        poly.map = mapView
-    }
-    func add(coordinate: CLLocationCoordinate2D){
-        
-        //start = true
-        self.path.add(CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude))
-        
-        doLine(path)
-    }
-    
-    func add2(coordinate: CLLocationCoordinate2D){
-        self.path.add(CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude)) //
-        //let polygon = GMSPolygon(path: path)
-        
-        let solidRed = GMSStrokeStyle.solidColor(.red)
-        let solidBlue = GMSStrokeStyle.solidColor(.blue)
-        let solidBlueSpan = GMSStyleSpan(style: solidBlue)
-        let redYellow = GMSStrokeStyle.gradient(from: .red, to: .yellow)
-        let redYellowSpan = GMSStyleSpan(style: redYellow)
-        
-        
-        polygon.path = path
-        // Configura el estilo del polígono (opcional)
-        //polygon.strokeColor = .yellow
-        polygon.strokeWidth = 10
-        //polygon.fillColor = UIColor.blue.withAlphaComponent(0.5)
-        polygon.geodesic = true
-        
-        //let polyline = GMSPolyline(path: path)
-        
-        //let image = UIImage(systemName: "circle.fill")!.withTintColor(.orange, renderingMode: .alwaysTemplate)
-        let largeFont = UIFont.systemFont(ofSize: 60)
-        let configuration = UIImage.SymbolConfiguration(font: largeFont)
-        
-        let image = UIImage(systemName: "circle.fill")!.withTintColor(.red, renderingMode: .alwaysOriginal)
-        
-        
-        image.withTintColor(.red)
-        //image.withTintColor(.cyan)
-        let stampStyle = GMSSpriteStyle(image: image)
-        
-        let transparentStampStroke = GMSStrokeStyle.transparentStroke(withStamp: stampStyle)
-        
-        
-        let span = GMSStyleSpan(style: transparentStampStroke)
-        /*
-         let redWithStamp = GMSStrokeStyle.solidColor(.red)
-         let image = UIImage(systemName: "circle.fill")! // Image could be from anywhere
-         redWithStamp.stampStyle = GMSTextureStyle(image: image)
-         let span = GMSStyleSpan(style: redWithStamp)
-         
-         */
-        polygon.spans = [span]
-        /*
-         polygon.spans = [
-         GMSStyleSpan(style: solidRed, segments: 2.5),
-         GMSStyleSpan(color: .gray),
-         GMSStyleSpan(color: .purple, segments: 0.75),
-         GMSStyleSpan(style: redYellow)
-         ]
-         
-         let styles = [
-         GMSStrokeStyle.solidColor(.systemYellow),
-         GMSStrokeStyle.solidColor(.systemPink)
-         ]
-         let lengths: [NSNumber] = [100000, 100000]
-         polygon.spans = GMSStyleSpans(
-         polygon.path!,
-         styles,
-         lengths,
-         GMSLengthKind.rhumb
-         )
-         */
-        //polygon.strokeColor = .yellow
-        
-        if (mapView.mapCapabilities.contains(.spritePolylines)) {
-            print(".......... SIIII")
-            
-        }
-        
-        
-        //polygon.spans = [GMSStyleSpan(style: solidRed)]
-        /*polygon.spans = [
-         GMSStyleSpan(style: solidRed),
-         GMSStyleSpan(style: solidRed),
-         GMSStyleSpan(style: redYellow)
-         ]
-         */
-        
-        //polygon.zIndex = 1
-        // Añade el polígono al mapa
-        polygon.map = mapView
-    }
-    
-    func play() {
-        polygon = GMSPolyline()
-    }
-    
-    func stop() {
-        
-    }
-    
-    func pause() {
-        
-    }
-    
-    func get() {
-        
-    }
-    
-    func reset() {
-        
-    }
-    
-    
-    
-}
-
-
-
 protocol ResettableView {
-    func resetPieces(_:DragDropGestureRecognizer)
+    func resetPieces(_: DragDropGestureRecognizer)
 }
 
+class MapViewController: UIViewController, GMSMapViewDelegate, UIGestureRecognizerDelegate, ResettableView {
+    let map = GMSMapView()
 
-class MapViewController:  UIViewController ,GMSMapViewDelegate, UIGestureRecognizerDelegate, ResettableView {
-    
-    let map =  GMSMapView()
-    
-    //var mode:Bool = false
+    // var mode:Bool = false
     var mode: Binding<Bool>?
-    //var path: GMSMutablePath?
-    
+
+    var newLead: Binding<Bool>?
+
+    // var path: GMSMutablePath?
+
     var path: Binding<GMSMutablePath>?
-    var draw:Draw?
+    var draw: Draw?
+    var drawMark: DrawMark?
     var newPath = GMSMutablePath()
-    
-   
+
     var onPlay = false
-    
-    
+
+    var drawing = false
+    var firstPoint: CLLocationCoordinate2D?
+
+    var location: CLLocationCoordinate2D?
+
+    // @Binding var path:GMSMutablePath
+    // @Binding var mode: Bool
+    var leadSelected: LeadModel?
+    var markerSelected: Binding<LeadModel?>
+    var leads: Binding<[LeadModel]>
+
+    private var drawPlay = false
+    private var markPlay = false
+
+    var started = false
+
+    var mapMode = MapMode.normal
+
+    var lastButton: MapButton?
+    var newPosition: Binding<CLLocationCoordinate2D?>
+    var playState: Bool = false {
+        didSet {
+            print("playState")
+            updatePlayButtonImage()
+        }
+    }
+
+    init(markerSelected: Binding<LeadModel?>, location: CLLocationCoordinate2D?, leads: Binding<[LeadModel]>, newPosition: Binding<CLLocationCoordinate2D?>) {
+        self.markerSelected = markerSelected
+        self.location = location
+        self.leads = leads
+        self.newPosition = newPosition
+
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    public lazy var clusterManager: GMUClusterManager = {
+        let iconGenerator = GMUDefaultClusterIconGenerator()
+
+        // iconGenerator.borderColor = .black // Cambiar el color del borde a negro
+        // iconGenerator.borderWidth = 1.0 // Establecer el ancho del borde
+        let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
+        let renderer = GMUDefaultClusterRenderer(mapView: map, clusterIconGenerator: iconGenerator)
+
+        return GMUClusterManager(map: self.map, algorithm: algorithm, renderer: renderer)
+    }()
+
+    private var clusterManager1: GMUClusterManager!
+
     override func loadView() {
+        print(" loadView() ")
         super.loadView()
-        map.camera = GMSCameraPosition(latitude: 37.36, longitude: -122.0, zoom: 5.0)
+
+        var longitude = -74.0060 // -76.53529600000002 //-122.008972
+        var latitude = 40.7128 // 39.2750209// 37.33464379999999
+
+        if let location = location {
+            longitude = location.longitude
+            latitude = location.latitude
+        }
+        // map.camera = GMSCameraPosition(latitude: latitude, longitude: longitude, zoom: 18.0)
+        map.camera = GMSCameraPosition(latitude: latitude, longitude: longitude, zoom: 16.0)
         map.settings.compassButton = true
         map.settings.zoomGestures = true
         map.settings.myLocationButton = true
-        
+        map.isMyLocationEnabled = true
+
         draw = Draw(map: map)
-        
-        //self.myDraw()
-        
-        //draw = Draw11(target: self,map: map)
-        //draw?.play()
-        //map.addGestureRecognizer(draw.drawGesture)
-        //self.play()
-        //draw.play2(drawGesture: UIPanGestureRecognizer(target: self, action: #selector(START)))
-        //x = MapViewDelegateHandler(self)
-        //map.delegate = draw  //x//self
-        //map.isUserInteractionEnabled = false
-        //map.settings.allowScrollGesturesDuringRotateOrZoom = false
-        
+        drawMark = DrawMark(map: map) { p in
+
+            self.newPosition.wrappedValue = p
+            self.doPlay(.normal)
+            if let newLead = self.newLead {
+                newLead.wrappedValue = true
+            }
+        }
+
+        // self.myDraw()
+
+        // draw = Draw11(target: self,map: map)
+        // draw?.play()
+        // map.addGestureRecognizer(draw.drawGesture)
+        // self.play()
+        // draw.play2(drawGesture: UIPanGestureRecognizer(target: self, action: #selector(START)))
+        // x = MapViewDelegateHandler(self)
+        // map.delegate = draw  //x//self
+        // map.isUserInteractionEnabled = false
+        // map.settings.allowScrollGesturesDuringRotateOrZoom = false
+
         /*
          let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTap))
          //map.addTarget(self, action: #selector(toggleGestures2), for: .touchUpInside)
-         
-         
+
          map.addGestureRecognizer(tapGestureRecognizer)
-         
-         
+
          let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(draw._startDraw))
          map.addGestureRecognizer(panGestureRecognizer)
-         
-         
+
          let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
          map.addGestureRecognizer(gestureRecognizer)
          */
-        //play()
-        //map.delegate = self
-        self.view = map
+        // play()
+        // map.delegate = self
+
+        // map.delegate = self
+        view = map
         /*
-       
-        map.settings.setAllGesturesEnabled(true)
-        
-        
-        let resetGestureRecognizer = DragDropGestureRecognizer(target: self, action: #selector(resetPieces(_:)))
-        view.addGestureRecognizer(resetGestureRecognizer)
-        
-        //resetGestureRecognizer.delegate = self
-        
-        resetGestureRecognizer.cancelsTouchesInView = false
-        
-        */
+
+         map.settings.setAllGesturesEnabled(true)
+
+         let resetGestureRecognizer = DragDropGestureRecognizer(target: self, action: #selector(resetPieces(_:)))
+         view.addGestureRecognizer(resetGestureRecognizer)
+
+         //resetGestureRecognizer.delegate = self
+
+         resetGestureRecognizer.cancelsTouchesInView = false
+
+         */
     }
-    
-    func setPlay(){
+
+    override func viewDidLoad() {
+        print(" viewDidLoad() ")
+        print("viewDidLoad.........................................")
+        super.viewDidLoad()
+        let size: CGFloat = 40.0
+        let items = [
+            MapMenuItem(title: "a", image: "info.bubble", color: .darkGray) { _ in
+
+                print("aaaa")
+                // self.stop()
+                // line.horizontal.3.decrease.circle
+                self.showLeadsOptions()
+            },
+            // MapMenuItem(title: "b", image: "magnifyingglass", color: .darkGray),
+            MapMenuItem(title: "c", image: "app.connected.to.app.below.fill", color: .darkGray) { _ in
+
+               
+
+            },
+            MapMenuItem(title: "d", image: "pin.fill", imageOff: "eraser.fill", color: .darkGray) { button in
+                if let last = self.lastButton , self.lastButton != button {
+                    
+                    last.currentState = .normal
+                    last.updateButton()
+                }
+                /*let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: 15, weight: .regular)
+                var image = UIImage(systemName: "pin.fill", withConfiguration: symbolConfiguration)
+                if self.mapMode == .mark {
+                    image = UIImage(systemName: "eraser.fill", withConfiguration: symbolConfiguration)
+                }
+
+                button.setImage(image, for: .normal)
+                // self.setMarkPlay()*/
+                if self.mapMode != .mark {
+                    self.doStop()
+                    self.doPlay(.mark)
+                    //button.currentState = .on
+                }else{
+                    self.doStop()
+                }
+                self.lastButton = button
+                
+            },
+            MapMenuItem(title: "d", image: "hand.draw.fill", imageOff: "eraser.fill", color: .darkGray) { button in
+                if let last = self.lastButton , self.lastButton != button {
+                    
+                    last.currentState = .normal
+                    last.updateButton()
+                }
+                /*let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: 15, weight: .regular)
+                var image = UIImage(systemName: "hand.draw.fill", withConfiguration: symbolConfiguration)
+                if !self.drawPlay {
+                    image = UIImage(systemName: "eraser.fill", withConfiguration: symbolConfiguration)
+                }
+
+                 
+                button.setImage(image, for: .normal)*/
+                if self.mapMode != .polygon {
+                    self.doStop()
+                    self.doPlay(.polygon)
+                   // button.currentState = .on
+                }else{
+                    self.doStop()
+                }
+                self.lastButton = button
+                
+            },
+        ]
+        let stackView = UIStackView()
+        // stackView.isUserInteractionEnabled = false
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        // Configuración del stack view
+        stackView.axis = .vertical
+        stackView.alignment = .leading
+        // stackView.distribution = .fill
+        // stackView.backgroundColor = .magenta
+        stackView.spacing = 20 // Puedes ajustar el espaciado según tus necesidades
+        stackView.isLayoutMarginsRelativeArrangement = true
+        // stackView.isLayoutMarginsRelativeArrangement = true
+        // stackView.translatesAutoresizingMaskIntoConstraints = true
+        stackView.clipsToBounds = true
+
+        items.forEach { item in
+            let button = MapButton(image: item.image, offImage: item.imageOff, color: item.color, currentState: .normal, action: item.action)
+            button.widthAnchor.constraint(equalToConstant: size).isActive = true
+            button.heightAnchor.constraint(equalTo: button.widthAnchor).isActive = true
+
+            // let gestureRecognizer = UITapGestureRecognizer(target: nil, action: nil)
+            // button.addGestureRecognizer(gestureRecognizer)
+            /* if let action = item.action {
+                 print(9.1)
+                 button.addAction(UIAction(handler: { _ in
+                     print(9)
+                     action(button)
+                 }), for: .touchUpInside)
+             }else{
+                 print(10)
+                 //button.addTarget(self, action: #selector(defaultTouche), for: .touchUpInside)
+                 button.addAction(UIAction(handler: { _ in
+                     print("nothing")
+                 }), for: .touchUpInside)
+             }
+             */
+            stackView.addArrangedSubview(button)
+        }
+
+        /*
+         items.forEach{ item in
+             let button = UIButton(type: .system)
+             let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: 15, weight: .regular)
+             let trashImage = UIImage(systemName: item.image, withConfiguration: symbolConfiguration)
+             button.setImage(trashImage, for: .normal)
+             //button.setImage(UIImage(systemName: item.image2, withConfiguration: symbolConfiguration), for: .selected)
+
+             // Ajustar el color del símbolo
+             button.tintColor = item.color
+             button.isUserInteractionEnabled = true
+             // Ajustar la apariencia del botón para que tenga un fondo circular grande y un borde
+             button.backgroundColor = .white
+             button.layer.cornerRadius = 0.5 * size // Tamaño del círculo (ajustar según sea necesario)
+             button.layer.borderWidth = 0.5  // Ancho del borde
+             button.layer.borderColor = item.color.cgColor  // Color del borde
+
+             // Configuración de acciones y restricciones
+             //button.addTarget(self, action: #selector(toggleGestures), for: .touchUpInside)
+             stackView.addArrangedSubview(button)
+
+             // Aplicar restricciones al botón
+             button.widthAnchor.constraint(equalToConstant: size).isActive = true
+             button.heightAnchor.constraint(equalTo: button.widthAnchor).isActive = true
+
+             if let action = item.action {
+
+                 button.addAction(UIAction(handler: { _ in
+
+                     action(button)
+                 }), for: .touchUpInside)
+             }else{
+
+                 //button.addTarget(self, action: #selector(defaultTouche), for: .touchUpInside)
+                 button.addAction(UIAction(handler: { _ in
+                     print("nothing")
+                 }), for: .touchUpInside)
+             }
+             let gestureRecognizer = UITapGestureRecognizer(target: nil, action: nil)
+             //gestureRecognizer.delegate = self
+             button.addGestureRecognizer(gestureRecognizer)
+             stackView.addArrangedSubview(button)
+             playButton?.append(button)
+
+         }*/
+
+        view.addSubview(stackView)
+
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            // stackView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 150),
+            stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            // stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+        ])
+
+        let iconGenerator = GMUDefaultClusterIconGenerator()
+        let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
+        let renderer = GMUDefaultClusterRenderer(mapView: map, clusterIconGenerator: iconGenerator)
+
+        // clusterManager = GMUClusterManager(map: mapView, algorithm: algorithm, renderer: renderer)
+        clusterManager1 = GMUClusterManager(map: map, algorithm: algorithm, renderer: renderer)
+        // Register self to listen to GMSMapViewDelegate events.
+        clusterManager1.setMapDelegate(self) // (context.coordinator)//(c)
+
+        clusterManager1.cluster()
+    }
+
+    func start() {
+        print("start")
+        generateClusterItems(manager: clusterManager1)
+    }
+
+    private func generateClusterItems(manager: GMUClusterManager) {
+        let leads = leads.wrappedValue
+        /* guard let leads = leads.wrappedValue else {
+
+             // Manejar el caso cuando leads es nil
+             return
+         }
+         */
+        // map.clear()
+        manager.clearItems()
+        print("generateClusterItems: \(leads.count)")
+        for leadModel in leads {
+            // print( leadModel.first_name ?? "-/n")
+            if let latitude = Double(leadModel.latitude),
+               let longitude = Double(leadModel.longitude) {
+                let marker = GMSMarker()
+                marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                // marker.title = leadModel.first_name
+                marker.isTappable = true
+                // marker.userData = ["name":  leadModel.id ]
+                marker.userData = leadModel
+
+                let circleIconView = getUIImage(name: leadModel.status_id.name)
+                circleIconView.frame = CGRect(x: 120, y: 120, width: 30, height: 30)
+                /*
+                 let circleIconView = StatusUIView(status: .nho)
+                 circleIconView.frame = CGRect(x: 120, y: 120, width: 50, height: 50)
+                 */
+                marker.iconView = circleIconView
+
+                // marker.map = map
+                manager.add(marker)
+            }
+        }
+
+        // manager.cluster()
+        print("ready ClusterItems: \(manager.clusterRequestCount())")
+        /*
+         let extent = 0.2
+         for _ in 1...kClusterItemCount {
+         let lat = kCameraLatitude + extent * randomScale()
+         let lng = kCameraLongitude + extent * randomScale()
+         let position = CLLocationCoordinate2D(latitude: lat, longitude: lng)
+         let marker = GMSMarker(position: position)
+         //manager.add(marker)
+         }
+         */
+    }
+
+    func doPlay(_ mode: MapMode) {
+        
+       
+        switch mode {
+        case .normal:
+            return
+        case .mark:
+            startMark()
+        case .polygon:
+            play()
+        }
+    }
+
+    func doStop() {
+        switch mapMode {
+        case .normal:
+            return
+        case .mark:
+            stopMark()
+        case .polygon:
+            stop()
+        }
+    }
+
+    func setPlay() {
         onPlay.toggle()
         if onPlay {
             play()
-        }else{
+        } else {
             stop()
         }
-        
     }
-    
-    func play(){
+
+    func setMarkPlay() {
+        markPlay.toggle()
+        if markPlay {
+            startMark()
+        } else {
+            stopMark()
+        }
+    }
+
+    func startMark() {
+        print("map.delegate = drawMark")
+        mapMode = .mark
+        map.delegate = drawMark
+    }
+
+    func stopMark() {
+        print("map.delegate = self")
+        drawMark?.stop()
+        map.delegate = self
+        mapMode = .normal
+    }
+
+    func play() {
         print("play()")
-        self.map.settings.setAllGesturesEnabled(false)
-        
-        
-        let resetGestureRecognizer = DragDropGestureRecognizer(target: self, action: #selector(self.resetPieces(_:)))
-        self.view.addGestureRecognizer(resetGestureRecognizer)
-        
-        //resetGestureRecognizer.delegate = self
-        
+        map.settings.setAllGesturesEnabled(false)
+
+        let resetGestureRecognizer = DragDropGestureRecognizer(target: self, action: #selector(resetPieces(_:)))
+        view.addGestureRecognizer(resetGestureRecognizer)
+
+        // resetGestureRecognizer.delegate = self
+
         resetGestureRecognizer.cancelsTouchesInView = false
+        drawPlay = true
+        mapMode = .polygon
     }
-    
-    func stop(){
-        self.map.settings.setAllGesturesEnabled(true)
+
+    func stop() {
+        map.settings.setAllGesturesEnabled(true)
+        draw?.stop()
+        drawPlay = false
+        mapMode = .normal
     }
-    
-    
-    func showLeadsOptions(){
-        print("\n\n========.....===================")
-        
-       
-        
+
+    func showLeadsOptions() {
         if let path2 = draw?.path2 {
             path?.wrappedValue = GMSMutablePath(path: path2)
         }
-        
-        
-        if let path = path?.wrappedValue {
-            print("x-> path?.count(): ", path.count())
-            
-            for index in 0..<path.count() {
-                let coordinate = path.coordinate(at: index)
-                //print("x-> \(index) Latitud: \(coordinate.latitude), Longitud: \(coordinate.longitude)")
-            }
-        }
-        
-        
-        print("New path count in ended ", newPath.count())
-        
-        for index in 0..<newPath.count() {
-            let coordinate = newPath.coordinate(at: index)
-            //print("Latitud: \(coordinate.latitude), Longitud: \(coordinate.longitude)")
-        }
-        //path?.wrappedValue = newPath
-        print("================================\n\n")
+
+        // print("New path count in ended ", newPath.count())
+        /*
+         for index in 0..<newPath.count() {
+             let coordinate = newPath.coordinate(at: index)
+             print("Latitud: \(coordinate.latitude), Longitud: \(coordinate.longitude)")
+         }
+          */
+        // path?.wrappedValue = newPath
+
         if let mode = mode {
             mode.wrappedValue = true
         }
     }
-    func play1(){
+
+    func play1() {
         print("play")
-        
+
         map.settings.setAllGesturesEnabled(false)
-        
-        
-        
+
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(startDraw))
         map.addGestureRecognizer(panGestureRecognizer)
-        
-        
+
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        
+
         map.addGestureRecognizer(gestureRecognizer)
-        
-        
+
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         view.addGestureRecognizer(longPressGesture)
-        
+
         let hover = UIHoverGestureRecognizer(target: self, action: #selector(hovering(_:)))
         view.addGestureRecognizer(hover)
-        
-        
-        
-        
     }
+
     @objc
     func resetPieces(_ gesture: DragDropGestureRecognizer) {
-        
-        let location = gesture.location(in: self.view)
-        if let tappedView = self.view.hitTest(location, with: nil) {
-            
-            print("no Se tocó la mapa: \(tappedView.self)")
-            
-            
-            if tappedView.self is UIButton{
-                print("Se tocóUN Boton \(tappedView.self)")
+        let location = gesture.location(in: view)
+        if let tappedView = view.hitTest(location, with: nil) {
+            // print("no Se tocó la mapa: \(tappedView.self)")
+
+            if tappedView.self is UIButton {
+                // print("Se tocóUN Boton \(tappedView.self)")
                 return
             }
-           
-            print("layer ", tappedView.layer, self.view)
-            if tappedView == self.view {
-                print("Se tocó la vista del ViewController: MISMO")
+
+            // print("layer ", tappedView.layer, self.view)
+            if tappedView == view {
+                // print("Se tocó la vista del ViewController: MISMO")
                 // Realiza acciones específicas para tu ViewController
                 return
             }
-            
         }
-        
-        
-        
-        
-        
-        
+
         switch gesture.state {
         case .began:
             // Inicia el dibujo
-            
-            
-            
-            
+
             let tapPoint = gesture.location(in: map)
             let coordinate = map.projection.coordinate(for: tapPoint)
-            
-            //print(coordinate.latitude)
-            draw?.add(coordinate: coordinate)
-            //print("Began drawing")
+
+            // print(coordinate.latitude)
+            // draw?.add(coordinate: coordinate)
+
+            firstPoint = coordinate
+        // print("Began drawing")
         case .changed:
             // Procesa los puntos tocados para dibujar
-            //let touchedPoints = gesture.touchedPoints
+            // let touchedPoints = gesture.touchedPoints
             // Implementa tu lógica de dibujo aquí
-            //print("Changed drawing: \(touchedPoints)")
+            // print("Changed drawing: \(touchedPoints)")
             let tapPoint = gesture.location(in: map)
             let coordinate = map.projection.coordinate(for: tapPoint)
-            
-            //print(coordinate.latitude)
+
+            if !drawing, let firstPoint = firstPoint {
+                draw?.add(coordinate: firstPoint)
+            }
+            drawing = true
+            // print(coordinate.latitude)
             draw?.add(coordinate: coordinate)
-            //print("Changed drawing: (touchedPoints)")
+        // print("Changed drawing: (touchedPoints)")
         case .ended:
             // Finaliza el dibujo
-            
-            /*
-            newPath = GMSMutablePath(path: draw?.path2 ?? GMSMutablePath())
-            print(newPath.count())
-            print("New path count in ended state:", newPath.count())
 
-            path?.wrappedValue = newPath
-            */
-            draw?.bye()
-            //newPath = GMSMutablePath(path: self.draw?.path2 ?? GMSMutablePath())
-            
-            //newPath = GMSMutablePath()
-            //newPath.add(CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194))
-            //newPath.add(CLLocationCoordinate2D(latitude: 34.0522, longitude: -118.2437))
-            //newPath.add(CLLocationCoordinate2D(latitude: 40.7128, longitude: -74.0060))
-            
-           
-            print("New path count in ended state:", self.newPath.count())
+            if drawing {
+                draw?.bye()
+            } else {
+                showLeadsOptions()
+            }
+            drawing = false
+            /*
+             newPath = GMSMutablePath(path: draw?.path2 ?? GMSMutablePath())
+             print(newPath.count())
+             print("New path count in ended state:", newPath.count())
+
+             path?.wrappedValue = newPath
+             */
+
+            // newPath = GMSMutablePath(path: self.draw?.path2 ?? GMSMutablePath())
+
+            // newPath = GMSMutablePath()
+            // newPath.add(CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194))
+            // newPath.add(CLLocationCoordinate2D(latitude: 34.0522, longitude: -118.2437))
+            // newPath.add(CLLocationCoordinate2D(latitude: 40.7128, longitude: -74.0060))
+
+            // print(".ended:", self.newPath.count())
             if let path2 = draw?.path2 {
-                print("yes \(path2.count())")
+                // print("yes \(path2.count())")
                 path?.wrappedValue = GMSMutablePath(path: path2)
                 newPath = GMSMutablePath(path: path2)
             }
-            
-            
-           
-            if let path = path?.wrappedValue {
-                for index in 0..<path.count() {
-                    let coordinate = path.coordinate(at: index)
-                    print("\(index) => Latitud: \(coordinate.latitude), Longitud: \(coordinate.longitude)")
-                }
-            }
-            
-            for index in 0..<newPath.count() {
-                let coordinate = newPath.coordinate(at: index)
-                print("\(index) Latitud: \(coordinate.latitude), Longitud: \(coordinate.longitude)")
-            }
-            
-            /*
-            if let path = path {
-                print("Count: ")
-                print(draw?.path2.count())
-                path.wrappedValue = GMSMutablePath(path: draw?.path2 ?? GMSMutablePath()) //draw?.path2 ?? GMSMutablePath()
-            }
-             */
-            //print("Ended drawing")
+
+        /*
+         
+         if let path = path?.wrappedValue {
+             for index in 0..<path.count() {
+                 let coordinate = path.coordinate(at: index)
+                 print("\(index) => Latitud: \(coordinate.latitude), Longitud: \(coordinate.longitude)")
+             }
+         }
+         
+         for index in 0..<newPath.count() {
+             let coordinate = newPath.coordinate(at: index)
+             print("\(index) Latitud: \(coordinate.latitude), Longitud: \(coordinate.longitude)")
+         }
+         */
+        /*
+         if let path = path {
+         print("Count: ")
+         print(draw?.path2.count())
+         path.wrappedValue = GMSMutablePath(path: draw?.path2 ?? GMSMutablePath()) //draw?.path2 ?? GMSMutablePath()
+         }
+         */
+        // print("Ended drawing")
         default:
             break
         }
-        
-        
-        
     }
+
     /*
-    
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("touchesBegan 1.00")
-        
-        return
-        
-    }
+
+     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+     print("touchesBegan 1.00")
+
+     return
+
+     }
      */
     /*
      override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
      super.touchesMoved(touches, with: event)
      print("touchesMoved")
-     
+
      if let touch = touches.first {
      let tapPoint = touch.location(in: map)
      let coordinate = map.projection.coordinate(for: tapPoint)
-     
+
      print(coordinate.latitude)
      draw?.add(coordinate: coordinate)
      }
-     
+
      //state = .changed
      }
-     
-     
+
      override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
      super.touchesEnded(touches, with: event)
      draw?.reset()
-     
-     
+
      }
-     
+
      */
-    
+
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
                            shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        print("queeee")
-        
         return true
     }
-    
-    
+
     @objc func startDraw(_ gestureRecognizer: UIPanGestureRecognizer) {
         print("handlePanGesture")
         if gestureRecognizer.state == .ended {
             print("Bye.................")
-            //draw?.bye()
-        }        // Actualiza la ruta que el usuario está dibujando.
+            // draw?.bye()
+        } // Actualiza la ruta que el usuario está dibujando.
         if gestureRecognizer.state == .began {
             print("hello")
             let tapPoint = gestureRecognizer.location(in: map)
             let coordinate = map.projection.coordinate(for: tapPoint)
             draw?.add(coordinate: coordinate)
-            
+
         } else if gestureRecognizer.state == .changed {
             let tapPoint = gestureRecognizer.location(in: map)
             let coordinate = map.projection.coordinate(for: tapPoint)
-            
+
             // Acciones a realizar cuando se toca el mapa
-            //print("Tocaste en la coordenada: \(coordinate.latitude), \(coordinate.longitude)")
-            
+            // print("Tocaste en la coordenada: \(coordinate.latitude), \(coordinate.longitude)")
+
             draw?.add(coordinate: coordinate)
         }
     }
-    
+
     @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
-        
         print("xxxxxxxxxx")
         if gestureRecognizer.state == .began {
             let location = gestureRecognizer.location(in: view)
@@ -649,498 +826,433 @@ class MapViewController:  UIViewController ,GMSMapViewDelegate, UIGestureRecogni
             // Aquí puedes manejar el evento de liberación del dedo
         }
     }
-    
+
     @objc
     func hovering(_ recognizer: UIHoverGestureRecognizer) {
         print("hovering")
-        
     }
-    
-    @objc func handleTap(gestureRecognizer: UITapGestureRecognizer? = nil) -> Bool{
+
+    @objc func handleTap(gestureRecognizer: UITapGestureRecognizer? = nil) -> Bool {
         print("handleTap")
-        
+
         // Obtenga la ubicación del toque
-        //let location = gestureRecognizer.location(in: mapView)
+        // let location = gestureRecognizer.location(in: mapView)
         // Coordine la ubicación del toque
-        //let coordinate = mapView.projection.coordinate(for: location)
+        // let coordinate = mapView.projection.coordinate(for: location)
         // Implemente la acción deseada
-        //print("Tocado en la coordenada: \(coordinate)")
-        
+        // print("Tocado en la coordenada: \(coordinate)")
+
         // En el método gestureRecognizer(_:shouldRecognizeSimultaneouslyWith:) del UIGestureRecognizer, devuelve true para permitir que el usuario dibuje sobre el mapa mientras interactúa con otros elementos de la interfaz de usuario.
         return false
     }
-    
-    
-    
-    override func viewDidLoad() {
-        
-        
-        
-        super.viewDidLoad()
-        let size: CGFloat = 40.0
-        let items = [
-            MapMenuItem(title: "a", image: "line.horizontal.3.decrease.circle", color: .darkGray){
-                //self.stop()
-                self.showLeadsOptions()
-            },
-            MapMenuItem(title: "b", image: "magnifyingglass", color: .darkGray),
-            MapMenuItem(title: "c", image: "app.connected.to.app.below.fill", color: .darkGray),
-            MapMenuItem(title: "d", image: "pin.fill", color: .darkGray){
-                
-                //self.stop()
-            },
-            MapMenuItem(title: "d", image: "hand.draw.fill", color: .darkGray){
-                
-                self.setPlay()
-            }
-        ]
-        let stackView = UIStackView()
-        //stackView.isUserInteractionEnabled = false
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        // Configuración del stack view
-        stackView.axis = .vertical
-        stackView.alignment = .leading
-        //stackView.distribution = .fill
-        //stackView.backgroundColor = .magenta
-        stackView.spacing = 20  // Puedes ajustar el espaciado según tus necesidades
-        stackView.isLayoutMarginsRelativeArrangement = true
-        //stackView.isLayoutMarginsRelativeArrangement = true
-        //stackView.translatesAutoresizingMaskIntoConstraints = true
-        stackView.clipsToBounds = true
-        items.forEach{ item in
-            let button = UIButton(type: .system)
-            let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: 15, weight: .regular)
-            let trashImage = UIImage(systemName: item.image, withConfiguration: symbolConfiguration)
-            button.setImage(trashImage, for: .normal)
-            
-            // Ajustar el color del símbolo
-            button.tintColor = item.color
-            button.isUserInteractionEnabled = true
-            // Ajustar la apariencia del botón para que tenga un fondo circular grande y un borde
-            button.backgroundColor = .white
-            button.layer.cornerRadius = 0.5 * size // Tamaño del círculo (ajustar según sea necesario)
-            button.layer.borderWidth = 0.5  // Ancho del borde
-            button.layer.borderColor = item.color.cgColor  // Color del borde
-            
-            // Configuración de acciones y restricciones
-            //button.addTarget(self, action: #selector(toggleGestures), for: .touchUpInside)
-            stackView.addArrangedSubview(button)
-            
-            // Aplicar restricciones al botón
-            button.widthAnchor.constraint(equalToConstant: size).isActive = true
-            button.heightAnchor.constraint(equalTo: button.widthAnchor).isActive = true
-            
-            if let action = item.action {
-                button.addAction(UIAction(handler: { _ in action() }), for: .touchUpInside)
-            }else{
-                //button.addTarget(self, action: #selector(defaultTouche), for: .touchUpInside)
-                button.addAction(UIAction(handler: { _ in
-                    print("nothing")
-                }), for: .touchUpInside)
-            }
-            let gestureRecognizer = UITapGestureRecognizer(target: nil, action: nil)
-            //gestureRecognizer.delegate = self
-            button.addGestureRecognizer(gestureRecognizer)
-            stackView.addArrangedSubview(button)
-            
-        }
-        
-        view.addSubview(stackView)
-        
-        
-        NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            //stackView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 150),
-            stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            //stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-        ])
-        
-        
-        
-        
+
+    var playButton: [UIButton]?
+    private func updatePlayButtonImage() {
+        print("updatePlayButtonImage")
+        let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: 15, weight: .regular)
+        let imageName = playState ? "house" : "house"
+        let trashImage = UIImage(systemName: imageName, withConfiguration: symbolConfiguration)
+
+        // playButton?.first?.setImage(trashImage, for: .normal)
     }
-    
+
     @objc func toggleGestures() {
         map.miTest()
         print("x")
-        //start = true
+        // start = true
         map.settings.setAllGesturesEnabled(false)
-        //map.settings.scrollGestures = false
-        //button.setTitle(true ? "Disable Gestures" : "Enable Gestures", for: .normal)
+        // map.settings.scrollGestures = false
+        // button.setTitle(true ? "Disable Gestures" : "Enable Gestures", for: .normal)
     }
-    
+
     @objc func toggleGestures2() {
         print("y")
-        //start = false
+        // start = false
         map.settings.setAllGesturesEnabled(true)
-        //map.settings.scrollGestures = true
-        //button.setTitle(true ? "Disable Gestures" : "Enable Gestures", for: .normal)
+        // map.settings.scrollGestures = true
+        // button.setTitle(true ? "Disable Gestures" : "Enable Gestures", for: .normal)
     }
-    
+
     @objc func handlePanGesture(_ gestureRecognizer: UIPanGestureRecognizer) {
         print("handlePanGesture")
         if gestureRecognizer.state == .ended {
-            
-        }        // Actualiza la ruta que el usuario está dibujando.
+        } // Actualiza la ruta que el usuario está dibujando.
         if gestureRecognizer.state == .began {
-            
-            
         } else if gestureRecognizer.state == .changed {
             let tapPoint = gestureRecognizer.location(in: map)
             let coordinate = map.projection.coordinate(for: tapPoint)
-            
+
             // Acciones a realizar cuando se toca el mapa
             print("Tocaste en la coordenada: \(coordinate.latitude), \(coordinate.longitude)")
         }
     }
-    
+
     // Cuando el usuario deja de dibujar, agrega la ruta al mapa.
     @objc func handlePanGestureEnded(_ gestureRecognizer: UIPanGestureRecognizer) {
         print("BBBBBB")
         if gestureRecognizer.state == .ended {
-            
         }
     }
-    
-     func mapView(_ mapView: GMSMapView, didTapOverlay coordinate: CLLocationCoordinate2D) {
-         print("didTapOverlay0.0")
-     
-     
-     
-     }
-    
+
+    func mapView(_ mapView: GMSMapView, didTapOverlay coordinate: CLLocationCoordinate2D) {
+        print("didTapOverlay0.0")
+    }
+
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
         print("arenita playita 0.0")
-        
-        
-        
     }
-    
+
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
         print("didLongPressAt")
     }
-    func mapView(_ mapView: GMSMapView, willMove gesture: Bool)  {
+
+    func mapView(_ mapView: GMSMapView, willMove gesture: Bool) {
         print("willMove")
     }
+
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
-        print(".")
-        let latitude = position.target.latitude
-        let longitude = position.target.longitude
-        
-        //print("Posición del usuario cambiada a (Latitud: \(latitude), Longitud: \(longitude))")
-        
-        
-        
+        /* print(".")
+         let latitude = position.target.latitude
+         let longitude = position.target.longitude
+
+         print("Posición del usuario cambiada a (Latitud: \(latitude), Longitud: \(longitude))")
+
+         */
         // Puedes realizar acciones adicionales basadas en el movimiento del usuario aquí
     }
-    
-    
-    
-    /*
-     override func viewDidLoad() {
-     super.viewDidLoad()
-     
-     }
-     */
-    
-    
-    
-    
-}
 
-struct MapViewControllerBridge: UIViewControllerRepresentable {
-    //@State private var clusterManager: GMUClusterManager!
-    
-    //@EnvironmentObject var lead:LeadViewModel
-    @Binding var leads: [LeadModel]
-    
-    @Binding var path:GMSMutablePath
-    @Binding var mode: Bool
-    //let path = GMSMutablePath()
-    
-    func makeUIViewController(context: Context) -> MapViewController {
-        print("UNO......")
-        //let viewController = MapViewController()
-        //let mapView = GMSMapView()
-        //mapView.delegate = context.coordinator
-        //viewController.view = mapView
-        
-        //return viewController
-        let uiViewController = MapViewController()
-        uiViewController.mode = $mode
-        uiViewController.path = $path
-        //uiViewController.map.delegate = uiViewController
-        //context.coordinator.mode = $mode
-        //context.coordinator.path = $path
-        //print(context.coordinator.test)
-        //uiViewController.map.delegate = context.coordinator
-        //c = context.coordinator
-        //mapVV = uiViewController.map
-        //mode = true
-        return uiViewController
-    }
-    
-    func updateUIViewController(_ uiViewController: MapViewController, context: Context) {
-        
-        let mapView = uiViewController.map
-        
-        
-        
-        print("DOS......count: ", leads.count)
-        let positionLondon = CLLocationCoordinate2D(latitude: 37.35, longitude: -122.0)
-        let london = GMSMarker(position: positionLondon)
-        
-        
-        
-        let markerImage = UIImage(systemName: "house.fill")!.withRenderingMode(.alwaysTemplate)
-        let markerView = UIImageView(image: markerImage)
-        markerView.tintColor = UIColor.red
-        london.title = "London"
-        
-        
-        let circleIconView = StatusUIView(status: .nho)
-        circleIconView.frame = CGRect(x: 120, y: 120, width: 50, height: 50)
-        
-        //let circleIconView = CircleIconView(systemName: "dot.radiowaves.up.forward")
-        //circleIconView.frame = CGRect(x: 120, y: 120, width: 126, height: 126)
-        //MapIconView
-        
-        london.iconView = circleIconView
-        london.map = uiViewController.map
-        
-        let iconGenerator = GMUDefaultClusterIconGenerator()
-        let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
-        let renderer = GMUDefaultClusterRenderer(mapView: mapView, clusterIconGenerator: iconGenerator)
-        clusterManager = GMUClusterManager(map: mapView, algorithm: algorithm, renderer: renderer)
-        
-        // Register self to listen to GMSMapViewDelegate events.
-        //clusterManager.setMapDelegate(c)//(context.coordinator)//(c)
-        
-        // Generate and add random items to the cluster manager.
-        generateClusterItems()
-        
-        // Call cluster() after items have been added to perform the clustering and rendering on map.
-        clusterManager.cluster()
-        
-    }
-    
-    private func generateClusterItems() {
-        print("generateClusterItems: \(leads.count)")
-        for leadModel in leads {
-            //print( leadModel.first_name ?? "-/n")
-            if let latitude = Double(leadModel.latitude),
-               let longitude = Double(leadModel.longitude) {
-                
-                
-                
-                let marker = GMSMarker()
-                marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-                marker.title = leadModel.first_name 
-                
-                let circleIconView = getUIImage(name: leadModel.status_id.name ?? "")
-                circleIconView.frame = CGRect(x: 120, y: 120, width: 30, height: 30)
-                
-                //let circleIconView = CircleIconView(systemName: "dot.radiowaves.up.forward")
-                //circleIconView.frame = CGRect(x: 120, y: 120, width: 126, height: 126)
-                //MapIconView
-                
-                marker.iconView = circleIconView
-                
-                //marker.map = mapView
-                clusterManager.add(marker)
-            }
-        }
-        /*
-         let extent = 0.2
-         for _ in 1...kClusterItemCount {
-         let lat = kCameraLatitude + extent * randomScale()
-         let lng = kCameraLongitude + extent * randomScale()
-         let position = CLLocationCoordinate2D(latitude: lat, longitude: lng)
-         let marker = GMSMarker(position: position)
-         //clusterManager.add(marker)
-         }
-         */
-    }
-    
-    /// Returns a random value between -1.0 and 1.0.
-    private func randomScale() -> Double {
-        return Double(arc4random()) / Double(UINT32_MAX) * 2.0 - 1.0
-    }
-    
-     
-     func makeCoordinator() -> MapViewCoordinator {
-         print("TRES ...")
-         return MapViewCoordinator(self, path: path)
-     }
-     
-    private func animateToSelectedMarker(viewController: MapViewController) {
-                
-        //let map = viewController.map
-        
-    }
-    
-    
-    
-    
-}
-
-final class MapViewCoordinator: NSObject, GMSMapViewDelegate/*, GMUClusterManagerDelegate*/ {
-    var mapViewControllerBridge: MapViewControllerBridge
-    //var path = GMSMutablePath()
-    var polygon = GMSPolygon()
-    let test = "ESPN"
-    
-    var mode: Binding<Bool>?
-    
-    init(_ mapViewControllerBridge: MapViewControllerBridge, path: GMSMutablePath) {
-        print("CUATRO......")
-        self.mapViewControllerBridge = mapViewControllerBridge
-        
-    }
-    /*
-     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-     print("un paso para la humanidad")
-     return false
-     }
-     */
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         mapView.animate(toLocation: marker.position)
+
         if let _ = marker.userData as? GMUCluster {
             mapView.animate(toZoom: mapView.camera.zoom + 1)
-            
+
             print("......Did tap cluster")
             return true
         }
-        
+
         print(".....Did tap marker")
+
+        /* if let userData = marker.userData as? [String:String]{
+         print(userData["name"] ?? "")
+         self.markerSelected.wrappedValue = LeadModel(id: userData["name"] ?? "")
+         } */
+
+        if let userData = marker.userData as? LeadModel {
+            // print(userData["name"] ?? "")
+            markerSelected.wrappedValue = userData
+        }
         return false
     }
-    
+
     /*
-     func makeClusterManager(for mapView: GMSMapView) -> GMUClusterManager {
-     print("CINCO......")
-     // Configurar GMUClusterManager
-     let iconGenerator = GMUDefaultClusterIconGenerator()
-     let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
-     let renderer = GMUDefaultClusterRenderer(mapView: mapView, clusterIconGenerator: iconGenerator)
-     let manager = GMUClusterManager(map: mapView, algorithm: algorithm, renderer: renderer)
-     manager.setDelegate(self, mapDelegate: self)
-     return manager
+     override func viewDidLoad() {
+     super.viewDidLoad()
+
      }
      */
-    func mapView(_ mapView: GMSMapView, willMove gesture: Bool) {
-        print("MapViewCoordinator SIX")
-        print(gesture)
-        //mapView.settings.setAllGesturesEnabled(false)
-        //self.mapViewControllerBridge.mapViewWillMove(gesture)
-        /*
-         let target = CLLocationCoordinate2D(latitude: 37.36, longitude: -122.0)
-         let cameraUpdate = GMSCameraUpdate.setTarget(target)
-         mapView.moveCamera(cameraUpdate)
-         */
-    }
-    
-    func mapView(_ mapView: GMSMapView, idleAt cameraPosition: GMSCameraPosition) {
-        print("MapViewCoordinator TEN")
-    }
-    
-    
-    
-    func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
-        // Se llama cuando se toca la ventana de información de un marcador específico
-        print("MapViewCoordinator SEVEN")
-        print(marker.title ?? "")
-        //mapView.settings.setAllGesturesEnabled(false)
-    }
-    func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
-        print("MapViewCoordinator NINE")
-        if let mode = mode {
-            mode.wrappedValue = true
-        }
-        
-    }
-    func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
-        let latitude = position.target.latitude
-        let longitude = position.target.longitude
-        
-        print("Posición del usuario cambiada a (Latitud: \(latitude), Longitud: \(longitude))")
-                
-        
-        // Puedes realizar acciones adicionales basadas en el movimiento del usuario aquí
-    }
-    func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
-        print("MapViewCoordinator EIGHT.")
-        
-        if !start {
-            polygon.path = GMSMutablePath()
-            print("nothing")
-            return
-        }
-        /*
-        
-        self.path.add(CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude)) //
-        //let polygon = GMSPolygon(path: path)
-        polygon.path = path
-        // Configura el estilo del polígono (opcional)
-        polygon.strokeColor = .blue
-        polygon.strokeWidth = 2.0
-        polygon.fillColor = UIColor.blue.withAlphaComponent(0.5)
-        
-        // Añade el polígono al mapa
-        polygon.map = mapView
-        */
-    }
-    
-    func mapView(_ mapView: GMSMapView, didDrag marker: GMSMarker) {
-        print("OJHHHHH")
-    }
-    
 }
 
-struct LeadMap:View {
-    //@State var mode = false
+struct MapViewControllerBridge: UIViewControllerRepresentable {
+    @ObservedObject var aqua: AquaFeelModel
+
+    @Binding var leads: [LeadModel]
+
+    @Binding var path: GMSMutablePath
+    @Binding var mode: Bool
+    @Binding var newLead: Bool
+    @Binding var leadSelected: LeadModel?
+    @Binding var contador: Int
+    var location: CLLocationCoordinate2D
+
+    func makeUIViewController(context: Context) -> MapViewController {
+        let uiViewController = MapViewController(markerSelected: $leadSelected, location: location, leads: $leads, newPosition: $aqua.newPosition)
+
+        uiViewController.mode = $mode
+        uiViewController.newLead = $newLead
+        uiViewController.path = $path
+        uiViewController.markerSelected = $leadSelected
+        uiViewController.map.delegate = uiViewController
+        uiViewController.leads = $leads
+
+        return uiViewController
+    }
+
+    func updateUIViewController(_ uiViewController: MapViewController, context: Context) {
+        print("updateUIViewController ........", leads.count, " vs. ", uiViewController.leads.wrappedValue.count)
+
+        // if uiViewController.leads.wrappedValue.count != leads.count {
+        if !leads.isEmpty {
+            if leads != uiViewController.leads.wrappedValue || !uiViewController.started {
+                DispatchQueue.main.async {
+                    print("yessssss")
+                    uiViewController.started = true
+                    uiViewController.leads = $leads
+
+                    uiViewController.start()
+                }
+            }
+        }
+    }
+}
+
+struct LeadMap: View {
+    var profile:ProfileManager
+    
+    @EnvironmentObject var store: MainStore<UserData>
+    @EnvironmentObject var loginManager: ProfileManager
+    
+    // @State var mode = false
     @State var showSettings = true
-    //@State var path = GMSMutablePath()
+    // @State var path = GMSMutablePath()
     @StateObject var aqua = AquaFeelModel()
-    @StateObject var lead = LeadViewModel(first_name: "Juan", last_name: "")
+    @ObservedObject var manager: LeadManager
+    //@StateObject var manager = LeadManager(autoLoad: true, limit: 2000, maxLoads: 510) // LeadViewModel(first_name: "Juan", last_name: "")
+    // @State var selected:LeadModel? = LeadModel()
+    @State var info = false
+
+    // var placeManager = LocationViewModel()
+
+    @State var showFilter = false
+
+    //@StateObject var lead2 = LeadViewModel(first_name: "Juan", last_name: "")
+
+    // @StateObject var lead = LeadManager()
+    
+    //@StateObject var user = UserManager()
+    
+    
+    @Environment(\.scenePhase) private var scenePhase
+    @State var contador = 0
+    var location: CLLocationCoordinate2D
+    @State var lead: LeadModel = LeadModel()
+    @StateObject private var placeViewModel = PlaceViewModel()
     var body: some View {
-        MapViewControllerBridge(leads: $lead.leads, path: $aqua.path, mode: $aqua.mode )
+        MapViewControllerBridge(aqua: aqua, leads: $manager.leads, path: $aqua.path, mode: $aqua.mode, newLead: $aqua.newLead, leadSelected: $manager.selected, contador: $contador, location: location)
             .edgesIgnoringSafeArea(.all)
-        //.environmentObject($lead.leads)
+            // .environmentObject($lead.leads)
             .sheet(isPresented: $aqua.mode) {
-                PathOptionView(path: $aqua.path )
-                    .presentationDetents([.fraction(0.30), .medium, .large])
+                PathOptionView(profile: profile, leads: $manager.leads, path: $aqua.path)
+                    .presentationDetents([.fraction(0.35), .medium, .large])
                     .presentationContentInteraction(.scrolls)
-            }.onAppear{
-                lead.loadAll()
-                print("onAppear")
+            }
+            .sheet(isPresented: $aqua.newLead) {
+                CreateLead(lead: $lead, mode: 1, manager: manager, userId: loginManager.info._id) { result in
+                    if result {
+                        manager.leads.append(lead)
+                    }
+                }.onAppear {
+                    
+                    //print(" \n\n\nnew position xxxxxxxxx", aqua.newPosition)
+                    placeViewModel.getPlaceDetailsByCoordinates(latitude: aqua.newPosition?.latitude ?? 0, longitude: aqua.newPosition?.longitude ?? 0)
+                }.onReceive(placeViewModel.$selectedPlace) { x in
+
+                    lead = placeViewModel.decode(placeDetails: x, leadAddress: lead)
+                }
+            }.onReceive(aqua.$newPosition) { _ in
+                // print(" new position xxxxxxxxx")
+                // print(x)
+            }
+            .sheet(isPresented: $info) {
+                // LeadDetailView(lead: lead.selected ?? LeadModel())
+                NavigationStack {
+                    CreateLead(lead: Binding<LeadModel>(
+                        get: { manager.selected ?? LeadModel() },
+                        set: { manager.selected = $0 }
+                    ), mode: 0, manager: manager, userId: loginManager.info._id) { _ in
+                        print("on Saving")
+                    }
+                    /*
+                     .toolbar{
+                         ToolbarItem(placement: .automatic) {
+                             Button("Close") {
+                                 // Acción al hacer clic en "Cancelar"
+                                 info = false // Cierra el sheet
+                             }
+                         }
+
+                     }
+                     */
+                }
+
+                .presentationDetents([.fraction(0.2), .medium, .large])
+                .presentationContentInteraction(.scrolls)
+            }
+            .sheet(isPresented: $showFilter) {
+                FilterOption(filter: $manager.filter, filters: $manager.leadFilter, statusList: manager.statusList, usersList: manager.users) {
+                    print("reseteando")
+                    // lead.reset()
+                    manager.resetFilter()
+                    manager.runLoad()
+                }
+                .onAppear {
+                    contador += 10
+                    
+                    //lead2.statusAll()
+                }
+
+                Button(action: {
+                    // Acción para mostrar la ventana modal con filtros
+                    showFilter.toggle()
+                }) {
+                    Text("Close")
+                    /* Image(systemName: "slider.horizontal.3") // Icono de sistema para filtros
+                     .foregroundColor(.blue)
+                     .font(.system(size: 20)) */
+                }
+                .padding()
+            }
+
+            .onDisappear{
+                manager.selected = nil
+            }
+            .onAppear {
+                DispatchQueue.main.async {
+                     manager.selected = nil
+                }
+               
+                manager.initFilter(){x, y in
+                    
+                    print("completation loadStatus")
+                }
+                /*
+                if let leadFilters = loginManager.info.leadFilters {
+                    
+                    manager.leadFilter = leadFilters
+                }
+                 
+                 */
+                 
+                //manager.token = loginManager.token
+                //manager.role = loginManager.role
+                //manager.user = loginManager.id
+                
+                 
+                 /*
+                store.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InhMdjR3STJUTSIsImVtYWlsIjoieWFubnllc3RlYmFuQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTcwNTYxMDY3NCwiZXhwIjoxNzEwNzk0Njc0fQ.5nPyOfuwOF3jOxm2lziG-_4jtDEqQmp9i3a6yBjIFCE"
+                
+                manager.token = store.token
+                manager.role = store.role
+                manager.user = store.id
+                
+                if manager.leads.isEmpty {
+                    manager.reset()
+                    manager.runLoad()
+                }
+
+                print(":::::::", store.token)
+                */
+            }
+        
+            .onReceive(manager.$leadFilter){ filter in
+                
+                DispatchQueue.main.async {
+                    loginManager.info.leadFilters = filter
+                    print("xxxxx.xxxx.x.x.x.x")
+                    
+                }
+               
+            }
+        
+            .onReceive(manager.$selected) { selected in
+
+                if selected != nil {
+                    info = true
+                }
+            }
+            .toolbar {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    // ToolbarItem(placement: .automatic) {
+                    Button {
+                        showFilter = true
+                    } label: {
+                        Image(systemName: "line.horizontal.3.decrease.circle")
+                    }
+                }
+            }
+            .onChange(of: scenePhase) { phase in
+
+                print("Out ??", phase)
+                print("manager.leads.count: ", manager.leads.count)
             }
     }
 }
 
-struct GeoPreview: PreviewProvider {
-    static var previews: some View {
-        XX()
-    }
-    
-    struct XX: View {
-        //@State var mode = false
-        @State var showSettings = true
-        //@State var path = GMSMutablePath()
-        @StateObject var aqua = AquaFeelModel()
-        @StateObject var lead = LeadViewModel(first_name: "Juan", last_name: "")
-        var body: some View {
-            MapViewControllerBridge(leads: $lead.leads, path: $aqua.path, mode: $aqua.mode )
-                .edgesIgnoringSafeArea(.all)
-                //.environmentObject($lead.leads)
-                .sheet(isPresented: $aqua.mode) {
-                    PathOptionView(path: $aqua.path )
-                        .presentationDetents([.fraction(0.30), .medium, .large])
-                        .presentationContentInteraction(.scrolls)
-                }.onAppear{
-                    lead.loadAll()
-                    print("onAppear")
-                }
-        }
-    }
+/*
+ struct GeoPreview: PreviewProvider {
+     static var previews: some View {
+         XX()
+     }
+
+     struct XX: View {
+         //@State var mode = false
+         @State var showSettings = true
+         //@State var path = GMSMutablePath()
+         @StateObject var aqua = AquaFeelModel()
+         @State var lead = LeadManager()//LeadViewModel(first_name: "Juan", last_name: "")
+         @State var info = false
+         //@State var selected:LeadModel? = LeadModel()
+         //@State private var mapState = MapViewState(leads: [], path: GMSMutablePath(), mode: false, leadSelected: nil)
+
+         var body: some View {
+             MapViewControllerBridge(leads: $lead.leads, path: $aqua.path, mode: $aqua.mode, leadSelected: $lead.selected )
+                 .edgesIgnoringSafeArea(.all)
+             //.environmentObject($lead.leads)
+                 .sheet(isPresented: $aqua.mode) {
+                     PathOptionView(leads: $lead.leads, path: $aqua.path )
+                         .presentationDetents([.fraction(0.30), .medium, .large])
+                         .presentationContentInteraction(.scrolls)
+
+                 }
+                 .sheet(isPresented: $info){
+                     //LeadDetailView(lead: lead.selected ?? LeadModel())
+
+                     NavigationStack{
+                         CreateLead(lead: Binding<LeadModel>(
+
+                             get: { lead.selected ?? LeadModel() },
+                             set: { lead.selected = $0 }
+                         ), manager: lead){
+                             print("never saving")
+                         }
+                         .presentationDetents([.medium, .large])
+                         .presentationContentInteraction(.scrolls)
+                         /* .toolbar{
+                             ToolbarItem(placement: .navigationBarLeading) {
+                                 Button("Cancelar") {
+                                     // Acción al hacer clic en "Cancelar"
+                                     info = false // Cierra el sheet
+                                 }
+                             }
+                             ToolbarItem(placement: .navigationBarTrailing) {
+                                 Button("Guardar") {
+                                     // Acción al hacer clic en "Guardar"
+                                     // Puedes realizar las acciones necesarias aquí
+                                 }
+                             }
+                         } */
+                     }
+
+                 }
+                 .onAppear{
+                     //lead.loadAll()
+                     lead.list()
+                     print("onAppear")
+                 }
+                 .onReceive(lead.$selected) {x in
+
+                     if let lead = x {
+                         info = true
+                     }
+
+                 }
+
+         }
+     }
+ }
+
+ */
+#Preview {
+    MainAppScreenHomeScreenPreview()
+    // HomeScreen(option:"b")
 }
