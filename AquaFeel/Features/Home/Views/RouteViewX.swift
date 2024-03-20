@@ -49,7 +49,7 @@ struct RouteX: View {
                 
                 /*
                 NavigationLink {
-                    LeadListScreen(profie: ProfileManager(), userId: "xLv4wI2TM", role: "ADMIN")
+                    LeadListScreen(profie: ProfileManager(), userId: "", role: "ADMIN")
                 } label: {
                     Label("Lead", systemImage: "person.badge.plus")
                 }

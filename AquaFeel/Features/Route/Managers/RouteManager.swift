@@ -18,16 +18,7 @@ class RouteManager: ObservableObject {
     var token = ""
   
     init(){
-        Task {
-            do {
-                //try await detail(routeId: "64c82646b6b8eb6360a05382" )
-                try await list()
-            } catch {
-                print(error)
-            }
-            
-           
-        }
+       
         
     }
  
@@ -46,8 +37,10 @@ class RouteManager: ObservableObject {
         
         do {
             let response:RouteResponse = try await fetching(config: info)
-            
-            routes = response.routes
+            DispatchQueue.main.async {
+                self.routes = response.routes
+            }
+            //routes = response.routes
             //prettyPrint(response.routes)
             
         } catch {
@@ -67,10 +60,10 @@ class RouteManager: ObservableObject {
         //let info = ApiConfig(scheme: "http", method: "GET", host: "127.0.0.1", path: "/routes/details", token: "", params: q.get(), port : "4000")
         do {
             let response:RouteDetailResponse = try await fetching(config: info)
-            
-            route = response.route
-            route.userId = self.userId
-            
+            DispatchQueue.main.async {
+                self.route = response.route
+                self.route.userId = self.userId
+            }
             
             //prettyPrint(response.route.leads)
             
@@ -96,21 +89,26 @@ class RouteManager: ObservableObject {
             return
         }
         
-        prettyPrint(route)
+        //prettyPrint(route)
         
         //var record = body
-        waiting = true
+        //waiting = true
         let info = ApiConfig(method: method, host: "api.aquafeelvirginia.com", path: path, token: token, params: nil)
         
         //let info = ApiConfig(scheme: "http", method: method, host: "127.0.0.1", path: path, token: token, params: nil, port : "4000")
+        DispatchQueue.main.async { 
+            self.waiting = true
+        }
         
         do {
             let response:RouteModel2 = try await fetching(body: route, config: info)
-            
-            //routes = response.routes
-            waiting = false
-            route.id = response._id
-            route._id = response._id
+            DispatchQueue.main.async {
+                //routes = response.routes
+                self.waiting = false
+                self.route.id = response._id
+                self.route._id = response._id
+            }
+           
             
             
         } catch {

@@ -234,6 +234,8 @@ struct CreatorListView: View {
 }
 
 struct CreateLead: View {
+    var profile:ProfileManager
+    
     @State private var texto = ""
     @State private var date = Date()
 
@@ -252,7 +254,7 @@ struct CreateLead: View {
     @State var showErrorMessage = false
     @State var errorMessage = ""
     @EnvironmentObject var store: MainStore<UserData>
-    @State var userRole = ""
+    //@State var userRole = ""
     
     @State var userId: String
     var onSave: (Bool) -> Void
@@ -316,7 +318,7 @@ struct CreateLead: View {
                     }
 
                     if mode == 2 {
-                        if userRole == "ADMIN" || userRole == "MANAGER" {
+                        if profile.role == "ADMIN" || profile.role == "MANAGER" {
                             Section {
                                 OwnerView(text: "Select User", owner: $lead.created_by)
                             } header: {
@@ -361,7 +363,7 @@ struct CreateLead: View {
                     }
                 }
                 .background(.blue)
-                .navigationTitle("Create Lead")
+                .navigationTitle("Lead Screen")
 
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -523,9 +525,7 @@ struct CreateLead: View {
         .onAppear {
             loadDataAndProcess()
 
-            if store.role != "" {
-                userRole = store.role
-            }
+            
             if mode == 1 {
                 lead = LeadModel()
                 lead.user_id = userId
@@ -584,7 +584,7 @@ struct TestCreateLead: View {
         status_id: StatusId()
     )
     var body: some View {
-        CreateLead(lead: $lead, mode: 2,manager: manager, userId: "xLv4wI2TM") { result in
+        CreateLead(profile: ProfileManager(), lead: $lead, mode: 2,manager: manager, userId: "") { result in
             print(result)
         }
         .onAppear {

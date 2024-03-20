@@ -13,6 +13,7 @@ struct UserData:  Codable, SimplyInitializable {
     var id: String
     var name: String
     var user: String
+    var userId: String
     var pass: String
     var token: String
     var role : String
@@ -29,11 +30,11 @@ struct UserData:  Codable, SimplyInitializable {
             self.init(name: "")
         }
     
-    init(id: String = "", name: String = "", email: String = "", password: String = "", token: String = "", role: String = "", isBlocked: Bool = true, isVerified: Bool = false, auth: Bool = false) {
+    init(id: String = "", name: String = "", email: String = "", userId: String = "", password: String = "", token: String = "", role: String = "", isBlocked: Bool = true, isVerified: Bool = false, auth: Bool = false) {
         self.id = id
         self.name = name
         self.user = email
-        
+        self.userId = userId
         self.pass = password
         self.token = token
         self.role = role

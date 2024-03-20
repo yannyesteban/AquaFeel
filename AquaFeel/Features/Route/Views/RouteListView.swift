@@ -325,7 +325,7 @@ struct LeadPicker: View {
 
             .onAppear {
                 print("onAppear...")
-
+                manager.userId = profile.userId
                 manager.role = profile.role
                 manager.token = profile.token
 
@@ -456,8 +456,9 @@ struct LeadPicker: View {
             // manager.token = store.token
             // manager.role = store.role
 
-            manager.role = profile.role
+            manager.user = profile.userId
             manager.token = profile.token
+            manager.role = profile.role
 
         }
     }
@@ -781,6 +782,22 @@ struct RouteListView: View {
                         Image(systemName: "plus")
                     }
                 }
+            }
+            .onAppear{
+                print("********* ----- ---- ", profile.userId)
+                routeManager.userId = profile.userId
+                
+                Task {
+                    do {
+                        //try await detail(routeId: "64c82646b6b8eb6360a05382" )
+                        try await routeManager.list()
+                    } catch {
+                        print(error)
+                    }
+                    
+                    
+                }
+                
             }
         }
     }

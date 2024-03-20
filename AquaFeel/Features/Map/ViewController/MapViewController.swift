@@ -37,24 +37,21 @@ class MapButton: UIButton {
     private let activeImage: String
     private let color: UIColor
     var action: ((MapButton) -> Void)?
-    
+
     var currentState: ButtonState = .active
 
     let button: UIButton
 
     // Optional action closure for button press
-   
-    
-   
 
     // Initializer with image name, color, and optional action closure
     init(image: String, offImage: String, color: UIColor, currentState: ButtonState = .normal, action: ((MapButton) -> Void)? = nil) {
         self.image = image
-        self.activeImage = offImage
+        activeImage = offImage
         self.color = color
         self.currentState = .normal
         self.action = action
-       
+
         // Initialize UIButton
         button = UIButton(type: .system)
         super.init(frame: .zero) // Call superclass initializer with zero frame
@@ -324,56 +321,51 @@ class MapViewController: UIViewController, GMSMapViewDelegate, UIGestureRecogniz
             // MapMenuItem(title: "b", image: "magnifyingglass", color: .darkGray),
             MapMenuItem(title: "c", image: "app.connected.to.app.below.fill", color: .darkGray) { _ in
 
-               
-
             },
             MapMenuItem(title: "d", image: "pin.fill", imageOff: "eraser.fill", color: .darkGray) { button in
-                if let last = self.lastButton , self.lastButton != button {
-                    
+                if let last = self.lastButton, self.lastButton != button {
                     last.currentState = .normal
                     last.updateButton()
                 }
-                /*let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: 15, weight: .regular)
-                var image = UIImage(systemName: "pin.fill", withConfiguration: symbolConfiguration)
-                if self.mapMode == .mark {
-                    image = UIImage(systemName: "eraser.fill", withConfiguration: symbolConfiguration)
-                }
+                /* let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: 15, weight: .regular)
+                 var image = UIImage(systemName: "pin.fill", withConfiguration: symbolConfiguration)
+                 if self.mapMode == .mark {
+                     image = UIImage(systemName: "eraser.fill", withConfiguration: symbolConfiguration)
+                 }
 
-                button.setImage(image, for: .normal)
-                // self.setMarkPlay()*/
+                 button.setImage(image, for: .normal)
+                 // self.setMarkPlay() */
                 if self.mapMode != .mark {
                     self.doStop()
                     self.doPlay(.mark)
-                    //button.currentState = .on
-                }else{
+                    // button.currentState = .on
+                } else {
                     self.doStop()
                 }
                 self.lastButton = button
-                
+
             },
             MapMenuItem(title: "d", image: "hand.draw.fill", imageOff: "eraser.fill", color: .darkGray) { button in
-                if let last = self.lastButton , self.lastButton != button {
-                    
+                if let last = self.lastButton, self.lastButton != button {
                     last.currentState = .normal
                     last.updateButton()
                 }
-                /*let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: 15, weight: .regular)
-                var image = UIImage(systemName: "hand.draw.fill", withConfiguration: symbolConfiguration)
-                if !self.drawPlay {
-                    image = UIImage(systemName: "eraser.fill", withConfiguration: symbolConfiguration)
-                }
+                /* let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: 15, weight: .regular)
+                 var image = UIImage(systemName: "hand.draw.fill", withConfiguration: symbolConfiguration)
+                 if !self.drawPlay {
+                     image = UIImage(systemName: "eraser.fill", withConfiguration: symbolConfiguration)
+                 }
 
-                 
-                button.setImage(image, for: .normal)*/
+                 button.setImage(image, for: .normal) */
                 if self.mapMode != .polygon {
                     self.doStop()
                     self.doPlay(.polygon)
-                   // button.currentState = .on
-                }else{
+                    // button.currentState = .on
+                } else {
                     self.doStop()
                 }
                 self.lastButton = button
-                
+
             },
         ]
         let stackView = UIStackView()
@@ -536,8 +528,6 @@ class MapViewController: UIViewController, GMSMapViewDelegate, UIGestureRecogniz
     }
 
     func doPlay(_ mode: MapMode) {
-        
-       
         switch mode {
         case .normal:
             return
@@ -997,17 +987,17 @@ struct MapViewControllerBridge: UIViewControllerRepresentable {
 }
 
 struct LeadMap: View {
-    var profile:ProfileManager
-    
+    var profile: ProfileManager
+
     @EnvironmentObject var store: MainStore<UserData>
     @EnvironmentObject var loginManager: ProfileManager
-    
+
     // @State var mode = false
     @State var showSettings = true
     // @State var path = GMSMutablePath()
     @StateObject var aqua = AquaFeelModel()
     @ObservedObject var manager: LeadManager
-    //@StateObject var manager = LeadManager(autoLoad: true, limit: 2000, maxLoads: 510) // LeadViewModel(first_name: "Juan", last_name: "")
+    // @StateObject var manager = LeadManager(autoLoad: true, limit: 2000, maxLoads: 510) // LeadViewModel(first_name: "Juan", last_name: "")
     // @State var selected:LeadModel? = LeadModel()
     @State var info = false
 
@@ -1015,13 +1005,12 @@ struct LeadMap: View {
 
     @State var showFilter = false
 
-    //@StateObject var lead2 = LeadViewModel(first_name: "Juan", last_name: "")
+    // @StateObject var lead2 = LeadViewModel(first_name: "Juan", last_name: "")
 
     // @StateObject var lead = LeadManager()
-    
-    //@StateObject var user = UserManager()
-    
-    
+
+    // @StateObject var user = UserManager()
+
     @Environment(\.scenePhase) private var scenePhase
     @State var contador = 0
     var location: CLLocationCoordinate2D
@@ -1037,13 +1026,12 @@ struct LeadMap: View {
                     .presentationContentInteraction(.scrolls)
             }
             .sheet(isPresented: $aqua.newLead) {
-                CreateLead(lead: $lead, mode: 1, manager: manager, userId: loginManager.info._id) { result in
+                CreateLead(profile: profile, lead: $lead, mode: 1, manager: manager, userId: loginManager.info._id) { result in
                     if result {
                         manager.leads.append(lead)
                     }
                 }.onAppear {
-                    
-                    //print(" \n\n\nnew position xxxxxxxxx", aqua.newPosition)
+                    // print(" \n\n\nnew position xxxxxxxxx", aqua.newPosition)
                     placeViewModel.getPlaceDetailsByCoordinates(latitude: aqua.newPosition?.latitude ?? 0, longitude: aqua.newPosition?.longitude ?? 0)
                 }.onReceive(placeViewModel.$selectedPlace) { x in
 
@@ -1056,7 +1044,7 @@ struct LeadMap: View {
             .sheet(isPresented: $info) {
                 // LeadDetailView(lead: lead.selected ?? LeadModel())
                 NavigationStack {
-                    CreateLead(lead: Binding<LeadModel>(
+                    CreateLead(profile: profile, lead: Binding<LeadModel>(
                         get: { manager.selected ?? LeadModel() },
                         set: { manager.selected = $0 }
                     ), mode: 0, manager: manager, userId: loginManager.info._id) { _ in
@@ -1087,8 +1075,8 @@ struct LeadMap: View {
                 }
                 .onAppear {
                     contador += 10
-                    
-                    //lead2.statusAll()
+
+                    // lead2.statusAll()
                 }
 
                 Button(action: {
@@ -1103,57 +1091,54 @@ struct LeadMap: View {
                 .padding()
             }
 
-            .onDisappear{
+            .onDisappear {
                 manager.selected = nil
             }
             .onAppear {
                 DispatchQueue.main.async {
-                     manager.selected = nil
+                    manager.selected = nil
                 }
-               
-                manager.initFilter(){x, y in
-                    
+
+                manager.initFilter { _, _ in
+
                     print("completation loadStatus")
                 }
                 /*
-                if let leadFilters = loginManager.info.leadFilters {
-                    
-                    manager.leadFilter = leadFilters
-                }
-                 
-                 */
-                 
-                //manager.token = loginManager.token
-                //manager.role = loginManager.role
-                //manager.user = loginManager.id
-                
-                 
-                 /*
-                store.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InhMdjR3STJUTSIsImVtYWlsIjoieWFubnllc3RlYmFuQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTcwNTYxMDY3NCwiZXhwIjoxNzEwNzk0Njc0fQ.5nPyOfuwOF3jOxm2lziG-_4jtDEqQmp9i3a6yBjIFCE"
-                
-                manager.token = store.token
-                manager.role = store.role
-                manager.user = store.id
-                
-                if manager.leads.isEmpty {
-                    manager.reset()
-                    manager.runLoad()
-                }
+                 if let leadFilters = loginManager.info.leadFilters {
 
-                print(":::::::", store.token)
-                */
+                     manager.leadFilter = leadFilters
+                 }
+
+                  */
+
+                // manager.token = loginManager.token
+                // manager.role = loginManager.role
+                // manager.user = loginManager.id
+
+                /*
+                 store.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InhMdjR3STJUTSIsImVtYWlsIjoieWFubnllc3RlYmFuQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTcwNTYxMDY3NCwiZXhwIjoxNzEwNzk0Njc0fQ.5nPyOfuwOF3jOxm2lziG-_4jtDEqQmp9i3a6yBjIFCE"
+
+                 manager.token = store.token
+                 manager.role = store.role
+                 manager.user = store.id
+
+                 if manager.leads.isEmpty {
+                     manager.reset()
+                     manager.runLoad()
+                 }
+
+                 print(":::::::", store.token)
+                 */
             }
-        
-            .onReceive(manager.$leadFilter){ filter in
-                
+
+            .onReceive(manager.$leadFilter) { filter in
+
                 DispatchQueue.main.async {
                     loginManager.info.leadFilters = filter
                     print("xxxxx.xxxx.x.x.x.x")
-                    
                 }
-               
             }
-        
+
             .onReceive(manager.$selected) { selected in
 
                 if selected != nil {

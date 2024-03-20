@@ -40,7 +40,9 @@ struct Profile: Codable {
 }
 
 
-let SuperToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InhMdjR3STJUTSIsImVtYWlsIjoieWFubnllc3RlYmFuQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTcwNTYxMDY3NCwiZXhwIjoxNzEwNzk0Njc0fQ.5nPyOfuwOF3jOxm2lziG-_4jtDEqQmp9i3a6yBjIFCE"
+var SuperToken = ""// "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InhMdjR3STJUTSIsImVtYWlsIjoieWFubnllc3RlYmFuQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTcwNTYxMDY3NCwiZXhwIjoxNzEwNzk0Njc0fQ.5nPyOfuwOF3jOxm2lziG-_4jtDEqQmp9i3a6yBjIFCE"
+
+
 
 class ProfileManager: LoginProtocol, ObservableObject {
     @Published var leadFilters = LeadFilter()
@@ -51,9 +53,9 @@ class ProfileManager: LoginProtocol, ObservableObject {
     @Published var begin: Bool = false
     @Published var isLoading = false
 
-    @Published var userId: String = "xLv4wI2TM"
+    @Published var userId: String = "DD2EMns3y"
     @Published var token: String = SuperToken
-    @Published var role: String = "ADMIN"
+    @Published var role: String = "SELLER"
     @Published var id: String = ""
 
     @Published var info: User = User()
@@ -72,6 +74,7 @@ class ProfileManager: LoginProtocol, ObservableObject {
         Task {
             await load()
         }
+        
     }
 
     func _login() async throws -> LoginResponse {
@@ -143,7 +146,7 @@ class ProfileManager: LoginProtocol, ObservableObject {
             }
         }
     }
-
+/*
     func login2(completion: @escaping (Bool, LoginFetch?) -> Void) {
         isLoading = true
 
@@ -188,7 +191,7 @@ class ProfileManager: LoginProtocol, ObservableObject {
             self.isLoading = false
         }
     }
-
+*/
     func isAuth() -> Bool {
         return auth
     }
@@ -201,6 +204,7 @@ class ProfileManager: LoginProtocol, ObservableObject {
                 self.token = self.store.token
                 self.role = self.store.role
                 self.id = self.store.id
+                self.userId = self.store.userId
                 self.info = self.store.info
                 self.myTest = self.store.role
             }
@@ -214,6 +218,8 @@ class ProfileManager: LoginProtocol, ObservableObject {
         do {
             var store: UserData = UserData()
             store.token = token
+            store.userId = userId
+            store.role = role
             store.info = info
             store.id = id
             store.token = token

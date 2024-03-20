@@ -36,7 +36,7 @@ struct DayIconView: View {
 
 struct HomeScreen: View {
     
-    @ObservedObject var profile:ProfileManager
+    var profile:ProfileManager
     @EnvironmentObject var store: MainStore<UserData>
 
     
@@ -46,7 +46,7 @@ struct HomeScreen: View {
 
     @State private var date = Date()
     @State private var isDateSelected = false
-    @State private var selectedDate = Date()
+    //@State private var selectedDate = Date()
 
     
     @StateObject var manager = LeadManager(autoLoad: true, limit: 2000, maxLoads: 510)
@@ -56,6 +56,11 @@ struct HomeScreen: View {
 
     @State var startLocation = CLLocationCoordinate2D(latitude: 25.7134396, longitude: -80.2800688)
     
+    
+    @State private var selectedIdentifier: Calendar.Identifier = .gregorian
+    @State private var selectedDate: Date?
+    @State private var selectedDate2: Date?
+    @State private var myTest = "0"
     
     
     var body: some View {
@@ -85,10 +90,15 @@ struct HomeScreen: View {
 
              }*/
             Form {
-                
+                //Text("Role: \(profile.role)")
+                //Text("User: \(profile.userId)")
                 Text("Appointments")
-                
-                CalendarView(profile: profile)
+                CalendarView(profile: ProfileManager())
+                    
+                //ContentView2024()
+                    //.padding(0)
+                    //.fixedSize(horizontal: false, vertical: true)
+                //CalendarView(profile: profile)
                 /*
                 DatePicker(
                     "Start Date",
@@ -104,7 +114,7 @@ struct HomeScreen: View {
                 })
                 */
                 .navigationDestination(isPresented: $isDateSelected) {
-                    Text(selectedDate.formattedDate()) // Pass selected date
+                    //Text(selectedDate?.formattedDate() ?? "") // Pass selected date
                 }
                 /*
                  NavigationLink {
@@ -134,13 +144,13 @@ struct HomeScreen: View {
                 }
                 */
                 NavigationLink {
-                    AppointmentList(showLeads: true, filterMode: .today, userId: profile.info._id)
+                    AppointmentList(profile: profile, showLeads: true, filterMode: .today, userId: profile.info._id)
                 } label: {
                     Label("Lead Created Today", systemImage: "person")
                 }
                 
                 NavigationLink {
-                    AppointmentList(filterMode: .today, userId: profile.info._id)
+                    AppointmentList(profile: profile,filterMode: .today, userId: profile.info._id)
                 } label: {
                     DayIconView(date: Date())
                     
@@ -148,7 +158,7 @@ struct HomeScreen: View {
                 }
                 
                 NavigationLink {
-                    AppointmentList(filterMode: .last30, userId: profile.info._id)
+                    AppointmentList(profile: profile, filterMode: .last30, userId: profile.info._id)
                 } label: {
                     Label("Appointment Set Past 30 Days", systemImage: "calendar")
                 }
@@ -194,7 +204,7 @@ struct HomeScreen: View {
                     }
 
                     NavigationLink {
-                        CreateLead(lead: $lead, mode: 1, manager: manager, userId: profile.info._id ) {_ in
+                        CreateLead(profile: profile, lead: $lead, mode: 1, manager: manager, userId: profile.info._id ) {_ in
                         }
 
                     } label: {
@@ -285,7 +295,7 @@ struct HomeScreen: View {
             .padding(.horizontal, 50)
         }
         .onAppear {
-            
+            print("::", profile.token, ":", profile.userId, ":", profile.role)
            
                 DispatchQueue.main.async {
                     print(profile.token, profile.role, profile.id, profile.user)

@@ -18,7 +18,7 @@ struct MainAppScreen: View {
 
     @State var showSettings = true
 
-    @StateObject var loginManager = ProfileManager()
+    @StateObject var profile = ProfileManager()
     // @StateObject var lead = LeadViewModel(first_name: "Juan", last_name: "")
 
     @StateObject var user = UserModel()
@@ -41,21 +41,21 @@ struct MainAppScreen: View {
 
     var body: some View {
         VStack {
-            if loginManager.info.isVerified{
-                HomeScreen(profile: loginManager)
+            if profile.info.isVerified{
+                HomeScreen(profile: profile)
                     // .environmentObject(lead)
                     .environmentObject(store)
-                    .environmentObject(loginManager)
+                    .environmentObject(profile)
                     .onChange(of: scenePhase) { phase in
 
-                       // print("Home Screen scenePhase 1.0", phase)
+                     
                     }
             } else {
-                //Text("Role: \(loginManager.info.role)")
-                //Text("Role: \(loginManager.info._id)")
+                //Text("Role: \(profile.role)")
+                //Text("User: \(profile.userId)")
                 NavigationStack {
                     
-                    LoginScreen(loginManager: loginManager, isLoading: $isLoading)
+                    LoginScreen(loginManager: profile, isLoading: $isLoading)
                         .alert("Error", isPresented: $alert) {
                             Button("Ok", role: .cancel) {
                                 print(store.userData.auth)
@@ -75,7 +75,7 @@ struct MainAppScreen: View {
                      }
                      } */
                 }
-                .environmentObject(loginManager)
+                .environmentObject(profile)
                 .environmentObject(store)
                 // .environmentObject(lead)
                 
@@ -116,10 +116,10 @@ struct MainAppScreen: View {
                 //print(store.userData.test)
                 //print("1.2")
                 loadDataFromAPI()
-                print("1.3", loginManager.role)
+                print("1.3", profile.userId)
                 // print(store.userData)
                 
-                loginManager.saveAction = { _ in
+                profile.saveAction = { _ in
                     print("1.4")
                     /*
                      DispatchQueue.main.async{
@@ -145,13 +145,13 @@ struct MainAppScreen: View {
             }
         }
 
-        .onReceive(loginManager.$isLoading) { x in
+        .onReceive(profile.$isLoading) { x in
 
             //print("$isLoading: ", x)
             //print("$isLoading: 1.0 ", loginManager.auth)
             //print("$isLoading: e.0 ", loginManager.isLoading)
         }
-        .onReceive(loginManager.$auth) { auth in
+        .onReceive(profile.$auth) { auth in
 
             if auth {
                 /*
@@ -178,7 +178,7 @@ struct MainAppScreen: View {
             }
         }
 
-        .onReceive(loginManager.$begin) { begin in
+        .onReceive(profile.$begin) { begin in
 
             /*
             if begin {
@@ -226,8 +226,8 @@ struct MainAppScreen: View {
             if phase == .inactive {
                 Task {
                     
-                    try? await loginManager.saveProfile()
-                    await loginManager.save()
+                    try? await profile.saveProfile()
+                    await profile.save()
                     print("Save successful ...")
                     
                 }

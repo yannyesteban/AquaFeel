@@ -22,6 +22,8 @@ class LeadManager: ObservableObject {
     @Published var selected: LeadModel?
     @Published var textFilter = ""
     @Published var filter = LeadFilter2()
+    
+    @Published var lastResult: Int?
 
     @Published var statusList: [StatusId] = []
     @Published var users: [User] = []
@@ -39,6 +41,8 @@ class LeadManager: ObservableObject {
 
     private var lastTask: URLSessionDataTask?
 
+    
+    
     var user = ""
 
     /// private var cancellables: Set<AnyCancellable> = []
@@ -88,6 +92,7 @@ class LeadManager: ObservableObject {
 
         if offset > leadsTotal {
             print("error offset")
+            return
         }
 
         let q: LeadQuery
@@ -163,7 +168,7 @@ class LeadManager: ObservableObject {
         }
         print("*****", path, role)
         let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: path, token: token, params: q.get())
-
+        lastResult = nil
         lastTask = fetch(config: info) { (result: Result<LeadsRequest, Error>) in
             switch result {
             case let .success(data):
@@ -191,6 +196,8 @@ class LeadManager: ObservableObject {
                         self.leadsTotal = data.count ?? 0
                         self.page = 1
                     }
+                    
+                    self.lastResult = data.leads.count
                 }
 
             case let .failure(error):

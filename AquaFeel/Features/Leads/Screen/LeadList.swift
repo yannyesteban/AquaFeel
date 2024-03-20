@@ -24,7 +24,7 @@ struct LeadList1: View {
             
             
             
-            NavigationLink(destination:  CreateLead(lead: $leads[index], manager: manager, userId: ""){ _ in }) {
+            NavigationLink(destination:  CreateLead(profile: ProfileManager(), lead: $leads[index], manager: manager, userId: ""){ _ in }) {
                 HStack{
                     SuperIconViewViewWrapper(status: getStatusType(from: leads[index].status_id.name))
                         .frame(width: 34, height: 34)
@@ -151,7 +151,7 @@ struct LeadListScreen: View {
             
             List {
                 ForEach(manager.leads.indices, id: \.self) { index in
-                    NavigationLink(destination:  CreateLead(lead: $manager.leads[index], manager: manager, userId: profile.userId){_ in}) {
+                    NavigationLink(destination:  CreateLead(profile: profile, lead: $manager.leads[index], manager: manager, userId: profile.userId){_ in}) {
                         HStack{
                             SuperIconViewViewWrapper(status: getStatusType(from: manager.leads[index].status_id.name))
                                 .frame(width: 34, height: 34)
@@ -263,7 +263,7 @@ struct LeadListScreen: View {
                                 
                                 NavigationLink {
                                     
-                                    CreateLead(lead: $lead, mode: 1, manager: manager, userId: profile.userId){_ in
+                                    CreateLead(profile:profile, lead: $lead, mode: 1, manager: manager, userId: profile.userId){_ in
                                         
                                     }
                                     
@@ -349,7 +349,7 @@ struct LeadListScreen: View {
         
         
         .onAppear{
-            print(":::::::", profile.token, profile.userId, profile.role)
+            print("::", profile.token, ":", profile.userId, ":", profile.role)
             manager.user = profile.userId
             manager.token = profile.token
             manager.role = profile.role

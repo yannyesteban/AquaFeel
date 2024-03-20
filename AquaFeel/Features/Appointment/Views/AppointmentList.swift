@@ -14,6 +14,7 @@ enum LeadModeFilter {
     
 }
 struct AppointmentList: View {
+    var profile:ProfileManager
     
     @State private var isCreateLeadActive = false
     @State var filter = ""
@@ -64,7 +65,7 @@ struct AppointmentList: View {
                 ForEach(manager.leads.indices, id: \.self) { index in
                     NavigationLink(destination:  
                                    //Text("Nothing")
-                                   CreateLead(lead: $manager.leads[index], mode: 2, manager: leadManager, userId: userId) {_ in}
+                                   CreateLead(profile: profile, lead: $manager.leads[index], mode: 2, manager: leadManager, userId: userId) {_ in}
                                   ) {
                         HStack{
                             SuperIconViewViewWrapper(status: getStatusType(from: manager.leads[index].status_id.name))
@@ -204,5 +205,5 @@ struct AppointmentList: View {
 
 
 #Preview {
-    AppointmentList(filterMode: .all, userId: "xLv4wI2TM")//DD2EMns3y"
+    AppointmentList(profile: ProfileManager(), filterMode: .all, userId: "123456")//DD2EMns3y"
 }
