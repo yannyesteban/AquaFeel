@@ -63,6 +63,9 @@ func getIconInfo(status: StatusType) -> IconInfo {
     case .r2:
         color = ColorFromHex("#00ffff")
         image = "arrow.counterclockwise"
+    case .none:
+        color = ColorFromHex("#FFA500")
+        image = "star.fill"
         
     }
     
@@ -161,7 +164,7 @@ func getStatusType(from statusString: String) -> StatusType {
     case "r2":
         return .r2
     default:
-        return .uc
+        return .none
     }
 }
 
@@ -199,6 +202,7 @@ enum StatusType{
     
     case nm // home  #00ff00
     case r2 // arrow anti clocl green #00ffff
+    case none // star anti clocl green #00ffff
 }
 
 final class StatusUIView: CircleIconView, UIViewRepresentable{
@@ -255,6 +259,9 @@ final class StatusUIView: CircleIconView, UIViewRepresentable{
         case .r2:
             color = ColorFromHex("#00ffff")
             image = "arrow.counterclockwise"
+        case .none:
+            color = ColorFromHex("#FFA500")
+            image = "star.fill"
         }
         //return CircleIconView(systemName: image, color:color)
         
@@ -350,6 +357,9 @@ struct SuperIconView {
         case .r2:
             color = ColorFromHex("#00ffff")
             image = "arrow.counterclockwise"
+        case .none:
+            color = ColorFromHex("#FFA500")
+            image = "star.fill"
         }
         
         return CircleIconView(systemName: image, color:color)

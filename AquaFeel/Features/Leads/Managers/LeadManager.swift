@@ -207,6 +207,8 @@ class LeadManager: ObservableObject {
     }
 
     func reset() {
+        
+        print("reset...... debug", self.leads.count , self.maxLoads)
         page = 1
         resetData = true
         textFilter = ""
@@ -216,6 +218,7 @@ class LeadManager: ObservableObject {
     }
     
     func resetFilter() {
+        print("resetFilter...... debug", self.leads.count , self.maxLoads)
         page = 1
         resetData = true
         textFilter = ""
@@ -225,6 +228,7 @@ class LeadManager: ObservableObject {
     }
 
     func search() {
+        print("search...... debug", self.leads.count , self.maxLoads)
         page = 1
         resetData = true
 
@@ -236,6 +240,7 @@ class LeadManager: ObservableObject {
     }
 
     func runLoad() {
+        print("runLoad...... debug", self.leads.count , self.maxLoads)
         list(query: nil) {
             if self.leads.count < self.maxLoads {
                 self.runLoad()
@@ -244,6 +249,7 @@ class LeadManager: ObservableObject {
     }
 
     func load(count: Int) {
+        print("load...... debug", self.leads.count , self.maxLoads)
         maxLoads = count
         autoLoad = false
         runLoad()
@@ -283,7 +289,7 @@ class LeadManager: ObservableObject {
                         self.leads[index] = body
 
                     } else {
-                        print("fracaso")
+                        print("not found")
                     }
 
                     completion(true, lead)
@@ -295,7 +301,10 @@ class LeadManager: ObservableObject {
         }
     }
 
-    func delete(query: LeadQuery, mode: ModeSave = .delete, completion: @escaping (Bool) -> Void) {
+    func delete(query: LeadQuery, leadId: String, mode: ModeSave = .delete, completion: @escaping (Bool) -> Void) {
+        
+              
+        
         let path: String = "/leads/delete"
 
         let info = ApiConfig(method: "DELETE", host: "api.aquafeelvirginia.com", path: path, token: token, params: query.get())
@@ -306,7 +315,12 @@ class LeadManager: ObservableObject {
                 DispatchQueue.main.async {
                     // self.leads[index] = body
                     // print(lead)
-
+                    if let index = self.leads.firstIndex(where: { $0.id == leadId }) {
+                        self.leads.remove(at: index)
+                        
+                    } else {
+                        print("not found")
+                    }
                     completion(true)
                 }
             case let .failure(error):

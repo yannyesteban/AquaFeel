@@ -73,7 +73,7 @@ struct AddressField<T: AddressProtocol>: View {
             }
 
         }.onReceive(placeViewModel.$selectedPlace) { newSelectedPlace in
-            print("three")
+            
             if let placeDetails = newSelectedPlace {
                 print("four")
                 locationWaiting = false
@@ -98,8 +98,7 @@ struct AddressField<T: AddressProtocol>: View {
 
                 print(leadAddress)
 
-            } else {
-                print("selectedPlace is nil")
+            
             }
         }
     }

@@ -174,9 +174,7 @@ class PlaceViewModel: ObservableObject {
             
             print(leadAddress)
             
-        }else {
-            
-            print("selectedPlace is nil")
+        
         }
         
         return leadAddress

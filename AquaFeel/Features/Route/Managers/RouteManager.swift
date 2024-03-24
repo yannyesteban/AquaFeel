@@ -36,7 +36,7 @@ class RouteManager: ObservableObject {
         ////////////let info = ApiConfig(scheme: "http", method: "GET", host: "127.0.0.1", path: "/routes/list", token: "", params: q.get(), port : "4000")
         
         do {
-            let response:RouteResponse = try await fetching(config: info)
+            let response:RouteResponse2 = try await fetching(config: info)
             DispatchQueue.main.async {
                 self.routes = response.routes
             }

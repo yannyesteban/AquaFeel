@@ -36,9 +36,21 @@ struct DatePickerString: View {
     @Binding var text: String
 
     private var realDate: Date {
+        
+        let isoDateFormatter = ISO8601DateFormatter()
+        isoDateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        
+        if let date = isoDateFormatter.date(from: text) {
+            return date
+        } else {
+            return Date()
+        }
+        
+        
+        /*
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        //dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
 
         if let date = dateFormatter.date(from: text) {
             return date
@@ -46,6 +58,7 @@ struct DatePickerString: View {
             // If the conversion fails, returns the current date as the default value
             return Date()
         }
+         */
     }
 
     var body: some View {
@@ -55,11 +68,17 @@ struct DatePickerString: View {
                 get: { self.realDate },
                 set: { newValue in
                     // Convert the new selected date to a string format and assign to the ObservableLeadModel
-                    let dateFormatter = DateFormatter()
+                    /*let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-                    dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+                   // dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
 
                     text = dateFormatter.string(from: newValue)
+                     */
+                    
+                    let isoDateFormatter = ISO8601DateFormatter()
+                    isoDateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+                    
+                    text = isoDateFormatter.string(from: newValue)
                 }
             ),
 
@@ -243,7 +262,9 @@ struct CreateLead: View {
 
     @State var mode: Int = 2
     @ObservedObject var manager: LeadManager
-    @State var deleteConfirm = false
+    @Binding var updated: Bool
+    
+    @State private var deleteConfirm = false
 
     @State private var isShowingSnackbar = false
 
@@ -255,8 +276,9 @@ struct CreateLead: View {
     @State var errorMessage = ""
     @EnvironmentObject var store: MainStore<UserData>
     //@State var userRole = ""
-    
-    @State var userId: String
+    @Environment(\.presentationMode) var presentationMode
+    @State private var isAppointmentVisible = false
+    //@State var userId: String
     var onSave: (Bool) -> Void
 
     private func loadDataAndProcess() {
@@ -311,11 +333,42 @@ struct CreateLead: View {
                             MyStatus(status: $lead.status_id, statusList: lead2.statusList)
                         }
                     }
-
-                    Section("Appointment / Callback time") {
-                        DatePickerString(title: "Date", text: $lead.appointment_date)
-                        DatePickerString(title: "Time", text: $lead.appointment_time)
+                    .alert(isPresented: $showErrorMessage) {
+                        Alert(title: Text("Error"), message: Text(errorMessage), dismissButton: .default(Text("OK")))
                     }
+                    
+                    Section("Appointment / Callback time") {
+                        Button(action: {
+                            withAnimation {
+                                if lead.appointment_date != "" {
+                                    // Si ya hay una cita programada, cancela la cita
+                                    lead.appointment_date = ""
+                                } else {
+                                    // De lo contrario, muestra el selector de fecha
+                                    isAppointmentVisible.toggle()
+                                }
+                            }
+                        }) {
+                            HStack {
+                                Image(systemName: lead.appointment_date != "" ? "trash" : "calendar")
+                                Text(lead.appointment_date != "" ? "Cancel Appointment" : "Set Appointment")
+                            }
+                            .foregroundColor(lead.appointment_date != "" ? .red : .primary) // Cambiar el color del icono
+                        }
+                        
+                        if isAppointmentVisible || lead.appointment_date != "" {
+                            
+                                DatePickerString(title: "Date", text: $lead.appointment_date)
+                                    .onChange(of: lead.appointment_date){ newDate in
+                                        lead.appointment_time = newDate
+                                    }
+                            Text("Old Time \(formattedTime(from : lead.appointment_time))")
+                        }
+                        
+                    }
+                    
+                   
+                    
 
                     if mode == 2 {
                         if profile.role == "ADMIN" || profile.role == "MANAGER" {
@@ -354,23 +407,46 @@ struct CreateLead: View {
                         }
                     }
                 }
-                .alert(isPresented: $showErrorMessage) {
-                    Alert(title: Text("Error"), message: Text(errorMessage), dismissButton: .default(Text("OK")))
-                }
+                
                 .onChange(of: mode) { newMode in
                     if newMode == 1 {
+                        
                         lead = LeadModel()
+                        lead.created_by = CreatorModel(_id: profile.userId)
+                        lead.user_id = profile.userId
                     }
                 }
                 .background(.blue)
-                .navigationTitle("Lead Screen")
-
+                .navigationTitle("Lead")
+                
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
                         if isShowingSnackbar {
                             ProgressView("")
 
                         } else {
+                            
+                            Button {
+                                lead.makePhoneCall()
+                            } label: {
+                                Label("", systemImage: "phone")
+                                    .font(.title3)//arrow.turn.up.right
+                            }
+                            .disabled(lead.phone.isEmpty)
+                           
+                            Button {
+                                lead.sendSMS()
+                            } label: {
+                                Label("", systemImage: "message")
+                                    .font(.title3)//arrow.turn.up.right
+                            }
+                            .disabled(lead.phone.isEmpty)
+                            Button {
+                                lead.openGoogleMaps()
+                            } label: {
+                                Label("", systemImage: "globe")
+                                    .font(.title3)//
+                            }
                             Button {
                                 errorMessage = lead.validForm()
 
@@ -392,10 +468,12 @@ struct CreateLead: View {
                                     isShowingSnackbar = false
 
                                     if ok, let newLead = newLead {
+                                        updated = true
                                         lead.id = newLead.id
                                         mode = 2
 
                                         if saveMode == .add {
+                                            manager.leads.insert(lead, at: 0)
                                             result = true
                                         }
                                     }
@@ -404,13 +482,13 @@ struct CreateLead: View {
                                 }
 
                             } label: {
-                                Label("Save", systemImage: "square.and.arrow.down")
+                                Label("Save", systemImage: "externaldrive.fill")
                                     .font(.title3)
                             }
                         }
                     }
                 }
-                if mode == 2 {
+                /*if mode == 2 {
                     HStack {
                         if !lead.phone.isEmpty {
                             Button {
@@ -445,9 +523,10 @@ struct CreateLead: View {
                         }
                         .padding(.horizontal, 30)
                     }
-                }
+                }*/
 
             } else {
+                
                 VStack {
                     HStack {
                         VStack {
@@ -484,6 +563,7 @@ struct CreateLead: View {
 
                         }.padding(0)
                     }
+                    
 
                 }.padding(0)
                     .toolbar {
@@ -496,6 +576,29 @@ struct CreateLead: View {
                             }
                         }
                         ToolbarItemGroup(placement: .navigationBarTrailing) {
+                            
+                            Button {
+                                lead.makePhoneCall()
+                            } label: {
+                                Label("", systemImage: "phone")
+                                    .font(.title3)//arrow.turn.up.right
+                            }
+                            .disabled(lead.phone.isEmpty)
+                            
+                            Button {
+                                lead.sendSMS()
+                            } label: {
+                                Label("", systemImage: "message")
+                                    .font(.title3)//arrow.turn.up.right
+                            }
+                            .disabled(lead.phone.isEmpty)
+                            Button {
+                                lead.openGoogleMaps()
+                            } label: {
+                                Label("", systemImage: "globe")
+                                    .font(.title3)//
+                            }
+                            
                             if isShowingSnackbar {
                                 ProgressView("")
 
@@ -513,7 +616,7 @@ struct CreateLead: View {
                                     onSave(false)
 
                                 } label: {
-                                    Label("Save", systemImage: "square.and.arrow.down")
+                                    Label("Save", systemImage: "externaldrive.fill")
                                         .font(.title3)
                                 }
                             }
@@ -527,14 +630,39 @@ struct CreateLead: View {
 
             
             if mode == 1 {
+                print("--- - - - -- - ******** * * * * * * ***")
                 lead = LeadModel()
-                lead.user_id = userId
+                lead.created_by = CreatorModel(_id: profile.userId, firstName: profile.info.firstName, lastName: profile.info.lastName)
                 lead.owned_by = manager.user
                 print("new: ", manager.user)
-                lead.created_by = CreatorModel(_id: manager.user)
+                //lead.created_by = CreatorModel(_id: manager.user)
             }
         }
-
+        
+        .alert(isPresented: $deleteConfirm) {
+            Alert(
+                title: Text("Confirmation"),
+                message: Text("Are you sure you want to delete the lead?"),
+                primaryButton: .destructive(Text("Delete")) {
+                    let leadQuery = LeadQuery()
+                        .add(.id, lead.id)
+                    manager.delete(query: leadQuery, leadId: lead.id) { result in
+                        
+                        if result {
+                            presentationMode.wrappedValue.dismiss()
+                            updated = true
+                        } else {
+                            print("after delete, fail ", result)
+                            showErrorMessage = true
+                            errorMessage = "Failure, the operation was not completed."
+                        }
+                       
+                    }
+                },
+                secondaryButton: .cancel()
+            )
+        }
+        /*
         .confirmationDialog(
             "Delete record",
             isPresented: $deleteConfirm,
@@ -542,10 +670,18 @@ struct CreateLead: View {
                 Button("Delete", role: .destructive) {
                     let leadQuery = LeadQuery()
                         .add(.id, lead.id)
-                    manager.delete(query: leadQuery) { result in
+                    manager.delete(query: leadQuery, leadId: lead.id) { result in
+                       
+                        if result {
+                            presentationMode.wrappedValue.dismiss()
+                        } else {
+                            showErrorMessage = true
+                            errorMessage = "Failure, the operation was not completed."
+                        }
                         print("after delete", result)
-                        self.mode = 1
-                        self.lead = LeadModel()
+                        
+                        //self.mode = 1
+                        //self.lead = LeadModel()
                     }
                 }
             },
@@ -553,6 +689,7 @@ struct CreateLead: View {
                 Text("are you sure to delete record?")
             }
         )
+         */
     }
 }
 
@@ -561,6 +698,7 @@ struct TestCreateLead: View {
     @StateObject var user = UserManager()
     @State var nombrecito = "Juancito"
     @State private var store = MainStore<UserData>() // AppStore()
+    @State private var updated = false
     @State var lead: LeadModel = LeadModel(
         id: "65c56f5ff4a97859d1955f89",
         business_name: "N/A",
@@ -584,7 +722,7 @@ struct TestCreateLead: View {
         status_id: StatusId()
     )
     var body: some View {
-        CreateLead(profile: ProfileManager(), lead: $lead, mode: 2,manager: manager, userId: "") { result in
+        CreateLead(profile: ProfileManager(), lead: $lead, mode: 2,manager: manager, updated: $updated) { result in
             print(result)
         }
         .onAppear {

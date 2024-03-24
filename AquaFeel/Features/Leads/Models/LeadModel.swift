@@ -104,12 +104,9 @@ protocol AddressProtocol {
     var country: String { get set }
     var latitude: String { get set }
     var longitude: String { get set }
-    
-    
 }
 
 struct AddressModel2: AddressProtocol {
-    
     var street_address: String
     var apt: String
     var city: String
@@ -118,9 +115,8 @@ struct AddressModel2: AddressProtocol {
     var country: String
     var latitude: String
     var longitude: String
-    var name: String =  "yanny"
-    
-    
+    var name: String = "yanny"
+
     init(street_address: String = "", apt: String = "", city: String = "", state: String = "", zip: String = "", country: String = "", latitude: String = "", longitude: String = "") {
         self.street_address = street_address
         self.apt = apt
@@ -134,7 +130,6 @@ struct AddressModel2: AddressProtocol {
 }
 
 struct AddressModel: AddressProtocol {
-    
     var street_address: String
     var apt: String
     var city: String
@@ -143,8 +138,7 @@ struct AddressModel: AddressProtocol {
     var country: String
     var latitude: String
     var longitude: String
-    
-    
+
     init(street_address: String = "", apt: String = "", city: String = "", state: String = "", zip: String = "", country: String = "", latitude: String = "", longitude: String = "") {
         self.street_address = street_address
         self.apt = apt
@@ -505,7 +499,10 @@ struct LeadModel: Codable, AddressProtocol, Equatable, Hashable {
             return
         }
 
-        if let url = URL(string: "comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic") {
+        let formattedStreetAddress = street_address.replacingOccurrences(of: " ", with: "+")
+        let urlString = "http://maps.google.com/maps?q=loc:\(latitude),\(longitude)(\(formattedStreetAddress))&z=18" // URL(string: "comgooglemaps://?saddr=&daddr=\(latitude),\(longitude)&directionsmode=driving")
+
+        if let url = URL(string: urlString) {
             if UIApplication.shared.canOpenURL(url) {
                 UIApplication.shared.open(url)
             } else {

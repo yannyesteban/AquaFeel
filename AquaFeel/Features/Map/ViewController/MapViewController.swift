@@ -201,6 +201,9 @@ class MapViewController: UIViewController, GMSMapViewDelegate, UIGestureRecogniz
 
     var lastButton: MapButton?
     var newPosition: Binding<CLLocationCoordinate2D?>
+    
+    var lastMarker: Binding<GMSMarker?>
+    
     var playState: Bool = false {
         didSet {
             print("playState")
@@ -208,13 +211,15 @@ class MapViewController: UIViewController, GMSMapViewDelegate, UIGestureRecogniz
         }
     }
 
-    init(markerSelected: Binding<LeadModel?>, location: CLLocationCoordinate2D?, leads: Binding<[LeadModel]>, newPosition: Binding<CLLocationCoordinate2D?>) {
+    init(markerSelected: Binding<LeadModel?>, location: CLLocationCoordinate2D?, leads: Binding<[LeadModel]>, newPosition: Binding<CLLocationCoordinate2D?>, lastMarker: Binding<GMSMarker?> ) {
         self.markerSelected = markerSelected
         self.location = location
         self.leads = leads
         self.newPosition = newPosition
-
+        self.lastMarker = lastMarker
         super.init(nibName: nil, bundle: nil)
+        
+        
     }
 
     required init?(coder: NSCoder) {
@@ -238,8 +243,8 @@ class MapViewController: UIViewController, GMSMapViewDelegate, UIGestureRecogniz
         print(" loadView() ")
         super.loadView()
 
-        var longitude = -74.0060 // -76.53529600000002 //-122.008972
-        var latitude = 40.7128 // 39.2750209// 37.33464379999999
+        var longitude = -95.72743170000001 //-74.0060 // -122.008972 //-122.008972
+        var latitude = 29.9170442//40.7128 // 39.2750209// 37.33464379999999
 
         if let location = location {
             longitude = location.longitude
@@ -311,17 +316,19 @@ class MapViewController: UIViewController, GMSMapViewDelegate, UIGestureRecogniz
         super.viewDidLoad()
         let size: CGFloat = 40.0
         let items = [
-            MapMenuItem(title: "a", image: "info.bubble", color: .darkGray) { _ in
+            /*MapMenuItem(title: "a", image: "info.bubble", color: .darkGray) { _ in
 
                 print("aaaa")
                 // self.stop()
                 // line.horizontal.3.decrease.circle
                 self.showLeadsOptions()
-            },
+            },*/
             // MapMenuItem(title: "b", image: "magnifyingglass", color: .darkGray),
-            MapMenuItem(title: "c", image: "app.connected.to.app.below.fill", color: .darkGray) { _ in
+            
+            
+            /*MapMenuItem(title: "c", image: "app.connected.to.app.below.fill", color: .darkGray) { _ in
 
-            },
+            },*/
             MapMenuItem(title: "d", image: "pin.fill", imageOff: "eraser.fill", color: .darkGray) { button in
                 if let last = self.lastButton, self.lastButton != button {
                     last.currentState = .normal
@@ -500,8 +507,42 @@ class MapViewController: UIViewController, GMSMapViewDelegate, UIGestureRecogniz
                 // marker.userData = ["name":  leadModel.id ]
                 marker.userData = leadModel
 
-                let circleIconView = getUIImage(name: leadModel.status_id.name)
+                let circleIconView = 
+                    //CircleIconView(systemName: "trash", color: .red) 
+                getUIImage(name: leadModel.status_id.name)
+                
+                
                 circleIconView.frame = CGRect(x: 120, y: 120, width: 30, height: 30)
+                
+                if true && false {
+                    let circleLayer = CALayer()
+                    let circleSizeIncrease: CGFloat = 28 // Ajusta el tamaño del aumento según tus necesidades
+                    circleLayer.bounds = CGRect(x: 0, y: 0, width: circleIconView.bounds.width + circleSizeIncrease, height: circleIconView.bounds.height + circleSizeIncrease)
+                    circleLayer.position = CGPoint(x: circleIconView.bounds.midX, y: circleIconView.bounds.midY)
+                    circleLayer.cornerRadius = circleLayer.bounds.width / 2
+                    //circleLayer.backgroundColor = UIColor.white.cgColor
+                    circleLayer.borderWidth = 6.0 // Grosor del borde del círculo
+                    circleLayer.borderColor = UIColor.white.cgColor // Color del borde del círculo
+                    circleIconView.layer.addSublayer(circleLayer)
+                } else {
+                    // Crea un círculo rojo
+                    let circleLayer = CALayer()
+                    circleLayer.bounds = circleIconView.bounds
+                    circleLayer.position = CGPoint(x: circleIconView.bounds.midX, y: circleIconView.bounds.midY)
+                    circleLayer.cornerRadius = circleIconView.bounds.width / 2
+                    //circleLayer.backgroundColor = UIColor.red.cgColor
+                    circleLayer.borderWidth = 0.0 // Grosor del borde del círculo
+                    circleLayer.borderColor = UIColor.black.cgColor // Color del borde del círculo
+                    
+                    // Añade el círculo rojo a tu imagen
+                    circleIconView.layer.addSublayer(circleLayer)
+                }
+                
+                
+               
+               
+                
+                
                 /*
                  let circleIconView = StatusUIView(status: .nho)
                  circleIconView.frame = CGRect(x: 120, y: 120, width: 50, height: 50)
@@ -778,6 +819,8 @@ class MapViewController: UIViewController, GMSMapViewDelegate, UIGestureRecogniz
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
                            shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        
+        print("gestureRecognizer .. gestureRecognizer .. gestureRecognizer")
         return true
     }
 
@@ -927,6 +970,21 @@ class MapViewController: UIViewController, GMSMapViewDelegate, UIGestureRecogniz
          print(userData["name"] ?? "")
          self.markerSelected.wrappedValue = LeadModel(id: userData["name"] ?? "")
          } */
+        
+        //marker.iconView?.backgroundColor = .black
+        
+        if let last = lastMarker.wrappedValue {
+            if let sublayers = last.iconView?.layer.sublayers {
+                if let lastLayer = sublayers.last {
+                    // Modificar la capa recién agregada
+                    //lastLayer.cornerRadius = (marker.iconView?.bounds.width ?? 0) / 2
+                    lastLayer.borderWidth = 0.0
+                    
+                }
+            }
+        }
+        
+        lastMarker.wrappedValue = marker
 
         if let userData = marker.userData as? LeadModel {
             // print(userData["name"] ?? "")
@@ -953,10 +1011,11 @@ struct MapViewControllerBridge: UIViewControllerRepresentable {
     @Binding var newLead: Bool
     @Binding var leadSelected: LeadModel?
     @Binding var contador: Int
+    @Binding var lastMarker: GMSMarker?
     var location: CLLocationCoordinate2D
 
     func makeUIViewController(context: Context) -> MapViewController {
-        let uiViewController = MapViewController(markerSelected: $leadSelected, location: location, leads: $leads, newPosition: $aqua.newPosition)
+        let uiViewController = MapViewController(markerSelected: $leadSelected, location: location, leads: $leads, newPosition: $aqua.newPosition, lastMarker: $lastMarker)
 
         uiViewController.mode = $mode
         uiViewController.newLead = $newLead
@@ -975,7 +1034,7 @@ struct MapViewControllerBridge: UIViewControllerRepresentable {
         if !leads.isEmpty {
             if leads != uiViewController.leads.wrappedValue || !uiViewController.started {
                 DispatchQueue.main.async {
-                    print("yessssss")
+                    
                     uiViewController.started = true
                     uiViewController.leads = $leads
 
@@ -988,9 +1047,9 @@ struct MapViewControllerBridge: UIViewControllerRepresentable {
 
 struct LeadMap: View {
     var profile: ProfileManager
-
+    @Binding var updated: Bool
     @EnvironmentObject var store: MainStore<UserData>
-    @EnvironmentObject var loginManager: ProfileManager
+    //@EnvironmentObject var loginManager: ProfileManager
 
     // @State var mode = false
     @State var showSettings = true
@@ -1016,19 +1075,23 @@ struct LeadMap: View {
     var location: CLLocationCoordinate2D
     @State var lead: LeadModel = LeadModel()
     @StateObject private var placeViewModel = PlaceViewModel()
+    @State var lastMarker: GMSMarker? = nil
+    //@State var updated = false
     var body: some View {
-        MapViewControllerBridge(aqua: aqua, leads: $manager.leads, path: $aqua.path, mode: $aqua.mode, newLead: $aqua.newLead, leadSelected: $manager.selected, contador: $contador, location: location)
+        MapViewControllerBridge(aqua: aqua, leads: $manager.leads, path: $aqua.path, mode: $aqua.mode, newLead: $aqua.newLead, leadSelected: $manager.selected, contador: $contador, lastMarker:$lastMarker, location: location)
+        
             .edgesIgnoringSafeArea(.all)
             // .environmentObject($lead.leads)
             .sheet(isPresented: $aqua.mode) {
-                PathOptionView(profile: profile, leads: $manager.leads, path: $aqua.path)
+                PathOptionView(profile: profile, leads: $manager.leads, path: $aqua.path, leadManager: manager, updated: $updated)
                     .presentationDetents([.fraction(0.35), .medium, .large])
                     .presentationContentInteraction(.scrolls)
             }
             .sheet(isPresented: $aqua.newLead) {
-                CreateLead(profile: profile, lead: $lead, mode: 1, manager: manager, userId: loginManager.info._id) { result in
+                CreateLead(profile: profile, lead: $lead, mode: 1, manager: manager, updated: .constant(false)) { result in
                     if result {
-                        manager.leads.append(lead)
+                        
+                        //manager.leads.append(lead)
                     }
                 }.onAppear {
                     // print(" \n\n\nnew position xxxxxxxxx", aqua.newPosition)
@@ -1037,35 +1100,29 @@ struct LeadMap: View {
 
                     lead = placeViewModel.decode(placeDetails: x, leadAddress: lead)
                 }
-            }.onReceive(aqua.$newPosition) { _ in
-                // print(" new position xxxxxxxxx")
-                // print(x)
             }
+        
+        
+        
             .sheet(isPresented: $info) {
+                
+                
                 // LeadDetailView(lead: lead.selected ?? LeadModel())
                 NavigationStack {
+                    
                     CreateLead(profile: profile, lead: Binding<LeadModel>(
                         get: { manager.selected ?? LeadModel() },
                         set: { manager.selected = $0 }
-                    ), mode: 0, manager: manager, userId: loginManager.info._id) { _ in
+                    ), mode: 0, manager: manager, updated: $updated) { _ in
                         print("on Saving")
                     }
-                    /*
-                     .toolbar{
-                         ToolbarItem(placement: .automatic) {
-                             Button("Close") {
-                                 // Acción al hacer clic en "Cancelar"
-                                 info = false // Cierra el sheet
-                             }
-                         }
-
-                     }
-                     */
+                   
                 }
 
                 .presentationDetents([.fraction(0.2), .medium, .large])
                 .presentationContentInteraction(.scrolls)
             }
+         
             .sheet(isPresented: $showFilter) {
                 FilterOption(filter: $manager.filter, filters: $manager.leadFilter, statusList: manager.statusList, usersList: manager.users) {
                     print("reseteando")
@@ -1091,6 +1148,7 @@ struct LeadMap: View {
                 .padding()
             }
 
+        
             .onDisappear {
                 manager.selected = nil
             }
@@ -1134,7 +1192,7 @@ struct LeadMap: View {
             .onReceive(manager.$leadFilter) { filter in
 
                 DispatchQueue.main.async {
-                    loginManager.info.leadFilters = filter
+                    profile.info.leadFilters = filter
                     print("xxxxx.xxxx.x.x.x.x")
                 }
             }
@@ -1145,9 +1203,25 @@ struct LeadMap: View {
                     info = true
                 }
             }
+        
+            .onChange(of: info){ _ in
+                print("manager.leads.count", manager.leads.count)
+            }
+        
+            .onChange(of: updated){ value in
+                if value {
+                    print("search() 1.1")
+                    //manager.search()
+                    
+                }
+                //updated = false
+            }
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    // ToolbarItem(placement: .automatic) {
+                    
+                    
+                   
+                    
                     Button {
                         showFilter = true
                     } label: {
@@ -1155,11 +1229,77 @@ struct LeadMap: View {
                     }
                 }
             }
+            .onChange(of: info){ info in
+                print("last marker", info)
+                print(lastMarker)
+                
+                if let sublayers = lastMarker?.iconView?.layer.sublayers {
+                    if let lastLayer = sublayers.last {
+                        // Modificar la capa recién agregada
+                        //lastLayer.cornerRadius = (marker.iconView?.bounds.width ?? 0) / 2
+                        if info {
+                            lastLayer.borderWidth = 3.0
+                        }else {
+                            lastLayer.borderWidth = 0.0
+                        }
+                        
+                        
+                    }
+                }
+                
+            }
+        
+            .onChange(of: lastMarker){ l in
+                print("last marker", info)
+                print(lastMarker)
+                
+                if let sublayers = lastMarker?.iconView?.layer.sublayers {
+                    if let lastLayer = sublayers.last {
+                        
+                        // Modificar la capa recién agregada
+                        //lastLayer.cornerRadius = (marker.iconView?.bounds.width ?? 0) / 2
+                        if info {
+                            lastLayer.borderWidth = 3.0
+                        }else {
+                            lastLayer.borderWidth = 0.0
+                        }
+                        
+                        
+                    }
+                }
+                
+            }
+        
             .onChange(of: scenePhase) { phase in
 
                 print("Out ??", phase)
                 print("manager.leads.count: ", manager.leads.count)
             }
+        /*if info {
+            NavigationStack {
+                CreateLead(profile: profile, lead: Binding<LeadModel>(
+                    get: { manager.selected ?? LeadModel() },
+                    set: { manager.selected = $0 }
+                ), mode: 0, manager: manager) { _ in
+                    print("on Saving")
+                }
+                
+                .frame(minWidth: 300, minHeight: 250)
+                
+                
+                Button("Hola"){
+                    print(9)
+                    info.toggle()
+                }
+                
+            }
+            
+            .presentationDetents([.fraction(0.2), .medium, .large])
+            .presentationContentInteraction(.scrolls)
+            
+           
+                
+        }*/
     }
 }
 

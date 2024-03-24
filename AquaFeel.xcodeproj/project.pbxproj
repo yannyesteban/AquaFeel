@@ -19,6 +19,7 @@
 		2B17FACB2B7D820300445990 /* GoogleMapsCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B17FAC82B7D820200445990 /* GoogleMapsCore.xcframework */; };
 		2B1CB9262B6540A7003CE11A /* UIViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1CB9252B6540A7003CE11A /* UIViewTest.swift */; };
 		2B1CB9292B657422003CE11A /* LeadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1CB9282B657422003CE11A /* LeadModel.swift */; };
+		2B217BFE2BABA7EC0055F1D4 /* LeadsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B217BFD2BABA7EC0055F1D4 /* LeadsManager.swift */; };
 		2B3502392B97A10E00190FAC /* PhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3502382B97A10E00190FAC /* PhoneView.swift */; };
 		2B3697EC2B87EDDE008B339B /* SnackbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3697EB2B87EDDE008B339B /* SnackbarView.swift */; };
 		2B3A2C052B782596003EED04 /* LeadList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3A2C042B782596003EED04 /* LeadList.swift */; };
@@ -101,6 +102,9 @@
 		2BE1EFF62B6988DA00D51888 /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1EFF52B6988DA00D51888 /* LoginScreen.swift */; };
 		2BE1EFF92B69A5B900D51888 /* MapIconView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1EFF82B69A5B900D51888 /* MapIconView2.swift */; };
 		2BE1EFFB2B69BB4E00D51888 /* Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1EFFA2B69BB4E00D51888 /* Circle.swift */; };
+		2BEC71F02BB06C56009BF4E0 /* DraggableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC71EF2BB06C56009BF4E0 /* DraggableView.swift */; };
+		2BEC721B2BB09698009BF4E0 /* RouteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC721A2BB09698009BF4E0 /* RouteController.swift */; };
+		2BEC721D2BB0D6D8009BF4E0 /* DirectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC721C2BB0D6D8009BF4E0 /* DirectionModel.swift */; };
 		2BED59BE2B8552A20094CD7E /* RouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BED59BD2B8552A20094CD7E /* RouteView.swift */; };
 		2BED59C02B85549A0094CD7E /* AddressSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BED59BF2B85549A0094CD7E /* AddressSelector.swift */; };
 		2BED97C92B8CFE6A0043A6F3 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BED97C82B8CFE6A0043A6F3 /* UserManager.swift */; };
@@ -134,6 +138,7 @@
 		2B17FAC82B7D820200445990 /* GoogleMapsCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = GoogleMapsCore.xcframework; sourceTree = "<group>"; };
 		2B1CB9252B6540A7003CE11A /* UIViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewTest.swift; sourceTree = "<group>"; };
 		2B1CB9282B657422003CE11A /* LeadModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadModel.swift; sourceTree = "<group>"; };
+		2B217BFD2BABA7EC0055F1D4 /* LeadsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadsManager.swift; sourceTree = "<group>"; };
 		2B3502382B97A10E00190FAC /* PhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneView.swift; sourceTree = "<group>"; };
 		2B3697EB2B87EDDE008B339B /* SnackbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackbarView.swift; sourceTree = "<group>"; };
 		2B3A2C042B782596003EED04 /* LeadList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadList.swift; sourceTree = "<group>"; };
@@ -219,6 +224,9 @@
 		2BE1EFF52B6988DA00D51888 /* LoginScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
 		2BE1EFF82B69A5B900D51888 /* MapIconView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapIconView2.swift; sourceTree = "<group>"; };
 		2BE1EFFA2B69BB4E00D51888 /* Circle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circle.swift; sourceTree = "<group>"; };
+		2BEC71EF2BB06C56009BF4E0 /* DraggableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableView.swift; sourceTree = "<group>"; };
+		2BEC721A2BB09698009BF4E0 /* RouteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteController.swift; sourceTree = "<group>"; };
+		2BEC721C2BB0D6D8009BF4E0 /* DirectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionModel.swift; sourceTree = "<group>"; };
 		2BED59BC2B851E3D0094CD7E /* Empty.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Empty.md; sourceTree = "<group>"; };
 		2BED59BD2B8552A20094CD7E /* RouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteView.swift; sourceTree = "<group>"; };
 		2BED59BF2B85549A0094CD7E /* AddressSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSelector.swift; sourceTree = "<group>"; };
@@ -332,6 +340,8 @@
 			isa = PBXGroup;
 			children = (
 				2B4713142B84213B0020D66F /* Draw.swift */,
+				2BEC721C2BB0D6D8009BF4E0 /* DirectionModel.swift */,
+				2B217BFD2BABA7EC0055F1D4 /* LeadsManager.swift */,
 				2B0F54142B9CB65400AEEAE3 /* UnknowJson.swift */,
 			);
 			path = Models;
@@ -382,6 +392,7 @@
 				2BA94E6C2B7152E50004C446 /* MapMenuViewController1.swift */,
 				2B4713162B842D9D0020D66F /* testUI.swift */,
 				2BED59BC2B851E3D0094CD7E /* Empty.md */,
+				2BEC721A2BB09698009BF4E0 /* RouteController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -770,6 +781,7 @@
 			isa = PBXGroup;
 			children = (
 				2BE1EFF82B69A5B900D51888 /* MapIconView2.swift */,
+				2BEC71EF2BB06C56009BF4E0 /* DraggableView.swift */,
 				2BF6BE0B2B72C0FE0016FB39 /* PathOptionView.swift */,
 			);
 			path = Views;
@@ -869,6 +881,7 @@
 				2B3697EC2B87EDDE008B339B /* SnackbarView.swift in Sources */,
 				2B0F54152B9CB65400AEEAE3 /* UnknowJson.swift in Sources */,
 				2B5DF8FD2B7686CD002ECBAC /* PlaceViewModel.swift in Sources */,
+				2BEC721B2BB09698009BF4E0 /* RouteController.swift in Sources */,
 				2BA43D1C2B5B322300960681 /* Test3.swift in Sources */,
 				2B75B3482B5F1AE000BDD12C /* SettingView.swift in Sources */,
 				2B693A5C2BAA43010048B6A5 /* AquaCalendar.swift in Sources */,
@@ -879,6 +892,7 @@
 				2B3A2C052B782596003EED04 /* LeadList.swift in Sources */,
 				2B3502392B97A10E00190FAC /* PhoneView.swift in Sources */,
 				2B75B3462B5F07A300BDD12C /* MainScreen.swift in Sources */,
+				2B217BFE2BABA7EC0055F1D4 /* LeadsManager.swift in Sources */,
 				2BED97C92B8CFE6A0043A6F3 /* UserManager.swift in Sources */,
 				2BD84DB12B56CDB200BC01C9 /* CreateLead.swift in Sources */,
 				2BA8A5B92B5441EE0004CDCD /* LoginViewModel.swift in Sources */,
@@ -897,6 +911,7 @@
 				2BB966CE2B8BED73007E1442 /* PP.swift in Sources */,
 				2BA484762B9A2FB300247BD0 /* RegistrationView.swift in Sources */,
 				2B3F34B02BA21A2E00BAF52D /* AppointmentManager.swift in Sources */,
+				2BEC721D2BB0D6D8009BF4E0 /* DirectionModel.swift in Sources */,
 				2B5793B72B9B861200E907E9 /* PassEdit.swift in Sources */,
 				2BC6CCED2B9F9CF600C7DA19 /* RouteListView.swift in Sources */,
 				2BA43D142B5AC76100960681 /* HomeScreen.swift in Sources */,
@@ -919,6 +934,7 @@
 				2B0FB8672B758B1C005FD5A8 /* AddressViewPrevies.swift in Sources */,
 				2BAEE8592B59D1AB00B0C16D /* TabB.swift in Sources */,
 				2B5810FB2B682B2C00B48A88 /* MapScreen.swift in Sources */,
+				2BEC71F02BB06C56009BF4E0 /* DraggableView.swift in Sources */,
 				2B75B3512B5F2D8E00BDD12C /* PassView.swift in Sources */,
 				2B3BFC002B5C1F3C00069F99 /* ProfileManager.swift in Sources */,
 				2B0FB8652B758AC0005FD5A8 /* AddressViewModel.swift in Sources */,

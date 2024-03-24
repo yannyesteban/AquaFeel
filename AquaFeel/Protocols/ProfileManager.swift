@@ -40,7 +40,7 @@ struct Profile: Codable {
 }
 
 
-var SuperToken = ""// "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InhMdjR3STJUTSIsImVtYWlsIjoieWFubnllc3RlYmFuQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTcwNTYxMDY3NCwiZXhwIjoxNzEwNzk0Njc0fQ.5nPyOfuwOF3jOxm2lziG-_4jtDEqQmp9i3a6yBjIFCE"
+var SuperToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InhMdjR3STJUTSIsImVtYWlsIjoieWFubnllc3RlYmFuQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTcxMTExNjU5MCwiZXhwIjoxNzE2MzAwNTkwfQ.cBCnDu-4B7EhiYI45J3hId1_fOEITwzySY9QvW-UfcE"
 
 
 
@@ -53,9 +53,9 @@ class ProfileManager: LoginProtocol, ObservableObject {
     @Published var begin: Bool = false
     @Published var isLoading = false
 
-    @Published var userId: String = "DD2EMns3y"
+    @Published var userId: String = "xLv4wI2TM"//xLv4wI2TM - DD2EMns3y"
     @Published var token: String = SuperToken
-    @Published var role: String = "SELLER"
+    @Published var role: String = "SELLER"// ADMIN   - SELLER"
     @Published var id: String = ""
 
     @Published var info: User = User()
@@ -112,7 +112,9 @@ class ProfileManager: LoginProtocol, ObservableObject {
     }
 
     func login(completion: @escaping (Bool, LoginFetch?) -> Void) {
-        isLoading = true
+        DispatchQueue.main.async {
+            self.isLoading = true
+        }
 
         Task {
             do {
@@ -231,7 +233,9 @@ class ProfileManager: LoginProtocol, ObservableObject {
     }
 
     func saveProfile() async throws {
-        waiting = true
+        DispatchQueue.main.async {
+            self.waiting = true
+        }
 
         let apiInfo = ApiConfig(method: "POST", host: "api.aquafeelvirginia.com", path: "/profile/edit", token: token, params: nil)
 
@@ -240,18 +244,23 @@ class ProfileManager: LoginProtocol, ObservableObject {
         do {
             let response: ProfileResponse = try await fetching(body: info, config: apiInfo)
 
+            print(response)
             DispatchQueue.main.async {
                 self.waiting = false
             }
 
         } catch {
-            waiting = false
+            DispatchQueue.main.async {
+                self.waiting = false
+            }
             throw error
         }
     }
     
     func changePassword(email: String, oldPassword: String, newPassword: String) async throws -> PasswordResponse{
-        waiting = true
+        DispatchQueue.main.async {
+            self.waiting = true
+        }
         let body = PasswordModel(email: email, oldPassword: oldPassword, newPassword: newPassword)
         
         let apiInfo = ApiConfig(method: "POST", host: "api.aquafeelvirginia.com", path: "/auth/changePassword", token: token, params: nil)
@@ -260,7 +269,7 @@ class ProfileManager: LoginProtocol, ObservableObject {
         
         do {
             let response: PasswordResponse = try await fetching(body: body, config: apiInfo)
-            prettyPrint(response)
+            
             DispatchQueue.main.async {
                 self.waiting = false
             }
@@ -268,7 +277,9 @@ class ProfileManager: LoginProtocol, ObservableObject {
             return response
         } catch {
             print(error)
-            waiting = false
+            DispatchQueue.main.async {
+                self.waiting = false
+            }
             throw error
         }
     }

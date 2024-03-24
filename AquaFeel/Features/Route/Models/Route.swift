@@ -12,7 +12,7 @@ struct MessageResponse: Codable, NeedStatusCode{
     var statusCode: Int?
 }
 
-struct RouteResponse: Codable {
+struct RouteResponse2: Codable {
     let routes: [RouteModel]
 }
 

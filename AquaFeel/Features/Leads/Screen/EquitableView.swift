@@ -162,7 +162,7 @@ struct EquitableView: View {
                              */
                             
                         } label : {
-                            Label("Save", systemImage: "square.and.arrow.down")
+                            Label("Save", systemImage: "externaldrive.fill")
                                 .font(.title3)
                         }
                     }

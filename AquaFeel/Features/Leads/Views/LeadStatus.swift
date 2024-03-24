@@ -244,6 +244,9 @@ struct LeadStatus2: View {
             return ColorFromHex("#00ff00")
         case .r2:
             return ColorFromHex("#00ffff")
+        case .none:
+            return ColorFromHex("#FFA500")
+            
             
         }
     }
@@ -283,6 +286,8 @@ struct LeadStatus2: View {
             return "house.fill"
         case .r2:
             return "arrow.counterclockwise"
+        case .none:
+            return "star.fill"
         }
     }
     

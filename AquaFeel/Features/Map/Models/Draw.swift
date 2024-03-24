@@ -47,6 +47,10 @@ class Draw: MapDraw {
         line.path = path
         line.strokeColor = color
         line.strokeWidth = strokeWidth
+        
+        var p = GMSPath(fromEncodedPath: "ioiiE`_soQMA}@Oy@CO?c@?E?q@HaAP")
+        
+        print("p?.count()", p?.coordinate(at: 0).latitude, p?.coordinate(at: 0).longitude)
     }
 
     func doLine(_ path: GMSMutablePath) {

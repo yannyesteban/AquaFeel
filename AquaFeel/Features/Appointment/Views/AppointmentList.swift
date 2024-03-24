@@ -13,8 +13,27 @@ enum LeadModeFilter {
     case last30
     
 }
+func formattedTime(from text: String) -> String {
+    
+    let isoDateFormatter = ISO8601DateFormatter()
+    isoDateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+    
+    if let date = isoDateFormatter.date(from: text) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "h:mm a"
+        return formatter.string(from: date)
+    } else {
+        return "-"
+    }
+    
+    
+    
+    
+}
+
 struct AppointmentList: View {
     var profile:ProfileManager
+    @Binding var updated: Bool
     
     @State private var isCreateLeadActive = false
     @State var filter = ""
@@ -65,19 +84,26 @@ struct AppointmentList: View {
                 ForEach(manager.leads.indices, id: \.self) { index in
                     NavigationLink(destination:  
                                    //Text("Nothing")
-                                   CreateLead(profile: profile, lead: $manager.leads[index], mode: 2, manager: leadManager, userId: userId) {_ in}
+                                   CreateLead(profile: profile, lead: $manager.leads[index], mode: 2, manager: leadManager, updated: $updated) {_ in}
                                   ) {
                         HStack{
-                            SuperIconViewViewWrapper(status: getStatusType(from: manager.leads[index].status_id.name))
-                                .frame(width: 34, height: 34)
+                            VStack(alignment: .center){
+                                SuperIconViewViewWrapper(status: getStatusType(from: manager.leads[index].status_id.name))
+                                    .frame(width: 34, height: 34)
+                                Text(formattedTime(from: manager.leads[index].appointment_time)).font(.footnote)
+                            }.frame(width: 60)
+                            
                             VStack(alignment: .leading) {
                                 
                                 Text("\(manager.leads[index].first_name) \(manager.leads[index].last_name)" )
+                                    .font(.subheadline)
                                 //.fontWeight(.semibold)
                                 //.foregroundStyle(.blue)
                                 
                                 Text( "\(manager.leads[index].street_address)")
-                                    .foregroundStyle(.gray)
+                                    .foregroundStyle(.secondary)
+                                    //.font(.subheadline)
+                                
                                 
                             }
                             
@@ -87,6 +113,7 @@ struct AppointmentList: View {
                 }.onAppear{
                     print("list count is", manager.leads.count)
                 }
+                .padding(0)
                 
                 
                 ProgressView()
@@ -152,7 +179,7 @@ struct AppointmentList: View {
                 }
             }
             .navigationBarTitle("My Appointments")
-            .toolbar{
+            /*.toolbar{
                 ToolbarItem(placement: .automatic){
                     //ToolbarItemGroup(placement: .automatic){
                     
@@ -170,17 +197,14 @@ struct AppointmentList: View {
                     }
                 }
             }
-            
+            */
            
             
         }
         
         
         .onAppear{
-            Task{
-                
-                
-            }
+            
                
             
         }
@@ -205,5 +229,5 @@ struct AppointmentList: View {
 
 
 #Preview {
-    AppointmentList(profile: ProfileManager(), filterMode: .all, userId: "123456")//DD2EMns3y"
+    AppointmentList(profile: ProfileManager(), updated: .constant(false), filterMode: .all, userId: "DD2EMns3y")//DD2EMns3y"
 }

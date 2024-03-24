@@ -396,7 +396,7 @@ struct LeadPicker: View {
                                     .add(.limit, "40")
                                     .add(.searchValue, newSearchText)
                                 //lead2.loadAll(query:leadQuery)
-                                
+                                print("search() 1.0")
                                 manager.search()
                             }
 
@@ -640,7 +640,7 @@ struct RouteView: View {
                         // onSave(false)
 
                     } label: {
-                        Label("Save", systemImage: "square.and.arrow.down")
+                        Label("Save", systemImage: "externaldrive.fill")
                             .font(.title3)
                     }
                 }

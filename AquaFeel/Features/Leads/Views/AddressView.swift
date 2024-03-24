@@ -100,9 +100,7 @@ struct ModalView<T: AddressProtocol>: View {
                 
                 print(leadAddress)
                 
-            }else {
-                
-                print("selectedPlace is nil")
+           
             }
         }
         /*
@@ -210,9 +208,7 @@ struct AddressView<T: AddressProtocol>: View {
                     
                     print(leadAddress)
                     
-                }else {
-                    
-                    print("selectedPlace is nil")
+                
                 }
             }
         
@@ -239,7 +235,7 @@ struct TestAddressView: View {
 }
 
 #Preview("testLeadList") {
-    LeadListScreen(profile: ProfileManager())
+    LeadListScreen(profile: ProfileManager(), updated: .constant(false))
 }
 
 

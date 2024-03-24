@@ -131,6 +131,36 @@ class DragDropGestureRecognizer: UIGestureRecognizer {
 
 
 
+class CustomGestureRecognizer: UIGestureRecognizer {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
+        super.touchesBegan(touches, with: event)
+        
+        // Lógica para manejar el inicio del gesto
+        state = .began
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent) {
+        super.touchesMoved(touches, with: event)
+        
+        // Lógica para manejar el movimiento del gesto
+        state = .changed
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent) {
+        super.touchesEnded(touches, with: event)
+        
+        // Lógica para manejar el final del gesto
+        state = .ended
+    }
+    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent) {
+        super.touchesCancelled(touches, with: event)
+        
+        // Lógica para manejar la cancelación del gesto
+        state = .cancelled
+    }
+}
+
 struct MapButtonView: View {
     var action: () -> Void
     

@@ -100,9 +100,7 @@ struct ModalView2<T: AddressProtocol>: View {
                 
                 print(leadAddress)
                 
-            }else {
-                
-                print("selectedPlace is nil")
+            
             }
         }
         /*
@@ -208,9 +206,7 @@ struct AddressView2<T: AddressProtocol>: View {
                     
                     print(leadAddress)
                     
-                }else {
-                    
-                    print("selectedPlace is nil")
+                
                 }
             }
         

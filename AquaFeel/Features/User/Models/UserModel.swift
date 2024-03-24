@@ -345,6 +345,7 @@ func fetch<T2: Codable, T: Decodable>(body: T2, config: ApiConfig, completion: @
         return
     }
 
+    print(url)
     // Create URLRequest
     var request = URLRequest(url: url)
     request.httpMethod = config.method
@@ -352,9 +353,9 @@ func fetch<T2: Codable, T: Decodable>(body: T2, config: ApiConfig, completion: @
     // Set the request body with model data
     do {
         let jsonData = try JSONEncoder().encode(body)
-        if let jsonString = String(data: jsonData, encoding: .utf8) {
+        /*if let jsonString = String(data: jsonData, encoding: .utf8) {
             print(jsonString)
-        }
+        }*/
         request.httpBody = jsonData
 
     } catch {
@@ -378,9 +379,9 @@ func fetch<T2: Codable, T: Decodable>(body: T2, config: ApiConfig, completion: @
             completion(.failure(NSError(domain: "Response data is nil", code: 0, userInfo: nil)))
             return
         }
-        print("JSON: ")
-        print(String(decoding: data, as: UTF8.self))
-        print(";\n")
+        //print("JSON: ")
+        //print(String(decoding: data, as: UTF8.self))
+        //print(";\n")
         do {
             // Decode the API response
             let decodedResponse = try JSONDecoder().decode(T.self, from: data)
