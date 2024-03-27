@@ -15,40 +15,47 @@ class PlaceManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     override init() {
         super.init()
-        print("INIT setupLocationManager")
+        
         setupLocationManager()
     }
     
     func start(){
-        print("start")
-        //setupLocationManager()
+       
+        setupLocationManager()
         requestLocation()
     }
     
     private func setupLocationManager() {
-        print("setupLocationManager")
+        
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        
+        //location = locationManager.location?.coordinate
+        
         //locationManager.startUpdatingLocation()
     }
     
     func requestLocation() {
-        print("requestLocation")
+       
         
         locationManager.requestLocation()
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("didUpdateLocations")
+        
         if let location = locations.first?.coordinate {
-            print("didUpdateLocations ", location.latitude, location.longitude)
+            
             self.location = location
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-            print("didFailWithError")
-        print("Error al obtener la ubicación: \(error.localizedDescription)")
+            
+        print("error: \(error.localizedDescription)")
+    }
+    
+    func setLocation() {
+        location = locationManager.location?.coordinate
     }
 }

@@ -488,9 +488,12 @@ struct RouteView: View {
     @State var deleteConfirm = false
 
     @State var ok = false
+    @State var ok2 = false
     @State var error = false
     @State var message = ""
     @State var completed = false
+    
+    @Environment(\.presentationMode) var presentationMode
     var body: some View {
         Form {
             Section("Route Info") {
@@ -518,39 +521,7 @@ struct RouteView: View {
                     }
                 }
 
-                /* List {
-                     ForEach(leads.indices, id: \.self) { index in
-                         Toggle(isOn: $leads[index].isSelected) {
-                             HStack {
-                                 SuperIconViewViewWrapper(status: getStatusType(from: leads[index].status_id.name))
-                                     .frame(width: 34, height: 34)
-                                 VStack(alignment: .leading) {
-                                     Text("\(leads[index].first_name) \(leads[index].last_name)")
-                                     Text("\(leads[index].street_address)")
-                                         .foregroundStyle(.gray)
-                                 }
-                             }
-                         }
-                         .toggleStyle(SwitchToggleStyle(tint: .blue)) // Puedes ajustar el color del interruptor según tus preferencias
-                     }
-                 } */
-
-                /* List {
-                 ForEach($lead.leads.indices, id: \.self) { index in
-                 Toggle(isOn: $lead.leads[index].isSelected) {
-                 HStack {
-                 SuperIconViewViewWrapper(status: getStatusType(from: lead.leads[index].status_id.name))
-                 .frame(width: 34, height: 34)
-                 VStack(alignment: .leading) {
-                 Text("\(lead.leads[index].first_name) \(lead.leads[index].last_name)")
-                 Text("\(lead.leads[index].street_address)")
-                 .foregroundStyle(.gray)
-                 }
-                 }
-                 }
-                 .toggleStyle(SwitchToggleStyle(tint: .blue)) // Puedes ajustar el color del interruptor según tus preferencias
-                 }
-                 } */
+                
             }
             if mode == .edit {
                 Section {
@@ -567,20 +538,7 @@ struct RouteView: View {
                     .foregroundColor(.red)
                 }
             }
-            /*
-             Button(action: {
-                 // Acción al hacer clic en el botón
-                 // Puedes agregar aquí la lógica que se ejecutará cuando se presione el botón "Route it"
-             }) {
-                 Text("Route it")
-                     .foregroundColor(.white)
-                     .font(.headline)
-                     .padding()
-                     .background(Color.blue)
-                     .cornerRadius(10) // O cualquier valor que desees para redondear las esquinas
-             }
-             .frame(maxWidth: .infinity)
-              */
+          
         }
         .navigationBarTitle("Route")
         .toolbar {
@@ -595,6 +553,10 @@ struct RouteView: View {
 
                             try? await routeManager.save(mode: mode)
                             try? await routeManager.list()
+                            routeManager.route.id = routeManager.route._id
+                           
+                            mode = .edit
+                            ok = true
                         }
 
                         // onSave(false)
@@ -619,6 +581,7 @@ struct RouteView: View {
                 } label: {
                     Image(systemName: "car.fill")
                 }
+                .disabled(routeManager.route.id?.isEmpty ?? false)
 
                 NavigationLink {
                     LeadPicker(profile: profile, selectedLeads: $routeManager.route.leads)
@@ -646,18 +609,23 @@ struct RouteView: View {
             } label: {
                 Label("Add Leads", systemImage: "person.badge.plus")
                     .font(.title3)
+            }.alert(message, isPresented: $ok2) {
+                Button("Ok") {
+                    completed = true
+                    presentationMode.wrappedValue.dismiss()
+                }
             }
         }
         .alert(message, isPresented: $error) {
             Button("Ok", role: .cancel) {
             }
         }
-        .alert("Account Created Successfully", isPresented: $ok) {
+        .alert("Route Created Successfully", isPresented: $ok) {
             Button("Ok") {
                 completed = true
             }
         } message: {
-            Text("Password updated sucessfully")
+            Text("record updated sucessfully")
         }
         .confirmationDialog(
             "Delete record",
@@ -670,13 +638,14 @@ struct RouteView: View {
 
                             if result.statusCode == 201 {
                                 message = result.message
-                                ok = true
+                                ok2 = true
                                 // mode = .new
                                 routeManager.setNew(leads: [])
-                                DispatchQueue.main.async {
+                                
+                                /*DispatchQueue.main.async {
                                     mode = .new
                                 }
-
+                                */
                             } else {
                                 message = result.message
                                 error = true
@@ -684,6 +653,7 @@ struct RouteView: View {
                         }
                     }
                 }
+                
             },
             message: {
                 Text("are you sure to delete record?")

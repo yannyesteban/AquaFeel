@@ -243,10 +243,12 @@ class MapViewController: UIViewController, GMSMapViewDelegate, UIGestureRecogniz
        
         super.loadView()
 
-        var longitude = -95.72743170000001 //-74.0060 // -122.008972 //-122.008972
-        var latitude = 29.9170442//40.7128 // 39.2750209// 37.33464379999999
+        var longitude = 0.0 //-74.0060 // -122.008972 //-122.008972
+        var latitude = 0.0//40.7128 // 39.2750209// 37.33464379999999
 
+       
         if let location = location {
+           
             longitude = location.longitude
             latitude = location.latitude
         }

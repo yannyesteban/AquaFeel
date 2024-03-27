@@ -131,7 +131,7 @@ class PlaceViewModel: ObservableObject {
                         let result = try JSONDecoder().decode(GeocodeResult.self, from: data)
                         if let firstResult = result.results.first {
                             DispatchQueue.main.async {
-                                print("que paso", firstResult)
+                                //print("que paso", firstResult)
                                 self.selectedPlace = firstResult
                                 
                                 self.onSelectedPlaceUpdated?(firstResult, nil)

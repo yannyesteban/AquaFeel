@@ -52,6 +52,8 @@ class ProfileManager: LoginProtocol, ObservableObject {
     @Published var auth: Bool = false
     @Published var begin: Bool = false
     @Published var isLoading = false
+    
+    @Published var error = false
 
     @Published var userId: String = "xLv4wI2TM"//xLv4wI2TM - DD2EMns3y"
     @Published var token: String = SuperToken
@@ -114,6 +116,7 @@ class ProfileManager: LoginProtocol, ObservableObject {
     func login(completion: @escaping (Bool, LoginFetch?) -> Void) {
         DispatchQueue.main.async {
             self.isLoading = true
+            self.error = false
         }
 
         Task {
@@ -123,6 +126,8 @@ class ProfileManager: LoginProtocol, ObservableObject {
                 let userData = try await _userData(id: response.user?._id ?? "")
                 
                 DispatchQueue.main.async {
+                    
+                    self.error = false
                     self.isLoading = false
                     self.info = userData
                     self.user = userData.email
@@ -144,7 +149,15 @@ class ProfileManager: LoginProtocol, ObservableObject {
                 }
 
             } catch {
+                DispatchQueue.main.async {
+                    self.error = true
+                    self.auth = false
+                    self.isLoading = false
+                    
+                }
                 print("error 1.0 \(error)")
+                throw  error
+                
             }
         }
     }

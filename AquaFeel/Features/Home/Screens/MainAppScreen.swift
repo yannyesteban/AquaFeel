@@ -44,7 +44,7 @@ struct MainAppScreen: View {
             } else {
                 NavigationStack {
                     LoginScreen(loginManager: profile, isLoading: $isLoading)
-                        .alert("Error", isPresented: $alert) {
+                        .alert("Error", isPresented: $profile.error) {
                             Button("Ok", role: .cancel) {
                                 print(store.userData.auth)
                             }
@@ -72,6 +72,7 @@ struct MainAppScreen: View {
         }
         .task {
             loadDataFromAPI()
+            
         }
 
         .onChange(of: scenePhase) { phase in

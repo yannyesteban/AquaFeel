@@ -51,7 +51,7 @@ struct HomeScreen: View {
     // @State var manager = LeadManager()
     var placeManager = PlaceManager()
 
-    @State var startLocation = CLLocationCoordinate2D(latitude: 25.7134396, longitude: -80.2800688)
+    @State var startLocation = CLLocationCoordinate2D(latitude: 0, longitude: 0)
 
     @State private var selectedIdentifier: Calendar.Identifier = .gregorian
     @State private var lastSelectedDate: Date?
@@ -278,7 +278,7 @@ struct HomeScreen: View {
             .padding(.horizontal, 50)
         }
         .onAppear {
-            
+            placeManager.setLocation()
 
             DispatchQueue.main.async {
                 
@@ -313,6 +313,7 @@ struct HomeScreen: View {
         
 
         .onReceive(placeManager.$location) { newValue in
+            
             if let location = newValue {
                 self.startLocation = location
             }
