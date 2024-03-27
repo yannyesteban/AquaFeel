@@ -497,16 +497,9 @@ struct PathOptionView: View {
             }
             .onChange(of: leadsManager.updated){ value in
                 updated = value
-                print("bye update....", value)
+                
             }
-            .onDisappear{
-                print("bye update....1.0 ", leadsManager.updated)
-                if leadsManager.updated {
-                    print("bye update")
-                    //leadManager.search()
-                }
-                print("bye")
-            }
+            
             
             .onAppear {
                 
@@ -596,7 +589,7 @@ struct PathOptionView: View {
                     isPresented: $statusConfirm,
                     actions: {
                         Button("Change", role: .destructive) {
-                            print(99999)
+                            
                         }
                     }
                 )

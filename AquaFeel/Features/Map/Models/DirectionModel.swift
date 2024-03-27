@@ -23,16 +23,18 @@ struct GeocodedWaypoint: Codable {
 struct Route: Codable {
     let bounds: Bounds
     let copyrights: String
-    let legs: [Leg]
+    //let legs: [Leg]
     let overviewPolyline: OverviewPolyline
     let summary: String
     let warnings: [String]
     let waypointOrder: [Int]
     
+    var leads:[LeadModel] = []
+    
     enum CodingKeys: String, CodingKey {
         case bounds
         case copyrights
-        case legs
+        //case legs
         case overviewPolyline = "overview_polyline"
         case summary
         case warnings
@@ -110,7 +112,7 @@ struct OverviewPolyline: Codable {
 
 struct RouteResponse: Codable {
     let geocodedWaypoints: [GeocodedWaypoint]
-    let routes: [Route]
+    var routes: [Route]
     let status: String
     
     

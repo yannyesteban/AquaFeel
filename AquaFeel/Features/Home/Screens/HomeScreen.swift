@@ -36,7 +36,7 @@ struct DayIconView: View {
 
 struct HomeScreen: View {
     var profile: ProfileManager
-    @EnvironmentObject var store: MainStore<UserData>
+    //@EnvironmentObject var store: MainStore<UserData>
 
     @State public var showOption: Bool = false
 
@@ -143,7 +143,7 @@ struct HomeScreen: View {
             
             .sheet(isPresented: $showOption) {
                 SettingView(loginManager: profile)
-                    .environmentObject(store)
+                    //.environmentObject(store)
             }
             .toolbar {
                 if lastPick != nil {
@@ -235,11 +235,21 @@ struct HomeScreen: View {
                     }
                 } label: {
                     VStack {
-                        Image(systemName: "point.topleft.down.to.point.bottomright.curvepath")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 30, height: 30)
-                            .foregroundColor(.blue)
+                        
+                        if #available(iOS 17.0, *) {
+                            Image(systemName: "point.topleft.down.to.point.bottomright.curvepath")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(.blue)
+                        } else {
+                            Image(systemName: "car.fill")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(.blue)
+                        }
+                        
 
                         Text("Routes")
                             .font(.caption)

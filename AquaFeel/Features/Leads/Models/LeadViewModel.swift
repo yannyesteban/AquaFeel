@@ -9,8 +9,8 @@ import Foundation
 
 
 class LeadViewModel: ObservableObject {
-    @Published var first_name: String = "yanyesteban@gmail.com"
-    @Published var last_name: String = "Acceso1024"
+    @Published var first_name: String = ""
+    @Published var last_name: String = ""
     
     @Published var data: LeadModel = LeadModel()
     

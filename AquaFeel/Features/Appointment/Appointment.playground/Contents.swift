@@ -19,16 +19,7 @@ func searchPlaces(searchText: String) {
                      print(resultString)
                  }
                  
-               /* do {
-                    let result = try JSONDecoder().decode(PlaceResult.self, from: data)
-                    DispatchQueue.main.async {
-                        print(result.predictions)
-                        //self.places = result.predictions
-                    }
-                } catch {
-                    print("Error decoding: \(error.localizedDescription)")
-                }
-                */
+               
             } else if let error = error {
                 print("Error in request: \(error.localizedDescription)")
             }

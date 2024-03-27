@@ -91,12 +91,18 @@ struct AquaCalendar: UIViewRepresentable {
 
             if let date = calendar.date(from: dateComponents) {
                 if date != selectedDate {
-                    selectedDate = date
+                    // selectedDate = date
+                    DispatchQueue.main.async {
+                        self.selectedDate = date
+                    }
                 }
             }
-            picked.wrappedValue.toggle()
 
-            selection.setSelectedDates(selectedDates, animated: true)
+            DispatchQueue.main.async {
+                self.picked.wrappedValue.toggle()
+
+                selection.setSelectedDates(self.selectedDates, animated: true)
+            }
         }
 
         func multiDateSelection(_ selection: UICalendarSelectionMultiDate, didDeselectDate dateComponents: DateComponents) {
@@ -106,10 +112,11 @@ struct AquaCalendar: UIViewRepresentable {
             let calendar = Calendar.current
 
             if let date = calendar.date(from: DateComponents(year: calendarView.visibleDateComponents.year, month: calendarView.visibleDateComponents.month, day: 1)) {
-                if date != month.wrappedValue {
-                    month.wrappedValue = date
-
-                    changeMonth?(date)
+                DispatchQueue.main.async {
+                    if date != self.month.wrappedValue {
+                        self.month.wrappedValue = date
+                        self.changeMonth?(date)
+                    }
                 }
             }
 
@@ -121,7 +128,10 @@ struct AquaCalendar: UIViewRepresentable {
 
             if let date = calendar.date(from: dateComponents) {
                 if date != selectedDate {
-                    selectedDate = date
+                    // selectedDate = date
+                    DispatchQueue.main.async {
+                        self.selectedDate = date
+                    }
                 }
             }
             picked.wrappedValue.toggle()
@@ -130,8 +140,10 @@ struct AquaCalendar: UIViewRepresentable {
 
         func dateSelection(_ selection: UICalendarSelectionSingleDate, didSelectDate dateComponents: DateComponents?) {
             guard let dateComponents, let date = calendar.date(from: dateComponents) else { return }
-            // print(selection.selectedDate)
-            selectedDate = date
+            
+            DispatchQueue.main.async {
+                self.selectedDate = date
+            }
         }
 
         func calendarView(_ calendarView: UICalendarView,

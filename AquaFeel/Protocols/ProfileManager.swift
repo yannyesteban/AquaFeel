@@ -119,9 +119,9 @@ class ProfileManager: LoginProtocol, ObservableObject {
         Task {
             do {
                 let response: LoginResponse = try await _login()
-                // prettyPrint(response.user)
+                
                 let userData = try await _userData(id: response.user?._id ?? "")
-                // prettyPrint(userData)
+                
                 DispatchQueue.main.async {
                     self.isLoading = false
                     self.info = userData
@@ -228,7 +228,7 @@ class ProfileManager: LoginProtocol, ObservableObject {
 
             try await saveFile(userData: store, name: "LoginStore1.data")
         } catch {
-            print("Errror save", error)
+            print(error)
         }
     }
 
@@ -244,7 +244,7 @@ class ProfileManager: LoginProtocol, ObservableObject {
         do {
             let response: ProfileResponse = try await fetching(body: info, config: apiInfo)
 
-            print(response)
+            
             DispatchQueue.main.async {
                 self.waiting = false
             }
@@ -276,7 +276,7 @@ class ProfileManager: LoginProtocol, ObservableObject {
             
             return response
         } catch {
-            print(error)
+            
             DispatchQueue.main.async {
                 self.waiting = false
             }
@@ -320,8 +320,7 @@ func loadFile<T: Codable>(name: String) async throws -> T {
 }
 
 func saveFile<T: Codable>(userData: T, name: String) async throws {
-    print("save generic data...")
-    print(userData)
+    
 
     let data = try JSONEncoder().encode(userData)
     let outfile = try fileURL(name: name)
@@ -329,8 +328,7 @@ func saveFile<T: Codable>(userData: T, name: String) async throws {
 }
 
 func save2<T: Codable>(userData: T, name: String) async throws {
-    print("save generic data...")
-    print(userData)
+   
     let task = Task {
         let data = try JSONEncoder().encode(userData)
         let outfile = try fileURL(name: name)

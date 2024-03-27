@@ -110,8 +110,6 @@ struct AppointmentList: View {
                         }
                         
                     }
-                }.onAppear{
-                    print("list count is", manager.leads.count)
                 }
                 .padding(0)
                 
@@ -214,7 +212,7 @@ struct AppointmentList: View {
             manager.showLeads = showLeads
             manager.filterMode = filterMode
             manager.userId = userId
-            print("Task", manager.filterMode, userId)
+            
             
             try? await manager.list()
             

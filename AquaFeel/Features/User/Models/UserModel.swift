@@ -451,8 +451,8 @@ func fetch<T: Decodable>(config: ApiConfig, completion: @escaping (Result<T, Err
 class UserModel: ObservableObject {
     @Published var user: User = User()
 
-    @Published var first_name: String = "yanyesteban@gmail.com"
-    @Published var last_name: String = "Acceso1024"
+    @Published var first_name: String = ""
+    @Published var last_name: String = ""
 
     @Published var data: LeadModel = LeadModel()
 
@@ -507,7 +507,7 @@ class UserModel: ObservableObject {
         var dictionary: [LeadAllQuery: String] = [:]
 
         for myCase in LeadAllQuery.allCases {
-            print(myCase.rawValue)
+            
             dictionary[myCase] = myCase.rawValue
         }
 
@@ -559,7 +559,7 @@ class UserModel: ObservableObject {
         do {
             let jsonData = try JSONEncoder().encode(body)
             if let jsonString = String(data: jsonData, encoding: .utf8) {
-                print("/n/n/....../n")
+                
                 print(jsonString)
                 // return
             }

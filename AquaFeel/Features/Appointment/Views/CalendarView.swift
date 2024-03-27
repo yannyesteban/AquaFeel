@@ -54,9 +54,10 @@ func dateRangeString(for date: Date) -> (String, String) {
 func shortDate(_ date: Date) -> String {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "MMMM d" // "MMMM" representa el nombre completo del mes y "d"
-    
+
     return dateFormatter.string(from: date)
 }
+
 struct AppointmentList2: View {
     var profile: ProfileManager
     @Binding var updated: Bool
@@ -108,7 +109,7 @@ struct AppointmentList2: View {
         NavigationStack {
             List {
                 ForEach(manager.leads.indices, id: \.self) { index in
-                    NavigationLink(destination: CreateLead(profile: profile, lead: $manager.leads[index], manager: manager,updated: $updated) { _ in }) {
+                    NavigationLink(destination: CreateLead(profile: profile, lead: $manager.leads[index], manager: manager, updated: $updated) { _ in }) {
                         HStack {
                             SuperIconViewViewWrapper(status: getStatusType(from: manager.leads[index].status_id.name))
                                 .frame(width: 34, height: 34)
@@ -129,28 +130,21 @@ struct AppointmentList2: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .foregroundColor(.black)
                         .foregroundColor(.red)
-                } else  if manager.lastResult == 0 {
-                        Text("no leads")
+                } else if manager.lastResult == 0 {
+                    Text("no leads")
                 }
-                
             }
 
-            
             .onAppear {
-                print("onAppear 1.0...", profile.userId)
-
                 manager.userId = profile.userId
                 manager.role = ""
                 manager.token = profile.token
-
-              
             }
             .onAppear {
-                print("onAppear 2.0...", profile.userId)
                 manager.user = profile.userId
                 let leadQuery = LeadQuery()
                     .add(.field, "appointment_date")
-                    //.add(.statusId, "613bb4e0d6113e00169fefa9")
+                    // .add(.statusId, "613bb4e0d6113e00169fefa9")
                     .add(.quickDate, "custom")
 
                     .add(.fromDate, formatDateToString(date))
@@ -161,8 +155,6 @@ struct AppointmentList2: View {
                     .add(.limit, "1000")
                 // .add(.searchValue, "jose")
                 manager.list(query: leadQuery)
-
-                
             }
             .toolbar {
                 ToolbarItemGroup(placement: .topBarLeading) {
@@ -172,42 +164,34 @@ struct AppointmentList2: View {
 
                     } label: {
                         HStack {
-                            
                             Image(systemName: "gobackward")
                         }
-                        
+
                         .foregroundColor(.red)
                     }
                 }
             }
             .navigationBarTitle("Leads: \(shortDate(date))")
 
-            
         }.sheet(isPresented: $isFilterModalPresented) {
             FilterOption(filter: $manager.filter, filters: $manager.leadFilter, statusList: manager.statusList, usersList: manager.users) {
-                
                 manager.reset()
             }
-            
 
             Button(action: {
-                
                 isFilterModalPresented.toggle()
             }) {
                 Text("Close")
-               
             }
             .padding()
         }
 
         .onAppear {
-          
             manager.role = profile.role
             manager.token = profile.token
         }
     }
 }
-
 
 struct AppointmentByDate: View {
     var profile: ProfileManager
@@ -215,22 +199,22 @@ struct AppointmentByDate: View {
     var date: Date
     @State private var isCreateLeadActive = false
     @State var filter = ""
-    
+
     // @StateObject var lead2 = LeadViewModel(first_name: "Juan", last_name: "")
-    
+
     @StateObject var manager = LeadManager(autoLoad: false)
     // @StateObject var user = UserManager()
-    
+
     @State private var isFilterModalPresented = false
-    
+
     @State private var numbers: [Int] = Array(1 ... 20)
     @State private var isLoading = false
     @State private var isFinished = false
     @State var lead: LeadModel = LeadModel()
-    
+
     // @Binding var selectedLeads: [LeadModel]
     // @State var selectedLeads: Set<LeadModel> = []
-    
+
     // @EnvironmentObject var store: MainStore<UserData>
     /*
      func toggleLeadSelection(_ lead: LeadModel) {
@@ -255,12 +239,12 @@ struct AppointmentByDate: View {
             }
         }
     }
-    
+
     var body: some View {
         NavigationStack {
             List {
                 ForEach(manager.leads.indices, id: \.self) { index in
-                    NavigationLink(destination: CreateLead(profile: profile, lead: $manager.leads[index], manager: manager,updated: $updated) { _ in }) {
+                    NavigationLink(destination: CreateLead(profile: profile, lead: $manager.leads[index], manager: manager, updated: $updated) { _ in }) {
                         HStack {
                             SuperIconViewViewWrapper(status: getStatusType(from: manager.leads[index].status_id.name))
                                 .frame(width: 34, height: 34)
@@ -268,92 +252,76 @@ struct AppointmentByDate: View {
                                 Text("\(manager.leads[index].first_name) \(manager.leads[index].last_name)")
                                 // .fontWeight(.semibold)
                                 // .foregroundStyle(.blue)
-                                
+
                                 Text("\(manager.leads[index].street_address)")
                                     .foregroundStyle(.gray)
                             }
                         }
                     }
                 }
-                
+
                 if manager.lastResult == nil {
                     ProgressView()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .foregroundColor(.black)
                         .foregroundColor(.red)
-                } else  if manager.lastResult == 0 {
+                } else if manager.lastResult == 0 {
                     Text("no leads")
                 }
-                
             }
-            
-            
+
             .onAppear {
-                print("onAppear 1.0...", profile.userId)
-                
                 manager.userId = profile.userId
                 manager.role = ""
                 manager.token = profile.token
-                
-                
             }
             .onAppear {
-                print("onAppear 2.0...", profile.userId)
                 manager.user = profile.userId
                 let leadQuery = LeadQuery()
                     .add(.field, "appointment_date")
-                //.add(.statusId, "613bb4e0d6113e00169fefa9")
+                    // .add(.statusId, "613bb4e0d6113e00169fefa9")
                     .add(.quickDate, "custom")
-                
+
                     .add(.fromDate, formatDateToString(date))
-                
+
                     .add(.toDate, formatDateToString(date))
-                // .add(.searchKey, "all")
+                    // .add(.searchKey, "all")
                     .add(.offset, "0")
                     .add(.limit, "1000")
                 // .add(.searchValue, "jose")
                 manager.list(query: leadQuery)
-                
-                
             }
             .toolbar {
                 ToolbarItemGroup(placement: .topBarLeading) {
                     Button {
                         manager.reset()
                         manager.load(count: 9)
-                        
+
                     } label: {
                         HStack {
-                            
                             Image(systemName: "gobackward")
                         }
-                        
+
                         .foregroundColor(.red)
                     }
                 }
             }
             .navigationBarTitle("Leads: \(shortDate(date))")
-            
-            
+
         }.sheet(isPresented: $isFilterModalPresented) {
             FilterOption(filter: $manager.filter, filters: $manager.leadFilter, statusList: manager.statusList, usersList: manager.users) {
-                
                 manager.reset()
             }
-            
-            
+
             Button(action: {
-                
                 isFilterModalPresented.toggle()
             }) {
                 Text("Close")
-                
             }
             .padding()
         }
-        
+
         .onAppear {
-            
             manager.role = profile.role
             manager.token = profile.token
         }
@@ -362,13 +330,12 @@ struct AppointmentByDate: View {
 
 struct CalendarView: View {
     var profile: ProfileManager
-    @Binding var updated: Bool    
+    @Binding var updated: Bool
     @State private var isDateSelected = false
     @StateObject var manager: AppointmentManager = AppointmentManager(filterMode: .all)
     @Binding var lastSelectedDate: Date?
-    
+
     @State private var picked: Bool = false
-    
 
     @Binding var lastPick: String?
     @State var leads: [LeadModel] = []
@@ -376,96 +343,78 @@ struct CalendarView: View {
         NavigationStack {
             AquaCalendar(selected: $lastSelectedDate, month: $manager.month, picked: $picked, specialDates: manager.specialDates)
                 .navigationDestination(isPresented: $isDateSelected) {
-                    AppointmentList2(profile: profile,updated: $updated, date: lastSelectedDate ?? Date())
+                    AppointmentList2(profile: profile, updated: $updated, date: lastSelectedDate ?? Date())
                 }
                 .onChange(of: lastSelectedDate) { _ in
-                    //isDateSelected = true
+                    // isDateSelected = true
                 }
                 .onChange(of: picked) { _ in
                     withAnimation {
                         if let date = lastSelectedDate {
-                            
                             let lastDate = formatDateToString(date)
-                            
+
                             if lastDate != lastPick {
                                 leads = manager.groups[lastDate] ?? []
+                                
+                                leads.sort { lead1, lead2 in
+                                    return lead1.appointment_time < lead2.appointment_time
+                                }
+                                
                                 manager.leads = leads
                                 if leads.count > 0 {
                                     lastPick = lastDate
-                                }else {
+                                } else {
                                     lastPick = nil
                                 }
-                                
+
                             } else {
                                 lastPick = nil
                             }
-                            
                         }
                     }
-                    print(lastPick ?? "NIL")
-                    /*
-                    print(picked)
-                    if let date = lastSelectedDate, let group = manager.groups[formatDateToString(date)] {
-                        prettyPrint( group)
-                    }
-                   
-                     */
-                    //isDateSelected = true
                 }
         }
-        
-        
-        .onChange(of: isDateSelected) { value in
-            print("isDateSelected", value)
-            
-        }
-        
+
         .onAppear {
-            print("onAppear isDateSelected", isDateSelected)
             manager.userId = profile.userId
-            
+
             if let date = manager.month {
                 manager.doTask(date: date)
             }
         }
-        
-        //VStack(alignment: .leading){
-            
-            if lastPick != nil {
-                List {
-                    
-                    ForEach(manager.leads.indices, id: \.self) { index in
-                        NavigationLink(destination: CreateLead(profile: profile, lead: $manager.leads[index], manager: LeadManager(autoLoad: false),updated: $updated) { _ in }) {
+
+        // VStack(alignment: .leading){
+
+        if lastPick != nil {
+            List {
+                ForEach(manager.leads.indices, id: \.self) { index in
+                    NavigationLink(destination: CreateLead(profile: profile, lead: $manager.leads[index], manager: LeadManager(autoLoad: false), updated: $updated) { _ in }) {
+                        HStack {
+                            SuperIconViewViewWrapper(status: getStatusType(from: manager.leads[index].status_id.name))
+                                .frame(width: 30, height: 30)
                             HStack {
-                                SuperIconViewViewWrapper(status: getStatusType(from: manager.leads[index].status_id.name))
-                                    .frame(width: 30, height: 30)
-                                HStack {
-                                    VStack(alignment: .leading) {
-                                        Text("\(manager.leads[index].first_name) \(manager.leads[index].last_name)")
-                                        // .fontWeight(.semibold)
-                                        // .foregroundStyle(.blue)
-                                        
-                                        Text("\(formattedTime(from: manager.leads[index].appointment_time))")
-                                            .foregroundStyle(.gray)
-                                    }
-                                    Spacer()
-                                    
+                                VStack(alignment: .leading) {
+                                    Text("\(manager.leads[index].first_name) \(manager.leads[index].last_name)")
+                                    // .fontWeight(.semibold)
+                                    // .foregroundStyle(.blue)
+
+                                    Text("\(formattedTime(from: manager.leads[index].appointment_time))")
+                                        .foregroundStyle(.gray)
                                 }
-                                
+                                Spacer()
                             }
                         }
                     }
-                    
-                    
                 }
             }
-            
-        //}
+        }
+
+        // }
     }
 }
 
 #Preview {
-    CalendarView(profile: ProfileManager(),updated: .constant(false), lastSelectedDate: .constant(nil), lastPick: .constant(nil))
+    CalendarView(profile: ProfileManager(), updated: .constant(false), lastSelectedDate: .constant(nil), lastPick: .constant(nil))
 }
 
 struct xxxx: View {

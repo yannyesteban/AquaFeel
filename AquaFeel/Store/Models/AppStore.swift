@@ -30,14 +30,13 @@ class AppStore: ObservableObject {
             let userData = try JSONDecoder().decode(UserData.self, from: data)
             return userData
         }
-        print("load user data")
+        
         let userData = try await task.value
         self.userData = userData
     }
     
     func save(userData: UserData) async throws {
-        print("save user data...")
-        print(userData)
+        
         let task = Task {
             let data = try JSONEncoder().encode(userData)
             let outfile = try Self.fileURL()
@@ -58,7 +57,7 @@ protocol SimplyInitializable {
 class MainStore<T: SimplyInitializable & Codable>: ObservableObject {
     @Published var userData: T = T()
     @Published var auth = Authentication()
-    @Published var id = "********************"
+    @Published var id = ""
     @Published var user = ""
     @Published var firstName = ""
     @Published var lastName = ""
@@ -88,21 +87,15 @@ class MainStore<T: SimplyInitializable & Codable>: ObservableObject {
             let userData = try JSONDecoder().decode(T.self, from: data)
             return userData
         }
-        print("load generic data")
+       
         let userData = try await task.value
         self.userData = userData
         
-        let jsonData = try JSONEncoder().encode(userData)
-        if let jsonString = String(data: jsonData, encoding: .utf8) {
-            print("/n/n/....../n")
-            print(jsonString)
-            //return
-        }
+       
     }
     
     func save(userData: T) async throws {
-        print("save generic data...")
-        print(userData)
+        
         let task = Task {
             let data = try JSONEncoder().encode(userData)
             let outfile = try Self.fileURL()

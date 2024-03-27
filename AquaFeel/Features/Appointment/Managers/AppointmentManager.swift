@@ -96,7 +96,7 @@ class AppointmentManager: ObservableObject {
             }
 
         } catch {
-            print("error", error.localizedDescription)
+           
             throw error
         }
     }
@@ -126,7 +126,7 @@ class AppointmentManager: ObservableObject {
             }
 
         } catch {
-            print("error", error.localizedDescription)
+            
             throw error
         }
     }
@@ -135,12 +135,12 @@ class AppointmentManager: ObservableObject {
         let calendar = Calendar.current
         let components = calendar.dateComponents([.year, .month], from: myDate)
         guard let firstDateOfMonth = calendar.date(from: components) else {
-            print("Error")
+            
             return nil
         }
 
         guard let lastDateOfMonth = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: firstDateOfMonth) else {
-            print("Error")
+           
             return nil
         }
 
@@ -161,7 +161,7 @@ class AppointmentManager: ObservableObject {
             return groups
 
         } catch {
-            print("error", error.localizedDescription)
+            
             throw error
         }
     }
@@ -176,12 +176,12 @@ class AppointmentManager: ObservableObject {
         let calendar = Calendar.current
         let components = calendar.dateComponents([.year, .month], from: myDate)
         guard let firstDateOfMonth = calendar.date(from: components) else {
-            print("Error")
+            
             return nil
         }
 
         guard let lastDateOfMonth = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: firstDateOfMonth) else {
-            print("Error")
+            
             return nil
         }
 
@@ -216,7 +216,7 @@ class AppointmentManager: ObservableObject {
             return groups
 
         } catch {
-            print("error", error.localizedDescription)
+            
             throw error
         }
     }
@@ -242,7 +242,7 @@ class AppointmentManager: ObservableObject {
                 }
             }
         }
-        // print("\n\n", groupedLeads["2024-03-04"]?.count)
+        
         return groupedLeads
     }
 

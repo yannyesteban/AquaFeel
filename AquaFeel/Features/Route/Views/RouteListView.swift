@@ -60,17 +60,9 @@ struct ModalView3: View {
 
                         Task {
                             let x = try await placeViewModel.getDetails(placeID: place.placeID)
-                            // print("...", x?.formatted_address ?? "")
-                            // prettyPrint(x)
+
                             if let x = x {
                                 addressManager.address = placeViewModel.decodeDetails(placeDetails: x)
-                                print(addressManager.address)
-
-                                /*
-                                 var leadAddress:AddressModel = placeViewModel.decodeDetails(placeDetails: x) as! AddressModel
-
-                                 print(leadAddress?.city)
-                                 */
                             }
                         }
                     }
@@ -121,19 +113,17 @@ struct AddressRoute<T: AddressProtocol>: View {
     @State private var searchText2 = ""
     @State private var isModalPresented = false
     @State var value = 0
-    //@Binding var leadAddress: T
+    // @Binding var leadAddress: T
 
     @StateObject private var location = PlaceManager()
     @StateObject private var placeViewModel = PlaceViewModel()
     @State private var locationWaiting = false
 
-    //@State var address = AddressModel()
+    // @State var address = AddressModel()
 
     @StateObject var addressManager = AddressManager()
     var body: some View {
-        
         HStack {
-            
             TextField(label, text: $address)
 
                 .onTapGesture {
@@ -179,44 +169,37 @@ struct AddressRoute<T: AddressProtocol>: View {
 
         .onReceive(addressManager.$address) { new in
             DispatchQueue.main.async {
-                print(new.street_address)
                 address = new.street_address
                 latitude = new.latitude
                 longitude = new.longitude
             }
-            
-
         }
-        
+
         .onReceive(location.$location) { newValue in
-            print("one")
 
             if let place = newValue {
                 latitude = String(place.latitude)
                 longitude = String(place.longitude)
-                print("two", latitude, longitude)
+
                 placeViewModel.getPlaceDetailsByCoordinates(latitude: place.latitude, longitude: place.longitude)
             }
 
         }.onReceive(placeViewModel.$selectedPlace) { newSelectedPlace in
-            
+
             if let placeDetails = newSelectedPlace {
-               
                 locationWaiting = false
 
                 latitude = String(placeDetails.geometry?.location?.lat ?? 0.0)
                 longitude = String(placeDetails.geometry?.location?.lng ?? 0.0)
                 address = placeDetails.formatted_address ?? ""
-                
-               
             }
         }
     }
 }
 
 struct LeadPicker: View {
-    var profile:ProfileManager
-    
+    var profile: ProfileManager
+
     @State private var isCreateLeadActive = false
     @State var filter = ""
 
@@ -286,9 +269,6 @@ struct LeadPicker: View {
                                 }
                         }
                     }
-
-                }.onAppear {
-                    print("list count is", manager.leads.count)
                 }
 
                 ProgressView()
@@ -324,7 +304,6 @@ struct LeadPicker: View {
              } */
 
             .onAppear {
-                print("onAppear...")
                 manager.userId = profile.userId
                 manager.role = profile.role
                 manager.token = profile.token
@@ -332,14 +311,6 @@ struct LeadPicker: View {
                 manager.initFilter(completion: { _, _ in
 
                 })
-                // let leadQuery = LeadQuery()
-                // .add(.limit , "10")
-                // .add(.searchKey, "all")
-                // .add(.searchValue, "yanny")
-
-                // lead.load(count: 3)
-                // print(9999)
-                // user.list(){}
             }
 
             .toolbar {
@@ -365,21 +336,21 @@ struct LeadPicker: View {
                 VStack {
                     Divider()
                         .padding(.horizontal, 20)
-                        /*
-                        .toolbar {
-                            ToolbarItem(placement: .automatic) {
-                                // ToolbarItemGroup(placement: .automatic){
+                    /*
+                     .toolbar {
+                         ToolbarItem(placement: .automatic) {
+                             // ToolbarItemGroup(placement: .automatic){
 
-                                NavigationLink {
-                                    CreateLead(lead: $lead, mode: 1, manager: manager, userId: userId) { _ in
-                                    }
+                             NavigationLink {
+                                 CreateLead(lead: $lead, mode: 1, manager: manager, userId: userId) { _ in
+                                 }
 
-                                } label: {
-                                    Image(systemName: "plus")
-                                }
-                            }
-                        }
-                         */
+                             } label: {
+                                 Image(systemName: "plus")
+                             }
+                         }
+                     }
+                      */
                     // .toolbarBackground(.hidden, for: .navigationBar)
 
                     TextField("search by...", text: $manager.filter.textFilter)
@@ -390,13 +361,13 @@ struct LeadPicker: View {
 
                             searchTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { _ in
                                 let leadQuery = LeadQuery()
-                                    .add(.limit , "30")
+                                    .add(.limit, "30")
                                     .add(.searchKey, "all")
                                     .add(.offset, "0")
                                     .add(.limit, "40")
                                     .add(.searchValue, newSearchText)
-                                //lead2.loadAll(query:leadQuery)
-                                print("search() 1.0")
+                                // lead2.loadAll(query:leadQuery)
+
                                 manager.search()
                             }
 
@@ -431,7 +402,6 @@ struct LeadPicker: View {
 
         }.sheet(isPresented: $isFilterModalPresented) {
             FilterOption(filter: $manager.filter, filters: $manager.leadFilter, statusList: manager.statusList, usersList: manager.users) {
-                print("reseteando")
                 manager.reset()
             }
             .onAppear {
@@ -451,15 +421,9 @@ struct LeadPicker: View {
         }
 
         .onAppear {
-            // print(":::::::", store.token)
-            // manager.user = store.id
-            // manager.token = store.token
-            // manager.role = store.role
-
             manager.user = profile.userId
             manager.token = profile.token
             manager.role = profile.role
-
         }
     }
 }
@@ -506,10 +470,9 @@ struct DateLocalView: View {
 }
 
 struct RouteView: View {
-    var profile:ProfileManager
-    @ObservedObject var routeManager:RouteManager
-    
-    
+    var profile: ProfileManager
+    @ObservedObject var routeManager: RouteManager
+
     @State var mode: RecordMode = .none
     @State var id: String
     @State var AddressFrom: LeadModel = LeadModel()
@@ -519,12 +482,11 @@ struct RouteView: View {
 
     @StateObject var lead = LeadViewModel(first_name: "Juan", last_name: "")
     @State var leads: [LeadModel] = []
-    
 
     @State var isShowingSnackbar = false
     @State var showPicker = false
     @State var deleteConfirm = false
-    
+
     @State var ok = false
     @State var error = false
     @State var message = ""
@@ -534,7 +496,6 @@ struct RouteView: View {
             Section("Route Info") {
                 TextField("Route Name", text: $routeManager.route.name)
 
-                
                 AddressRoute<LeadModel>(label: "Start Point", address: $routeManager.route.startingAddress, latitude: $routeManager.route.startingAddressLat, longitude: $routeManager.route.startingAddressLong)
                 AddressRoute<LeadModel>(label: "End Point", address: $routeManager.route.endingAddress, latitude: $routeManager.route.endingAddressLat, longitude: $routeManager.route.endingAddressLong)
             }
@@ -607,23 +568,22 @@ struct RouteView: View {
                 }
             }
             /*
-            Button(action: {
-                // Acción al hacer clic en el botón
-                // Puedes agregar aquí la lógica que se ejecutará cuando se presione el botón "Route it"
-            }) {
-                Text("Route it")
-                    .foregroundColor(.white)
-                    .font(.headline)
-                    .padding()
-                    .background(Color.blue)
-                    .cornerRadius(10) // O cualquier valor que desees para redondear las esquinas
-            }
-            .frame(maxWidth: .infinity)
-             */
+             Button(action: {
+                 // Acción al hacer clic en el botón
+                 // Puedes agregar aquí la lógica que se ejecutará cuando se presione el botón "Route it"
+             }) {
+                 Text("Route it")
+                     .foregroundColor(.white)
+                     .font(.headline)
+                     .padding()
+                     .background(Color.blue)
+                     .cornerRadius(10) // O cualquier valor que desees para redondear las esquinas
+             }
+             .frame(maxWidth: .infinity)
+              */
         }
         .navigationBarTitle("Route")
         .toolbar {
-            
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 if routeManager.waiting {
                     ProgressView("")
@@ -653,9 +613,13 @@ struct RouteView: View {
             ToolbarItem(placement: .automatic) {
                 // ToolbarItemGroup(placement: .automatic){
 
-                Button("Route It") {
-                    //showPicker = true
+                NavigationLink {
+                    RouteMapsScreen(profile: profile, routeId: routeManager.route._id)
+
+                } label: {
+                    Image(systemName: "car.fill")
                 }
+
                 NavigationLink {
                     LeadPicker(profile: profile, selectedLeads: $routeManager.route.leads)
 
@@ -666,7 +630,6 @@ struct RouteView: View {
         }
         .onAppear {
             Task {
-                print("mode", mode)
                 if mode == .edit {
                     try! await routeManager.detail(routeId: id)
 
@@ -678,11 +641,9 @@ struct RouteView: View {
             }
         }
         HStack {
-            
-            
-            Button{
+            Button {
                 showPicker = true
-            }label: {
+            } label: {
                 Label("Add Leads", systemImage: "person.badge.plus")
                     .font(.title3)
             }
@@ -694,8 +655,6 @@ struct RouteView: View {
         .alert("Account Created Successfully", isPresented: $ok) {
             Button("Ok") {
                 completed = true
-                //print(completed)
-                // print(store.userData.auth)
             }
         } message: {
             Text("Password updated sucessfully")
@@ -705,39 +664,25 @@ struct RouteView: View {
             isPresented: $deleteConfirm,
             actions: {
                 Button("Delete", role: .destructive) {
-                    Task{
-                        
-                        
-                        if let result = try? await routeManager.delete(routeId: id){
-                            
+                    Task {
+                        if let result = try? await routeManager.delete(routeId: id) {
                             try? await routeManager.list()
-                            
+
                             if result.statusCode == 201 {
                                 message = result.message
                                 ok = true
-                                //mode = .new
-                                routeManager.setNew(leads : [])
+                                // mode = .new
+                                routeManager.setNew(leads: [])
                                 DispatchQueue.main.async {
                                     mode = .new
-                                    /*
-                                    id = "0"
-                                    leads = []
-                                    print("deleteeeeee")
-                                    routeManager.route = RouteModel()
-                                     */
                                 }
-                                
-                                
-                            } else{
+
+                            } else {
                                 message = result.message
                                 error = true
                             }
                         }
-
-                        
                     }
-                    
-                    
                 }
             },
             message: {
@@ -748,7 +693,7 @@ struct RouteView: View {
 }
 
 struct RouteListView: View {
-    var profile:ProfileManager
+    var profile: ProfileManager
     @StateObject var routeManager = RouteManager()
     var body: some View {
         NavigationStack {
@@ -776,33 +721,30 @@ struct RouteListView: View {
                     // ToolbarItemGroup(placement: .automatic){
 
                     NavigationLink {
-                        RouteView(profile: profile, routeManager: routeManager , mode: .new, id: "0", leads: [])
+                        RouteView(profile: profile, routeManager: routeManager, mode: .new, id: "0", leads: [])
 
                     } label: {
                         Image(systemName: "plus")
                     }
                 }
             }
-            .onAppear{
-                print("********* ----- ---- ", profile.userId)
-                routeManager.userId = profile.userId
+            .onAppear {
                 
+                routeManager.userId = profile.userId
+
                 Task {
                     do {
-                        //try await detail(routeId: "64c82646b6b8eb6360a05382" )
+                        // try await detail(routeId: "64c82646b6b8eb6360a05382" )
                         try await routeManager.list()
                     } catch {
                         print(error)
                     }
-                    
-                    
                 }
-                
             }
         }
     }
 }
 
 #Preview {
-    RouteListView(profile:  ProfileManager())
+    RouteListView(profile: ProfileManager())
 }

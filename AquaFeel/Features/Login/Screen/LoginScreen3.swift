@@ -9,12 +9,12 @@ import SwiftUI
 
 struct LoginScreen3: View {
     @Binding var userData: UserData
-    @ObservedObject var viewModel: LoginViewModel = LoginViewModel(email: "yannyesteban@gmail.com", password: "Acceso1024")
+    @ObservedObject var viewModel: LoginViewModel = LoginViewModel(email: "", password: "")
     @Environment(\.scenePhase) private var scenePhase
     let saveAction: ()->Void
     
     @State private var alert = false;
-    @State private var texto = "yanny"
+    @State private var texto = ""
     var body: some View {
         
         ZStack{

@@ -32,7 +32,7 @@ struct LocationTextField: View {
             Button(action: {
                 viewModel.start()
                 viewModel.requestLocation()
-                print(999)
+                
                 isLocationVisible.toggle()
             }) {
                 Image(systemName: "location.circle.fill")

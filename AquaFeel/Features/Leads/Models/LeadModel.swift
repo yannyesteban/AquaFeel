@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 struct LeadsRequest: Codable {
     let leads: [LeadModel]
     let count: Int?
@@ -263,6 +264,9 @@ struct LeadModel: Codable, AddressProtocol, Equatable, Hashable {
     var isSelected: Bool
     var mode: Int = 2
 
+    var routeOrder: Int
+    
+    
     enum CodingKeys: String, CodingKey {
         case id = "_id"
         case business_name
@@ -389,6 +393,23 @@ struct LeadModel: Codable, AddressProtocol, Equatable, Hashable {
          updated_on = try container.decode(String.self, forKey: .updated_on)*/
         isSelected = true
         user_id = created_by._id
+        routeOrder = 0
+    }
+
+    init(from json: String) throws {
+        guard let data = json.data(using: .utf8) else {
+            throw NSError(domain: "LeadModel", code: 1, userInfo: ["message": "Error"])
+        }
+        do {
+            let decoder = JSONDecoder()
+
+            let decodedLead = try decoder.decode(LeadModel.self, from: data)
+
+            self = decodedLead
+        } catch {
+            print(error)
+            throw error
+        }
     }
 
     init(
@@ -446,6 +467,7 @@ struct LeadModel: Codable, AddressProtocol, Equatable, Hashable {
         self.created_by = created_by
         isSelected = true
         self.mode = mode
+        routeOrder = 0
     }
 
     func encode(to encoder: Encoder) throws {

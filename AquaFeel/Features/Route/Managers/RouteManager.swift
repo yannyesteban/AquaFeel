@@ -40,8 +40,7 @@ class RouteManager: ObservableObject {
             DispatchQueue.main.async {
                 self.routes = response.routes
             }
-            //routes = response.routes
-            //prettyPrint(response.routes)
+            
             
         } catch {
             throw error
@@ -65,7 +64,7 @@ class RouteManager: ObservableObject {
                 self.route.userId = self.userId
             }
             
-            //prettyPrint(response.route.leads)
+            
             
         } catch {
             throw error
@@ -89,10 +88,7 @@ class RouteManager: ObservableObject {
             return
         }
         
-        //prettyPrint(route)
         
-        //var record = body
-        //waiting = true
         let info = ApiConfig(method: method, host: "api.aquafeelvirginia.com", path: path, token: token, params: nil)
         
         //let info = ApiConfig(scheme: "http", method: method, host: "127.0.0.1", path: path, token: token, params: nil, port : "4000")

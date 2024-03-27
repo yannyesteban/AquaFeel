@@ -48,9 +48,9 @@ class Draw: MapDraw {
         line.strokeColor = color
         line.strokeWidth = strokeWidth
         
-        var p = GMSPath(fromEncodedPath: "ioiiE`_soQMA}@Oy@CO?c@?E?q@HaAP")
         
-        print("p?.count()", p?.coordinate(at: 0).latitude, p?.coordinate(at: 0).longitude)
+        
+        
     }
 
     func doLine(_ path: GMSMutablePath) {
@@ -205,7 +205,7 @@ class Draw: MapDraw {
         // polygon.strokeColor = .yellow
 
         if mapView.mapCapabilities.contains(.spritePolylines) {
-            print(".......... SIIII")
+            //print(".......... SIIII")
         }
 
         // polygon.spans = [GMSStyleSpan(style: solidRed)]
@@ -296,7 +296,7 @@ class DrawMark: NSObject, GMSMapViewDelegate {
     }
 
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
-        print("arenita bebita 0.0")
+        
 
         doMark(coordinate)
     }
@@ -314,7 +314,7 @@ class DrawMark: NSObject, GMSMapViewDelegate {
     }
 
     func stop() {
-        print("delete mark")
+        
         marker.map = nil
     }
 

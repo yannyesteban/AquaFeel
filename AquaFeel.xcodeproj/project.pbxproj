@@ -1087,10 +1087,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AquaFeel/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
-				INFOPLIST_KEY_NSAppleMusicUsageDescription = "we need to do call";
 				INFOPLIST_KEY_NSContactsUsageDescription = "The app needs access contacts to convert";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "i need you location ";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = Important;
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Important We need you location";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Important We need you location";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1132,10 +1131,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AquaFeel/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
-				INFOPLIST_KEY_NSAppleMusicUsageDescription = "we need to do call";
 				INFOPLIST_KEY_NSContactsUsageDescription = "The app needs access contacts to convert";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "i need you location ";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = Important;
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Important We need you location";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Important We need you location";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

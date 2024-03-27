@@ -240,7 +240,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate, UIGestureRecogniz
     private var clusterManager1: GMUClusterManager!
 
     override func loadView() {
-        print(" loadView() ")
+       
         super.loadView()
 
         var longitude = -95.72743170000001 //-74.0060 // -122.008972 //-122.008972
@@ -311,8 +311,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate, UIGestureRecogniz
     }
 
     override func viewDidLoad() {
-        print(" viewDidLoad() ")
-        print("viewDidLoad.........................................")
+       
         super.viewDidLoad()
         let size: CGFloat = 40.0
         let items = [
@@ -1094,7 +1093,7 @@ struct LeadMap: View {
                         //manager.leads.append(lead)
                     }
                 }.onAppear {
-                    // print(" \n\n\nnew position xxxxxxxxx", aqua.newPosition)
+                    
                     placeViewModel.getPlaceDetailsByCoordinates(latitude: aqua.newPosition?.latitude ?? 0, longitude: aqua.newPosition?.longitude ?? 0)
                 }.onReceive(placeViewModel.$selectedPlace) { x in
 
@@ -1125,7 +1124,7 @@ struct LeadMap: View {
          
             .sheet(isPresented: $showFilter) {
                 FilterOption(filter: $manager.filter, filters: $manager.leadFilter, statusList: manager.statusList, usersList: manager.users) {
-                    print("reseteando")
+                   
                     // lead.reset()
                     manager.resetFilter()
                     manager.runLoad()
@@ -1193,7 +1192,7 @@ struct LeadMap: View {
 
                 DispatchQueue.main.async {
                     profile.info.leadFilters = filter
-                    print("xxxxx.xxxx.x.x.x.x")
+                    
                 }
             }
 
@@ -1270,11 +1269,7 @@ struct LeadMap: View {
                 
             }
         
-            .onChange(of: scenePhase) { phase in
-
-                print("Out ??", phase)
-                print("manager.leads.count: ", manager.leads.count)
-            }
+            
         /*if info {
             NavigationStack {
                 CreateLead(profile: profile, lead: Binding<LeadModel>(

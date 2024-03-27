@@ -33,14 +33,14 @@ struct MainAppScreen: View {
     var body: some View {
         VStack {
             if profile.info.isVerified {
-                RouteMapsScreen()
-                /*
+                //RouteMapsScreen()
+                
                 HomeScreen(profile: profile)
                     
                     .environmentObject(store)
                     .environmentObject(profile)
                     .onChange(of: scenePhase) { _ in
-                    }*/
+                    }
             } else {
                 NavigationStack {
                     LoginScreen(loginManager: profile, isLoading: $isLoading)
