@@ -20,6 +20,10 @@
 		2B1CB9262B6540A7003CE11A /* UIViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1CB9252B6540A7003CE11A /* UIViewTest.swift */; };
 		2B1CB9292B657422003CE11A /* LeadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1CB9282B657422003CE11A /* LeadModel.swift */; };
 		2B217BFE2BABA7EC0055F1D4 /* LeadsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B217BFD2BABA7EC0055F1D4 /* LeadsManager.swift */; };
+		2B29D7712BB89A8B00E0AF5D /* HomeMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B29D7702BB89A8B00E0AF5D /* HomeMap.swift */; };
+		2B29D7732BB89CEC00E0AF5D /* HomeMapsRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B29D7722BB89CEC00E0AF5D /* HomeMapsRepresentable.swift */; };
+		2B29D7752BB89F0400E0AF5D /* HomeMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B29D7742BB89F0400E0AF5D /* HomeMapsViewController.swift */; };
+		2B29D7772BB8A03400E0AF5D /* HomeMapsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B29D7762BB8A03400E0AF5D /* HomeMapsModel.swift */; };
 		2B3502392B97A10E00190FAC /* PhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3502382B97A10E00190FAC /* PhoneView.swift */; };
 		2B3697EC2B87EDDE008B339B /* SnackbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3697EB2B87EDDE008B339B /* SnackbarView.swift */; };
 		2B3A2C052B782596003EED04 /* LeadList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3A2C042B782596003EED04 /* LeadList.swift */; };
@@ -88,6 +92,8 @@
 		2BA8A5C92B545E1E0004CDCD /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA8A5C82B545E1E0004CDCD /* UserData.swift */; };
 		2BA94E6B2B71265B0004C446 /* DragDropGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA94E6A2B71265B0004C446 /* DragDropGestureRecognizer.swift */; };
 		2BA94E6D2B7152E50004C446 /* MapMenuViewController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA94E6C2B7152E50004C446 /* MapMenuViewController1.swift */; };
+		2BAE58242BB9B05D005A8949 /* LassoTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAE58232BB9B05D005A8949 /* LassoTool.swift */; };
+		2BAE58272BB9B9D0005A8949 /* HomeMapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAE58262BB9B9D0005A8949 /* HomeMapManager.swift */; };
 		2BAEE8552B59CFEC00B0C16D /* MyTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAEE8542B59CFEC00B0C16D /* MyTab.swift */; };
 		2BAEE8572B59D02900B0C16D /* TabA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAEE8562B59D02900B0C16D /* TabA.swift */; };
 		2BAEE8592B59D1AB00B0C16D /* TabB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAEE8582B59D1AB00B0C16D /* TabB.swift */; };
@@ -139,6 +145,10 @@
 		2B1CB9252B6540A7003CE11A /* UIViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewTest.swift; sourceTree = "<group>"; };
 		2B1CB9282B657422003CE11A /* LeadModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadModel.swift; sourceTree = "<group>"; };
 		2B217BFD2BABA7EC0055F1D4 /* LeadsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadsManager.swift; sourceTree = "<group>"; };
+		2B29D7702BB89A8B00E0AF5D /* HomeMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMap.swift; sourceTree = "<group>"; };
+		2B29D7722BB89CEC00E0AF5D /* HomeMapsRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMapsRepresentable.swift; sourceTree = "<group>"; };
+		2B29D7742BB89F0400E0AF5D /* HomeMapsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMapsViewController.swift; sourceTree = "<group>"; };
+		2B29D7762BB8A03400E0AF5D /* HomeMapsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMapsModel.swift; sourceTree = "<group>"; };
 		2B3502382B97A10E00190FAC /* PhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneView.swift; sourceTree = "<group>"; };
 		2B3697EB2B87EDDE008B339B /* SnackbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackbarView.swift; sourceTree = "<group>"; };
 		2B3A2C042B782596003EED04 /* LeadList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadList.swift; sourceTree = "<group>"; };
@@ -210,6 +220,8 @@
 		2BA8A5C82B545E1E0004CDCD /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		2BA94E6A2B71265B0004C446 /* DragDropGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragDropGestureRecognizer.swift; sourceTree = "<group>"; };
 		2BA94E6C2B7152E50004C446 /* MapMenuViewController1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMenuViewController1.swift; sourceTree = "<group>"; };
+		2BAE58232BB9B05D005A8949 /* LassoTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LassoTool.swift; sourceTree = "<group>"; };
+		2BAE58262BB9B9D0005A8949 /* HomeMapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMapManager.swift; sourceTree = "<group>"; };
 		2BAEE8542B59CFEC00B0C16D /* MyTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTab.swift; sourceTree = "<group>"; };
 		2BAEE8562B59D02900B0C16D /* TabA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabA.swift; sourceTree = "<group>"; };
 		2BAEE8582B59D1AB00B0C16D /* TabB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabB.swift; sourceTree = "<group>"; };
@@ -296,6 +308,27 @@
 				2B98C2C62B9E68230024FB2D /* LeadViewModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		2B29D76E2BB89A6E00E0AF5D /* HomeMap */ = {
+			isa = PBXGroup;
+			children = (
+				2BAE58252BB9B9B6005A8949 /* Managers */,
+				2B29D76F2BB89A7800E0AF5D /* Views */,
+			);
+			path = HomeMap;
+			sourceTree = "<group>";
+		};
+		2B29D76F2BB89A7800E0AF5D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2B29D7702BB89A8B00E0AF5D /* HomeMap.swift */,
+				2BAE58232BB9B05D005A8949 /* LassoTool.swift */,
+				2B29D7762BB8A03400E0AF5D /* HomeMapsModel.swift */,
+				2B29D7722BB89CEC00E0AF5D /* HomeMapsRepresentable.swift */,
+				2B29D7742BB89F0400E0AF5D /* HomeMapsViewController.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		2B3BFBFE2B5C1E6500069F99 /* Protocols */ = {
@@ -587,6 +620,7 @@
 		2BA8A5A72B5434B60004CDCD /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				2B29D76E2BB89A6E00E0AF5D /* HomeMap */,
 				2B3F34AE2BA21A1300BAF52D /* Appointment */,
 				2B6EE6CE2B9F889900FAFED7 /* Route */,
 				2B526FA42B7D2A520024A578 /* User */,
@@ -715,6 +749,14 @@
 				2BA43D152B5AC88600960681 /* Authentication.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		2BAE58252BB9B9B6005A8949 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				2BAE58262BB9B9D0005A8949 /* HomeMapManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		2BAEE8532B59CFD700B0C16D /* Test */ = {
@@ -874,6 +916,7 @@
 				2BED59C02B85549A0094CD7E /* AddressSelector.swift in Sources */,
 				2B98C2C72B9E68230024FB2D /* LeadViewModel.swift in Sources */,
 				2BA8A5A42B54327A0004CDCD /* Test.swift in Sources */,
+				2B29D7732BB89CEC00E0AF5D /* HomeMapsRepresentable.swift in Sources */,
 				2B4713172B842D9D0020D66F /* testUI.swift in Sources */,
 				2B75B34E2B5F24C000BDD12C /* ProfileView.swift in Sources */,
 				2BA8A5C22B5442ED0004CDCD /* LoginAction.swift in Sources */,
@@ -883,6 +926,7 @@
 				2B5DF8FD2B7686CD002ECBAC /* PlaceViewModel.swift in Sources */,
 				2BEC721B2BB09698009BF4E0 /* RouteController.swift in Sources */,
 				2BA43D1C2B5B322300960681 /* Test3.swift in Sources */,
+				2B29D7712BB89A8B00E0AF5D /* HomeMap.swift in Sources */,
 				2B75B3482B5F1AE000BDD12C /* SettingView.swift in Sources */,
 				2B693A5C2BAA43010048B6A5 /* AquaCalendar.swift in Sources */,
 				2BBDA2F92B90FD160073F43B /* EquitableView.swift in Sources */,
@@ -897,11 +941,13 @@
 				2BD84DB12B56CDB200BC01C9 /* CreateLead.swift in Sources */,
 				2BA8A5B92B5441EE0004CDCD /* LoginViewModel.swift in Sources */,
 				2BAEE8572B59D02900B0C16D /* TabA.swift in Sources */,
+				2BAE58242BB9B05D005A8949 /* LassoTool.swift in Sources */,
 				2BCA0B7D2B7BF026006D3993 /* FilterOption.swift in Sources */,
 				2B5811002B683C9E00B48A88 /* MapViewController.swift in Sources */,
 				2BD84DB52B572F3100BC01C9 /* SplashScreen.swift in Sources */,
 				2BD01F2B2B8B93E900FCE5CB /* LeadManager.swift in Sources */,
 				2BA94E6D2B7152E50004C446 /* MapMenuViewController1.swift in Sources */,
+				2B29D7752BB89F0400E0AF5D /* HomeMapsViewController.swift in Sources */,
 				2BA43D162B5AC88600960681 /* Authentication.swift in Sources */,
 				2BA8A5672B541C0C0004CDCD /* ContentView.swift in Sources */,
 				2BA8A5652B541C0C0004CDCD /* AquaFeelApp.swift in Sources */,
@@ -911,6 +957,7 @@
 				2BB966CE2B8BED73007E1442 /* PP.swift in Sources */,
 				2BA484762B9A2FB300247BD0 /* RegistrationView.swift in Sources */,
 				2B3F34B02BA21A2E00BAF52D /* AppointmentManager.swift in Sources */,
+				2BAE58272BB9B9D0005A8949 /* HomeMapManager.swift in Sources */,
 				2BEC721D2BB0D6D8009BF4E0 /* DirectionModel.swift in Sources */,
 				2B5793B72B9B861200E907E9 /* PassEdit.swift in Sources */,
 				2BC6CCED2B9F9CF600C7DA19 /* RouteListView.swift in Sources */,
@@ -924,6 +971,7 @@
 				2B3F34B42BA21F2800BAF52D /* AppointmentList.swift in Sources */,
 				2B6261CE2B86387200E7DF17 /* LeadDetailView.swift in Sources */,
 				2B526FA32B7CFCDC0024A578 /* MainAppScreen.swift in Sources */,
+				2B29D7772BB8A03400E0AF5D /* HomeMapsModel.swift in Sources */,
 				2B06D2E32B69749D00B401FB /* CustomTextView.swift in Sources */,
 				2B5793B52B9B856300E907E9 /* ProfileEdit.swift in Sources */,
 				2B06E8AF2BA3D0FE001C138F /* TestGitHUB.swift in Sources */,

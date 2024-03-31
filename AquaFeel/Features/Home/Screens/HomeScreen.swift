@@ -209,7 +209,26 @@ struct HomeScreen: View {
                     }
                 }
             }
+            
             HStack {
+                NavigationLink {
+                    HomeMap(profile: profile, updated: $updated, leadManager: manager, location: startLocation)
+                    
+                    // .edgesIgnoringSafeArea(.all)
+                } label: {
+                    VStack {
+                        Image(systemName: "network.badge.shield.half.filled")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 30, height: 30)
+                            .foregroundColor(.blue)
+                        
+                        Text("Map")
+                            .font(.caption)
+                            .foregroundColor(.blue)
+                    }
+                }
+                Spacer()
                 NavigationLink {
                     LeadMap(profile: profile, updated: $updated, manager: manager, location: startLocation)
 
@@ -333,7 +352,7 @@ struct OptionB: View {
     }
 }
 
-#Preview {
+#Preview ("Home"){
     MainAppScreenHomeScreenPreview()
 }
 

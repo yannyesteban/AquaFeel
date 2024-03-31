@@ -20,7 +20,7 @@ struct LoginScreen: View {
                 VStack {
                     HStack {
                         Text(appName).font(.title2).foregroundStyle(Color.accentColor)
-                        Text(appVersion).font(.title2)
+                        //Text(appVersion).font(.title2)
                     }.padding().bold()
 
                     Image("Logo1")

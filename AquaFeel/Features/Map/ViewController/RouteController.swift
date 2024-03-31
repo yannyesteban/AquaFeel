@@ -14,6 +14,9 @@ enum MapState {
     case next
     case prev
     case tap
+    
+    case lasso
+    case draw
 }
 
 struct RouteRequest {
@@ -557,7 +560,7 @@ struct RouterMapsView: UIViewControllerRepresentable {
 
 struct RouteMapsScreen: View {
     var profile: ProfileManager
-    @State var routeId: String = "" // "660392ab5cc75bdb59dca01b"
+    @State var routeId: String = "6605d1795cc75bdb59dcbfbe" // "660392ab5cc75bdb59dca01b"
     @StateObject var mapManager = MapManager()
     @StateObject var routeManager = RouteManager()
     @StateObject var directionManager = DirectionManager()

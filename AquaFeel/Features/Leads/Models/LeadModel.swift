@@ -7,6 +7,7 @@
 
 import Foundation
 
+import GoogleMaps
 
 struct LeadsRequest: Codable {
     let leads: [LeadModel]
@@ -266,6 +267,18 @@ struct LeadModel: Codable, AddressProtocol, Equatable, Hashable {
 
     var routeOrder: Int
     
+    var position: CLLocationCoordinate2D {
+        get {
+            guard let latitude = Double(latitude), let longitude = Double(longitude) else {
+                return kCLLocationCoordinate2DInvalid
+            }
+            return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        }
+        set(newPosition) {
+            latitude = "\(newPosition.latitude)"
+            longitude = "\(newPosition.longitude)"
+        }
+    }
     
     enum CodingKeys: String, CodingKey {
         case id = "_id"
