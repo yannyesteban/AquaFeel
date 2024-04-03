@@ -273,14 +273,17 @@ struct CreateLead: View {
     @StateObject private var viewModel = CreatorViewModel()
 
     @State var showErrorMessage = false
-    @State var errorMessage = ""
+    @State var alertMessage = ""
     @EnvironmentObject var store: MainStore<UserData>
     //@State var userRole = ""
     @Environment(\.presentationMode) var presentationMode
     @State private var isAppointmentVisible = false
+  
     //@State var userId: String
     var onSave: (Bool) -> Void
 
+    @State var alertTitle = "Alert"
+    //@State var alertMessage = "Error"
     private func loadDataAndProcess() {
         lead2.statusAll()
     }
@@ -334,7 +337,7 @@ struct CreateLead: View {
                         }
                     }
                     .alert(isPresented: $showErrorMessage) {
-                        Alert(title: Text("Error"), message: Text(errorMessage), dismissButton: .default(Text("OK")))
+                        Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
                     }
                     
                     Section("Appointment / Callback time") {
@@ -390,6 +393,7 @@ struct CreateLead: View {
                         TextField("", text: $lead.note, axis: .vertical)
                             .lineLimit(2 ... 4)
                     }
+                    
 
                     if mode == 2 {
                         Section {
@@ -419,12 +423,15 @@ struct CreateLead: View {
                 .background(.blue)
                 .navigationTitle("Lead")
                 
+                
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
                         if isShowingSnackbar {
                             ProgressView("")
 
                         } else {
+                            
+                            
                             
                             Button {
                                 lead.makePhoneCall()
@@ -448,9 +455,9 @@ struct CreateLead: View {
                                     .font(.title3)//
                             }
                             Button {
-                                errorMessage = lead.validForm()
+                                alertMessage = lead.validForm()
 
-                                if errorMessage != "" {
+                                if alertMessage != "" {
                                     showErrorMessage = true
 
                                     return
@@ -467,7 +474,12 @@ struct CreateLead: View {
 
                                     isShowingSnackbar = false
 
+                                    print("showSaveOk: A", ok)
                                     if ok, let newLead = newLead {
+                                        
+                                        showErrorMessage = true
+                                        alertMessage = "record was saved correctly!"
+                                        
                                         updated = true
                                         lead.id = newLead.id
                                         mode = 2
@@ -476,6 +488,9 @@ struct CreateLead: View {
                                             manager.leads.insert(lead, at: 0)
                                             result = true
                                         }
+                                    } else {
+                                        showErrorMessage = true
+                                        alertMessage = "Error: record wasn't saved!"
                                     }
 
                                     onSave(result)
@@ -486,6 +501,7 @@ struct CreateLead: View {
                                     .font(.title3)
                             }
                         }
+                        
                     }
                 }
                 /*if mode == 2 {
@@ -633,8 +649,8 @@ struct CreateLead: View {
                 print("--- - - - -- - ******** * * * * * * ***")
                 lead = LeadModel()
                 lead.created_by = CreatorModel(_id: profile.userId, firstName: profile.info.firstName, lastName: profile.info.lastName)
-                lead.owned_by = manager.user
-                print("new: ", manager.user)
+                lead.owned_by = manager.userId
+                print("new: ", manager.userId)
                 //lead.created_by = CreatorModel(_id: manager.user)
             }
         }
@@ -654,7 +670,7 @@ struct CreateLead: View {
                         } else {
                             print("after delete, fail ", result)
                             showErrorMessage = true
-                            errorMessage = "Failure, the operation was not completed."
+                            alertMessage = "Failure, the operation was not completed."
                         }
                        
                     }

@@ -308,11 +308,20 @@ struct HomeScreen: View {
 
                 manager.token = profile.token
                 manager.role = profile.info.role
-                manager.user = profile.info._id
+               
+                manager.userId = profile.userId
+                manager.role = profile.role
+                print("manager manager manager: ", manager.userId)
+                
                 if manager.leads.isEmpty {
                     
                     manager.runLoad()
                 }
+                
+                    
+    
+                        
+                    
                 
             }
 

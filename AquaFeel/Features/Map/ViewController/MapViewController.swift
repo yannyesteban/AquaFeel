@@ -339,7 +339,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate,  GMUClusterRender
             latitude = location.latitude
         }
         // map.camera = GMSCameraPosition(latitude: latitude, longitude: longitude, zoom: 18.0)
-        map.camera = GMSCameraPosition(latitude: latitude, longitude: longitude, zoom: 2.0)
+        map.camera = GMSCameraPosition(latitude: latitude, longitude: longitude, zoom: 16.0)
         map.settings.compassButton = true
         map.settings.zoomGestures = true
         map.settings.myLocationButton = true
@@ -591,8 +591,8 @@ class MapViewController: UIViewController, GMSMapViewDelegate,  GMUClusterRender
          return
          }
          */
-        // map.clear()
-        manager.clearItems()
+        // map.clear()manager.clearItems()
+        
         markerGroups = [:]
         print("markerGroups generateClusterItems: \(leads.count)")
         
@@ -1303,11 +1303,7 @@ struct LeadMap: View {
 
     @State var showFilter = false
 
-    // @StateObject var lead2 = LeadViewModel(first_name: "Juan", last_name: "")
 
-    // @StateObject var lead = LeadManager()
-
-    // @StateObject var user = UserManager()
 
     @Environment(\.scenePhase) private var scenePhase
     @State var contador = 0

@@ -6,12 +6,12 @@
 //
 
 import Combine
+import CoreLocation
 import Foundation
 
 class LeadManager: ObservableObject {
-    
     @Published var leadFilter = LeadFilter()
-    
+
     @Published var userId: String = ""
     @Published var token: String = ""
     @Published var role: String = ""
@@ -20,9 +20,10 @@ class LeadManager: ObservableObject {
 
     @Published var leads: [LeadModel] = []
     @Published var selected: LeadModel?
+    @Published var lead: LeadModel = .init()
     @Published var textFilter = ""
     @Published var filter = LeadFilter2()
-    
+
     @Published var lastResult: Int?
 
     @Published var statusList: [StatusId] = []
@@ -42,8 +43,6 @@ class LeadManager: ObservableObject {
     private var lastTask: URLSessionDataTask?
 
     
-    
-    var user = ""
 
     /// private var cancellables: Set<AnyCancellable> = []
 
@@ -164,9 +163,9 @@ class LeadManager: ObservableObject {
         if role == "MANAGER" || role == "ADMIN" {
             path = "/leads/list-all"
         } else {
-            _ = q.add(.userId, user)
+            _ = q.add(.userId, userId)
         }
-        print("*****", path, role)
+        print("*****", path, role, userId)
         let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: path, token: token, params: q.get())
         lastResult = nil
         lastTask = fetch(config: info) { (result: Result<LeadsRequest, Error>) in
@@ -196,7 +195,7 @@ class LeadManager: ObservableObject {
                         self.leadsTotal = data.count ?? 0
                         self.page = 1
                     }
-                    
+
                     self.lastResult = data.leads.count
                 }
 
@@ -207,28 +206,27 @@ class LeadManager: ObservableObject {
     }
 
     func reset() {
-        
-        print("reset...... debug", self.leads.count , self.maxLoads)
+        print("reset...... debug", leads.count, maxLoads)
         page = 1
         resetData = true
         textFilter = ""
-        //filter = LeadFilter2()
-        //leadFilter = LeadFilter()
+        // filter = LeadFilter2()
+        // leadFilter = LeadFilter()
         // leads = []
     }
-    
+
     func resetFilter() {
-        print("resetFilter...... debug", self.leads.count , self.maxLoads)
+        print("resetFilter...... debug", leads.count, maxLoads)
         page = 1
         resetData = true
         textFilter = ""
-        //filter = LeadFilter2()
+        // filter = LeadFilter2()
         leadFilter = LeadFilter()
         leads = []
     }
 
     func search() {
-        print("search...... debug", self.leads.count , self.maxLoads)
+        print("search...... debug", leads.count, maxLoads)
         page = 1
         resetData = true
 
@@ -240,7 +238,7 @@ class LeadManager: ObservableObject {
     }
 
     func runLoad() {
-        print("runLoad...... debug", self.leads.count , self.maxLoads)
+        print("runLoad...... debug", leads.count, maxLoads)
         list(query: nil) {
             if self.leads.count < self.maxLoads {
                 self.runLoad()
@@ -249,7 +247,7 @@ class LeadManager: ObservableObject {
     }
 
     func load(count: Int) {
-        print("load...... debug", self.leads.count , self.maxLoads)
+        print("load...... debug", leads.count, maxLoads)
         maxLoads = count
         autoLoad = false
         runLoad()
@@ -277,11 +275,9 @@ class LeadManager: ObservableObject {
             path = "/leads/delete"
         }
 
-        var record = body
-
         let info = ApiConfig(method: "POST", host: "api.aquafeelvirginia.com", path: path, token: token, params: nil)
 
-        fetch<LeadModel, LeadUpdateResponse>(body: record, config: info) { (result: Result<LeadModel /* LeadUpdateResponse */, Error>) in
+        fetch<LeadModel, LeadUpdateResponse>(body: body, config: info) { (result: Result<LeadModel /* LeadUpdateResponse */, Error>) in
             switch result {
             case let .success(lead):
                 DispatchQueue.main.async {
@@ -302,9 +298,6 @@ class LeadManager: ObservableObject {
     }
 
     func delete(query: LeadQuery, leadId: String, mode: ModeSave = .delete, completion: @escaping (Bool) -> Void) {
-        
-              
-        
         let path: String = "/leads/delete"
 
         let info = ApiConfig(method: "DELETE", host: "api.aquafeelvirginia.com", path: path, token: token, params: query.get())
@@ -317,7 +310,7 @@ class LeadManager: ObservableObject {
                     // print(lead)
                     if let index = self.leads.firstIndex(where: { $0.id == leadId }) {
                         self.leads.remove(at: index)
-                        
+
                     } else {
                         print("not found")
                     }
@@ -349,47 +342,42 @@ class LeadManager: ObservableObject {
             }
         }
     }
-    
+
     func _userList() async throws -> UsersRequest {
         let query = LeadQuery()
-        
-        
-       
+
         _ = query
             .add(.offset, String("0"))
-            .add(.limit , String("1000"))
-        
+            .add(.limit, String("1000"))
+
         let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/users/list", token: token, params: query.get())
-        
+
         do {
             let response: UsersRequest = try await fetching(config: info)
-            
+
             return response
-            
+
         } catch {
             throw error
         }
     }
-    
+
     func _statusList() async throws -> StatusModel {
         let query = LeadQuery()
-            
-        
+
         let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/status/list", token: token, params: query.get())
-        
+
         do {
             let response: StatusModel = try await fetching(config: info)
-            
+
             return response
-            
+
         } catch {
             throw error
         }
     }
-    
+
     func initFilter(completion: @escaping (Bool, LoginFetch?) -> Void) {
-       
-        
         Task {
             do {
                 let statusResponse: StatusModel = try await _statusList()
@@ -397,18 +385,54 @@ class LeadManager: ObservableObject {
                 let usersResponse = try await _userList()
                 // prettyPrint(userData)
                 DispatchQueue.main.async {
-                  
-                    
                     self.statusList = statusResponse.list
                     self.users = usersResponse.users
                 }
-                
+
             } catch {
                 print("error 1.0 \(error)")
             }
         }
     }
-    
-    
-   
+
+    func newFromLocation(location: CLLocationCoordinate2D) async throws -> LeadModel {
+        let detail = try await GoogleApis.getPlaceDetailsByCoordinates(location: location)
+
+        var lead = LeadModel()
+        lead.created_by = CreatorModel(_id: userId)
+        lead.user_id = userId
+
+        lead = decode(placeDetails: detail, lead: lead)
+
+        return lead
+    }
+
+    func decode(placeDetails: PlaceDetails?, lead: LeadModel) -> LeadModel {
+        var leadAddress = lead
+
+        if let placeDetails = placeDetails {
+            leadAddress.street_address = placeDetails.formatted_address ?? ""
+            leadAddress.latitude = String(placeDetails.geometry?.location?.lat ?? 0.0)
+            leadAddress.longitude = String(placeDetails.geometry?.location?.lng ?? 0.0)
+
+            for component in placeDetails.address_components ?? [] {
+                if component.types.contains("country") && component.types.contains("political") {
+                    leadAddress.country = component.long_name
+                } else if component.types.contains("administrative_area_level_1") && component.types.contains("political") {
+                    leadAddress.state = component.short_name
+                } else if component.types.contains("administrative_area_level_2") && component.types.contains("political") {
+                    leadAddress.city = component.short_name
+                } else if component.types.contains("postal_code") {
+                    leadAddress.zip = component.long_name
+                } else if component.types.contains("street_number") {
+                    // leadAddress.s = component.long_name
+                }
+            }
+
+        } else {
+            print("... error ...")
+        }
+
+        return leadAddress
+    }
 }

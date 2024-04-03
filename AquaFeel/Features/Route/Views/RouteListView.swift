@@ -330,7 +330,7 @@ struct LeadPicker: View {
                     }
                 }
             }
-            .navigationBarTitle("Leads List")
+            .navigationBarTitle("Leads")
 
             HStack {
                 VStack {
@@ -421,7 +421,7 @@ struct LeadPicker: View {
         }
 
         .onAppear {
-            manager.user = profile.userId
+            manager.userId = profile.userId
             manager.token = profile.token
             manager.role = profile.role
         }

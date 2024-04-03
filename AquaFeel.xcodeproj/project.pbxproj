@@ -24,6 +24,9 @@
 		2B29D7732BB89CEC00E0AF5D /* HomeMapsRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B29D7722BB89CEC00E0AF5D /* HomeMapsRepresentable.swift */; };
 		2B29D7752BB89F0400E0AF5D /* HomeMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B29D7742BB89F0400E0AF5D /* HomeMapsViewController.swift */; };
 		2B29D7772BB8A03400E0AF5D /* HomeMapsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B29D7762BB8A03400E0AF5D /* HomeMapsModel.swift */; };
+		2B31EBCA2BBB069700F1B8F8 /* ToolManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B31EBC92BBB069700F1B8F8 /* ToolManager.swift */; };
+		2B31EBCC2BBB581F00F1B8F8 /* GoogleApis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B31EBCB2BBB581F00F1B8F8 /* GoogleApis.swift */; };
+		2B31EBCE2BBB630700F1B8F8 /* MarkTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B31EBCD2BBB630700F1B8F8 /* MarkTool.swift */; };
 		2B3502392B97A10E00190FAC /* PhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3502382B97A10E00190FAC /* PhoneView.swift */; };
 		2B3697EC2B87EDDE008B339B /* SnackbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3697EB2B87EDDE008B339B /* SnackbarView.swift */; };
 		2B3A2C052B782596003EED04 /* LeadList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3A2C042B782596003EED04 /* LeadList.swift */; };
@@ -33,6 +36,7 @@
 		2B3F34B62BA2448600BAF52D /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3F34B52BA2448600BAF52D /* CalendarView.swift */; };
 		2B4713152B84213B0020D66F /* Draw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4713142B84213B0020D66F /* Draw.swift */; };
 		2B4713172B842D9D0020D66F /* testUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4713162B842D9D0020D66F /* testUI.swift */; };
+		2B4EFE8C2BBC814A0074963F /* ClusterTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4EFE8B2BBC814A0074963F /* ClusterTool.swift */; };
 		2B526FA32B7CFCDC0024A578 /* MainAppScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B526FA22B7CFCDC0024A578 /* MainAppScreen.swift */; };
 		2B526FA72B7D2A740024A578 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B526FA62B7D2A740024A578 /* UserModel.swift */; };
 		2B54BACE2B9E2E7400733E90 /* LoginProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B54BACD2B9E2E7400733E90 /* LoginProtocol.swift */; };
@@ -105,6 +109,7 @@
 		2BD01F2B2B8B93E900FCE5CB /* LeadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD01F2A2B8B93E900FCE5CB /* LeadManager.swift */; };
 		2BD84DB12B56CDB200BC01C9 /* CreateLead.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD84DB02B56CDB200BC01C9 /* CreateLead.swift */; };
 		2BD84DB52B572F3100BC01C9 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD84DB42B572F3100BC01C9 /* SplashScreen.swift */; };
+		2BE1BB9E2BBCC34B0003B808 /* LocationTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1BB9D2BBCC34B0003B808 /* LocationTool.swift */; };
 		2BE1EFF62B6988DA00D51888 /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1EFF52B6988DA00D51888 /* LoginScreen.swift */; };
 		2BE1EFF92B69A5B900D51888 /* MapIconView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1EFF82B69A5B900D51888 /* MapIconView2.swift */; };
 		2BE1EFFB2B69BB4E00D51888 /* Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1EFFA2B69BB4E00D51888 /* Circle.swift */; };
@@ -149,6 +154,9 @@
 		2B29D7722BB89CEC00E0AF5D /* HomeMapsRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMapsRepresentable.swift; sourceTree = "<group>"; };
 		2B29D7742BB89F0400E0AF5D /* HomeMapsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMapsViewController.swift; sourceTree = "<group>"; };
 		2B29D7762BB8A03400E0AF5D /* HomeMapsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMapsModel.swift; sourceTree = "<group>"; };
+		2B31EBC92BBB069700F1B8F8 /* ToolManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolManager.swift; sourceTree = "<group>"; };
+		2B31EBCB2BBB581F00F1B8F8 /* GoogleApis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleApis.swift; sourceTree = "<group>"; };
+		2B31EBCD2BBB630700F1B8F8 /* MarkTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkTool.swift; sourceTree = "<group>"; };
 		2B3502382B97A10E00190FAC /* PhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneView.swift; sourceTree = "<group>"; };
 		2B3697EB2B87EDDE008B339B /* SnackbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackbarView.swift; sourceTree = "<group>"; };
 		2B3A2C042B782596003EED04 /* LeadList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadList.swift; sourceTree = "<group>"; };
@@ -159,6 +167,7 @@
 		2B3F34B72BA2513700BAF52D /* Appointment.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Appointment.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2B4713142B84213B0020D66F /* Draw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Draw.swift; sourceTree = "<group>"; };
 		2B4713162B842D9D0020D66F /* testUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testUI.swift; sourceTree = "<group>"; };
+		2B4EFE8B2BBC814A0074963F /* ClusterTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterTool.swift; sourceTree = "<group>"; };
 		2B526FA22B7CFCDC0024A578 /* MainAppScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppScreen.swift; sourceTree = "<group>"; };
 		2B526FA62B7D2A740024A578 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		2B54BACD2B9E2E7400733E90 /* LoginProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProtocol.swift; sourceTree = "<group>"; };
@@ -233,6 +242,7 @@
 		2BD01F2A2B8B93E900FCE5CB /* LeadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadManager.swift; sourceTree = "<group>"; };
 		2BD84DB02B56CDB200BC01C9 /* CreateLead.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLead.swift; sourceTree = "<group>"; };
 		2BD84DB42B572F3100BC01C9 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
+		2BE1BB9D2BBCC34B0003B808 /* LocationTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTool.swift; sourceTree = "<group>"; };
 		2BE1EFF52B6988DA00D51888 /* LoginScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
 		2BE1EFF82B69A5B900D51888 /* MapIconView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapIconView2.swift; sourceTree = "<group>"; };
 		2BE1EFFA2B69BB4E00D51888 /* Circle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circle.swift; sourceTree = "<group>"; };
@@ -324,9 +334,14 @@
 			children = (
 				2B29D7702BB89A8B00E0AF5D /* HomeMap.swift */,
 				2BAE58232BB9B05D005A8949 /* LassoTool.swift */,
+				2B4EFE8B2BBC814A0074963F /* ClusterTool.swift */,
+				2B31EBCD2BBB630700F1B8F8 /* MarkTool.swift */,
+				2BE1BB9D2BBCC34B0003B808 /* LocationTool.swift */,
 				2B29D7762BB8A03400E0AF5D /* HomeMapsModel.swift */,
 				2B29D7722BB89CEC00E0AF5D /* HomeMapsRepresentable.swift */,
 				2B29D7742BB89F0400E0AF5D /* HomeMapsViewController.swift */,
+				2B31EBC92BBB069700F1B8F8 /* ToolManager.swift */,
+				2B31EBCB2BBB581F00F1B8F8 /* GoogleApis.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -909,6 +924,7 @@
 				2B54BACE2B9E2E7400733E90 /* LoginProtocol.swift in Sources */,
 				2B526FA72B7D2A740024A578 /* UserModel.swift in Sources */,
 				2BA8A5A02B541EE70004CDCD /* AppDelegate.swift in Sources */,
+				2BE1BB9E2BBCC34B0003B808 /* LocationTool.swift in Sources */,
 				2BAEE85B2B59D1EE00B0C16D /* TabC.swift in Sources */,
 				2BA8A5C62B545DDA0004CDCD /* AppStore.swift in Sources */,
 				2BE1EFFB2B69BB4E00D51888 /* Circle.swift in Sources */,
@@ -916,6 +932,7 @@
 				2BED59C02B85549A0094CD7E /* AddressSelector.swift in Sources */,
 				2B98C2C72B9E68230024FB2D /* LeadViewModel.swift in Sources */,
 				2BA8A5A42B54327A0004CDCD /* Test.swift in Sources */,
+				2B4EFE8C2BBC814A0074963F /* ClusterTool.swift in Sources */,
 				2B29D7732BB89CEC00E0AF5D /* HomeMapsRepresentable.swift in Sources */,
 				2B4713172B842D9D0020D66F /* testUI.swift in Sources */,
 				2B75B34E2B5F24C000BDD12C /* ProfileView.swift in Sources */,
@@ -927,6 +944,7 @@
 				2BEC721B2BB09698009BF4E0 /* RouteController.swift in Sources */,
 				2BA43D1C2B5B322300960681 /* Test3.swift in Sources */,
 				2B29D7712BB89A8B00E0AF5D /* HomeMap.swift in Sources */,
+				2B31EBCA2BBB069700F1B8F8 /* ToolManager.swift in Sources */,
 				2B75B3482B5F1AE000BDD12C /* SettingView.swift in Sources */,
 				2B693A5C2BAA43010048B6A5 /* AquaCalendar.swift in Sources */,
 				2BBDA2F92B90FD160073F43B /* EquitableView.swift in Sources */,
@@ -942,6 +960,7 @@
 				2BA8A5B92B5441EE0004CDCD /* LoginViewModel.swift in Sources */,
 				2BAEE8572B59D02900B0C16D /* TabA.swift in Sources */,
 				2BAE58242BB9B05D005A8949 /* LassoTool.swift in Sources */,
+				2B31EBCC2BBB581F00F1B8F8 /* GoogleApis.swift in Sources */,
 				2BCA0B7D2B7BF026006D3993 /* FilterOption.swift in Sources */,
 				2B5811002B683C9E00B48A88 /* MapViewController.swift in Sources */,
 				2BD84DB52B572F3100BC01C9 /* SplashScreen.swift in Sources */,
@@ -957,6 +976,7 @@
 				2BB966CE2B8BED73007E1442 /* PP.swift in Sources */,
 				2BA484762B9A2FB300247BD0 /* RegistrationView.swift in Sources */,
 				2B3F34B02BA21A2E00BAF52D /* AppointmentManager.swift in Sources */,
+				2B31EBCE2BBB630700F1B8F8 /* MarkTool.swift in Sources */,
 				2BAE58272BB9B9D0005A8949 /* HomeMapManager.swift in Sources */,
 				2BEC721D2BB0D6D8009BF4E0 /* DirectionModel.swift in Sources */,
 				2B5793B72B9B861200E907E9 /* PassEdit.swift in Sources */,
@@ -1135,9 +1155,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AquaFeel/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
-				INFOPLIST_KEY_NSContactsUsageDescription = "The app needs access contacts to convert";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Important We need you location";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Important We need you location";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Turning on location services allows us to show you the leads near you";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Turning on location services allows us to show you the leads near you";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1179,9 +1198,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AquaFeel/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
-				INFOPLIST_KEY_NSContactsUsageDescription = "The app needs access contacts to convert";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Important We need you location";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Important We need you location";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Turning on location services allows us to show you the leads near you";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Turning on location services allows us to show you the leads near you";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

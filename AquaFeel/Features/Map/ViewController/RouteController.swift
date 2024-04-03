@@ -14,9 +14,10 @@ enum MapState {
     case next
     case prev
     case tap
-    
+
     case lasso
     case draw
+    case reset
 }
 
 struct RouteRequest {
@@ -43,7 +44,6 @@ class MapManager: ObservableObject {
     }
 
     func nextMark() {
-        
         var index = lastLead
         if let myRoute = route?.routes[lastRoute] {
             index = (index % myRoute.leads.count) + 1
@@ -112,28 +112,20 @@ class DirectionManager: ObservableObject {
         do {
             var response: RouteResponse = try await fetching(config: info)
 
-            print("result.status:", response.status)
-
-            // var response = response1
             for i in response.routes.indices {
-                // i.leads = []
+                var newPos = 0
                 for j in response.routes[i].waypointOrder {
+                    newPos += 1
+
                     var lead = leads[j]
 
-                    lead.routeOrder = j + 1
+                    lead.routeOrder = newPos
                     response.routes[i].leads.append(lead)
                 }
 
                 print("i.waypointOrder", response.routes[i].waypointOrder)
             }
-            // prettyPrint(response)
-            /*
-             let response1 = response
-             DispatchQueue.main.async {
-                 // let response1 = response
-                 self.route = response1
-             }
-             */
+
             return response
         } catch {
             throw error
@@ -178,8 +170,8 @@ class RouterMapsX: UIViewController {
      */
     func fitBounds(bounds: GMSCoordinateBounds) {
         let update = GMSCameraUpdate.fit(bounds, withPadding: 50.0)
-         map.animate(with: update)
-        //map.moveCamera(update)
+        map.animate(with: update)
+        // map.moveCamera(update)
     }
 
     func addMarker(marker: GMSMarker) {
@@ -256,13 +248,11 @@ class RouterMapsX: UIViewController {
         map.clear()
         markerDictionary = [:]
         for route in routes {
-            
             let bounds = route.bounds
             let northeast = CLLocationCoordinate2D(latitude: bounds.northeast.lat, longitude: bounds.northeast.lng)
             let southwest = CLLocationCoordinate2D(latitude: bounds.southwest.lat, longitude: bounds.southwest.lng)
             fitBounds(bounds: GMSCoordinateBounds(coordinate: northeast, coordinate: southwest))
-            
-            
+
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 let path = GMSPath(fromEncodedPath: route.overviewPolyline.points)
                 let polyline = GMSPolyline(path: path)
@@ -270,28 +260,22 @@ class RouterMapsX: UIViewController {
                 polyline.strokeWidth = 4.0
                 polyline.map = self.map
             }
-            
-           
-            
+
             UIView.animate(withDuration: 1.0, delay: 0.5, options: [], animations: {
-               
                 self.drawMarker(leads: route.leads)
             }, completion: nil)
-            
-            
-            
-            /*
-            
-            let path = GMSPath(fromEncodedPath: route.overviewPolyline.points)
-            let polyline = GMSPolyline(path: path)
-            polyline.strokeColor = UIColor.orange
-            polyline.strokeWidth = 4.0
-            polyline.map = map
-            
 
-            markerDictionary = [:]
-            drawMarker(leads: route.leads)
-             */
+            /*
+
+             let path = GMSPath(fromEncodedPath: route.overviewPolyline.points)
+             let polyline = GMSPolyline(path: path)
+             polyline.strokeColor = UIColor.orange
+             polyline.strokeWidth = 4.0
+             polyline.map = map
+
+             markerDictionary = [:]
+             drawMarker(leads: route.leads)
+              */
         }
     }
 
@@ -560,7 +544,7 @@ struct RouterMapsView: UIViewControllerRepresentable {
 
 struct RouteMapsScreen: View {
     var profile: ProfileManager
-    @State var routeId: String = "6605d1795cc75bdb59dcbfbe" // "660392ab5cc75bdb59dca01b"
+    @State var routeId: String = "6608693c5cc75bdb59dcef06" // "660392ab5cc75bdb59dca01b"
     @StateObject var mapManager = MapManager()
     @StateObject var routeManager = RouteManager()
     @StateObject var directionManager = DirectionManager()
@@ -696,9 +680,8 @@ struct RouteMapsScreen: View {
                                     .foregroundColor(.blue)
                                     .padding()
 
-                                    //.shadow(radius: 10)
+                                // .shadow(radius: 10)
                             }
-                            
 
                             if mapManager.lead != nil {
                                 HStack {
@@ -753,8 +736,6 @@ struct RouteMapsScreen: View {
                                     .frame(width: 35, height: 35)
                                     .foregroundColor(.blue)
                                     .padding()
-
-                                   
                             }
                         }
                     }
@@ -815,34 +796,26 @@ struct RouteMapsScreen: View {
                 }
             }
         }
-        .onAppear{
-            
-           loadApi()
+        .onAppear {
+            loadApi()
         }
-
-        
     }
-    
-    func loadApi(){
-        Task{
+
+    func loadApi() {
+        Task {
             if routeId != "" {
-                
-                
                 try? await routeManager.detail(routeId: routeId)
-                
+
                 let request = RouteRequest(origin: routeManager.route.startingAddress, destination: routeManager.route.endingAddress, waypoints: routeManager.route.leads.map({
                     $0.latitude + "," + $0.longitude
                     // $0.street_address
                 }))
-                
+
                 let response = try? await directionManager.search(request: request, leads: routeManager.route.leads)
-                
+
                 mapManager.route = response
-                
-                
             }
         }
-        
     }
 }
 

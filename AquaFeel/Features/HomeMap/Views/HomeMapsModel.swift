@@ -10,11 +10,7 @@ import GoogleMaps
 import GoogleMapsUtils
 
 
-protocol MapTool {
-    init (map: GMSMapView)
-    func play()
-    func stop()
-}
+
 
 class MultiMark {
     

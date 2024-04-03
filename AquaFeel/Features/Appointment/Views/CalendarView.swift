@@ -141,7 +141,7 @@ struct AppointmentList2: View {
                 manager.token = profile.token
             }
             .onAppear {
-                manager.user = profile.userId
+                manager.userId = profile.userId
                 let leadQuery = LeadQuery()
                     .add(.field, "appointment_date")
                     // .add(.statusId, "613bb4e0d6113e00169fefa9")
@@ -276,7 +276,7 @@ struct AppointmentByDate: View {
                 manager.token = profile.token
             }
             .onAppear {
-                manager.user = profile.userId
+                manager.userId = profile.userId
                 let leadQuery = LeadQuery()
                     .add(.field, "appointment_date")
                     // .add(.statusId, "613bb4e0d6113e00169fefa9")

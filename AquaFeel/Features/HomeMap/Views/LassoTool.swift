@@ -9,7 +9,10 @@ import Foundation
 import GoogleMaps
 import SwiftUI
 
-class LassoTool: NSObject,  GMSMapViewDelegate, ObservableObject {
+class LassoTool: NSObject, MapTool, GMSMapViewDelegate {
+    var onDraw: ((GMSMarker) -> Void)?
+    var onPath: ((GMSMutablePath) -> Void)?
+
     var map: GMSMapView
     var onPlay = false
     var draw: Draw
@@ -19,18 +22,13 @@ class LassoTool: NSObject,  GMSMapViewDelegate, ObservableObject {
     var firstPoint: CLLocationCoordinate2D?
 
     var path = GMSMutablePath()
-    @Published var newPath = GMSMutablePath()
-    @ObservedObject var data = MapData()
+    var newPath = GMSMutablePath()
 
     override init() {
         map = GMSMapView()
         draw = Draw(map: map)
     }
 
-    func setData(data:MapData){
-        self.data = data
-        
-    }
     func setMap(map: GMSMapView) {
         self.map = map
         draw = Draw(map: map)
@@ -39,7 +37,7 @@ class LassoTool: NSObject,  GMSMapViewDelegate, ObservableObject {
     }
 
     func play() {
-        // view.map.delegate = self
+        // map.delegate = self
 
         print("play()")
         map.settings.setAllGesturesEnabled(false)
@@ -50,12 +48,14 @@ class LassoTool: NSObject,  GMSMapViewDelegate, ObservableObject {
         map.delegate = self
         // resetGestureRecognizer.delegate = self
 
-        resetGestureRecognizer.cancelsTouchesInView = false
+        // resetGestureRecognizer.cancelsTouchesInView = false
         onPlay = true
         drawPlay = true
     }
 
     func stop() {
+        map.settings.setAllGesturesEnabled(true)
+        draw.stop()
     }
 
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
@@ -107,11 +107,11 @@ class LassoTool: NSObject,  GMSMapViewDelegate, ObservableObject {
             if drawing {
                 draw.bye()
             } else {
+                onPath?(path)
                 // showLeadsOptions()
             }
             drawing = false
 
-            data.test = "yanny esteban"
             path = GMSMutablePath(path: draw.path2)
             newPath = GMSMutablePath(path: draw.path2)
 

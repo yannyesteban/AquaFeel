@@ -14,13 +14,13 @@ class MapsCluster: NSObject {
     var clusterManager: GMUClusterManager?
     var map: GMSMapView!
     var groups: [String: MultiMark] = [:]
-    init(map: GMSMapView) {
+    func setMap(map: GMSMapView) {
         self.map = map
         let iconGenerator = GMUDefaultClusterIconGenerator()
         let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
         let renderer = GMUDefaultClusterRenderer(mapView: map, clusterIconGenerator: iconGenerator)
         renderer.maximumClusterZoom = 15
-        super.init()
+        
         clusterManager = GMUClusterManager(map: map, algorithm: algorithm, renderer: renderer)
 
         // clusterManager?.setDelegate(self, mapDelegate: self)
@@ -44,6 +44,7 @@ class MapsCluster: NSObject {
         if let clusterManager = clusterManager {
             clusterManager.add(marker)
 
+            
             let coordinate = truncateCoordinatesStr(marker.position, toDecimals: 6)
 
             if groups[coordinate] != nil {
@@ -64,6 +65,7 @@ class MapsCluster: NSObject {
 
     func resetCluster() {
         // let manager = initCluster()
+        groups = [:]
         clusterManager?.clearItems()
     }
 

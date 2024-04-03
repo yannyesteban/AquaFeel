@@ -74,13 +74,13 @@ struct LeadListScreen: View {
 
     @State private var isFilterModalPresented = false
 
-    @State private var numbers: [Int] = Array(1 ... 20)
+    //@State private var numbers: [Int] = Array(1 ... 20)
     @State private var isLoading = false
     @State private var isFinished = false
     @State var lead: LeadModel = LeadModel()
 
     @EnvironmentObject var store: MainStore<UserData>
-
+    /*
     func loadMoreContent() {
         if !isLoading {
             isLoading = true
@@ -95,7 +95,7 @@ struct LeadListScreen: View {
             }
         }
     }
-
+     */
     var body: some View {
         /* NavigationStack {
              List{
@@ -202,7 +202,7 @@ struct LeadListScreen: View {
                     }
                 }
             }
-            .navigationBarTitle("Leads List")
+            .navigationBarTitle("Leads")
 
             HStack {
                 VStack {
@@ -295,7 +295,7 @@ struct LeadListScreen: View {
 
         .onAppear {
             print("::", profile.token, ":", profile.userId, ":", profile.role)
-            manager.user = profile.userId
+            manager.userId = profile.userId
             manager.token = profile.token
             manager.role = profile.role
         }
