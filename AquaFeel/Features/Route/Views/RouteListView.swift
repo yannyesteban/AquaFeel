@@ -360,14 +360,14 @@ struct LeadPicker: View {
                             searchTimer?.invalidate()
 
                             searchTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { _ in
-                                let leadQuery = LeadQuery()
+                                /*let leadQuery = LeadQuery()
                                     .add(.limit, "30")
                                     .add(.searchKey, "all")
                                     .add(.offset, "0")
                                     .add(.limit, "40")
                                     .add(.searchValue, newSearchText)
                                 // lead2.loadAll(query:leadQuery)
-
+                                        */
                                 manager.search()
                             }
 

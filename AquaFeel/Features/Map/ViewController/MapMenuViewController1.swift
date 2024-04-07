@@ -37,45 +37,7 @@ class XXX: UIViewController {
     }
 }
 
-class MyCustomView: UIView {
-    // Creamos un botón
-    let miBoton: UIButton = {
-        let boton = UIButton(type: .system)
-        boton.setTitle("Presionar", for: .normal)
-        boton.addTarget(self, action: #selector(botonPresionado), for: .touchUpInside)
-        return boton
-    }()
-    
-    // Función llamada cuando se presiona el botón
-    @objc func botonPresionado() {
-        print("Hola")
-    }
-    
-    // Configuración inicial de la vista
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        configurarVista()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        configurarVista()
-    }
-    
-    // Configuración de la vista y disposición de los elementos
-    func configurarVista() {
-        // Configurar otros elementos o diseño de la vista aquí
-        backgroundColor = UIColor.white
-        
-        // Agregar el botón a la vista y establecer su posición
-        addSubview(miBoton)
-        miBoton.translatesAutoresizingMaskIntoConstraints = true
-        NSLayoutConstraint.activate([
-            miBoton.centerXAnchor.constraint(equalTo: centerXAnchor),
-            miBoton.centerYAnchor.constraint(equalTo: centerYAnchor)
-        ])
-    }
-}
+
 
 protocol MapMenuDelegate: AnyObject {
     func buttonTapped(title: String)

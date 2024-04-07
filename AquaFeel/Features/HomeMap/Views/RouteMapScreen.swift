@@ -168,6 +168,20 @@ struct RouteMapScreen: View {
                                 .clipShape(Circle())
                                 .shadow(radius: 10)
                         }.padding(10)
+                        
+                        Button(action: {
+                            locationTool.follow.toggle()
+                        }) {
+                            Image(systemName: locationTool.follow ? "car.fill": "car.front.waves.up.fill")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 20, height: 20)
+                                .foregroundColor(.white)
+                                .padding()
+                                .background(Color.accentColor)
+                                .clipShape(Circle())
+                                .shadow(radius: 10)
+                        }.padding(10)
                     }
                 }
 

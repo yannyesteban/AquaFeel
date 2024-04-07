@@ -17,7 +17,7 @@ class LocationTool: NSObject, ObservableObject, MapTool, CLLocationManagerDelega
     var map: GMSMapView
     var onPlay = false
     
-    var follow = true
+    @Published var follow = false
 
     var marker = GMSMarker()
     var position: CLLocationCoordinate2D?

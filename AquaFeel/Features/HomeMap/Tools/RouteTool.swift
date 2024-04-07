@@ -24,6 +24,7 @@ class RouteTool: NSObject, ObservableObject, MapTool, GMSMapViewDelegate {
     // var lastMarker: Int?
 
     @Published var lead: LeadModel?
+    @Published var revealStatus = false
     var lastLead = 0
     var lastMarker: GMSMarker?
     var state: MapState = .none
@@ -34,12 +35,12 @@ class RouteTool: NSObject, ObservableObject, MapTool, GMSMapViewDelegate {
     var last: Int?
     var groups: [String: MultiMark] = [:]
     var polyline = GMSPolyline()
+    var markers: [GMSMarker] = []
     override init() {
         map = GMSMapView()
     }
 
     func setMap(map: GMSMapView) {
-       
         self.map = map
     }
 
@@ -51,19 +52,16 @@ class RouteTool: NSObject, ObservableObject, MapTool, GMSMapViewDelegate {
     }
 
     func nextMark() {
-       
         var index = lastLead
         if let myRoute = route?.routes[lastRoute] {
             index = (index % myRoute.leads.count) + 1
-            
+
             find(index)
         }
         state = .next
     }
 
     func prevMark() {
-       
-
         var index = lastLead
         if let myRoute = route?.routes[lastRoute] {
             if index == 1 {
@@ -86,18 +84,30 @@ class RouteTool: NSObject, ObservableObject, MapTool, GMSMapViewDelegate {
         let cameraUpdate = GMSCameraUpdate.setTarget(position)
 
         if let last = last {
-            markerDictionary[last]?.iconView?.backgroundColor = .systemTeal
+            markerDictionary[last]?.iconView = labelIcon(text: lead.routeOrder, color: .systemTeal)
+            //markerDictionary[last]?.iconView?.backgroundColor = .systemTeal
+            
+            //marker.iconView = labelIcon(text: lead.routeOrder)
         }
-        markerDictionary[lead.routeOrder]?.iconView?.backgroundColor = .red
+        
+        if revealStatus, let selected = markerDictionary[lead.routeOrder] {
+            let circleIconView = getUIImage(name: lead.status_id.name)
+            circleIconView.frame = CGRect(x: 120, y: 120, width: 25, height: 25)
+            
+           
+            selected.iconView = circleIconView
+        } else {
+            markerDictionary[lead.routeOrder]?.iconView = labelIcon(text: lead.routeOrder, color: .red)
+        }
+        
         last = lead.routeOrder
         map.animate(with: cameraUpdate)
     }
 
     func find(_ index: Int) {
         if let myRoute = route?.routes[lastRoute] {
-           
             if let leadFound = myRoute.leads.first(where: { $0.routeOrder == index }) {
-                prettyPrint(leadFound)
+               
                 lastLead = index
                 lead = leadFound
                 state = .tap
@@ -120,18 +130,43 @@ class RouteTool: NSObject, ObservableObject, MapTool, GMSMapViewDelegate {
     func fitBounds(bounds: GMSCoordinateBounds) {
         let update = GMSCameraUpdate.fit(bounds, withPadding: 50.0)
         map.animate(with: update)
-       
     }
 
-    func drawMarker(leads: [LeadModel]) {
-       
+    func reset() {
         groups = [:]
+        polyline.map = nil
+        markerDictionary = [:]
+        for market in markers {
+            market.map = nil
+        }
+        markers = []
+    }
+
+    
+    func labelIcon(text :Int, color: UIColor)-> UIView{
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
+        label.textAlignment = .center
+        label.textColor = .white
+        label.backgroundColor = color
+        label.layer.cornerRadius = 15
+        label.clipsToBounds = true
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.text = text.formatted() // Coloca el número deseado aquí
+        //marker.iconView = label
+        
+        return label
+        
+        
+    }
+    func drawMarker(leads: [LeadModel]) {
+        //groups = [:]
         for lead in leads {
             let latitude = Double(lead.latitude) ?? 0.0
             let longitude = Double(lead.longitude) ?? 0.0
             let position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
 
             let marker = GMSMarker(position: position)
+            markers.append(marker)
             markerDictionary[lead.routeOrder] = marker
 
             marker.userData = lead.routeOrder
@@ -145,7 +180,7 @@ class RouteTool: NSObject, ObservableObject, MapTool, GMSMapViewDelegate {
              markerImageView.layer.shadowOpacity = 0.7
              markerImageView.layer.shadowRadius = 3
              */
-            let label = UILabel(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
+            /*let label = UILabel(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
             label.textAlignment = .center
             label.textColor = .white
             label.backgroundColor = .systemTeal
@@ -153,7 +188,9 @@ class RouteTool: NSObject, ObservableObject, MapTool, GMSMapViewDelegate {
             label.clipsToBounds = true
             label.font = UIFont.boldSystemFont(ofSize: 14)
             label.text = lead.routeOrder.formatted() // Coloca el número deseado aquí
-            marker.iconView = label
+            */
+            marker.iconView = labelIcon(text: lead.routeOrder, color: .systemTeal)
+             
             // marker.iconView = markerImageView
             // Ajustar el tamaño del icono del marcador
 
@@ -209,16 +246,15 @@ class RouteTool: NSObject, ObservableObject, MapTool, GMSMapViewDelegate {
     }
 
     func drawRoute(routes: [Route]) {
-        
-        
-        polyline.map = nil
-        markerDictionary = [:]
+        //polyline.map = nil
+        //markerDictionary = [:]
+        reset()
         for route in routes {
             let bounds = route.bounds
             let northeast = CLLocationCoordinate2D(latitude: bounds.northeast.lat, longitude: bounds.northeast.lng)
             let southwest = CLLocationCoordinate2D(latitude: bounds.southwest.lat, longitude: bounds.southwest.lng)
             fitBounds(bounds: GMSCoordinateBounds(coordinate: northeast, coordinate: southwest))
-           
+
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 let path = GMSPath(fromEncodedPath: route.overviewPolyline.points)
                 self.polyline = GMSPolyline(path: path)
@@ -230,17 +266,15 @@ class RouteTool: NSObject, ObservableObject, MapTool, GMSMapViewDelegate {
             UIView.animate(withDuration: 1.0, delay: 0.5, options: [], animations: {
                 self.drawMarker(leads: route.leads)
             }, completion: nil)
-
-           
         }
     }
-    
+
     func truncateCoordinates(_ coordinate: CLLocationCoordinate2D, toDecimals decimals: Int) -> CLLocationCoordinate2D {
         let lat = Double(String(format: "%.\(decimals)f", coordinate.latitude))!
         let lon = Double(String(format: "%.\(decimals)f", coordinate.longitude))!
         return CLLocationCoordinate2D(latitude: lat, longitude: lon)
     }
-    
+
     func truncateCoordinatesStr(_ coordinate: CLLocationCoordinate2D, toDecimals decimals: Int) -> String {
         let lat = String(format: "%.\(decimals)f", coordinate.latitude)
         let lon = String(format: "%.\(decimals)f", coordinate.longitude)
