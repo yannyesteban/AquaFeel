@@ -12,9 +12,9 @@ protocol MapTool {
     func setMap(map: GMSMapView)
     func play()
     func stop()
-    
-    var onPath : ((GMSMutablePath) -> Void)? { get set }
-    var onDraw : ((GMSMarker) -> Void)? { get set }
+
+    var onPath: ((GMSMutablePath) -> Void)? { get set }
+    var onDraw: ((GMSMarker) -> Void)? { get set }
 }
 
 enum ToolMode {
@@ -22,9 +22,11 @@ enum ToolMode {
     case marker
     case route
     case cluster
+    case location
     case none
 }
 
+@MainActor
 class ToolManager: ObservableObject {
     @Published var mode = ToolMode.none
     @Published var mapTools: [ToolMode: MapTool] = [:]
@@ -33,31 +35,36 @@ class ToolManager: ObservableObject {
     @Published var lasso = GMSMutablePath()
     @Published var marker = GMSMarker()
     @Published var lead: LeadModel?
-    
-    @Published var ready = false
-    
-    //@Published var lassoEnded = false
-    //@Published var markEnded = false
 
-    //var map: GMSMapView
-    func initTool(mode: ToolMode, tool: MapTool){
-        
+    @Published var ready = false
+
+    // @Published var lassoEnded = false
+    // @Published var markEnded = false
+
+    // var map: GMSMapView
+    @MainActor
+    func initTool(mode: ToolMode, tool: MapTool) {
         mapTools[mode] = tool
-        
-        
-        
     }
+
+    func playTool(_ mode: ToolMode) {
+        mapTools[mode]?.play()
+    }
+    
+    func getTool<T:MapTool>(_ mode: ToolMode) -> T? {
+        return mapTools[mode] as? T
+    }
+
+    @MainActor
     func setTool(_ newMode: ToolMode) {
-        
         print("newMode: ", newMode)
         stop()
-        if newMode == mode || newMode == .none{
+        if newMode == mode || newMode == .none {
             tool = nil
             mode = .none
             return
         }
-        
-        
+
         tool = mapTools[newMode]
         mode = newMode
         play()
@@ -70,8 +77,8 @@ class ToolManager: ObservableObject {
         } else {
             setTool(thisMode)
         }
-        
     }
+
     func play() {
         tool?.play()
     }
