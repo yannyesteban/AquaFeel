@@ -609,11 +609,11 @@ class MapViewController: UIViewController, GMSMapViewDelegate,  GMUClusterRender
                 // CircleIconView(systemName: "trash", color: .red)
                 getUIImage(name: leadModel.status_id.name)
                 let truncatedCoordinate = truncateCoordinatesStr(position, toDecimals: 6)
-                print("truncatedCoordinate : ", truncatedCoordinate)
+                
                 if var existingMarkers = markerGroups[truncatedCoordinate] {
                     
                     //existingMarkers.append(marker)
-                    print("si existe ... . . . . .")
+                   
                     markerGroups[truncatedCoordinate]?.append(marker)
                     
                 } else {

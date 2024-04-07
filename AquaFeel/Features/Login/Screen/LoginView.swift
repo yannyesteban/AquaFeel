@@ -212,13 +212,13 @@ struct LoginView<T: LoginProtocol>: View {
         }
          */
         .onAppear {
-            loginManager.user = "yannyesteban@gmail.com"
-            loginManager.pass = "Acceso1024"
+            //loginManager.user = "yannyesteban@gmail.com"
+            //loginManager.pass = "Acceso1024"
             
             
         }
         .onChange(of: completed){ newValue in
-            print("...", newValue)
+           
             alert = !completed
             
         }

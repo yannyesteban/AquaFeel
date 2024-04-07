@@ -21,6 +21,6 @@ func prettyPrint<T: Encodable>(_ object: T) {
             }
         }
     } catch {
-        print("Error al pretty print el JSON: \(error)")
+        print("Error pretty print: \(error)")
     }
 }

@@ -116,7 +116,7 @@ struct LoginScreen3: View {
                 VStack {
                     HStack{
                         Text("Aquafeel").font(.title2).foregroundStyle(Color.accentColor)
-                        Text("2.0").font(.title2)
+                        Text("1.0").font(.title2)
                     }.padding().bold()
                     //Spacer()
                     Image("Logo1")

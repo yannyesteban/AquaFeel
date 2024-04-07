@@ -23,13 +23,6 @@
                                 <color key="textColor" systemColor="tintColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="2.0" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="GJd-Yh-RWb">
-                                <rect key="frame" x="227" y="264" width="117" height="43"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
-                                <color key="textColor" systemColor="tintColor"/>
-                                <nil key="highlightedColor"/>
-                                <size key="shadowOffset" width="4" height="4"/>
-                            </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Logo2" translatesAutoresizingMaskIntoConstraints="NO" id="1p7-rC-S4t">
                                 <rect key="frame" x="43" y="103" width="301" height="204"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -41,11 +34,8 @@
                         <color key="tintColor" systemColor="systemGray5Color"/>
                         <constraints>
                             <constraint firstItem="Bcu-3y-fUS" firstAttribute="centerX" secondItem="obG-Y5-kRd" secondAttribute="centerX" id="5cz-MP-9tL"/>
-                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="centerX" secondItem="GJd-Yh-RWb" secondAttribute="centerX" id="Q3B-4B-g5h"/>
                             <constraint firstItem="obG-Y5-kRd" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" symbolic="YES" id="SfN-ll-jLj"/>
                             <constraint firstAttribute="bottom" secondItem="obG-Y5-kRd" secondAttribute="bottom" constant="20" id="Y44-ml-fuU"/>
-                            <constraint firstItem="GJd-Yh-RWb" firstAttribute="firstBaseline" secondItem="Ze5-6b-2t3" secondAttribute="bottom" multiplier="1/3" constant="1" id="moa-c2-u7t"/>
-                            <constraint firstItem="GJd-Yh-RWb" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" symbolic="YES" id="x7j-FC-K8j"/>
                         </constraints>
                     </view>
                 </viewController>

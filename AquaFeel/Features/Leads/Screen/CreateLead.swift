@@ -545,7 +545,7 @@ struct CreateLead: View {
                 
                 VStack {
                     HStack {
-                        VStack {
+                        VStack(alignment: .leading){
                             SuperIcon2(status: Binding(
                                 get: { getStatusType(from: lead.status_id.name) },
                                 set: { _ in
@@ -563,8 +563,9 @@ struct CreateLead: View {
                             Text("\(lead.street_address)")
                                 .foregroundStyle(.gray)
                         }
+                        Spacer()
                     }
-                    .padding(6)
+                    .padding()
                     Form {
                         Section("Status") {
                             HStack {
@@ -641,6 +642,7 @@ struct CreateLead: View {
             }
         }
 
+        
         .onAppear {
             loadDataAndProcess()
 

@@ -123,7 +123,7 @@ class HomeMapsViewController: UIViewController {
         map.camera = GMSCameraPosition(latitude: latitude, longitude: longitude, zoom: 16.0)
         map.settings.compassButton = true
         map.settings.zoomGestures = true
-        map.settings.myLocationButton = true
+        //map.settings.myLocationButton = true
         map.isMyLocationEnabled = true
         
         

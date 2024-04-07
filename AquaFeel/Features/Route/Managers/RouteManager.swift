@@ -50,6 +50,36 @@ class RouteManager: ObservableObject {
             
     }
     
+    func getRoute(routeId: String) async throws -> RouteResponse?{
+        let q = LeadQuery()
+            .add(.id, routeId)
+        
+        
+        let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/routes/details", token: "", params: q.get())
+        //let info = ApiConfig(scheme: "http", method: "GET", host: "127.0.0.1", path: "/routes/details", token: "", params: q.get(), port : "4000")
+        do {
+            let response:RouteDetailResponse = try await fetching(config: info)
+            
+            
+            let request = RouteRequest(origin: response.route.startingAddress, destination: response.route.endingAddress, waypoints: response.route.leads.map({
+                $0.latitude + "," + $0.longitude
+                // $0.street_address
+            }))
+            
+            var directionManager = DirectionManager()
+            
+            let routeResponse = try? await directionManager.search(request: request, leads: response.route.leads)
+            
+         
+            
+            return routeResponse
+            
+            
+        } catch {
+            throw error
+        }
+    }
+    
     func detail(routeId: String) async throws{
         let q = LeadQuery()
             .add(.id, routeId)

@@ -44,6 +44,9 @@
     "0" : {
 
     },
+    "1.0" : {
+
+    },
     "2.0" : {
 
     },
@@ -855,9 +858,6 @@
         }
       }
     },
-    "Lead Info" : {
-
-    },
     "Leads" : {
       "localizations" : {
         "es-419" : {
@@ -869,6 +869,7 @@
       }
     },
     "Leads List" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es-419" : {
           "stringUnit" : {
@@ -980,10 +981,27 @@
       }
     },
     "No Data" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No hay datos"
+          }
+        }
+      }
     },
     "no leads" : {
 
+    },
+    "No leads found!" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "no hay Citas!"
+          }
+        }
+      }
     },
     "Nombre: %@" : {
 
@@ -1104,7 +1122,14 @@
 
     },
     "PREFRENCES" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preferencias"
+          }
+        }
+      }
     },
     "Profile" : {
       "localizations" : {

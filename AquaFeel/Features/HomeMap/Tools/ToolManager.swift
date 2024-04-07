@@ -29,7 +29,7 @@ enum ToolMode {
 @MainActor
 class ToolManager: ObservableObject {
     @Published var mode = ToolMode.none
-    @Published var mapTools: [ToolMode: MapTool] = [:]
+    var mapTools: [ToolMode: MapTool] = [:]
     @Published var tool: MapTool?
 
     @Published var lasso = GMSMutablePath()
@@ -50,14 +50,13 @@ class ToolManager: ObservableObject {
     func playTool(_ mode: ToolMode) {
         mapTools[mode]?.play()
     }
-    
-    func getTool<T:MapTool>(_ mode: ToolMode) -> T? {
-        return mapTools[mode] as? T
+
+    func getTool(_ mode: ToolMode) -> MapTool? {
+        return mapTools[mode]
     }
 
     @MainActor
     func setTool(_ newMode: ToolMode) {
-        print("newMode: ", newMode)
         stop()
         if newMode == mode || newMode == .none {
             tool = nil

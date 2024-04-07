@@ -36,7 +36,7 @@ struct DayIconView: View {
 
 struct HomeScreen: View {
     var profile: ProfileManager
-    //@EnvironmentObject var store: MainStore<UserData>
+    // @EnvironmentObject var store: MainStore<UserData>
 
     @State public var showOption: Bool = false
 
@@ -46,7 +46,7 @@ struct HomeScreen: View {
     @State private var isDateSelected = false
     // @State private var selectedDate = Date()
 
-    @StateObject var manager = LeadManager(autoLoad: true, limit: 2000, maxLoads: 510)
+    @StateObject var manager = LeadManager(autoLoad: true, limit: 2000, maxLoads: 2000)
 
     // @State var manager = LeadManager()
     var placeManager = PlaceManager()
@@ -62,14 +62,13 @@ struct HomeScreen: View {
     @State private var lastPick: String? = nil
     var body: some View {
         NavigationStack {
-            
             Form {
                 // Text("Role: \(profile.role)")
                 // Text("User: \(profile.userId)")
-                
+
                 HStack {
                     Text("Appointments")
-                    
+
                     if lastPick != nil {
                         Text("of")
                         Text(shortDate(lastSelectedDate ?? Date()))
@@ -89,9 +88,6 @@ struct HomeScreen: View {
                 }
                 CalendarView(profile: profile, updated: $updated, lastSelectedDate: $lastSelectedDate, lastPick: $lastPick)
                     .fixedSize(horizontal: false, vertical: true)
-                    
-                  
-                
 
                 if lastPick == nil {
                     NavigationLink {
@@ -140,10 +136,10 @@ struct HomeScreen: View {
                  }
                   */
             }
-            
+
             .sheet(isPresented: $showOption) {
                 SettingView(loginManager: profile)
-                    //.environmentObject(store)
+                // .environmentObject(store)
             }
             .toolbar {
                 if lastPick != nil {
@@ -153,12 +149,12 @@ struct HomeScreen: View {
                         } label: {
                             Label("", systemImage: "person")
                         }
-                        
+
                         NavigationLink {
                             AppointmentList(profile: profile, updated: $updated, filterMode: .today, userId: profile.info._id)
                         } label: {
                             DayIconView(date: Date())
-                            
+
                             // Text("Appointment Set Today")
                         }
                         NavigationLink {
@@ -166,8 +162,6 @@ struct HomeScreen: View {
                         } label: {
                             Label("", systemImage: "calendar")
                         }
-                        
-                        
                     }
                 }
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -190,47 +184,29 @@ struct HomeScreen: View {
             if lastPick != nil && false {
                 HStack {
                     NavigationLink {
-                        AppointmentList(profile: profile, updated: $updated, showLeads: true, filterMode: .today, userId: profile.info._id)
+                        AppointmentList(profile: profile, updated: $updated, showLeads: true, filterMode: .today, userId: profile.userId)
                     } label: {
                         Label("", systemImage: "person")
                     }
 
                     NavigationLink {
-                        AppointmentList(profile: profile, updated: $updated, filterMode: .today, userId: profile.info._id)
+                        AppointmentList(profile: profile, updated: $updated, filterMode: .today, userId: profile.userId)
                     } label: {
                         DayIconView(date: Date())
 
                         // Text("Appointment Set Today")
                     }
                     NavigationLink {
-                        AppointmentList(profile: profile, updated: $updated, filterMode: .last30, userId: profile.info._id)
+                        AppointmentList(profile: profile, updated: $updated, filterMode: .last30, userId: profile.userId)
                     } label: {
                         Label("", systemImage: "calendar")
                     }
                 }
             }
-            
+
             HStack {
                 NavigationLink {
                     HomeMap(profile: profile, updated: $updated, leadManager: manager, location: startLocation)
-                    
-                    // .edgesIgnoringSafeArea(.all)
-                } label: {
-                    VStack {
-                        Image(systemName: "network.badge.shield.half.filled")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 30, height: 30)
-                            .foregroundColor(.blue)
-                        
-                        Text("Map")
-                            .font(.caption)
-                            .foregroundColor(.blue)
-                    }
-                }
-                Spacer()
-                NavigationLink {
-                    LeadMap(profile: profile, updated: $updated, manager: manager, location: startLocation)
 
                     // .edgesIgnoringSafeArea(.all)
                 } label: {
@@ -247,14 +223,13 @@ struct HomeScreen: View {
                     }
                 }
                 Spacer()
-                
+
                 NavigationLink {
                     VStack {
                         RouteListView(profile: profile)
                     }
                 } label: {
                     VStack {
-                        
                         if #available(iOS 17.0, *) {
                             Image(systemName: "point.topleft.down.to.point.bottomright.curvepath")
                                 .resizable()
@@ -268,7 +243,6 @@ struct HomeScreen: View {
                                 .frame(width: 30, height: 30)
                                 .foregroundColor(.blue)
                         }
-                        
 
                         Text("Routes")
                             .font(.caption)
@@ -300,48 +274,32 @@ struct HomeScreen: View {
             placeManager.setLocation()
 
             DispatchQueue.main.async {
-                
-
                 if let filters = profile.info.leadFilters {
                     manager.leadFilter = filters
                 }
 
                 manager.token = profile.token
-                manager.role = profile.info.role
-               
+
                 manager.userId = profile.userId
                 manager.role = profile.role
-                print("manager manager manager: ", manager.userId)
-                
+                print("manager manager manager: ", manager.userId, manager.role)
+
                 if manager.leads.isEmpty {
-                    
                     manager.runLoad()
                 }
-                
-                    
-    
-                        
-                    
-                
             }
 
-           
-            
             placeManager.start()
-            
         }
         .onChange(of: updated) { value in
             if value {
-                
                 manager.search()
             }
             updated = false
         }
-        
-        
 
         .onReceive(placeManager.$location) { newValue in
-            
+
             if let location = newValue {
                 self.startLocation = location
             }
@@ -361,7 +319,7 @@ struct OptionB: View {
     }
 }
 
-#Preview ("Home"){
+#Preview("Home") {
     MainAppScreenHomeScreenPreview()
 }
 

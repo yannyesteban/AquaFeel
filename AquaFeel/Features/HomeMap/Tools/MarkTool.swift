@@ -9,7 +9,9 @@ import Foundation
 import GoogleMaps
 import SwiftUI
 
-class MarkTool: NSObject, MapTool, GMSMapViewDelegate {
+class MarkTool: NSObject, ObservableObject, MapTool, GMSMapViewDelegate {
+    @Published var ready = false
+    @Published var position: CLLocationCoordinate2D?
     var onPath: ((GMSMutablePath) -> Void)?
 
     var onDraw: ((GMSMarker) -> Void)?
@@ -18,7 +20,7 @@ class MarkTool: NSObject, MapTool, GMSMapViewDelegate {
     var onPlay = false
 
     var marker = GMSMarker()
-    var position: CLLocationCoordinate2D?
+    
 
     override init() {
         map = GMSMapView()
@@ -43,7 +45,10 @@ class MarkTool: NSObject, MapTool, GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         
         if marker == self.marker {
+            ready = true
             onDraw?(self.marker)
+        }else{
+            ready = false
         }
         
        
@@ -52,6 +57,8 @@ class MarkTool: NSObject, MapTool, GMSMapViewDelegate {
     }
 
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
+        
+        position = coordinate
         marker.position = coordinate
     }
 

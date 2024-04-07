@@ -54,7 +54,7 @@ struct LoginScreen: View {
             if let infoDict = Bundle.main.infoDictionary,
                let appName = infoDict["CFBundleName"] as? String,
                let appVersion = infoDict["CFBundleShortVersionString"] as? String {
-                self.appName = appName
+                self.appName = "Aquafeel" // appName
                 self.appVersion = appVersion
                 print("Nombre de la aplicación: \(appName)")
                 print("Versión de la aplicación: \(appVersion)")

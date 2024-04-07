@@ -95,7 +95,7 @@ class DirectionManager: ObservableObject {
         params["origin"] = request.origin
         params["destination"] = request.destination
 
-        var ways = request.waypoints.joined(separator: "|")
+        var ways = request.waypoints.prefix(25).joined(separator: "|")
 
         if ways != "" {
             if request.optimize {

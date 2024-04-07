@@ -9,7 +9,7 @@ import Foundation
 import GoogleMaps
 import SwiftUI
 
-class LocationTool: NSObject, MapTool, CLLocationManagerDelegate {
+class LocationTool: NSObject, ObservableObject, MapTool, CLLocationManagerDelegate {
     var onPath: ((GMSMutablePath) -> Void)?
 
     var onDraw: ((GMSMarker) -> Void)?
@@ -73,6 +73,16 @@ class LocationTool: NSObject, MapTool, CLLocationManagerDelegate {
         let cameraUpdate = GMSCameraUpdate.setTarget(markerPosition)
         
         map.animate(with: cameraUpdate)
+    }
+    
+    func myLocation(){
+        if let location = locationManager.location?.coordinate {
+            
+            let cameraUpdate = GMSCameraUpdate.setTarget(location)
+            
+            map.animate(with: cameraUpdate)
+        }
+        
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

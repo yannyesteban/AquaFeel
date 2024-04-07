@@ -30,10 +30,65 @@ struct HomeMap: View {
     @State var markEnded = false
     @State var time = 0
     @State var lead = LeadModel()
+
+    @StateObject var lassoTool: LassoTool = .init()
+    @StateObject var markTool: MarkTool = .init()
+    @StateObject var clusterTool: ClusterTool = .init()
+    @StateObject var locationTool: LocationTool = .init()
+    @StateObject var routeTool: RouteTool = .init()
+
     var body: some View {
         GeometryReader { _ in
 
-            HomeMapsRepresentable(location: $location, leadManager: leadManager, homeManager: homeManager, tool: tool, time: $time)
+            HomeMapsRepresentable(location: $location)
+                { map in
+                    lassoTool.setMap(map: map)
+                    markTool.setMap(map: map)
+                    clusterTool.setMap(map: map)
+                    locationTool.setMap(map: map)
+                    routeTool.setMap(map: map)
+
+                    tool.initTool(mode: .lasso, tool: lassoTool)
+                    tool.initTool(mode: .marker, tool: markTool)
+                    tool.initTool(mode: .cluster, tool: clusterTool)
+                    tool.initTool(mode: .location, tool: locationTool)
+                    tool.initTool(mode: .route, tool: routeTool)
+
+                    clusterTool.onDraw = { marker in
+                        DispatchQueue.main.async {
+                            showInfo = true
+
+                            if let userData = marker.userData as? LeadModel {
+                                lead = userData
+                            }
+                        }
+                    }
+
+                    markTool.onDraw = { marker in
+
+                        DispatchQueue.main.async {
+                            markEnded = true
+                            Task {
+                                self.lead = try! await leadManager.newFromLocation(location: marker.position)
+                            }
+                        }
+                    }
+
+                    var longitude = -74.0060
+                    var latitude = 40.7128
+
+                    longitude = location.longitude
+                    latitude = location.latitude
+
+                    // map.camera = GMSCameraPosition(latitude: latitude, longitude: longitude, zoom: 18.0)
+                    map.camera = GMSCameraPosition(latitude: latitude, longitude: longitude, zoom: 16.0)
+                    map.settings.compassButton = true
+                    map.settings.zoomGestures = true
+                    map.settings.myLocationButton = true
+                    map.isMyLocationEnabled = true
+
+                    // tool.playTool(.location)
+                }
                 .edgesIgnoringSafeArea(.all)
 
                 .overlay(alignment: .topLeading) {
@@ -64,9 +119,6 @@ struct HomeMap: View {
                                 .clipShape(Circle())
                                 .shadow(radius: 10)
                         }.padding(10)
-                        
-                        
-                        
                     }
                 }
         }
@@ -87,8 +139,8 @@ struct HomeMap: View {
             }
         }
 
-        .sheet(isPresented: $lassoEnded) {
-            PathOptionView(profile: profile, leads: $leadManager.leads, path: $tool.lasso, leadManager: leadManager, updated: $updated)
+        .sheet(isPresented: $lassoTool.ready) {
+            PathOptionView(profile: profile, leads: $leadManager.leads, path: $lassoTool.path, leadManager: leadManager, updated: $updated)
                 .presentationDetents([.fraction(0.35), .medium, .large])
                 .presentationContentInteraction(.scrolls)
         }
@@ -102,51 +154,35 @@ struct HomeMap: View {
         .sheet(isPresented: $showInfo) {
             NavigationStack {
                 CreateLead(profile: profile, lead: $lead
-                , mode: 0, manager: leadManager, updated: $updated) { _ in
-                    print("on Saving")
+                           , mode: 0, manager: leadManager, updated: $updated) { _ in
                 }
             }
-            
+
             .presentationDetents([.fraction(0.2), .medium, .large])
             .presentationContentInteraction(.scrolls)
         }
-        
-        .onAppear{
-            print("leadManager.userId: ", leadManager.userId)
+
+        .onAppear {
+            DispatchQueue.main.async {
+                leadManager.initFilter { _, _ in
+
+                    print("completation loadStatus")
+                }
+            }
         }
 
-        .onReceive(tool.$ready) { ready in
+        .onReceive(leadManager.$leads) { _ in
 
-            if ready {
-                DispatchQueue.main.async {
-                    switch tool.mode {
-                    case .lasso:
-                        lassoEnded = true
-                    case .marker:
+            DispatchQueue.main.async {
+                let markers = leadManager.getMarkers()
 
-                        markEnded = true
-                        DispatchQueue.main.async {
-                            Task{
-                                self.lead = try! await leadManager.newFromLocation(location: tool.marker.position)
-                            }
-                            
-                        }
-                    case .cluster:
-                        showInfo = true
-                        DispatchQueue.main.async {
-                            if let userData = tool.marker.userData as? LeadModel {
-                                // print(userData["name"] ?? "")
-                                lead = userData
-                            }
-                        }
-                       
+                clusterTool.loadMarkers(markers: markers)
+            }
+        }
+        .onReceive(leadManager.$leadFilter) { filter in
 
-                    default:
-                        lassoEnded = false
-                        
-                    }
-                    print("...tool.mode", tool.mode)
-                }
+            DispatchQueue.main.async {
+                profile.info.leadFilters = filter
             }
         }
     }

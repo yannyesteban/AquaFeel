@@ -19,11 +19,8 @@ enum GoogleAPIError: Error {
 
 class GoogleApis {
     static let apiKey = "AIzaSyA4Jqk-dU9axKNYJ6qjWcBcvQku0wTvBC4"
-    // CLLocationCoordinate2D
 
     static func getPlaceDetailsByCoordinates(location: CLLocationCoordinate2D) async throws -> PlaceDetails? {
-       
-        print("getPlaceDetailsByCoordinates", location.latitude, location.longitude)
         var params: [String: String] = [:]
 
         params["latlng"] = "\(location.latitude),\(location.longitude)"
@@ -34,7 +31,6 @@ class GoogleApis {
         do {
             let response: GeocodeResult = try await fetching(config: info)
 
-           
             if let firstResult = response.results.first {
                 return firstResult
             }
@@ -46,7 +42,7 @@ class GoogleApis {
         }
     }
 
-    static func search(request: RouteRequest, leads: [LeadModel]) async throws -> RouteResponse? {
+    static func doRoute(request: RouteRequest, leads: [LeadModel]) async throws -> RouteResponse? {
         var params: [String: String] = [:]
 
         params["origin"] = request.origin
@@ -71,9 +67,7 @@ class GoogleApis {
 
             print("result.status:", response.status)
 
-            // var response = response1
             for i in response.routes.indices {
-                // i.leads = []
                 for j in response.routes[i].waypointOrder {
                     var lead = leads[j]
 
@@ -83,14 +77,7 @@ class GoogleApis {
 
                 print("i.waypointOrder", response.routes[i].waypointOrder)
             }
-            // prettyPrint(response)
-            /*
-             let response1 = response
-             DispatchQueue.main.async {
-             // let response1 = response
-             self.route = response1
-             }
-             */
+
             return response
         } catch {
             throw error

@@ -8,6 +8,7 @@
 import Combine
 import CoreLocation
 import Foundation
+import GoogleMaps
 
 class LeadManager: ObservableObject {
     @Published var leadFilter = LeadFilter()
@@ -42,8 +43,6 @@ class LeadManager: ObservableObject {
 
     private var lastTask: URLSessionDataTask?
 
-    
-
     /// private var cancellables: Set<AnyCancellable> = []
 
     init(autoLoad: Bool = false, limit: Int = 20, maxLoads: Int = 100) {
@@ -72,7 +71,7 @@ class LeadManager: ObservableObject {
 
             .debounce(for: .seconds(0.2), scheduler: RunLoop.main)
             .sink { [weak self] _ in
-                print("hello weak self 1.0", self?.leads.count ?? 0)
+                print("leadFilter", self?.leads.count ?? 0)
                 if let ME = self {
                     if ME.onInit {
                         print("hello weak self 2.0")
@@ -434,5 +433,39 @@ class LeadManager: ObservableObject {
         }
 
         return leadAddress
+    }
+
+    func createMark(lead: LeadModel) -> GMSMarker {
+        let marker = GMSMarker()
+
+        marker.position = lead.position
+        marker.userData = lead
+        marker.isTappable = true
+
+        marker.userData = lead
+
+        let circleIconView = getUIImage(name: lead.status_id.name)
+        circleIconView.frame = CGRect(x: 120, y: 120, width: 30, height: 30)
+
+        let circleLayer = CALayer()
+        circleLayer.bounds = circleIconView.bounds
+        circleLayer.position = CGPoint(x: circleIconView.bounds.midX, y: circleIconView.bounds.midY)
+        circleLayer.cornerRadius = circleIconView.bounds.width / 2
+        circleLayer.borderWidth = 0.0
+        circleLayer.borderColor = UIColor.black.cgColor
+
+        circleIconView.layer.addSublayer(circleLayer)
+
+        marker.iconView = circleIconView
+
+        return marker
+    }
+
+    func getMarkers() -> [GMSMarker] {
+        var markers: [GMSMarker] = []
+        for lead in leads {
+            markers.append(createMark(lead: lead))
+        }
+        return markers
     }
 }

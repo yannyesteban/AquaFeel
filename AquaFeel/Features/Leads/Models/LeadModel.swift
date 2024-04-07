@@ -266,7 +266,7 @@ struct LeadModel: Codable, AddressProtocol, Equatable, Hashable {
     var mode: Int = 2
 
     var routeOrder: Int
-    
+
     var position: CLLocationCoordinate2D {
         get {
             guard let latitude = Double(latitude), let longitude = Double(longitude) else {
@@ -279,7 +279,7 @@ struct LeadModel: Codable, AddressProtocol, Equatable, Hashable {
             longitude = "\(newPosition.longitude)"
         }
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case id = "_id"
         case business_name
@@ -407,6 +407,14 @@ struct LeadModel: Codable, AddressProtocol, Equatable, Hashable {
         isSelected = true
         user_id = created_by._id
         routeOrder = 0
+
+        if !(-90 ... 90).contains(position.latitude) {
+            position = .init(latitude: 0.0, longitude: 0.0)
+        }
+
+        if !(-180 ... 180).contains(position.longitude) {
+            position = .init(latitude: 0.0, longitude: 0.0)
+        }
     }
 
     init(from json: String) throws {

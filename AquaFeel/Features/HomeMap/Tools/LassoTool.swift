@@ -9,7 +9,7 @@ import Foundation
 import GoogleMaps
 import SwiftUI
 
-class LassoTool: NSObject, MapTool, GMSMapViewDelegate {
+class LassoTool: NSObject, ObservableObject, MapTool, GMSMapViewDelegate {
     var onDraw: ((GMSMarker) -> Void)?
     var onPath: ((GMSMutablePath) -> Void)?
 
@@ -21,7 +21,8 @@ class LassoTool: NSObject, MapTool, GMSMapViewDelegate {
     var drawing = false
     var firstPoint: CLLocationCoordinate2D?
 
-    var path = GMSMutablePath()
+    @Published var path = GMSMutablePath()
+    @Published var ready = false
     var newPath = GMSMutablePath()
 
     override init() {
@@ -37,18 +38,13 @@ class LassoTool: NSObject, MapTool, GMSMapViewDelegate {
     }
 
     func play() {
-        // map.delegate = self
-
-        print("play()")
         map.settings.setAllGesturesEnabled(false)
 
         let resetGestureRecognizer = DragDropGestureRecognizer(target: self, action: #selector(recognizer(_:)))
         map.addGestureRecognizer(resetGestureRecognizer)
 
         map.delegate = self
-        // resetGestureRecognizer.delegate = self
 
-        // resetGestureRecognizer.cancelsTouchesInView = false
         onPlay = true
         drawPlay = true
     }
@@ -59,16 +55,13 @@ class LassoTool: NSObject, MapTool, GMSMapViewDelegate {
     }
 
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
-        print("didTapAt lasso")
     }
 
     func mapView(_ mapView: GMSMapView, willMove gesture: Bool) {
-        print("willMove ... 123")
     }
 
     @objc
     func recognizer(_ gesture: DragDropGestureRecognizer) {
-        print("resetPieces")
         let location = gesture.location(in: map)
         if let tappedView = map.hitTest(location, with: nil) {
             if tappedView.self is UIButton {
@@ -76,22 +69,21 @@ class LassoTool: NSObject, MapTool, GMSMapViewDelegate {
             }
 
             if tappedView == map {
-                print("tappedView == map")
                 return
             }
         }
 
         switch gesture.state {
         case .began:
+            ready = false
 
-            print(".began")
             let tapPoint = gesture.location(in: map)
             let coordinate = map.projection.coordinate(for: tapPoint)
 
             firstPoint = coordinate
 
         case .changed:
-            print(".changed")
+
             let tapPoint = gesture.location(in: map)
             let coordinate = map.projection.coordinate(for: tapPoint)
 
@@ -103,12 +95,12 @@ class LassoTool: NSObject, MapTool, GMSMapViewDelegate {
             draw.add(coordinate: coordinate)
 
         case .ended:
-            print(".ended")
+
             if drawing {
                 draw.bye()
             } else {
+                ready = true
                 onPath?(path)
-                // showLeadsOptions()
             }
             drawing = false
 
