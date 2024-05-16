@@ -213,7 +213,7 @@ struct AddressViewPrevies: View {
     
     func searchPlaces() {
         
-        let apiKey = "AIzaSyA4Jqk-dU9axKNYJ6qjWcBcvQku0wTvBC4"
+        let apiKey = APIKeys.googleApiKey
         let urlString = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=\(searchText)&key=\(apiKey)"
         
         if let url = URL(string: urlString) {
@@ -238,7 +238,7 @@ struct AddressViewPrevies: View {
     }
     
     func getPlaceDetails(placeID: String) {
-        let apiKey = "AIzaSyA4Jqk-dU9axKNYJ6qjWcBcvQku0wTvBC4"
+        let apiKey = APIKeys.googleApiKey
         
         let urlString = "https://maps.googleapis.com/maps/api/place/details/json?place_id=\(placeID)&key=\(apiKey)"
         

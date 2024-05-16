@@ -17,31 +17,7 @@ struct StatusResponse: Codable {
 class PathManager: ObservableObject {
 }
 
-class StatusManager: ObservableObject {
-    @Published var statusList: [StatusId] = []
-    @Published var lastStatus: StatusId?
-    @Published var lastStatusType: StatusType?
 
-    init() {
-        Task {
-            try? await list()
-        }
-    }
-
-    func list() async throws {
-        let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/status/list", token: "", params: nil)
-
-        do {
-            let response: StatusResponse = try await fetching(config: info)
-            DispatchQueue.main.async {
-                self.statusList = response.list
-            }
-
-        } catch {
-            throw error
-        }
-    }
-}
 
 struct NavigationButton: View {
     var imageName: String
@@ -183,7 +159,7 @@ struct ChangeStatusView: View {
         Form {
             Section("Select Status") {
                 HStack {
-                    MyStatus(status: $manager.statusId, statusList: statusList)
+                    LeadStatusView(status: $manager.statusId, statusList: statusList)
                 }
             }
             Section("Leads") {
@@ -237,6 +213,8 @@ struct ChangeStatusView: View {
 
 struct ChangeUserView: View {
     @ObservedObject var manager: LeadsManager
+    @ObservedObject var adminManager: AdminManager
+    
     @Binding var owner: CreatorModel
     @Binding var leads: [LeadModel]
     // @State var statusList: [StatusId] = []
@@ -251,7 +229,7 @@ struct ChangeUserView: View {
         Form {
             Section("Select User") {
                 HStack {
-                    OwnerView(text: "Select User", owner: $manager.owner)
+                    OwnerView(text: "Select User", owner: $manager.owner, adminManager: adminManager)
                 }
             }
             
@@ -390,11 +368,12 @@ struct PathOptionView: View {
     @State var statusId = StatusId()
 
     // @Binding var owner: CreatorModel
-    @StateObject private var viewModel = CreatorViewModel()
+    @StateObject private var viewModel = CreatorManager()
     @State var owner = CreatorModel()
     @StateObject var leadsManager = LeadsManager()
     @ObservedObject var leadManager: LeadManager
     @Binding var updated: Bool
+    @StateObject var adminManager = AdminManager()
     var body: some View {
         NavigationStack {
             VStack(alignment: .center) {
@@ -459,7 +438,7 @@ struct PathOptionView: View {
                         RouteView(profile: profile, routeManager: routeManager, mode: .new, id: "0", leads: filteredLeads)
                     }
                     NavigationButton(imageName: "person.fill.checkmark", label: "Owner") {
-                        ChangeUserView(manager: leadsManager, owner: $owner, leads: $filteredLeads)
+                        ChangeUserView(manager: leadsManager, adminManager: adminManager, owner: $owner, leads: $filteredLeads)
                     }.disabled(profile.role == "SELLER")
 
                     NavigationButton(imageName: "star.fill", label: "Status") {
@@ -504,6 +483,11 @@ struct PathOptionView: View {
             .onAppear {
                 
                 routeManager.userId = profile.userId
+                adminManager.token = profile.token
+                adminManager.userId = profile.userId
+                adminManager.role = profile.role
+                
+                
                 /*
                   path.removeAllCoordinates()
 

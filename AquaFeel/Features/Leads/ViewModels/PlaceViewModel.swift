@@ -67,7 +67,7 @@ class PlaceViewModel: ObservableObject {
                                                  } */
     var onSelectedPlaceUpdated: ((_ place: PlaceDetails?, _ error: Error?) -> Void)?
     
-    private let apiKey = "AIzaSyA4Jqk-dU9axKNYJ6qjWcBcvQku0wTvBC4"
+    private let apiKey = APIKeys.googleApiKey
     
     func searchPlaces(searchText: String) {
         guard let encodedSearchText = searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {

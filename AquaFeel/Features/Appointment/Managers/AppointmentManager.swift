@@ -86,7 +86,14 @@ class AppointmentManager: ObservableObject {
         }
 
         let path = "/leads/get"
-        let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: path, token: "", params: q.get())
+        
+        
+        let params: [String : String?]? = q.get()
+        let method = "GET"
+        let scheme = APIValues.scheme
+        let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: "", params: params, port: APIValues.port)
+        
+        //let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: path, token: "", params: q.get())
 
         do {
             let response: LeadsRequest = try await fetching(config: info)
@@ -116,7 +123,14 @@ class AppointmentManager: ObservableObject {
         if showLeads {
             path = "/leads/get"
         }
-        let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: path, token: "", params: q.get())
+        
+        
+        let params: [String : String?]? = q.get()
+        let method = "GET"
+        let scheme = APIValues.scheme
+        let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: "", params: params, port: APIValues.port)
+        
+        //let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: path, token: "", params: q.get())
 
         do {
             let response: LeadsRequest = try await fetching(config: info)
@@ -152,7 +166,14 @@ class AppointmentManager: ObservableObject {
         let dateStart = dateFormatter.string(from: firstDateOfMonth)
         let dateEnd = dateFormatter.string(from: lastDateAdjusted)
 
-        let info = ApiConfig(method: "POST", host: "api.aquafeelvirginia.com", path: "/leads/get-by-month", token: "", params: nil)
+        
+        let path = "/leads/get-by-month"
+        let params: [String : String?]? = nil
+        let method = "POST"
+        let scheme = APIValues.scheme
+        let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: "", params: params, port: APIValues.port)
+        
+        //let info = ApiConfig(method: "POST", host: "api.aquafeelvirginia.com", path: "/leads/get-by-month", token: "", params: nil)
         let body = AppointmentRequest(user_id: userId, date_start: dateStart, date_end: dateEnd)
         do {
             let response: LeadsRequest = try await fetching(body: body, config: info)
@@ -207,7 +228,15 @@ class AppointmentManager: ObservableObject {
             .add(.limit, "1000")
         // .add(.searchValue, "jose")
 
-        let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/leads/get", token: "", params: q.get())
+        
+        let path = "/leads/get"
+        let params: [String : String?]? = q.get()
+        let method = "GET"
+        let scheme = APIValues.scheme
+        let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: "", params: params, port: APIValues.port)
+        
+        
+        //let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/leads/get", token: "", params: q.get())
 
         do {
             let response: LeadsRequest = try await fetching(config: info)

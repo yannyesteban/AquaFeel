@@ -34,7 +34,7 @@ struct AppointmentList: View {
     @State var filter = ""
 
     @StateObject var manager: AppointmentManager = AppointmentManager(filterMode: .all)
-    // @StateObject var user = UserManager()
+    
 
     @State private var isFilterModalPresented = false
 
@@ -63,16 +63,18 @@ struct AppointmentList: View {
                                 SuperIconViewViewWrapper(status: getStatusType(from: manager.leads[index].status_id.name))
                                     .frame(width: 34, height: 34)
                                 Text(formattedTime(from: manager.leads[index].appointment_time)).font(.footnote)
-                            }.frame(width: 60)
+                            }.frame(width: 70)
 
                             VStack(alignment: .leading) {
                                 Text("\(manager.leads[index].first_name) \(manager.leads[index].last_name)")
                                     .font(.subheadline)
 
                                 Text("\(manager.leads[index].street_address)")
+                                    .font(.footnote)
                                     .foregroundStyle(.secondary)
                             }
                         }
+                        .padding(0)
                     }
                 }
                 .padding(0)
@@ -93,7 +95,7 @@ struct AppointmentList: View {
             }
 
             .toolbar {
-                ToolbarItemGroup(placement: .topBarLeading) {
+                ToolbarItemGroup(placement: .topBarTrailing) {
                     Button {
                         // manager.reset()
                         // manager.load(count: 9)

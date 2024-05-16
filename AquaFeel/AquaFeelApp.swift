@@ -23,7 +23,9 @@ struct AquaFeelApp: App {
             // HomeScreen(option:"b")
             // ContentView()
             // LeadMap()                .edgesIgnoringSafeArea(.all)
-            MainAppScreen().environmentObject(store)
+            MainAppScreen()
+                .environmentObject(store)
+                
         }
     }
 }

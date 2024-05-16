@@ -8,253 +8,9 @@
 import SwiftUI
 import UIKit
 
-class CreatorViewModel: ObservableObject {
-    @Published var selectedCreator: CreatorModel?
-    @Published var creators: [CreatorModel] = [] // Rellenar con tus datos
-    @Published var searchText = ""
-    @Published var shouldDismissSheet: Bool = false
-
-    func showCreatorList() {
-        selectedCreator = nil
-        shouldDismissSheet = true
-    }
-}
-
-struct TextWithIcon: View {
-    let text: String
-
-    var body: some View {
-        HStack {
-            SuperIconViewViewWrapper(status: getStatusType(from: "NHO"))
-                .frame(width: 30, height: 30)
-        }
-    }
-}
-
-struct DatePickerString: View {
-    var title: String
-    @Binding var text: String
-
-    private var realDate: Date {
-        
-        let isoDateFormatter = ISO8601DateFormatter()
-        isoDateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-        
-        if let date = isoDateFormatter.date(from: text) {
-            return date
-        } else {
-            return Date()
-        }
-        
-        
-        /*
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-        //dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-
-        if let date = dateFormatter.date(from: text) {
-            return date
-        } else {
-            // If the conversion fails, returns the current date as the default value
-            return Date()
-        }
-         */
-    }
-
-    var body: some View {
-        DatePicker(
-            title,
-            selection: Binding<Date>(
-                get: { self.realDate },
-                set: { newValue in
-                    // Convert the new selected date to a string format and assign to the ObservableLeadModel
-                    /*let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-                   // dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-
-                    text = dateFormatter.string(from: newValue)
-                     */
-                    
-                    let isoDateFormatter = ISO8601DateFormatter()
-                    isoDateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-                    
-                    text = isoDateFormatter.string(from: newValue)
-                }
-            ),
-
-            displayedComponents: [.date, .hourAndMinute]
-        )
-    }
-}
-
-struct MyStatus: View {
-    @Binding var status: StatusId
-
-    @State var sta: StatusType = .appt
-    @State private var isModalPresented = false
-
-    var statusList: [StatusId]
-    var body: some View {
-        HStack {
-            VStack {
-                SuperIcon2(status: $sta)
-
-                    .frame(width: 50, height: 50)
-                Text(status.name)
-                    .frame(width: 50, height: 30)
-            }.onTapGesture {
-                isModalPresented.toggle()
-            }
-            .onAppear {
-                sta = getStatusType(from: status.name)
-            }
-            .onChange(of: status.name) { newStatus in
-
-                sta = getStatusType(from: newStatus)
-            }
-
-            ScrollView(.horizontal) {
-                HStack {
-                    ForEach(statusList, id: \._id) { item in
-
-                        VStack {
-                            SuperIconViewViewWrapper(status: getStatusType(from: item.name))
-
-                                .frame(width: 30, height: 30)
-                                .padding(5)
-                                .onTapGesture {
-                                    status = item
-                                }
-                            Text(item.name)
-                                .frame(width: 50, height: 30)
-                                .foregroundColor(.blue)
-                        }
-                    }
-                }
-            }
-            .padding(5)
-
-        }.padding(0)
-            .sheet(isPresented: $isModalPresented) {
-                VStack {
-                    SuperIcon2(status: $sta)
-
-                        .frame(width: 50, height: 50)
-                    Text("Status: \(status.name)")
-                }
-                .padding(10)
-                Divider()
-                ScrollView {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))], spacing: 10) {
-                        ForEach(statusList, id: \._id) { item in
-                            VStack {
-                                SuperIconViewViewWrapper(status: getStatusType(from: item.name))
-                                    .frame(width: 50, height: 50)
-                                    .padding(5)
-                                    .onTapGesture {
-                                        status = item
-                                        isModalPresented.toggle()
-                                    }
-
-                                Text(item.name)
-                                    .frame(width: 50, height: 30)
-                                // .foregroundColor(.blue)
-                            }.padding(0)
-                        }
-                    }
-                }
-                .padding(30)
-
-                Button("back") {
-                    isModalPresented.toggle()
-                }
-            }.padding(0)
-    }
-}
-
-struct OwnerView: View {
-    @State var text = ""
-    @Binding var owner: CreatorModel
-    @StateObject private var viewModel = CreatorViewModel()
-    // @State var selectedCreator
-
-    var body: some View {
-        HStack {
-            if owner._id == "" {
-                Text(text)
-                    .foregroundColor(.secondary.opacity(0.7))
-            } else {
-                Text("\(owner.firstName) \(owner.lastName)")
-            }
-        }
-
-        // .frame(width: .infinity, height: .infinity)
-        .onTapGesture {
-            viewModel.showCreatorList()
-        }
-        .sheet(isPresented: $viewModel.shouldDismissSheet) {
-            CreatorListView(selected: $owner, viewModel: viewModel)
-        }.onReceive(viewModel.$selectedCreator) { _ in
-        }
-    }
-}
-
-struct CreatorListView: View {
-    @Binding var selected: CreatorModel
-    @ObservedObject var viewModel: CreatorViewModel
-    @StateObject var user = UserManager()
-
-    // @State var selected = false
-    var body: some View {
-        NavigationView {
-            List {
-                ForEach(viewModel.creators.filter {
-                    $0.firstName.localizedCaseInsensitiveContains(viewModel.searchText) ||
-                        $0.lastName.localizedCaseInsensitiveContains(viewModel.searchText) || viewModel.searchText == ""
-                }) { creator in
-
-                    HStack {
-                        Text("\(creator.firstName) \(creator.lastName)")
-
-                            .onTapGesture {
-                                viewModel.shouldDismissSheet = false
-                                selected = creator
-                            }
-                        if creator._id == selected._id {
-                            Image(systemName: creator._id == selected._id ? "checkmark.circle.fill" : "circle")
-                            // .foregroundColor(.gray) // Consistent checkbox color
-                        }
-                    }
-                    .foregroundColor(creator._id == selected._id ? .accentColor : .primary)
-                }
-            }
-            .searchable(text: $viewModel.searchText)
-            .navigationBarTitle("Owners List", displayMode: .inline)
-            .navigationBarItems(trailing: Button(action: {
-                viewModel.shouldDismissSheet = false
-            }) {
-                Image(systemName: "xmark") // Use "xmark" or any other SF Symbol
-            })
-        }
-        .onAppear {
-            user.list()
-        }
-        .onReceive(user.$users) { users in
-            viewModel.creators = users.map { user in
-                CreatorModel(
-                    _id: user._id, // Asegúrate de tener una propiedad que puedas utilizar como _id
-                    email: user.email,
-                    firstName: user.firstName,
-                    lastName: user.lastName
-                )
-            }
-        }
-    }
-}
-
 struct CreateLead: View {
-    var profile:ProfileManager
-    
+    var profile: ProfileManager
+
     @State private var texto = ""
     @State private var date = Date()
 
@@ -263,29 +19,38 @@ struct CreateLead: View {
     @State var mode: Int = 2
     @ObservedObject var manager: LeadManager
     @Binding var updated: Bool
-    
+
     @State private var deleteConfirm = false
 
-    @State private var isShowingSnackbar = false
+    @State private var isWaiting = false
 
-    @StateObject private var lead2 = LeadViewModel(first_name: "Juan", last_name: "")
+    // @StateObject private var lead2 = LeadViewModel(first_name: "Juan", last_name: "")
+    @StateObject private var statusManager = StatusManager()
 
-    @StateObject private var viewModel = CreatorViewModel()
+    @StateObject private var viewModel = CreatorManager()
+    @StateObject var adminManager = AdminManager()
 
     @State var showErrorMessage = false
+    @State var showErrorMessage2 = false
     @State var alertMessage = ""
     @EnvironmentObject var store: MainStore<UserData>
-    //@State var userRole = ""
+    // @State var userRole = ""
     @Environment(\.presentationMode) var presentationMode
     @State private var isAppointmentVisible = false
-  
-    //@State var userId: String
+
+    @State private var showHistory = false
+    // @State var userId: String
     var onSave: (Bool) -> Void
 
-    @State var alertTitle = "Alert"
-    //@State var alertMessage = "Error"
+    @State var alertTitle = "Message"
+
+    @State var showAlert = false
+
+    @State private var alert: Alert!
+
+    // @State var alertMessage = "Error"
     private func loadDataAndProcess() {
-        lead2.statusAll()
+        statusManager.statusAll()
     }
 
     var body: some View {
@@ -312,6 +77,9 @@ struct CreateLead: View {
                             if mode == 1 {
                                 Text("*")
                             }
+                            if lead.pending {
+                                Text("(Pending)")
+                            }
                         }
                     }
 
@@ -320,7 +88,7 @@ struct CreateLead: View {
 
                     Section("Address") {
                         /* AddressView<LeadModel>(label: "write a address", leadAddress: $lead) */
-                        AddressField<LeadModel>(label: "Start Point", leadAddress: $lead)
+                        AddressField<LeadModel>(label: "Address", leadAddress: $lead, withPlaceButton: mode == 1)
                         TextField("Apt / Suite", text: $lead.apt)
                         TextField("City", text: $lead.city)
                         TextField("State", text: $lead.state)
@@ -328,18 +96,14 @@ struct CreateLead: View {
                             TextField("Zip Code", text: $lead.zip)
                             TextField("Country", text: $lead.country)
                         }
-                        
                     }
 
                     Section("Status") {
                         HStack {
-                            MyStatus(status: $lead.status_id, statusList: lead2.statusList)
+                            LeadStatusView(status: $lead.status_id, statusList: statusManager.statusList)
                         }
                     }
-                    .alert(isPresented: $showErrorMessage) {
-                        Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
-                    }
-                    
+
                     Section("Appointment / Callback time") {
                         Button(action: {
                             withAnimation {
@@ -353,68 +117,101 @@ struct CreateLead: View {
                             }
                         }) {
                             HStack {
-                                Image(systemName: lead.appointment_date != "" ? "trash" : "calendar")
                                 Text(lead.appointment_date != "" ? "Cancel Appointment" : "Set Appointment")
+                                Spacer()
+                                Image(systemName: lead.appointment_date != "" ? "trash" : "calendar")
                             }
                             .foregroundColor(lead.appointment_date != "" ? .red : .primary) // Cambiar el color del icono
                         }
-                        
-                        if isAppointmentVisible || lead.appointment_date != "" {
-                            
-                                DatePickerString(title: "Date", text: $lead.appointment_date)
-                                    .onChange(of: lead.appointment_date){ newDate in
-                                        lead.appointment_time = newDate
-                                    }
-                            Text("Old Time \(formattedTime(from : lead.appointment_time))")
-                        }
-                        
-                    }
-                    
-                   
-                    
 
-                    if mode == 2 {
-                        if profile.role == "ADMIN" || profile.role == "MANAGER" {
-                            Section {
-                                OwnerView(text: "Select User", owner: $lead.created_by)
-                            } header: {
-                                Text("Owner")
-                            }
-                        } else {
-                            Section {
-                                Text("\(lead.created_by.firstName) \(lead.created_by.lastName)")
-                            } header: {
-                                Text("Owner")
+                        if isAppointmentVisible || lead.appointment_date != "" {
+                            DatePickerString(title: "Date", text: $lead.appointment_date)
+                                .onChange(of: lead.appointment_date) { newDate in
+                                    lead.appointment_time = newDate
+                                }
+
+                            if lead.appointment_time != lead.appointment_date {
+                                Text("Old Time \(formattedTime(from: lead.appointment_time))")
                             }
                         }
                     }
 
                     Section("Note") {
-                        TextField("", text: $lead.note, axis: .vertical)
+                        TextField("Write a note...", text: $lead.note, axis: .vertical)
                             .lineLimit(2 ... 4)
+                        /* HStack {
+                             Text("Add to favorites")
+                             Spacer()
+                             Button(action: {
+                                 lead.favorite.toggle()
+                             }) {
+                                 Image(systemName: lead.favorite ? "heart.fill" : "heart")
+                                     .font(.system(size: 20, weight: .light))
+                                     .foregroundColor(lead.favorite ? .red : .gray)
+                             }
+                         } */
                     }
-                    
+
+                    /*
+                     if mode == 2 && (profile.role == "ADMIN" || profile.role == "MANAGER") {
+                         Section {
+                             OwnerView(text: "Select User", owner: $lead.created_by, adminManager: adminManager)
+                         } header: {
+                             Text("Owner")
+                         }
+                     }*/
 
                     if mode == 2 {
                         Section {
+                            if profile.role == "ADMIN" || profile.role == "MANAGER" {
+                                OwnerView(text: "Select User", owner: $lead.created_by, adminManager: adminManager)
+                            }
+                            HStack {
+                                Text("Created On:")
+                                Spacer()
+                                Text("\(lead.createdOn.formatted())")
+                            }
+                            HStack {
+                                Text("Updated On:")
+                                Spacer()
+                                Text("\(lead.updatedOn.formatted())")
+                            }
+
+                        } header: {
+                            Text(profile.role == "ADMIN" || profile.role == "MANAGER" ? "Owner" : "")
+                        }
+
+                        Section {
                             Button(action: {
-                                deleteConfirm = true
+                                showHistory.toggle()
                             }) {
                                 HStack {
+                                    Text("Show History")
+                                    Spacer()
+                                    Image(systemName: "clock.arrow.circlepath")
+                                }
+                            }
+                        }
+
+                        Section {
+                            Button(action: {
+                                doDelete()
+
+                            }) {
+                                HStack {
+                                    Text("Delete")
                                     Spacer()
                                     Image(systemName: "trash")
                                         .foregroundColor(.red)
-                                    Text("Delete")
                                 }
                             }
                             .foregroundColor(.red)
                         }
                     }
                 }
-                
+
                 .onChange(of: mode) { newMode in
                     if newMode == 1 {
-                        
                         lead = LeadModel()
                         lead.created_by = CreatorModel(_id: profile.userId)
                         lead.user_id = profile.userId
@@ -422,130 +219,74 @@ struct CreateLead: View {
                 }
                 .background(.blue)
                 .navigationTitle("Lead")
-                
-                
+
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
-                        if isShowingSnackbar {
+                        if isWaiting {
                             ProgressView("")
 
                         } else {
-                            
-                            
-                            
                             Button {
                                 lead.makePhoneCall()
                             } label: {
-                                Label("", systemImage: "phone")
-                                    .font(.title3)//arrow.turn.up.right
+                                Label("", systemImage: "phone.fill")
+                                    .font(.title3) // arrow.turn.up.right
                             }
                             .disabled(lead.phone.isEmpty)
-                           
+
                             Button {
                                 lead.sendSMS()
                             } label: {
-                                Label("", systemImage: "message")
-                                    .font(.title3)//arrow.turn.up.right
+                                Label("", systemImage: "message.fill")
+                                    .font(.title3) // arrow.turn.up.right
                             }
                             .disabled(lead.phone.isEmpty)
                             Button {
-                                lead.openGoogleMaps()
+                                if profile.mapApi == .appleMaps {
+                                    lead.openAppleMaps()
+                                } else {
+                                    lead.openGoogleMaps()
+                                }
+
                             } label: {
-                                Label("", systemImage: "globe")
-                                    .font(.title3)//
+                                Label("", systemImage: "location.fill")
+                                    .font(.title3) //
                             }
                             Button {
-                                alertMessage = lead.validForm()
-
-                                if alertMessage != "" {
-                                    showErrorMessage = true
-
-                                    return
-                                } else {
-                                    isShowingSnackbar = true
-                                }
-
-                                var saveMode = ModeSave.edit
-                                if mode == 1 {
-                                    saveMode = .add
-                                }
-                                var result = false
-                                manager.save(body: lead, mode: saveMode) { ok, newLead in
-
-                                    isShowingSnackbar = false
-
-                                    print("showSaveOk: A", ok)
-                                    if ok, let newLead = newLead {
-                                        
-                                        showErrorMessage = true
-                                        alertMessage = "record was saved correctly!"
-                                        
-                                        updated = true
-                                        lead.id = newLead.id
-                                        mode = 2
-
-                                        if saveMode == .add {
-                                            manager.leads.insert(lead, at: 0)
-                                            result = true
-                                        }
-                                    } else {
-                                        showErrorMessage = true
-                                        alertMessage = "Error: record wasn't saved!"
-                                    }
-
-                                    onSave(result)
-                                }
+                                doSave()
 
                             } label: {
                                 Label("Save", systemImage: "externaldrive.fill")
                                     .font(.title3)
                             }
                         }
-                        
                     }
                 }
-                /*if mode == 2 {
-                    HStack {
-                        if !lead.phone.isEmpty {
-                            Button {
-                                lead.makePhoneCall()
-                            } label: {
-                                HStack {
-                                    Image(systemName: "phone")
-                                        .imageScale(.large)
-                                }
-                            }
-                            .padding(.horizontal, 30)
-
-                            Button {
-                                lead.sendSMS()
-                            } label: {
-                                HStack {
-                                    Image(systemName: "message")
-                                        .imageScale(.large)
-                                }
-                            }
-                            .padding(.horizontal, 30)
-                        }
-
-                        Button {
-                            lead.openGoogleMaps()
-
-                        } label: {
-                            HStack {
-                                Image(systemName: "arrow.turn.up.right")
-                                    .imageScale(.large)
-                            }
-                        }
-                        .padding(.horizontal, 30)
-                    }
-                }*/
 
             } else {
-                
+                if showErrorMessage2 {
+                    Label(alertMessage, systemImage: "info.bubble.fill")
+                        .padding(2)
+                        .foregroundColor(Color.accentColor)
+                        // .foregroundColor(.white)
+                        // .cornerRadius(2)
+                        .labelStyle(.titleAndIcon)
+                        // .labelStyle(.iconOnly)
+
+                        // .imageScale(.large)
+
+                        .opacity(showErrorMessage2 ? 1 : 0)
+                        // .rotationEffect(.degrees(showMessage ? 90 : 0))
+
+                        .scaleEffect(showErrorMessage2 ? 1 : 0)
+                        .font(.callout)
+
+                        // .frame(height: effect ? .infinity : 0)
+                        .padding()
+                }
                 VStack {
                     HStack {
-                        VStack(alignment: .leading){
+                        VStack(alignment: .leading) {
                             SuperIcon2(status: Binding(
                                 get: { getStatusType(from: lead.status_id.name) },
                                 set: { _ in
@@ -569,7 +310,7 @@ struct CreateLead: View {
                     Form {
                         Section("Status") {
                             HStack {
-                                MyStatus(status: $lead.status_id, statusList: lead2.statusList)
+                                LeadStatusView(status: $lead.status_id, statusList: statusManager.statusList)
                             }
 
                         }.padding(0)
@@ -580,7 +321,6 @@ struct CreateLead: View {
 
                         }.padding(0)
                     }
-                    
 
                 }.padding(0)
                     .toolbar {
@@ -593,44 +333,80 @@ struct CreateLead: View {
                             }
                         }
                         ToolbarItemGroup(placement: .navigationBarTrailing) {
-                            
                             Button {
                                 lead.makePhoneCall()
                             } label: {
-                                Label("", systemImage: "phone")
-                                    .font(.title3)//arrow.turn.up.right
+                                Label("", systemImage: "phone.fill")
+                                    .font(.title3) // arrow.turn.up.right
                             }
                             .disabled(lead.phone.isEmpty)
-                            
+
                             Button {
                                 lead.sendSMS()
                             } label: {
-                                Label("", systemImage: "message")
-                                    .font(.title3)//arrow.turn.up.right
+                                Label("", systemImage: "message.fill")
+                                    .font(.title3) // arrow.turn.up.right
                             }
                             .disabled(lead.phone.isEmpty)
                             Button {
-                                lead.openGoogleMaps()
+                                if profile.mapApi == .appleMaps {
+                                    lead.openAppleMaps()
+                                } else {
+                                    lead.openGoogleMaps()
+                                }
+                                
                             } label: {
-                                Label("", systemImage: "globe")
-                                    .font(.title3)//
+                                Label("", systemImage: "location.fill")
+                                    .font(.title3) //
                             }
-                            
-                            if isShowingSnackbar {
+
+                            if isWaiting {
                                 ProgressView("")
 
                             } else {
                                 Button {
-                                    isShowingSnackbar = true
+                                    isWaiting = true
                                     var saveMode = ModeSave.edit
                                     if mode == 1 {
                                         saveMode = .add
-                                    }
-                                    manager.save(body: lead, mode: saveMode) { _, _ in
+                                    } /*
+                                     manager.save(body: lead, mode: saveMode) { _, _ in
 
-                                        isShowingSnackbar = false
+                                         isShowingSnackbar = false
+                                     }
+                                     onSave(false)
+                                       */
+                                    var result = false
+                                    manager.save(body: lead, mode: saveMode) { ok, newLead in
+
+                                        isWaiting = false
+
+                                        print("showSaveOk: A", ok)
+                                        if ok, let newLead = newLead {
+                                            startMessage()
+                                            alertMessage = "record was saved correctly!"
+
+                                            updated = true
+                                            lead.id = newLead.id
+                                            // mode = 2
+
+                                            if saveMode == .add {
+                                                manager.leads.insert(lead, at: 0)
+                                                result = true
+                                            }
+                                            DispatchQueue.main.async {
+                                                lead.pending = false
+                                            }
+                                        } else {
+                                            DispatchQueue.main.async {
+                                                lead.pending = true
+                                            }
+                                            startMessage()
+                                            alertMessage = "Error: record wasn't saved!"
+                                        }
+
+                                        onSave(result)
                                     }
-                                    onSave(false)
 
                                 } label: {
                                     Label("Save", systemImage: "externaldrive.fill")
@@ -642,78 +418,135 @@ struct CreateLead: View {
             }
         }
 
-        
+        .sheet(isPresented: $showHistory) {
+            NavigationStack {
+                LeadHistoryView(id: lead.id)
+                    .navigationBarTitle("History")
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button(action: {
+                                showHistory.toggle()
+                            }) {
+                                Image(systemName: "chevron.backward")
+                            }
+                        }
+                    }
+            }
+        }
         .onAppear {
             loadDataAndProcess()
 
-            
+            adminManager.token = profile.token
+            adminManager.userId = profile.userId
+            adminManager.role = profile.role
+
             if mode == 1 {
-                print("--- - - - -- - ******** * * * * * * ***")
                 lead = LeadModel()
                 lead.created_by = CreatorModel(_id: profile.userId, firstName: profile.info.firstName, lastName: profile.info.lastName)
                 lead.owned_by = manager.userId
-                print("new: ", manager.userId)
-                //lead.created_by = CreatorModel(_id: manager.user)
+
+                // lead.created_by = CreatorModel(_id: manager.user)
             }
         }
-        
-        .alert(isPresented: $deleteConfirm) {
-            Alert(
-                title: Text("Confirmation"),
-                message: Text("Are you sure you want to delete the lead?"),
-                primaryButton: .destructive(Text("Delete")) {
-                    let leadQuery = LeadQuery()
-                        .add(.id, lead.id)
-                    manager.delete(query: leadQuery, leadId: lead.id) { result in
-                        
-                        if result {
-                            presentationMode.wrappedValue.dismiss()
-                            updated = true
-                        } else {
-                            print("after delete, fail ", result)
-                            showErrorMessage = true
-                            alertMessage = "Failure, the operation was not completed."
-                        }
-                       
-                    }
-                },
-                secondaryButton: .cancel()
-            )
+
+        .alert(isPresented: $showAlert) {
+            alert
         }
-        /*
-        .confirmationDialog(
-            "Delete record",
-            isPresented: $deleteConfirm,
-            actions: {
-                Button("Delete", role: .destructive) {
-                    let leadQuery = LeadQuery()
-                        .add(.id, lead.id)
-                    manager.delete(query: leadQuery, leadId: lead.id) { result in
-                       
-                        if result {
-                            presentationMode.wrappedValue.dismiss()
-                        } else {
-                            showErrorMessage = true
-                            errorMessage = "Failure, the operation was not completed."
-                        }
-                        print("after delete", result)
-                        
-                        //self.mode = 1
-                        //self.lead = LeadModel()
+    }
+
+    private func setAlert(title: String, message: String) {
+        alert = Alert(title: Text(title), message: Text(message), dismissButton: .default(Text("OK")))
+        showAlert = true
+    }
+
+    private func doSave() {
+        alertMessage = lead.validForm()
+
+        if alertMessage != "" {
+            setAlert(title: "Message", message: alertMessage)
+            // showErrorMessage = true
+
+            return
+        } else {
+            isWaiting = true
+        }
+
+        var saveMode = ModeSave.edit
+        if mode == 1 {
+            saveMode = .add
+        }
+        var result = false
+        manager.save(body: lead, mode: saveMode) { ok, newLead in
+
+            isWaiting = false
+
+            print("showSaveOk: A", ok)
+            if ok, let newLead = newLead {
+                // showErrorMessage = true
+                // alertMessage = "record was saved correctly!"
+                setAlert(title: "Message", message: "record was saved correctly!")
+                updated = true
+                lead.id = newLead.id
+                mode = 2
+
+                if saveMode == .add {
+                    manager.leads.insert(lead, at: 0)
+                    result = true
+                }
+                DispatchQueue.main.async {
+                    lead.pending = false
+                }
+                // manager2.search()
+
+            } else {
+                DispatchQueue.main.async {
+                    lead.pending = true
+                }
+
+                // showErrorMessage = true
+                // alertMessage = "Error: record wasn't saved!"
+                setAlert(title: "Message", message: "Error: record wasn't saved!")
+            }
+
+            onSave(result)
+        }
+    }
+
+    private func doDelete() {
+        // deleteConfirm = true
+        showAlert = true
+        alert = Alert(
+            title: Text("Confirmation"),
+            message: Text("Are you sure you want to delete the lead?"),
+            primaryButton: .destructive(Text("Delete")) {
+                let leadQuery = LeadQuery()
+                    .add(.id, lead.id)
+                manager.delete(query: leadQuery, leadId: lead.id) { result in
+
+                    if result {
+                        presentationMode.wrappedValue.dismiss()
+                        updated = true
+                    } else {
+                        setAlert(title: "Error", message: "Failure, the operation was not completed.")
                     }
                 }
             },
-            message: {
-                Text("are you sure to delete record?")
-            }
+            secondaryButton: .cancel()
         )
-         */
+    }
+
+    private func startMessage() {
+        showErrorMessage2 = true
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            showErrorMessage2 = false
+        }
     }
 }
 
 struct TestCreateLead: View {
     @StateObject var manager = LeadManager()
-    @StateObject var user = UserManager()
+
     @State var nombrecito = "Juancito"
     @State private var store = MainStore<UserData>() // AppStore()
     @State private var updated = false
@@ -740,7 +573,7 @@ struct TestCreateLead: View {
         status_id: StatusId()
     )
     var body: some View {
-        CreateLead(profile: ProfileManager(), lead: $lead, mode: 2,manager: manager, updated: $updated) { result in
+        CreateLead(profile: ProfileManager(), lead: $lead, mode: 2, manager: manager, updated: $updated) { result in
             print(result)
         }
         .onAppear {

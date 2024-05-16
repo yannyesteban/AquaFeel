@@ -204,7 +204,7 @@ struct StatusListView: View {
 }
 
 struct TestLeadStatusView: View {
-    @StateObject private var lead = LeadViewModel(first_name: "Juan", last_name: "")
+    @StateObject private var lead = StatusManager()
     @State var selected = ""
     var body: some View {
         StatusListView(statusList: lead.statusList, selected: $selected)

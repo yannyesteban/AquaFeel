@@ -7,7 +7,7 @@
 
 import Foundation
 
-
+/*
 class LeadViewModel: ObservableObject {
     @Published var first_name: String = ""
     @Published var last_name: String = ""
@@ -177,3 +177,6 @@ class LeadViewModel: ObservableObject {
         statusAll()
     }
 }
+
+
+*/

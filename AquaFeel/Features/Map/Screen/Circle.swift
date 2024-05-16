@@ -168,6 +168,26 @@ func getStatusType(from statusString: String) -> StatusType {
     }
 }
 
+func ColorFromHex(_ hex: String) -> Color{
+    
+    var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
+    hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
+    
+    var rgb: UInt64 = 0
+    
+    guard Scanner(string: hexSanitized).scanHexInt64(&rgb) else {
+        return Color.init(red: 0.0, green: 0.0, blue: 0.0)
+    }
+    
+    let red = CGFloat((rgb & 0xFF0000) >> 16) / 255.0
+    let green = CGFloat((rgb & 0x00FF00) >> 8) / 255.0
+    let blue = CGFloat(rgb & 0x0000FF) / 255.0
+    
+    
+    
+    return Color.init(red: red, green: green, blue: blue)
+}
+
 func ColorFromHex(_ hex: String) -> UIColor{
     
     var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -187,7 +207,7 @@ func ColorFromHex(_ hex: String) -> UIColor{
     
     return UIColor.init(red: red, green: green, blue: blue, alpha: 1.0)
 }
-enum StatusType{
+enum StatusType: String {
     case uc // truck brown #CC6F3F
     case ni // trash black
     case ingl // start pink #CC96C6

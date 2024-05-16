@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+/*
 class LoginViewModel: ObservableObject {
 
     @Published var email: String = ""
@@ -29,3 +29,4 @@ class LoginViewModel: ObservableObject {
         }
     }
 }
+*/

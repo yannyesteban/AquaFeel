@@ -1,5 +1,5 @@
 import Foundation
-let apiKey = "AIzaSyA4Jqk-dU9axKNYJ6qjWcBcvQku0wTvBC4"
+let apiKey = APIKeys.googleApiKey
 func searchPlaces(searchText: String) {
     guard let encodedSearchText = searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
         print("Error")

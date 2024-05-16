@@ -6,6 +6,32 @@
 //
 
 import Foundation
+import CoreLocation
+
+struct RegisterRequest: Codable {
+    let message: String
+    let user: User?
+    
+}
+
+struct UsersRequest: Codable {
+    let users: [User]
+    let count: Int
+}
+
+
+struct UserFilter {
+    
+    var textFilter =  ""
+    var status: [String] = []
+    var fromDate: Date? = nil
+    var toDate: Date? = nil
+    var dateField = ""
+    var quickdate = "all_time"//yesterday, current_week current_month current_year custom
+    var owner: [String] = []
+    
+    
+}
 
 struct DateFilters: Codable {
     var selectedDateFilter: String
@@ -79,6 +105,19 @@ struct User: Codable {
     var longitude: Double?
     var avatar: String?
 
+    var position: CLLocationCoordinate2D {
+        get {
+            guard let latitude = latitude, let longitude = longitude else {
+                return kCLLocationCoordinate2DInvalid
+            }
+            return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        }
+        set(newPosition) {
+            latitude = newPosition.latitude
+            longitude = newPosition.longitude
+        }
+    }
+    
     init(
         isBlocked: Bool = false,
         isVerified: Bool = false,
@@ -137,13 +176,18 @@ struct User: Codable {
 
     init(from decoder: Decoder) throws {
         let container: KeyedDecodingContainer<User.CodingKeys> = try decoder.container(keyedBy: User.CodingKeys.self)
-
-        isBlocked = try container.decode(Bool.self, forKey: User.CodingKeys.isBlocked)
-        isVerified = try container.decode(Bool.self, forKey: User.CodingKeys.isVerified)
-        assignedSellers = try container.decode([String].self, forKey: User.CodingKeys.assignedSellers)
+        isBlocked = try container.decodeIfPresent(Bool.self, forKey: .isBlocked) ?? false
+        isVerified = try container.decodeIfPresent(Bool.self, forKey: .isVerified) ?? false
+        assignedSellers = try container.decodeIfPresent([String].self, forKey: User.CodingKeys.assignedSellers) ?? []
+        
+        
+        //isBlocked = try container.decode(Bool.self, forKey: User.CodingKeys.isBlocked)
+        //isVerified = try container.decode(Bool.self, forKey: User.CodingKeys.isVerified)
+        //assignedSellers = try container.decode([String].self, forKey: User.CodingKeys.assignedSellers)
         leadFilters = try container.decodeIfPresent(LeadFilter.self, forKey: User.CodingKeys.leadFilters)
         _id = try container.decode(String.self, forKey: User.CodingKeys._id)
-        email = try container.decode(String.self, forKey: User.CodingKeys.email)
+        //email = try container.decode(String.self, forKey: User.CodingKeys.email)
+        email = try container.decodeIfPresent(String.self, forKey: .email) ?? ""
         firstName = try container.decode(String.self, forKey: User.CodingKeys.firstName)
         lastName = try container.decode(String.self, forKey: User.CodingKeys.lastName)
 
@@ -195,45 +239,48 @@ protocol NeedStatusCode {
 
 func _fetching<T: Decodable>(body: Data?, config: ApiConfig) async throws -> T {
     // URL of the API endpoint for updates
-
+    print("config.scheme ... ", config.scheme)
     var components = URLComponents()
-    components.scheme = config.scheme ?? "https"
+    components.scheme = config.scheme ?? "http"
     components.host = config.host
     components.path = config.path
     if let port = config.port {
         components.port = Int(port)
     }
-
+    
     if let params = config.params {
         components.queryItems = params.map { URLQueryItem(name: $0.key, value: $0.value) }
     }
-
+    
     guard let url = components.url else {
         throw APIError.urlError
     }
-
+    
     // Create URLRequest
     var request = URLRequest(url: url)
     request.httpMethod = config.method
-
+    
     if let body = body {
         request.httpBody = body
     }
-
-    print("Url: \(url)\n")
-
+    
+   
+    
     // Add the authorization header with the Bearer token
     request.addValue("Bearer \(config.token)", forHTTPHeaderField: "Authorization")
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
+    
+    print("Url begin: \(url)\n")
     let (data, response) = try await URLSession.shared.data(for: request)
-    //print("Url: \(url)\n")
+    print("Url end: \(url)\n")
     //print(String(decoding: data, as: UTF8.self))
     
     let decoder = JSONDecoder()
-    let x = try decoder.decode(T.self, from: data)
     
-    if var myProtocolObject = x as? NeedStatusCode {
+    let object = try decoder.decode(T.self, from: data)
+     
+    
+    if var myProtocolObject = object as? NeedStatusCode {
         
         guard let httpResponse = response as? HTTPURLResponse else {
             throw APIError.requestError
@@ -252,7 +299,7 @@ func _fetching<T: Decodable>(body: Data?, config: ApiConfig) async throws -> T {
      }
      */
     //let decoder = JSONDecoder()
-    return x//try decoder.decode(T.self, from: data)
+    return object//try decoder.decode(T.self, from: data)
 }
 
 func fetching<T: Decodable>(config: ApiConfig) async throws -> T {
@@ -277,7 +324,7 @@ func fetching<T2: Codable, T: Decodable>(body: T2, config: ApiConfig) async thro
             print(jsonString)
         }
          */
-        let httpBody = jsonData
+        //let httpBody = jsonData
         return try await _fetching(body: jsonData, config: config)
 
     } catch {
@@ -337,9 +384,10 @@ func fetch<T2: Codable, T: Decodable>(body: T2, config: ApiConfig, completion: @
     // URL of the API endpoint for updates
 
     var components = URLComponents()
-    components.scheme = "https"
+    components.scheme = config.scheme ?? "https"
     components.host = config.host
     components.path = config.path
+    components.port = Int(config.port ?? "80")
 
     guard let url = components.url else {
         return
@@ -380,7 +428,7 @@ func fetch<T2: Codable, T: Decodable>(body: T2, config: ApiConfig, completion: @
             return
         }
         //print("JSON: ")
-        //print(String(decoding: data, as: UTF8.self))
+        print(String(decoding: data, as: UTF8.self))
         //print(";\n")
         do {
             // Decode the API response
@@ -398,16 +446,20 @@ func fetch<T2: Codable, T: Decodable>(body: T2, config: ApiConfig, completion: @
 func fetch<T: Decodable>(config: ApiConfig, completion: @escaping (Result<T, Error>) -> Void) -> URLSessionDataTask? {
     // URL of the API endpoint for updates
 
+    
     var components = URLComponents()
-    components.scheme = "https"
+    components.scheme = config.scheme
     components.host = config.host
     components.path = config.path
+    components.port = Int(config.port ?? "80")
+    
     if let params = config.params {
         components.queryItems = params.map { URLQueryItem(name: $0.key, value: $0.value) }
     }
 
     // Create URLRequest
     guard let url = components.url else {
+        
         return nil
     }
 
@@ -419,6 +471,7 @@ func fetch<T: Decodable>(config: ApiConfig, completion: @escaping (Result<T, Err
 
     // Configure URLSession task
     print("begin: ", url)
+    
     let task = URLSession.shared.dataTask(with: request) { data, _, error in
         // Handle API response
         if let error = error {
@@ -465,10 +518,16 @@ class UserModel: ObservableObject {
         self.last_name = last_name
     }
 
-    // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InhMdjR3STJUTSIsImVtYWlsIjoieWFubnllc3RlYmFuQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTcwNTYxMDY3NCwiZXhwIjoxNzEwNzk0Njc0fQ.5nPyOfuwOF3jOxm2lziG-_4jtDEqQmp9i3a6yBjIFCE"
-
+    
     func get(query: LeadQuery) {
-        let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/users/details", token: token, params: query.get())
+        
+        let path = "/users/details"
+        let params: [String : String?]? = query.get()
+        let method = "GET"
+        let scheme = APIValues.scheme
+        let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
+        
+        //let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/users/details", token: token, params: query.get())
 
         fetch(config: info) { (result: Result<User, Error>) in
             switch result {
@@ -488,13 +547,19 @@ class UserModel: ObservableObject {
     func loadAll() {
         // let param = LeadsApiParam()
 
-        let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/users/details", token: token, params: [:])
+        let path = "/users/details"
+        let params: [String : String?]? = [:]
+        let method = "GET"
+        let scheme = APIValues.scheme
+        let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
+        
+        //let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/users/details", token: token, params: [:])
 
         ApiFetch<LeadsApiParam, LeadsModel>(
             info: info, parameters: nil
         ).sendRequest { data in
             DispatchQueue.main.async {
-                self.first_name = "que Cool"
+                
                 self.leads = data.leads
             }
 
@@ -511,8 +576,16 @@ class UserModel: ObservableObject {
             dictionary[myCase] = myCase.rawValue
         }
 
-        let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/leads/list-all", token: token, params: [:])
+        let path = "/leads/list-all"
+        let params: [String : String?]? = [:]
+        let method = "GET"
+        let scheme = APIValues.scheme
+        let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
+        
+        //let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/leads/list-all", token: token, params: [:])
 
+        
+        print("xxxxx 55 55 555 55 5 ")
         ApiFetch<LeadsApiParam, LeadsModel>(
             info: info, parameters: nil
         ).sendGet(query: query.get()) { data in
@@ -527,8 +600,14 @@ class UserModel: ObservableObject {
 
     func statusAll() {
         // let param = LeadsApiParam()
-
-        let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/status/list", token: token, params: [:])
+        let path = "/status/list"
+        let params: [String : String?]? = [:]
+        let method = "GET"
+        let scheme = APIValues.scheme
+        let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
+        
+        
+        //let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/status/list", token: token, params: [:])
 
         ApiFetch<LeadsApiParam, StatusModel>(
             info: info, parameters: nil
@@ -552,9 +631,18 @@ class UserModel: ObservableObject {
             path = "/leads/edit"
         case .delete:
             path = "/leads/delete"
+        case .none:
+            return
         }
 
-        let info = ApiConfig(method: "POST", host: "api.aquafeelvirginia.com", path: path, token: token, params: [:])
+        
+        
+        let params: [String : String?]? = [:]
+        let method = "POST"
+        let scheme = APIValues.scheme
+        let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
+        
+        //let info = ApiConfig(method: "POST", host: "api.aquafeelvirginia.com", path: path, token: token, params: [:])
 
         do {
             let jsonData = try JSONEncoder().encode(body)
@@ -579,7 +667,14 @@ class UserModel: ObservableObject {
     }
 
     func delete(query: LeadQuery) {
-        let info = ApiConfig(method: "DELETE", host: "api.aquafeelvirginia.com", path: "/leads/delete", token: token, params: query.get())
+        
+        let path = "/leads/delete"
+        let params: [String : String?]? = query.get()
+        let method = "DELETE"
+        let scheme = APIValues.scheme
+        let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
+        
+        //let info = ApiConfig(method: "DELETE", host: "api.aquafeelvirginia.com", path: "/leads/delete", token: token, params: query.get())
 
         ApiFetch<LeadsApiParam, LeadsModel>(
             info: info, parameters: nil

@@ -11,6 +11,7 @@ import SwiftUI
 struct MainAppScreen: View {
     @EnvironmentObject var store: MainStore<UserData>
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.colorScheme) var colorScheme
 
     @State var isLoading: Bool = true
     @State var alert: Bool = false
@@ -20,6 +21,11 @@ struct MainAppScreen: View {
     @StateObject var profile = ProfileManager()
 
     @StateObject var user = UserModel()
+
+    //@StateObject var offlineManager = OfflineManager()
+    let appLocale = Locale.current.identifier
+
+    @State var languaje: String?
 
     func loadDataFromAPI() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -33,10 +39,11 @@ struct MainAppScreen: View {
     var body: some View {
         VStack {
             if profile.info.isVerified {
-                //RouteMapsScreen()
-                
+                // RouteMapsScreen()
+
                 HomeScreen(profile: profile)
-                    
+                    .environment(\.locale, .init(identifier: languaje ?? appLocale))
+
                     .environmentObject(store)
                     .environmentObject(profile)
                     .onChange(of: scenePhase) { _ in
@@ -70,19 +77,39 @@ struct MainAppScreen: View {
                 }
             }
         }
+        
+        .preferredColorScheme(profile.schemeMode == .user ? colorScheme : profile.schemeMode == .dark ? .dark : .light)
         .task {
             loadDataFromAPI()
-            
+            await OfflineStore.load()
+            await OfflineStore.start()
+
+            /*
+             Locale.availableIdentifiers.forEach { identifier in
+                 print(identifier)
+             }
+              */
+        }
+
+        .onReceive(profile.$language) { value in
+
+            switch value {
+            case .english:
+                languaje = "en-US"
+            case .spanish:
+                languaje = "es-US"
+            case .user:
+                languaje = appLocale
+            }
         }
 
         .onChange(of: scenePhase) { phase in
 
-            print("Saving User Info...", phase)
             if phase == .inactive {
                 Task {
                     try? await profile.saveProfile()
                     await profile.save()
-                    print("Save successful ...")
+                    await OfflineStore.save()
                 }
             }
         }

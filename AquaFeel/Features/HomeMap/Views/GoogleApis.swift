@@ -18,7 +18,7 @@ enum GoogleAPIError: Error {
 }
 
 class GoogleApis {
-    static let apiKey = "AIzaSyA4Jqk-dU9axKNYJ6qjWcBcvQku0wTvBC4"
+    static let apiKey = APIKeys.googleApiKey
 
     static func getPlaceDetailsByCoordinates(location: CLLocationCoordinate2D) async throws -> PlaceDetails? {
         var params: [String: String] = [:]
@@ -26,7 +26,7 @@ class GoogleApis {
         params["latlng"] = "\(location.latitude),\(location.longitude)"
         params["key"] = apiKey
 
-        let info = ApiConfig(method: "GET", host: "maps.googleapis.com", path: "/maps/api/geocode/json", token: "", params: params)
+        let info = ApiConfig(scheme: "https", method: "GET", host: "maps.googleapis.com", path: "/maps/api/geocode/json", token: "", params: params)
 
         do {
             let response: GeocodeResult = try await fetching(config: info)
@@ -60,7 +60,7 @@ class GoogleApis {
         params["mode"] = "driving"
         params["key"] = apiKey
 
-        let info = ApiConfig(method: "GET", host: "maps.googleapis.com", path: "/maps/api/directions/json", token: "", params: params)
+        let info = ApiConfig(scheme: "https", method: "GET", host: "maps.googleapis.com", path: "/maps/api/directions/json", token: "", params: params)
 
         do {
             var response: RouteResponse = try await fetching(config: info)

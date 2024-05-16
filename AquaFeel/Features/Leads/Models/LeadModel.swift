@@ -6,8 +6,35 @@
 //
 
 import Foundation
-
+import MapKit
 import GoogleMaps
+
+func realDate(text: String) -> Date {
+    
+    let isoDateFormatter = ISO8601DateFormatter()
+    isoDateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+    
+    if let date = isoDateFormatter.date(from: text) {
+        return date
+    } else {
+        return Date()
+    }
+    
+    
+    /*
+     let dateFormatter = DateFormatter()
+     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+     //dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+     
+     if let date = dateFormatter.date(from: text) {
+     return date
+     } else {
+     // If the conversion fails, returns the current date as the default value
+     return Date()
+     }
+     */
+}
+
 
 struct LeadsRequest: Codable {
     let leads: [LeadModel]
@@ -85,6 +112,7 @@ enum ModeSave: String {
     case delete
     case add
     case edit
+    case none
 }
 
 struct LeadsModel: Codable {
@@ -266,7 +294,14 @@ struct LeadModel: Codable, AddressProtocol, Equatable, Hashable {
     var mode: Int = 2
 
     var routeOrder: Int
-
+    var createdOn: Date
+    var updatedOn: Date
+    
+    var history : [LeadModel] = []
+    var pending = false
+    var updateMode = ModeSave.add
+    var favorite: Bool = true
+    
     var position: CLLocationCoordinate2D {
         get {
             guard let latitude = Double(latitude), let longitude = Double(longitude) else {
@@ -311,6 +346,10 @@ struct LeadModel: Codable, AddressProtocol, Equatable, Hashable {
         case user_id
         case isSelected
         case owned_by
+        case createOn = "created_on"
+        case updatedOn = "updated_on"
+        case history
+        case favorite
     }
 
     func hash(into hasher: inout Hasher) {
@@ -365,7 +404,14 @@ struct LeadModel: Codable, AddressProtocol, Equatable, Hashable {
 
         appointment_date = try container.decodeIfPresent(String.self, forKey: .appointment_date) ?? ""
         appointment_time = try container.decodeIfPresent(String.self, forKey: .appointment_time) ?? ""
+        let date = try container.decodeIfPresent(String.self, forKey: .createOn) ?? ""
+        createdOn = realDate(text: date)
+        
+        let date2 = try container.decodeIfPresent(String.self, forKey: .updatedOn) ?? ""
+        favorite = try container.decodeIfPresent(Bool.self, forKey: .favorite) ?? false
+        updatedOn = realDate(text: date2)
 
+        
         if container.contains(.status_id) {
             do {
                 // Try to decode status_id as an object
@@ -407,7 +453,10 @@ struct LeadModel: Codable, AddressProtocol, Equatable, Hashable {
         isSelected = true
         user_id = created_by._id
         routeOrder = 0
-
+        
+        history = try container.decodeIfPresent([LeadModel].self, forKey: .history) ?? []
+        
+        
         if !(-90 ... 90).contains(position.latitude) {
             position = .init(latitude: 0.0, longitude: 0.0)
         }
@@ -460,7 +509,9 @@ struct LeadModel: Codable, AddressProtocol, Equatable, Hashable {
         created_by: CreatorModel = CreatorModel(_id: ""),
         user_id: String = "",
         // isSelected = true
-        mode: Int = 2
+        mode: Int = 2,
+        createdOn: Date = Date(),
+        updatedOn: Date = Date()
     ) {
         self.id = id
         self.business_name = business_name
@@ -489,6 +540,8 @@ struct LeadModel: Codable, AddressProtocol, Equatable, Hashable {
         isSelected = true
         self.mode = mode
         routeOrder = 0
+        self.createdOn = createdOn
+        self.updatedOn = updatedOn
     }
 
     func encode(to encoder: Encoder) throws {
@@ -518,6 +571,7 @@ struct LeadModel: Codable, AddressProtocol, Equatable, Hashable {
         try container.encode(status_id._id, forKey: .status_id)
         try container.encode(note, forKey: .note)
         try container.encode(created_by._id, forKey: .user_id)
+        try container.encode(favorite, forKey: .favorite)
         // try container.encode(user_id, forKey: .user_id)
     }
 
@@ -553,6 +607,36 @@ struct LeadModel: Codable, AddressProtocol, Equatable, Hashable {
             }
         }
     }
+    
+    func openAppleMaps() {
+        
+        let startCoordinate = CLLocationCoordinate2D(latitude: position.latitude, longitude: position.longitude)
+       
+        
+        // Crear placemarks y map items
+        let startPlacemark = MKPlacemark(coordinate: startCoordinate)
+        let startItem = MKMapItem(placemark: startPlacemark)
+        startItem.name = "Start Location"
+        /*
+        let stop1Placemark = MKPlacemark(coordinate: stop1Coordinate)
+        let stop1Item = MKMapItem(placemark: stop1Placemark)
+        stop1Item.name = "Stop 1"
+        
+        let stop2Placemark = MKPlacemark(coordinate: stop2Coordinate)
+        let stop2Item = MKMapItem(placemark: stop2Placemark)
+        stop2Item.name = "Stop 2"
+        
+        let destinationPlacemark = MKPlacemark(coordinate: destinationCoordinate)
+        let destinationItem = MKMapItem(placemark: destinationPlacemark)
+        destinationItem.name = "Destination Location"
+        */
+        // Crear opciones de lanzamiento
+        let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
+        
+        // Abrir Apple Maps con múltiples destinos
+        MKMapItem.openMaps(with: [startItem], launchOptions: launchOptions)
+        
+    }
 
     func sendSMS() {
         if let url = URL(string: "sms:\(phone)") {
@@ -582,12 +666,43 @@ struct LeadModel: Codable, AddressProtocol, Equatable, Hashable {
         if status_id._id.isEmpty {
             return "Status field is required!"
         }
+        
+        
 
         if street_address.isEmpty {
             return "Address is required!"
         }
+        
+        if longitude.isEmpty || latitude.isEmpty {
+            return "Address is invalid!"
+        }
 
         return ""
+    }
+    
+    static func groupLeadsByDate(leads: [LeadModel]) -> [String: [LeadModel]] {
+        var groupedLeads = [String: [LeadModel]]()
+        
+        let dateFormatter = DateFormatter()
+        
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        let isoDateFormatter = DateFormatter()
+        isoDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        
+        for lead in leads {
+            if let date = isoDateFormatter.date(from: lead.appointment_date) {
+                let dateString = dateFormatter.string(from: date)
+                if var leadsForDate = groupedLeads[dateString] {
+                    leadsForDate.append(lead)
+                    groupedLeads[dateString] = leadsForDate
+                } else {
+                    groupedLeads[dateString] = [lead]
+                }
+            }
+        }
+        
+        return groupedLeads
     }
 }
 
@@ -681,7 +796,7 @@ class ObservableLeadModel: ObservableObject {
 }
 
 struct ApiConfig {
-    var scheme: String? = nil
+    var scheme: String
     let method: String
     let host: String
     let path: String
@@ -709,14 +824,15 @@ struct ApiFetch<M: Codable, T: Decodable> {
     }
 
     func sendGet(query: [String: String?], completion: @escaping (T) -> Void) {
-        let scheme: String = "https"
+        //let scheme: String = info.scheme ?? "https"
         // let host: String = "api.aquafeelvirginia.com"
         // let path = "/auth/login"
 
         var components = URLComponents()
-        components.scheme = scheme
+        components.scheme = info.scheme
         components.host = info.host
         components.path = info.path
+        components.port = Int(info.port ?? "80")
 
         components.queryItems = [URLQueryItem(name: "limit", value: "2500"), URLQueryItem(name: "offset", value: "0")]
         for (key, value) in query {
@@ -776,14 +892,15 @@ struct ApiFetch<M: Codable, T: Decodable> {
     }
 
     func sendRequest(completion: @escaping (T) -> Void) {
-        let scheme: String = "https"
+        //let scheme: String = "https"
         // let host: String = "api.aquafeelvirginia.com"
         // let path = "/auth/login"
 
         var components = URLComponents()
-        components.scheme = scheme
+        components.scheme = info.scheme
         components.host = info.host
         components.path = info.path
+        components.port = Int(info.port ?? "80")
 
         components.queryItems = [URLQueryItem(name: "limit", value: "2500"), URLQueryItem(name: "offset", value: "0")]
 
@@ -836,9 +953,12 @@ struct ApiFetch<M: Codable, T: Decodable> {
         task.resume()
     }
 
+    /*
     func sendPost<T2: Codable>(lead: T2, token: String, completion: @escaping (Result<LeadUpdateResponse, Error>) -> Void) {
         // URL of the API endpoint for updates
         let apiUrl = URL(string: "https://api.aquafeelvirginia.com/leads/edit")!
+        
+        print("ERROR ERROR ..... ..... ....")
 
         // Create URLRequest
         var request = URLRequest(url: apiUrl)
@@ -891,13 +1011,15 @@ struct ApiFetch<M: Codable, T: Decodable> {
         task.resume()
     }
 
+     */
     func fetch<T2: Codable>(body: T2, config: ApiConfig, completion: @escaping (Result<LeadUpdateResponse, Error>) -> Void) {
         // URL of the API endpoint for updates
 
         var components = URLComponents()
-        components.scheme = "https"
+        components.scheme = config.scheme
         components.host = config.host
         components.path = config.path
+        components.port = Int(config.port ?? "80")
 
         guard let url = components.url else {
             return
@@ -910,9 +1032,9 @@ struct ApiFetch<M: Codable, T: Decodable> {
         // Set the request body with model data
         do {
             let jsonData = try JSONEncoder().encode(body)
-            if let jsonString = String(data: jsonData, encoding: .utf8) {
-                // print(jsonString)
-            }
+            /*if let jsonString = String(data: jsonData, encoding: .utf8) {
+               print(jsonString)
+            }*/
             request.httpBody = jsonData
 
         } catch {
@@ -956,9 +1078,11 @@ struct ApiFetch<M: Codable, T: Decodable> {
         // URL of the API endpoint for updates
 
         var components = URLComponents()
-        components.scheme = "https"
+        components.scheme = config.scheme
         components.host = config.host
         components.path = config.path
+        components.port = Int(config.port ?? "80")
+        
         if let params = config.params {
             components.queryItems = params.map { URLQueryItem(name: $0.key, value: $0.value) }
         }
@@ -1020,6 +1144,8 @@ class LeadQuery {
         map
     }
 }
+
+
 
 /*
  #Preview {

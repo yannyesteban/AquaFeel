@@ -10,6 +10,7 @@ import SwiftUI
 struct AvatarView: View {
     let imageURL: URL
 
+    var size: CGFloat = 60
     var body: some View {
         AsyncImage(url: imageURL) { phase in
             switch phase {
@@ -20,20 +21,20 @@ struct AvatarView: View {
                     .resizable()
                     .scaledToFit()
                     .scaleEffect(1.4)
-                    .frame(width: 60, height: 60)
+                    .frame(width: size, height: size)
                     .clipShape(Circle())
             case .failure:
                 Image(systemName: "person.circle.fill")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 60, height: 60)
+                    .frame(width: size, height: size)
                     .clipShape(Circle())
             // .foregroundColor(.gray)
             @unknown default:
                 fatalError("Unhandled case")
             }
         }
-        .frame(width: 60, height: 60)
+        .frame(width: size, height: size)
         .clipShape(Circle())
     }
 }
@@ -47,6 +48,9 @@ struct SettingView: View {
     @State private var isShowingDialog = false
 
     @EnvironmentObject var store: MainStore<UserData>
+    @Environment(\.colorScheme) var colorScheme
+
+    @EnvironmentObject var profile: ProfileManager
 
     var languages: [String] = ["English", "Spanish", "German"]
 
@@ -64,13 +68,11 @@ struct SettingView: View {
                     NavigationStack {
                         NavigationLink {
                             ProfileView(loginManager: loginManager)
-                            /* AvatarView(imageURL: URL(string: avatar) ?? URL(string: "defaultAvatarURL")!)
-                             .padding() */
+                            
                         } label: {
                             HStack {
                                 AvatarView(imageURL: URL(string: avatar) ?? URL(string: "defaultAvatarURL")!)
-                                // .padding()
-                                // .frame(width: 20, height: 20)
+                                
                                 VStack(alignment: .leading) {
                                     Text("\(loginManager.info.firstName) \(loginManager.info.lastName)")
                                     // .font(.caption)
@@ -84,107 +86,81 @@ struct SettingView: View {
                             }
                         }
                     }
-                    /* HStack{
-                         Spacer()
-                         VStack {
-
-                             Image(systemName: "person.fill")
-                                 .font(.system(size: 20, weight: .light))
-
-                             Text("\(store.firstName) \(store.lastName)")
-
-                                 .font(.title)
-                             Text(user)
-                                 .font(.subheadline)
-                                 .foregroundColor(.gray)
-                             Spacer()
-                             Button(action: {
-                                 print("Edit Profile tapped")
-                             }) {
-                                 Text("Edit Profile")
-                                     .frame(minWidth: 0, maxWidth: .infinity)
-                                     .font(.system(size: 18))
-                                     .padding()
-                                     .foregroundColor(.white)
-                                     .overlay(
-                                         RoundedRectangle(cornerRadius: 25)
-                                             .stroke(Color.white, lineWidth: 2)
-                                     )
-                             }
-                             .background(Color.blue)
-                             .cornerRadius(25)
-                         }
-                         Spacer()
-                     } */
+                    
                 }
 
-                Section(header: Text("CONTENT"), content: {
-                    HStack {
-                        Image(systemName: "star")
-
-                        Text("Favorites")
-                    }
-
-                    HStack {
-                        Image(systemName: "person.fill")
-                            .font(.system(size: 20, weight: .light))
-                        Text("Profile")
-                    }
-
+                Section {
                     HStack {
                         Image(systemName: "map")
                             .font(.system(size: 20, weight: .light))
-                        Picker("Map Api", selection: $mapApi) {
-                            ForEach(apis, id: \.self) { item in
-                                Text(item)
-                            }
+                        Picker("Map Api", selection: $loginManager.mapApi) {
+                            Text("Google Maps").tag(AppMapApi.googleMaps)
+                            Text("Apple Maps").tag(AppMapApi.appleMaps)
+                            Text("Open Streets").tag(AppMapApi.openStreet)
                         }
                     }
 
-                })
-
-                Section(header: Text("PREFRENCES"), content: {
                     HStack {
                         Image(systemName: "globe")
                             .font(.system(size: 20, weight: .light))
 
-                        Picker("Languaje", selection: $language) {
-                            ForEach(languages, id: \.self) { item in
+                        Picker("Languaje", selection: $loginManager.language) {
+                            Text("System").tag(AppLanguage.user)
+                            Text("English").tag(AppLanguage.english)
+                            Text("Spanish").tag(AppLanguage.spanish)
+                            /*ForEach(languages, id: \.self) { item in
                                 Text(item)
-                            }
+                            }*/
                         }
                     }
 
                     HStack {
+                        
                         Image(systemName: "moon.stars")
                             .font(.system(size: 20, weight: .light))
-                        Toggle(isOn: $isDarkModeEnabled) {
-                            Text("Dark mode")
+                        Picker("Theme", selection: $loginManager.schemeMode) {
+                            Text("System").tag(SchemeMode.user)
+                            Text("Light").tag(SchemeMode.light)
+                            Text("Dark").tag(SchemeMode.dark)
+                            /*ForEach(languages, id: \.self) { item in
+                             Text(item)
+                             }*/
                         }
+                        
+                        
+                       
                     }
                     HStack {
                         Image(systemName: "antenna.radiowaves.left.and.right.slash")
                             .font(.system(size: 20, weight: .light))
-                        Toggle(isOn: $downloadViaWifiEnabled) {
+                        Toggle(isOn: $loginManager.offline) {
                             Text("Offline")
                         }
                     }
+                    
                     HStack {
                         Image(systemName: "link")
                             .font(.system(size: 20, weight: .light))
-                        Text("Play in background")
+                        Toggle(isOn: $loginManager.playBackground) {
+                            Text("Play in background")
+                        }
                     }
-
-                })
+                    
+                   
+                }
+               
                 HStack {
+                    Text("Log out")
+                    Spacer()
                     Image(systemName: "power")
                         .font(.system(size: 20, weight: .light))
-                    Text("Log out")
+                    
                 }
+                .foregroundColor(.red)
                 .onTapGesture {
                     isShowingDialog = true
                 }
-                .confirmationDialog(
+                /*.confirmationDialog(
                     "are you sure to leave?",
                     isPresented: $isShowingDialog
                 ) {
@@ -195,12 +171,36 @@ struct SettingView: View {
                         isShowingDialog = false
                     }
                 }
+                 */
             }
+            
+            .alert(isPresented: $isShowingDialog) {
+                Alert(
+                    title: Text("Confirmation"),
+                    message: Text("are you sure to leave?"),
+                    primaryButton: .destructive(Text("Quit")) {
+                        loginManager.info.isVerified = false
+                    },
+                    secondaryButton: .cancel(Text("Cancel"))
+                )
+            }
+            
+            .preferredColorScheme(profile.schemeMode == .user ? colorScheme : profile.schemeMode == .dark ? .dark : .light)
             .navigationBarTitle("Settings")
             .onAppear {
                 user = "\(loginManager.info.email)"
                 name = "\(loginManager.info.firstName) \(loginManager.info.lastName)"
                 avatar = loginManager.info.avatar ?? ""
+            }
+
+            .onChange(of: isDarkModeEnabled) { value in
+                DispatchQueue.main.async {
+                    if value {
+                        profile.colorScheme = .dark
+                    } else {
+                        profile.colorScheme = .light
+                    }
+                }
             }
         }
     }

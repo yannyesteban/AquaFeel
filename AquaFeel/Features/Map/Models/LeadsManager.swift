@@ -54,7 +54,14 @@ class LeadsManager: ObservableObject {
         
         let body = BulkSeller(created_by: owner._id, ids: ids)
         
-        let info = ApiConfig(method: "POST", host: "api.aquafeelvirginia.com", path: "/leads/bulk-assign-seller", token: token, params: nil)
+        
+        let path = "/leads/bulk-assign-seller"
+        let params: [String : String?]? = nil
+        let method = "POST"
+        let scheme = APIValues.scheme
+        let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
+        
+        //let info = ApiConfig(method: "POST", host: "api.aquafeelvirginia.com", path: "/leads/bulk-assign-seller", token: token, params: nil)
 
         do {
             let response: BulkStatusResponse = try await fetching(body: body, config: info)
@@ -89,7 +96,14 @@ class LeadsManager: ObservableObject {
         
         let body = BulkDelete(leadIds: ids)
         
-        let info = ApiConfig(method: "POST", host: "api.aquafeelvirginia.com", path: "/leads/delete-bulk", token: token, params: nil)
+        
+        let path = "/leads/delete-bulk"
+        let params: [String : String?]? = nil
+        let method = "POST"
+        let scheme = APIValues.scheme
+        let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
+        
+        //let info = ApiConfig(method: "POST", host: "api.aquafeelvirginia.com", path: "/leads/delete-bulk", token: token, params: nil)
 
         
         
@@ -121,8 +135,14 @@ class LeadsManager: ObservableObject {
         let ids: [String] = leadsSelected.map { $0.id }
         
         let body = BulkStatus(status_id: statusId._id, ids: ids)
-        print(statusId, ids)
-        let info = ApiConfig(method: "POST", host: "api.aquafeelvirginia.com", path: "/leads/bulk-status-update", token: token, params: nil)
+        
+        let path = "/leads/bulk-status-update"
+        let params: [String : String?]? = nil
+        let method = "POST"
+        let scheme = APIValues.scheme
+        let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
+        
+        //let info = ApiConfig(method: "POST", host: "api.aquafeelvirginia.com", path: "/leads/bulk-status-update", token: token, params: nil)
 
         do {
             let response: BulkStatusResponse = try await fetching(body: body, config: info)

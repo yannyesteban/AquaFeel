@@ -9,7 +9,7 @@ import SwiftUI
 import GoogleMaps
 import GoogleMapsUtils
 
-
+/*
 let kClusterItemCount = 100
 let kCameraLatitude = 37.36
 let kCameraLongitude = -122.0
@@ -202,3 +202,6 @@ struct ContentView: View {
 #Preview ("yanny") {
    Text("Hola")
 }
+
+
+*/

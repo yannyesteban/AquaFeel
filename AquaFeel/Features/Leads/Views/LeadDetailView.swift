@@ -9,8 +9,8 @@ import SwiftUI
 
 struct LeadDetailView: View {
     @State var lead: LeadModel
-    @StateObject private var lead2 = LeadViewModel(first_name: "Juan", last_name: "")
-    
+    //@StateObject private var lead2 = LeadViewModel(first_name: "Juan", last_name: "")
+    @StateObject private var statusManager = StatusManager()
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
@@ -32,7 +32,7 @@ struct LeadDetailView: View {
                 }
                 Section("Status") {
                     HStack {
-                        MyStatus(status: $lead.status_id, statusList: lead2.statusList)
+                        LeadStatusView(status: $lead.status_id, statusList: statusManager.statusList)
                     }
                     
                 }
@@ -69,7 +69,7 @@ struct LeadDetailView: View {
             .padding(20)
         }
         .onAppear{
-            lead2.statusAll()
+            statusManager.statusAll()
         }
         //.navigationBarTitle("Lead Detail", displayMode: .inline)
     }

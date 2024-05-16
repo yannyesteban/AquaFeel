@@ -56,8 +56,11 @@ struct HomeScreen: View {
     @State private var selectedIdentifier: Calendar.Identifier = .gregorian
     @State private var lastSelectedDate: Date?
     @State private var selectedDate2: Date?
-    @State private var myTest = "0"
+    //@State private var myTest = "0"
     @State private var updated = false
+    @State private var updated2 = false
+    
+    @StateObject var traceManager = TraceManager()
 
     @State private var lastPick: String? = nil
     var body: some View {
@@ -65,7 +68,7 @@ struct HomeScreen: View {
             Form {
                 // Text("Role: \(profile.role)")
                 // Text("User: \(profile.userId)")
-
+                
                 HStack {
                     Text("Appointments")
 
@@ -136,7 +139,10 @@ struct HomeScreen: View {
                  }
                   */
             }
-
+            
+            //.navigationTitle("Home")
+          
+            
             .sheet(isPresented: $showOption) {
                 SettingView(loginManager: profile)
                 // .environmentObject(store)
@@ -164,14 +170,32 @@ struct HomeScreen: View {
                         }
                     }
                 }
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                ToolbarItemGroup(placement: .topBarLeading) {
                     // ToolbarItem(placement: .automatic) {
                     Button {
                         showOption = true
                     } label: {
                         Image(systemName: "gear")
                     }
-
+                    /*
+                    NavigationLink {
+                        CreateLead(profile: profile, lead: $lead, mode: 1, manager: manager, updated: $updated) { _ in
+                        }
+                        
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                     */
+                }
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    // ToolbarItem(placement: .automatic) {
+                   /*
+                    Button {
+                        showOption = true
+                    } label: {
+                        Image(systemName: "gear")
+                    }
+                    */
                     NavigationLink {
                         CreateLead(profile: profile, lead: $lead, mode: 1, manager: manager, updated: $updated) { _ in
                         }
@@ -203,11 +227,33 @@ struct HomeScreen: View {
                     }
                 }
             }
+            /*
+            NavigationLink {
+                AppleMapScreen(profile: profile, updated: $updated, leadManager: manager, location: startLocation)
+                
+                
+                // .edgesIgnoringSafeArea(.all)
+            } label: {
+                VStack {
+                    Image(systemName: "map.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.blue)
+                    
+                    Text("Map")
+                        .font(.caption)
+                        .foregroundColor(.blue)
+                }
+            }
+            Spacer()
+             */
 
             HStack {
                 NavigationLink {
                     HomeMap(profile: profile, updated: $updated, leadManager: manager, location: startLocation)
-
+                       
+                        
                     // .edgesIgnoringSafeArea(.all)
                 } label: {
                     VStack {
@@ -252,7 +298,9 @@ struct HomeScreen: View {
                 Spacer()
 
                 NavigationLink {
+                    
                     LeadListScreen(profile: profile, updated: $updated)
+                        
 
                 } label: {
                     VStack {
@@ -267,9 +315,52 @@ struct HomeScreen: View {
                             .foregroundColor(.blue)
                     }
                 }
+                
+                if profile.role == "ADMIN" {
+                    Spacer()
+                    
+                    NavigationLink {
+                        AdminScreen(profile: profile)
+                        
+                    } label: {
+                        VStack {
+                            Image(systemName: "shield")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(.blue)
+                            
+                            Text("Admin")
+                                .font(.caption)
+                                .foregroundColor(.blue)
+                        }
+                    }
+                } else {
+                    Spacer()
+                    
+                    NavigationLink {
+                        AdminScreen2(profile: profile)
+                        
+                    } label: {
+                        VStack {
+                            Image(systemName: "chart.pie.fill")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(.blue)
+                            
+                            Text("Stats")
+                                .font(.caption)
+                                .foregroundColor(.blue)
+                        }
+                    }
+                }
+                
+                
             }
             .padding(.horizontal, 50)
         }
+        .environmentObject(manager)
         .onAppear {
             placeManager.setLocation()
 
@@ -282,8 +373,7 @@ struct HomeScreen: View {
 
                 manager.userId = profile.userId
                 manager.role = profile.role
-                print("manager manager manager: ", manager.userId, manager.role)
-
+                
                 if manager.leads.isEmpty {
                     manager.runLoad()
                 }
@@ -293,6 +383,7 @@ struct HomeScreen: View {
         }
         .onChange(of: updated) { value in
             if value {
+               
                 manager.search()
             }
             updated = false
@@ -303,6 +394,18 @@ struct HomeScreen: View {
             if let location = newValue {
                 self.startLocation = location
             }
+        }
+        
+        .onReceive(traceManager.$position) { position in
+            
+            if let position {
+                Task {
+                    try? await profile.setLocation(position: position)
+                }
+               
+            }
+            
+            
         }
     }
 }

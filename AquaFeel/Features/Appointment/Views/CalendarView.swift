@@ -68,7 +68,7 @@ struct AppointmentList2: View {
     // @StateObject var lead2 = LeadViewModel(first_name: "Juan", last_name: "")
 
     @StateObject var manager = LeadManager(autoLoad: false)
-    // @StateObject var user = UserManager()
+    
 
     @State private var isFilterModalPresented = false
 
@@ -174,7 +174,7 @@ struct AppointmentList2: View {
             .navigationBarTitle("Leads: \(shortDate(date))")
 
         }.sheet(isPresented: $isFilterModalPresented) {
-            FilterOption(filter: $manager.filter, filters: $manager.leadFilter, statusList: manager.statusList, usersList: manager.users) {
+            FilterOption(profile: profile, filter: $manager.filter, filters: $manager.leadFilter, statusList: manager.statusList, usersList: manager.users) {
                 manager.reset()
             }
 
@@ -203,7 +203,7 @@ struct AppointmentByDate: View {
     // @StateObject var lead2 = LeadViewModel(first_name: "Juan", last_name: "")
 
     @StateObject var manager = LeadManager(autoLoad: false)
-    // @StateObject var user = UserManager()
+    
 
     @State private var isFilterModalPresented = false
 
@@ -309,7 +309,7 @@ struct AppointmentByDate: View {
             .navigationBarTitle("Leads: \(shortDate(date))")
 
         }.sheet(isPresented: $isFilterModalPresented) {
-            FilterOption(filter: $manager.filter, filters: $manager.leadFilter, statusList: manager.statusList, usersList: manager.users) {
+            FilterOption(profile: profile, filter: $manager.filter, filters: $manager.leadFilter, statusList: manager.statusList, usersList: manager.users) {
                 manager.reset()
             }
 

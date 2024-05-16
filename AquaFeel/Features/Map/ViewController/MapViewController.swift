@@ -1351,7 +1351,7 @@ struct LeadMap: View {
             }
 
             .sheet(isPresented: $showFilter) {
-                FilterOption(filter: $manager.filter, filters: $manager.leadFilter, statusList: manager.statusList, usersList: manager.users) {
+                FilterOption(profile: profile, filter: $manager.filter, filters: $manager.leadFilter, statusList: manager.statusList, usersList: manager.users) {
                     // lead.reset()
                     manager.resetFilter()
                     manager.runLoad()

@@ -7,6 +7,23 @@
 
 import Foundation
 
+enum SchemeMode:Int, Codable {
+    case user = 0
+    case light = 1
+    case dark = 2
+}
+
+enum AppLanguage:Int, Codable {
+    case user = 0
+    case english = 1
+    case spanish = 2
+}
+
+enum AppMapApi:Int, Codable {
+    case googleMaps = 0
+    case appleMaps = 1
+    case openStreet = 2
+}
 
 struct UserData:  Codable, SimplyInitializable {
     
@@ -22,8 +39,13 @@ struct UserData:  Codable, SimplyInitializable {
     var isVerified: Bool
     var auth: Bool
     var test:String = "yanny Nuñez TEST One"
-   
     var info: User = User()
+    
+    var schemeMode = SchemeMode.user
+    var language = AppLanguage.user
+    var mapApi = AppMapApi.googleMaps
+    var offline = false
+    var playBackground = false
     
     init() {
             // Llama al inicializador principal con un valor predeterminado

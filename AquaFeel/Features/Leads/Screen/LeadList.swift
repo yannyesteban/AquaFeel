@@ -67,10 +67,9 @@ struct LeadListScreen: View {
     @State private var isCreateLeadActive = false
     @State var filter = ""
 
-    @StateObject var lead2 = LeadViewModel(first_name: "Juan", last_name: "")
+    //@StateObject var lead2 = LeadViewModel(first_name: "Juan", last_name: "")
 
     @StateObject var manager = LeadManager()
-    // @StateObject var user = UserManager()
 
     @State private var isFilterModalPresented = false
 
@@ -273,7 +272,7 @@ struct LeadListScreen: View {
             // }
 
         }.sheet(isPresented: $isFilterModalPresented) {
-            FilterOption(filter: $manager.filter, filters: $manager.leadFilter, statusList: manager.statusList, usersList: manager.users) {
+            FilterOption(profile: profile, filter: $manager.filter, filters: $manager.leadFilter, statusList: manager.statusList, usersList: manager.users) {
                 print("reseteando")
                 manager.reset()
             }
@@ -294,7 +293,7 @@ struct LeadListScreen: View {
         }
 
         .onAppear {
-            print("::", profile.token, ":", profile.userId, ":", profile.role)
+           
             manager.userId = profile.userId
             manager.token = profile.token
             manager.role = profile.role

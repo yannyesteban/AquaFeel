@@ -6,10 +6,10 @@
 //
 
 import SwiftUI
-
+/*
 struct LoginScreen3: View {
     @Binding var userData: UserData
-    @ObservedObject var viewModel: LoginViewModel = LoginViewModel(email: "", password: "")
+    //@ObservedObject var viewModel: LoginViewModel = LoginViewModel(email: "", password: "")
     @Environment(\.scenePhase) private var scenePhase
     let saveAction: ()->Void
     
@@ -262,3 +262,4 @@ struct LoginScreen3: View {
     }
 }
 
+*/

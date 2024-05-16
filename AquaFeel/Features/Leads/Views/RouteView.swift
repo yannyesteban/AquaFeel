@@ -18,6 +18,7 @@ struct AddressField<T: AddressProtocol>: View {
     @StateObject private var location = PlaceManager()
     @ObservedObject private var placeViewModel = PlaceViewModel()
     @State private var locationWaiting = false
+    @State var withPlaceButton = true
     var body: some View {
         HStack {
             TextField(label, text: $leadAddress.street_address)
@@ -43,25 +44,28 @@ struct AddressField<T: AddressProtocol>: View {
                     }
                     .padding()
                 }
-            if locationWaiting {
-                ProgressView("")
-                    .padding(.leading, 14)
-                    .padding(.top, 2)
-                
-            } else {
-                Button(action: {
-                    // location.location = nil
-                    locationWaiting = true
-                    location.start()
+            if withPlaceButton {
+                if locationWaiting {
+                    ProgressView("")
+                        .padding(.leading, 14)
+                        .padding(.top, 2)
                     
-                }) {
-                    Image(systemName: "location.circle.fill")
-                        .foregroundColor(.blue)
-                    
-                        .imageScale(.large)
-                        .padding(.leading, 10)
+                } else {
+                    Button(action: {
+                        // location.location = nil
+                        locationWaiting = true
+                        location.start()
+                        
+                    }) {
+                        Image(systemName: "location.circle.fill")
+                            .foregroundColor(.blue)
+                        
+                            .imageScale(.large)
+                            .padding(.leading, 10)
+                    }
                 }
             }
+            
             
 
         }.onReceive(location.$location) { newValue in
@@ -103,14 +107,14 @@ struct AddressField<T: AddressProtocol>: View {
         }
     }
 }
-
+/*
 struct RouteView01: View {
     @State var AddressFrom: LeadModel = LeadModel()
     @State var AddressTo: LeadModel = LeadModel()
 
     @State var name: String = ""
 
-    @StateObject var lead = LeadViewModel(first_name: "Juan", last_name: "")
+    @StateObject var lead = LeadManager()
     @Binding var leads: [LeadModel]
 
     var body: some View {
@@ -177,11 +181,12 @@ struct RouteView01: View {
             // .add(.searchKey, "all")
             // .add(.searchValue, "yanny")
 
-            lead.loadAll(query: leadQuery)
+            lead.list(query: leadQuery)
         }
     }
 }
 
+ */
 /*
  #Preview {
      RouteView(leads: [])

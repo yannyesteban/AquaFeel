@@ -4,9 +4,76 @@
 //
 //  Created by Yanny Esteban on 5/4/24.
 //
-
+	
 import GoogleMaps
 import SwiftUI
+
+struct MapLeadList: View {
+    @ObservedObject var routeManager: RouteManager
+    
+    
+    @Binding var selectedMode: String
+    @Binding var selectedAvoid: [String]
+    
+    @State var all = true
+    
+    let modes = ["driving", "walking", "bicycling", "transit"]
+    let avoidList = ["tolls", "highways", "ferries", "indoor"]
+    
+    var body: some View {
+        
+        List {
+            Picker("Transportation mode:", selection: $selectedMode) {
+                ForEach(modes, id: \.self) { mode in
+                    Text(mode.capitalized)
+                }
+            }
+            Section(header: Text("Avoid")) {
+                ForEach(avoidList, id: \.self) { avoid in
+                    Toggle(isOn: Binding(
+                        get: { selectedAvoid.contains(avoid) },
+                        set: { isSelected in
+                            
+                            if isSelected {
+                                selectedAvoid.append(avoid)
+                            } else {
+                                selectedAvoid.removeAll { $0 == avoid }
+                            }
+                        }
+                    )) {
+                        Text(avoid) // Mostrar el nombre del estado
+                    }
+                }
+            }
+            Toggle(isOn: $all) {
+                HStack {
+                    Text("Select All")
+                }
+            }.onChange(of: all) { newValue in
+                // Cuando cambia el estado de 'all', actualizar el estado de todos los toggles de los elementos
+                for index in routeManager.route.leads.indices {
+                    routeManager.route.leads[index].isSelected = newValue
+                }
+            }
+            ForEach(routeManager.route.leads.indices, id: \.self) { index in
+                Toggle(isOn: $routeManager.route.leads[index].isSelected) {
+                    HStack {
+                        SuperIconViewViewWrapper(status: getStatusType(from: routeManager.route.leads[index].status_id.name))
+                            .frame(width: 34, height: 34)
+                        VStack(alignment: .leading) {
+                            Text("\(routeManager.route.leads[index].first_name) \(routeManager.route.leads[index].last_name)")
+                            Text("\(routeManager.route.leads[index].street_address)")
+                                .foregroundStyle(.gray)
+                        }
+                    }
+                }
+                .toggleStyle(SwitchToggleStyle(tint: .blue)) // Puedes ajustar el color del interruptor según tus preferencias
+            }
+        }
+        
+        
+    }
+}
 
 struct RouteMapScreen: View {
     var profile: ProfileManager
@@ -14,6 +81,7 @@ struct RouteMapScreen: View {
     // @StateObject var mapManager = MapManager()
 
     @Binding var updated: Bool
+    @State var leadSaved = false
     @EnvironmentObject var store: MainStore<UserData>
 
     @State var showSettings = true
@@ -36,6 +104,10 @@ struct RouteMapScreen: View {
     @State var popupVisible = false
     @State var scrollViewHeight: CGFloat = -50
     @State var showInfo = false
+    @State var showLeads = false
+    
+    @State var selectedMode: String = "driving"
+    @State var selectedAvoid: [String] = []
 
     @StateObject var lassoTool: LassoTool = .init()
     @StateObject var markTool: MarkTool = .init()
@@ -72,7 +144,9 @@ struct RouteMapScreen: View {
                     // map.isMyLocationEnabled = true
 
                     tool.playTool(.location)
-                }                
+                    routeTool.play()
+                    
+                }
                 .edgesIgnoringSafeArea(.all)
                 .overlay(alignment: .topTrailing) {
                     VStack {
@@ -80,7 +154,7 @@ struct RouteMapScreen: View {
                             routeTool.lead?.makePhoneCall()
 
                         } label: {
-                            Image(systemName: "phone")
+                            Image(systemName: "phone.fill")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 20, height: 20)
@@ -95,7 +169,7 @@ struct RouteMapScreen: View {
                         Button {
                             routeTool.lead?.sendSMS()
                         } label: {
-                            Image(systemName: "message")
+                            Image(systemName: "message.fill")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 20, height: 20)
@@ -109,9 +183,16 @@ struct RouteMapScreen: View {
                         .padding(10)
 
                         Button {
-                            routeTool.lead!.openGoogleMaps()
+                            
+                            if profile.mapApi == .appleMaps {
+                                routeTool.lead!.openAppleMaps()
+                            } else {
+                                routeTool.lead!.openGoogleMaps()
+                            }
+                            
+                            
                         } label: {
-                            Image(systemName: "globe")
+                            Image(systemName: "location.fill")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 20, height: 20)
@@ -142,9 +223,10 @@ struct RouteMapScreen: View {
                         }
 
                         Button(action: {
-                            loadApi()
+                            showLeads = true
+                            // loadApi()
                         }) {
-                            Image(systemName: "arrow.counterclockwise")
+                            Image(systemName: "slider.horizontal.3") // arrow.counterclockwise
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 20, height: 20)
@@ -158,7 +240,7 @@ struct RouteMapScreen: View {
                         Button(action: {
                             locationTool.myLocation()
                         }) {
-                            Image(systemName: "location.fill")
+                            Image(systemName: "location.magnifyingglass")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 20, height: 20)
@@ -168,11 +250,11 @@ struct RouteMapScreen: View {
                                 .clipShape(Circle())
                                 .shadow(radius: 10)
                         }.padding(10)
-                        
+
                         Button(action: {
                             locationTool.follow.toggle()
                         }) {
-                            Image(systemName: locationTool.follow ? "car.fill": "car.front.waves.up.fill")
+                            Image(systemName: locationTool.follow ? "car.fill" : "car.front.waves.up.fill")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 20, height: 20)
@@ -292,7 +374,7 @@ struct RouteMapScreen: View {
                 CreateLead(profile: profile, lead: Binding<LeadModel>(
                     get: { routeTool.lead ?? LeadModel() },
                     set: { routeTool.lead = $0 }
-                ), mode: 2, manager: leadManager, updated: .constant(false)) { result in
+                ), mode: 2, manager: leadManager, updated: $leadSaved) { result in
                     if result {
                     }
                 }
@@ -308,6 +390,27 @@ struct RouteMapScreen: View {
             }
         }
 
+        .sheet(isPresented: $showLeads) {
+            NavigationStack {
+                MapLeadList(routeManager: routeManager, selectedMode: $selectedMode, selectedAvoid: $selectedAvoid)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button {
+                                Task {
+                                    let response = try? await routeManager.getDirection(mode: selectedMode, avoid: selectedAvoid)
+                                    routeTool.route = response
+                                    routeTool.drawRoute(routes: response?.routes ?? [])
+                                }
+
+                                showLeads.toggle()
+                            } label: {
+                                Image(systemName: "arrow.left")
+                            }
+                        }
+                    }
+            }
+        }
+
         .onChange(of: popupVisible) { value in
             withAnimation {
                 if value {
@@ -318,21 +421,43 @@ struct RouteMapScreen: View {
             }
         }
         .onAppear {
-            
             loadApi()
+        }
+        
+        .onChange(of: leadSaved){ value in
+            
+            if value {
+                DispatchQueue.main.async {
+                    routeTool.updateMarker()
+                    leadSaved = false
+                }
+               
+            }
+            
             
         }
+    }
+
+    func reDraw() {
     }
 
     func loadApi() {
         Task {
             if routeId != "" {
+                if let response = try? await routeManager.routeData(routeId: routeId) {
+                    routeManager.route = response
+                    
+                }
+
+                // return
+            }
+
+            if routeId != "" {
                 let response = try? await routeManager.getRoute(routeId: routeId)
                 if let tool1 = tool.mapTools[.route] as? RouteTool { // routeTool{}
                     tool1.route = response
-                   
+
                     tool1.drawRoute(routes: response?.routes ?? [])
-                   
                 }
             }
         }

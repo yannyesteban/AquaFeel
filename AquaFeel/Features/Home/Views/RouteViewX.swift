@@ -56,7 +56,7 @@ struct RouteX: View {
                 */
                 
                 NavigationLink {
-                    Text(" ...yanny ")
+                    Text("...")
                 } label: {
                     Label("Extra", systemImage: "chart.bar")
                 }

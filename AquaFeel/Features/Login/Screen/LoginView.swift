@@ -117,6 +117,7 @@ struct LoginView<T: LoginProtocol>: View {
     @State private var completed = false
     @State var avatarImage: UIImage?
 
+    @State var showChangePass = false
     var body: some View {
         VStack {
             Form {
@@ -179,6 +180,7 @@ struct LoginView<T: LoginProtocol>: View {
 
             .foregroundStyle(Color.orange)
             .onTapGesture {
+                showChangePass.toggle()
             }
 
         Button("Register") {
@@ -186,6 +188,22 @@ struct LoginView<T: LoginProtocol>: View {
             completed = false
         }
         .padding()
+        .sheet(isPresented: $showChangePass){
+            
+            
+            NavigationStack {
+                PassEmailView()
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button(action: {
+                                showChangePass.toggle()
+                            }) {
+                                Image(systemName: "chevron.backward")
+                            }
+                        }
+                    }
+            }
+        }
         .sheet(isPresented: $alert){
             NavigationStack {
                 RegistrationView(completed: $completed)

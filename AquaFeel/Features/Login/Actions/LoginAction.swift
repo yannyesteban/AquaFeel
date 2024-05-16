@@ -6,13 +6,14 @@
 //
 
 import Foundation
-
+/*
 struct LoginAction {
     
     var parameters: LoginFetch
     
     func sendRequest(completion: @escaping (LoginResponse) -> Void) {
         
+        print("find here , there are a mistake ...")
         let scheme: String = "https"
         let host: String = "api.aquafeelvirginia.com"
         let path = "/auth/login"
@@ -21,6 +22,7 @@ struct LoginAction {
         components.scheme = scheme
         components.host = host
         components.path = path
+        
         
         guard let url = components.url else {
             return
@@ -68,7 +70,7 @@ struct LoginAction {
         task.resume()
     }
 }
-
+*/
 
 struct FetchAction<T:Decodable> {
     
@@ -76,6 +78,7 @@ struct FetchAction<T:Decodable> {
     
     func sendRequest(completion: @escaping (T) -> Void) {
         
+        print("find here , there are a mistake 2...")
         let scheme: String = "https"
         let host: String = "api.aquafeelvirginia.com"
         let path = "/auth/login"

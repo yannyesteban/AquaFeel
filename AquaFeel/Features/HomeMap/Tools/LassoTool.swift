@@ -29,6 +29,11 @@ class LassoTool: NSObject, ObservableObject, MapTool, GMSMapViewDelegate {
         map = GMSMapView()
         draw = Draw(map: map)
     }
+    
+    func setMap(map: MapsProvider) {
+        
+        
+    }
 
     func setMap(map: GMSMapView) {
         self.map = map

@@ -25,6 +25,11 @@ class MarkTool: NSObject, ObservableObject, MapTool, GMSMapViewDelegate {
     override init() {
         map = GMSMapView()
     }
+    
+    func setMap(map: MapsProvider) {
+        
+        
+    }
 
     func setMap(map: GMSMapView) {
         self.map = map

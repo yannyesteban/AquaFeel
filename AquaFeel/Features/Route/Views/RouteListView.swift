@@ -206,7 +206,7 @@ struct LeadPicker: View {
     // @StateObject var lead2 = LeadViewModel(first_name: "Juan", last_name: "")
 
     @StateObject var manager = LeadManager()
-    // @StateObject var user = UserManager()
+    
 
     @State private var isFilterModalPresented = false
 
@@ -401,7 +401,7 @@ struct LeadPicker: View {
             // }
 
         }.sheet(isPresented: $isFilterModalPresented) {
-            FilterOption(filter: $manager.filter, filters: $manager.leadFilter, statusList: manager.statusList, usersList: manager.users) {
+            FilterOption(profile: profile, filter: $manager.filter, filters: $manager.leadFilter, statusList: manager.statusList, usersList: manager.users) {
                 manager.reset()
             }
             .onAppear {
@@ -432,6 +432,7 @@ struct LeadPicker: View {
 struct DateLocalView: View {
     // The original date string
     let dateString: String
+    var showTime = true
 
     // The formatted date
     var formattedDate: String {
@@ -451,7 +452,10 @@ struct DateLocalView: View {
 
             // Configure the date and time style according to your preferences
             localDateFormatter.dateStyle = .medium
-            localDateFormatter.timeStyle = .medium
+            if showTime {
+                localDateFormatter.timeStyle = .medium
+            }
+            
 
             // Convert the date to a string in local format
             return localDateFormatter.string(from: date)
@@ -480,7 +484,7 @@ struct RouteView: View {
 
     @State var name: String = ""
 
-    @StateObject var lead = LeadViewModel(first_name: "Juan", last_name: "")
+    //@StateObject var lead = LeadViewModel(first_name: "Juan", last_name: "")
     @State var leads: [LeadModel] = []
 
     @State var isShowingSnackbar = false
@@ -506,18 +510,22 @@ struct RouteView: View {
             Section("Leads") {
                 List {
                     ForEach(routeManager.route.leads.indices, id: \.self) { index in
-                        Toggle(isOn: $routeManager.route.leads[index].isSelected) {
-                            HStack {
-                                SuperIconViewViewWrapper(status: getStatusType(from: routeManager.route.leads[index].status_id.name))
-                                    .frame(width: 34, height: 34)
-                                VStack(alignment: .leading) {
-                                    Text("\(routeManager.route.leads[index].first_name) \(routeManager.route.leads[index].last_name)")
-                                    Text("\(routeManager.route.leads[index].street_address)")
-                                        .foregroundStyle(.gray)
+                        NavigationLink (destination: LeadLocationView(profile: profile, lead: routeManager.route.leads[index], location: routeManager.route.leads[index].position)) {
+                            Toggle(isOn: $routeManager.route.leads[index].isSelected) {
+                                HStack {
+                                    SuperIconViewViewWrapper(status: getStatusType(from: routeManager.route.leads[index].status_id.name))
+                                        .frame(width: 34, height: 34)
+                                    VStack(alignment: .leading) {
+                                        Text("\(routeManager.route.leads[index].first_name) \(routeManager.route.leads[index].last_name)")
+                                        Text("\(routeManager.route.leads[index].street_address)")
+                                            .foregroundStyle(.gray)
+                                    }
+                                    
                                 }
                             }
+                            .toggleStyle(SwitchToggleStyle(tint: .blue)) // Puedes ajustar el color del interruptor según tus preferencias
                         }
-                        .toggleStyle(SwitchToggleStyle(tint: .blue)) // Puedes ajustar el color del interruptor según tus preferencias
+                        
                     }
                 }
 
@@ -529,10 +537,11 @@ struct RouteView: View {
                         deleteConfirm = true
                     }) {
                         HStack {
+                            Text("Delete")
                             Spacer()
                             Image(systemName: "trash")
                                 .foregroundColor(.red)
-                            Text("Delete")
+                           
                         }
                     }
                     .foregroundColor(.red)
@@ -576,8 +585,8 @@ struct RouteView: View {
                 // ToolbarItemGroup(placement: .automatic){
 
                 NavigationLink {
-                    //RouteMapsScreen(profile: profile, routeId: routeManager.route._id)
-                    RouteMapScreen(profile: profile, routeId: routeManager.route._id, updated: .constant(false), leadManager: LeadManager())
+                    RouteMapsScreen(profile: profile, routeId: routeManager.route._id)
+                    //RouteAppleMapScreen(profile: profile, routeId: routeManager.route._id, updated: .constant(false), leadManager: LeadManager())
                 } label: {
                     Image(systemName: "car.fill")
                 }

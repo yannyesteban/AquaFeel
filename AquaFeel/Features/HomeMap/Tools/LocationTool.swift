@@ -28,14 +28,18 @@ class LocationTool: NSObject, ObservableObject, MapTool, CLLocationManagerDelega
         map = GMSMapView()
     }
 
+    func setMap(map: MapsProvider) {
+        
+        
+    }
     func setMap(map: GMSMapView) {
         self.map = map
         marker.map = map
     }
 
     func play() {
-        
-        marker.groundAnchor = CGPointMake(0.5, 0.5)
+        marker.zIndex = -1
+        /*marker.groundAnchor = CGPointMake(0.5, 0.5)
         marker.zIndex = -1
         let circleBackgroundView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         circleBackgroundView.backgroundColor = UIColor.orange.withAlphaComponent(0.3)
@@ -53,6 +57,8 @@ class LocationTool: NSObject, ObservableObject, MapTool, CLLocationManagerDelega
         circleBackgroundView.addSubview(circleIconView)
         // Configurar el marcador con la vista del icono
         marker.iconView = circleBackgroundView
+         */
+        marker.icon?.withTintColor(.green)
         marker.map = map
 
         locationManager.delegate = self

@@ -36,19 +36,31 @@ class RouteTool: NSObject, ObservableObject, MapTool, GMSMapViewDelegate {
     var groups: [String: MultiMark] = [:]
     var polyline = GMSPolyline()
     var markers: [GMSMarker] = []
+
+    var leadMarkers: [Int: GMSMarker] = [:]
     override init() {
         map = GMSMapView()
     }
 
+    func setMap(map: MapsProvider) {
+        
+        
+    }
+    
     func setMap(map: GMSMapView) {
         self.map = map
     }
 
     func play() {
+        map.settings.compassButton = false
+        map.settings.zoomGestures = true
+        map.settings.myLocationButton = false
+        map.isMyLocationEnabled = false
         map.delegate = self
     }
 
     func stop() {
+        reset()
     }
 
     func nextMark() {
@@ -84,22 +96,24 @@ class RouteTool: NSObject, ObservableObject, MapTool, GMSMapViewDelegate {
         let cameraUpdate = GMSCameraUpdate.setTarget(position)
 
         if let last = last {
-            markerDictionary[last]?.iconView = labelIcon(text: lead.routeOrder, color: .systemTeal)
-            //markerDictionary[last]?.iconView?.backgroundColor = .systemTeal
-            
-            //marker.iconView = labelIcon(text: lead.routeOrder)
+            // markerDictionary[last]?.iconView = labelIcon(text: lead.routeOrder, color: .systemTeal)
+
+            // markerDictionary[last]?.iconView?.backgroundColor = .systemTeal
+
+            // marker.iconView = labelIcon(text: lead.routeOrder)
         }
-        
-        if revealStatus, let selected = markerDictionary[lead.routeOrder] {
-            let circleIconView = getUIImage(name: lead.status_id.name)
-            circleIconView.frame = CGRect(x: 120, y: 120, width: 25, height: 25)
-            
-           
-            selected.iconView = circleIconView
-        } else {
-            markerDictionary[lead.routeOrder]?.iconView = labelIcon(text: lead.routeOrder, color: .red)
-        }
-        
+
+        /*
+         if revealStatus, let selected = markerDictionary[lead.routeOrder] {
+             let circleIconView = getUIImage(name: lead.status_id.name)
+             circleIconView.frame = CGRect(x: 120, y: 120, width: 25, height: 25)
+
+             selected.iconView = circleIconView
+         } else {
+             markerDictionary[lead.routeOrder]?.iconView = labelIcon(text: lead.routeOrder, color: .red)
+         }
+
+          */
         last = lead.routeOrder
         map.animate(with: cameraUpdate)
     }
@@ -107,7 +121,6 @@ class RouteTool: NSObject, ObservableObject, MapTool, GMSMapViewDelegate {
     func find(_ index: Int) {
         if let myRoute = route?.routes[lastRoute] {
             if let leadFound = myRoute.leads.first(where: { $0.routeOrder == index }) {
-               
                 lastLead = index
                 lead = leadFound
                 state = .tap
@@ -142,8 +155,7 @@ class RouteTool: NSObject, ObservableObject, MapTool, GMSMapViewDelegate {
         markers = []
     }
 
-    
-    func labelIcon(text :Int, color: UIColor)-> UIView{
+    func labelIcon(text: Int, color: UIColor) -> UIView {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
         label.textAlignment = .center
         label.textColor = .white
@@ -152,22 +164,26 @@ class RouteTool: NSObject, ObservableObject, MapTool, GMSMapViewDelegate {
         label.clipsToBounds = true
         label.font = UIFont.boldSystemFont(ofSize: 14)
         label.text = text.formatted() // Coloca el número deseado aquí
-        //marker.iconView = label
-        
-        return label
-        
-        
-    }
-    func drawMarker(leads: [LeadModel]) {
-        //groups = [:]
-        for lead in leads {
-            let latitude = Double(lead.latitude) ?? 0.0
-            let longitude = Double(lead.longitude) ?? 0.0
-            let position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        // marker.iconView = label
 
-            let marker = GMSMarker(position: position)
-            markers.append(marker)
+        return label
+    }
+
+    func drawMarker(leads: [LeadModel]) {
+        // groups = [:]
+        for lead in leads {
+            /* let latitude = Double(lead.latitude) ?? 0.0
+             let longitude = Double(lead.longitude) ?? 0.0
+             let position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+
+              */
+
+            print("lead.position", lead.position.latitude)
+            let marker = GMSMarker(position: lead.position)
+
             markerDictionary[lead.routeOrder] = marker
+
+            marker.groundAnchor = CGPoint(x: 0.5, y: 0.5)
 
             marker.userData = lead.routeOrder
             // marker.icon = UIImage(systemName: "trash.circle.fill")
@@ -180,17 +196,17 @@ class RouteTool: NSObject, ObservableObject, MapTool, GMSMapViewDelegate {
              markerImageView.layer.shadowOpacity = 0.7
              markerImageView.layer.shadowRadius = 3
              */
-            /*let label = UILabel(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
-            label.textAlignment = .center
-            label.textColor = .white
-            label.backgroundColor = .systemTeal
-            label.layer.cornerRadius = 15
-            label.clipsToBounds = true
-            label.font = UIFont.boldSystemFont(ofSize: 14)
-            label.text = lead.routeOrder.formatted() // Coloca el número deseado aquí
-            */
-            marker.iconView = labelIcon(text: lead.routeOrder, color: .systemTeal)
-             
+            /* let label = UILabel(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
+             label.textAlignment = .center
+             label.textColor = .white
+             label.backgroundColor = .systemTeal
+             label.layer.cornerRadius = 15
+             label.clipsToBounds = true
+             label.font = UIFont.boldSystemFont(ofSize: 14)
+             label.text = lead.routeOrder.formatted() // Coloca el número deseado aquí
+             */
+            // marker.iconView = labelIcon(text: lead.routeOrder, color: .systemTeal)
+
             // marker.iconView = markerImageView
             // Ajustar el tamaño del icono del marcador
 
@@ -198,31 +214,37 @@ class RouteTool: NSObject, ObservableObject, MapTool, GMSMapViewDelegate {
              markerImageView.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
              */
 
-            /*
-             let customView = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+            let customView = UIView(frame: CGRect(x: 0, y: 0, width: 42, height: 42))
 
-             // Agregar el icono al customView
-             let iconImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-             iconImageView.image = UIImage(systemName: "trash.circle.fill") // Icono de bote de basura
-             iconImageView.tintColor = .red // Color del icono
-             customView.addSubview(iconImageView)
+            let circleIconView = getUIImage(name: lead.status_id.name)
+            circleIconView.frame = CGRect(x: 6, y: 6, width: 30, height: 30)
 
-             // Agregar el número al customView
-             let label = UILabel(frame: CGRect(x: 10, y: 0, width: 20, height: 20))
-             label.textAlignment = .center
-             label.textColor = .white
-             label.backgroundColor = .blue
-             label.layer.cornerRadius = 5
-             label.clipsToBounds = true
-             label.font = UIFont.boldSystemFont(ofSize: 20)
-             label.text = lead.routeOrder.formatted() // Número del marcador
-             customView.addSubview(label)
-             marker.iconView = customView
-             */
+            // Agregar el icono al customView
+            // let iconImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+            // iconImageView.image = UIImage(systemName: "trash.circle.fill") // Icono de bote de basura
+            // iconImageView.tintColor = .red // Color del icono
+            customView.addSubview(circleIconView)
+
+            // Agregar el número al customView
+            let label = UILabel(frame: CGRect(x: 2, y: 2, width: 20, height: 20))
+            label.textAlignment = .center
+            label.textColor = .black
+            label.backgroundColor = .white
+            label.layer.cornerRadius = 10
+            label.clipsToBounds = true
+            label.font = UIFont.boldSystemFont(ofSize: 11)
+            label.text = lead.routeOrder.formatted() // Número del marcador
+            label.layer.borderWidth = 2.0
+            label.layer.borderColor = UIColor.red.cgColor
+            customView.addSubview(label)
+            // customView.layer.borderColor = UIColor.blue.cgColor
+            // customView.layer.borderWidth = 2.0
+            marker.iconView = customView
 
             // Establecer el customView como el iconView del marcador
-
+            leadMarkers[lead.routeOrder] = marker
             add(marker: marker)
+            markers.append(marker)
         }
     }
 
@@ -245,9 +267,46 @@ class RouteTool: NSObject, ObservableObject, MapTool, GMSMapViewDelegate {
         }
     }
 
+    func updateMarker() {
+        if let myRoute = route?.routes[lastRoute], let lead = lead {
+            if let index = myRoute.leads.firstIndex(where: { $0.routeOrder == lastLead }) {
+                route?.routes[lastRoute].leads[index] = lead
+            }
+        }
+
+        if let marker = leadMarkers[lastLead], let lead = lead {
+            let customView = UIView(frame: CGRect(x: 0, y: 0, width: 42, height: 42))
+
+            let circleIconView = getUIImage(name: lead.status_id.name)
+            circleIconView.frame = CGRect(x: 6, y: 6, width: 30, height: 30)
+
+            // Agregar el icono al customView
+            // let iconImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+            // iconImageView.image = UIImage(systemName: "trash.circle.fill") // Icono de bote de basura
+            // iconImageView.tintColor = .red // Color del icono
+            customView.addSubview(circleIconView)
+
+            // Agregar el número al customView
+            let label = UILabel(frame: CGRect(x: 2, y: 2, width: 20, height: 20))
+            label.textAlignment = .center
+            label.textColor = .black
+            label.backgroundColor = .white
+            label.layer.cornerRadius = 10
+            label.clipsToBounds = true
+            label.font = UIFont.boldSystemFont(ofSize: 11)
+            label.text = lead.routeOrder.formatted() // Número del marcador
+            label.layer.borderWidth = 2.0
+            label.layer.borderColor = UIColor.red.cgColor
+            customView.addSubview(label)
+            // customView.layer.borderColor = UIColor.blue.cgColor
+            // customView.layer.borderWidth = 2.0
+            marker.iconView = customView
+        }
+    }
+
     func drawRoute(routes: [Route]) {
-        //polyline.map = nil
-        //markerDictionary = [:]
+        // polyline.map = nil
+        // markerDictionary = [:]
         reset()
         for route in routes {
             let bounds = route.bounds
@@ -282,11 +341,15 @@ class RouteTool: NSObject, ObservableObject, MapTool, GMSMapViewDelegate {
     }
 
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        if marker == self.marker {
-            onDraw?(self.marker)
+        if let index = marker.userData as? Int {
+            find(index)
         }
 
-        return true
+        if marker == self.marker {
+            onDraw?(marker)
+        }
+        mapView.animate(toLocation: marker.position)
+        return false
     }
 
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
@@ -296,4 +359,8 @@ class RouteTool: NSObject, ObservableObject, MapTool, GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
         stop()
     }
+}
+
+#Preview("Home") {
+    MainAppScreenHomeScreenPreview()
 }

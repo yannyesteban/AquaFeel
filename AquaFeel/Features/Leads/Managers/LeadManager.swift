@@ -10,6 +10,7 @@ import CoreLocation
 import Foundation
 import GoogleMaps
 
+
 class LeadManager: ObservableObject {
     @Published var leadFilter = LeadFilter()
 
@@ -20,6 +21,7 @@ class LeadManager: ObservableObject {
     // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InhMdjR3STJUTSIsImVtYWlsIjoieWFubnllc3RlYmFuQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTcwNTYxMDY3NCwiZXhwIjoxNzEwNzk0Njc0fQ.5nPyOfuwOF3jOxm2lziG-_4jtDEqQmp9i3a6yBjIFCE"
 
     @Published var leads: [LeadModel] = []
+    @Published var history: [LeadModel] = []
     @Published var selected: LeadModel?
     @Published var lead: LeadModel = .init()
     @Published var textFilter = ""
@@ -42,10 +44,13 @@ class LeadManager: ObservableObject {
     private var cancellables: Set<AnyCancellable> = []
 
     private var lastTask: URLSessionDataTask?
+    
 
     /// private var cancellables: Set<AnyCancellable> = []
 
     init(autoLoad: Bool = false, limit: Int = 20, maxLoads: Int = 100) {
+        
+        
         self.autoLoad = autoLoad
         self.limit = limit
         self.maxLoads = maxLoads
@@ -71,7 +76,7 @@ class LeadManager: ObservableObject {
 
             .debounce(for: .seconds(0.2), scheduler: RunLoop.main)
             .sink { [weak self] _ in
-                print("leadFilter", self?.leads.count ?? 0)
+                print("leadFilter: ", self?.leads.count ?? 0)
                 if let ME = self {
                     if ME.onInit {
                         print("hello weak self 2.0")
@@ -83,6 +88,8 @@ class LeadManager: ObservableObject {
                 }
             }
             .store(in: &cancellables)
+        
+        
     }
 
     func list(query: LeadQuery? = nil, completion: (() -> Void)? = nil) {
@@ -164,15 +171,22 @@ class LeadManager: ObservableObject {
         } else {
             _ = q.add(.userId, userId)
         }
-        print("*****", path, role, userId)
-        let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: path, token: token, params: q.get())
+        
+        
+        let params: [String : String?]? = q.get()
+        let method = "GET"
+        let scheme = APIValues.scheme
+        let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
+        
+        
+        //let info = ApiConfig(method: "GET", host: APIValues.host, path: path, token: token, params: q.get(), port: APIValues.port)
         lastResult = nil
         lastTask = fetch(config: info) { (result: Result<LeadsRequest, Error>) in
             switch result {
             case let .success(data):
 
                 DispatchQueue.main.async {
-                    print("llegó request ")
+                    
                     if data.leads.count > 0 {
                         if self.resetData {
                             self.leads = data.leads
@@ -205,7 +219,7 @@ class LeadManager: ObservableObject {
     }
 
     func reset() {
-        print("reset...... debug", leads.count, maxLoads)
+        
         page = 1
         resetData = true
         textFilter = ""
@@ -215,7 +229,7 @@ class LeadManager: ObservableObject {
     }
 
     func resetFilter() {
-        print("resetFilter...... debug", leads.count, maxLoads)
+        
         page = 1
         resetData = true
         textFilter = ""
@@ -225,7 +239,7 @@ class LeadManager: ObservableObject {
     }
 
     func search() {
-        print("search...... debug", leads.count, maxLoads)
+        
         page = 1
         resetData = true
 
@@ -237,7 +251,7 @@ class LeadManager: ObservableObject {
     }
 
     func runLoad() {
-        print("runLoad...... debug", leads.count, maxLoads)
+        
         list(query: nil) {
             if self.leads.count < self.maxLoads {
                 self.runLoad()
@@ -246,7 +260,7 @@ class LeadManager: ObservableObject {
     }
 
     func load(count: Int) {
-        print("load...... debug", leads.count, maxLoads)
+        
         maxLoads = count
         autoLoad = false
         runLoad()
@@ -272,10 +286,32 @@ class LeadManager: ObservableObject {
             path = "/leads/edit"
         case .delete:
             path = "/leads/delete"
+        case .none:
+            return
         }
 
-        let info = ApiConfig(method: "POST", host: "api.aquafeelvirginia.com", path: path, token: token, params: nil)
+        
+       
+        let params: [String : String?]? = nil
+        let method = "POST"
+        let scheme = APIValues.scheme
+        let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
+        
+        //let info = ApiConfig(method: "POST", host: "api.aquafeelvirginia.com", path: path, token: token, params: nil)
 
+       
+        
+        DispatchQueue.main.async {
+            if let index = self.leads.firstIndex(where: { $0.id == body.id }) {
+                self.leads[index] = body
+                
+            } else {
+                print("not found")
+            }
+            
+            
+        }
+        
         fetch<LeadModel, LeadUpdateResponse>(body: body, config: info) { (result: Result<LeadModel /* LeadUpdateResponse */, Error>) in
             switch result {
             case let .success(lead):
@@ -290,6 +326,7 @@ class LeadManager: ObservableObject {
                     completion(true, lead)
                 }
             case let .failure(error):
+                OfflineStore.addLeads(lead: body, mode: mode)
                 print("Error updating:", error)
                 completion(false, nil)
             }
@@ -299,9 +336,15 @@ class LeadManager: ObservableObject {
     func delete(query: LeadQuery, leadId: String, mode: ModeSave = .delete, completion: @escaping (Bool) -> Void) {
         let path: String = "/leads/delete"
 
-        let info = ApiConfig(method: "DELETE", host: "api.aquafeelvirginia.com", path: path, token: token, params: query.get())
+        
+        let params: [String : String?]? = query.get()
+        let method = "DELETE"
+        let scheme = APIValues.scheme
+        let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
+        
+        //let info = ApiConfig(method: "DELETE", host: "api.aquafeelvirginia.com", path: path, token: token, params: query.get())
 
-        fetch<LeadDeleteResponse>(config: info) { (result: Result<LeadDeleteResponse, Error>) in
+        _ = fetch<LeadDeleteResponse>(config: info) { (result: Result<LeadDeleteResponse, Error>) in
             switch result {
             case let .success(lead):
                 DispatchQueue.main.async {
@@ -326,7 +369,13 @@ class LeadManager: ObservableObject {
         let q = LeadQuery()
             .add(.id, id)
 
-        let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/leads/details", token: token, params: q.get())
+        let path = "/leads/details"
+        let params: [String : String?]? = q.get()
+        let method = "GET"
+        let scheme = APIValues.scheme
+        let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
+        
+        //let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/leads/details", token: token, params: q.get())
 
         _ = fetch(config: info) { (result: Result<LeadDetailRequest, Error>) in
             switch result {
@@ -342,6 +391,65 @@ class LeadManager: ObservableObject {
         }
     }
 
+    func getHistory(id: String) {
+        let q = LeadQuery()
+            .add(.id, id)
+        
+        
+        let path = "/leads/details"
+        let params: [String : String?]? = q.get()
+        let method = "GET"
+        let scheme = APIValues.scheme
+        let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
+        
+        //let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/leads/details", token: token, params: q.get())
+        
+        _ = fetch(config: info) { (result: Result<LeadDetailRequest, Error>) in
+            switch result {
+            case let .success(data):
+                
+                DispatchQueue.main.async {
+                    self.history = data.lead.history
+                }
+                
+            case let .failure(error):
+                print("Error updating:", error)
+            }
+        }
+    }
+    
+    
+    func getSellers() async throws {
+        
+        let path = "/users/list-all-sellers"
+        let params: [String : String?]? = nil
+        let method = "GET"
+        let scheme = APIValues.scheme
+        let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
+        
+        //let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/users/list-all-sellers", token: token, params: nil)
+        
+        do {
+            let response: AllSellersResponse = try await fetching(config: info)
+            
+            if response.statusCode == 200 {
+                
+                DispatchQueue.main.async {
+                    
+                    self.users = response.users
+                    
+                }
+            } else {
+                print("Error in list sellers")
+            }
+            
+        } catch {
+            
+            throw error
+        }
+    }
+    
+    
     func _userList() async throws -> UsersRequest {
         let query = LeadQuery()
 
@@ -349,7 +457,14 @@ class LeadManager: ObservableObject {
             .add(.offset, String("0"))
             .add(.limit, String("1000"))
 
-        let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/users/list", token: token, params: query.get())
+        
+        let path = "/users/list"
+        let params: [String : String?]? = query.get()
+        let method = "GET"
+        let scheme = APIValues.scheme
+        let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
+        
+        //let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/users/list", token: token, params: query.get())
 
         do {
             let response: UsersRequest = try await fetching(config: info)
@@ -364,7 +479,14 @@ class LeadManager: ObservableObject {
     func _statusList() async throws -> StatusModel {
         let query = LeadQuery()
 
-        let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/status/list", token: token, params: query.get())
+        let path = "/status/list"
+        let params: [String : String?]? = query.get()
+        let method = "GET"
+        let scheme = APIValues.scheme
+        let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
+        
+        
+        //let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/status/list", token: token, params: query.get())
 
         do {
             let response: StatusModel = try await fetching(config: info)
@@ -380,12 +502,13 @@ class LeadManager: ObservableObject {
         Task {
             do {
                 let statusResponse: StatusModel = try await _statusList()
+                try? await getSellers()
                 // prettyPrint(response.user)
-                let usersResponse = try await _userList()
+                //let usersResponse = try await _userList()
                 // prettyPrint(userData)
                 DispatchQueue.main.async {
                     self.statusList = statusResponse.list
-                    self.users = usersResponse.users
+                    //self.users = usersResponse.users
                 }
 
             } catch {
@@ -393,6 +516,8 @@ class LeadManager: ObservableObject {
             }
         }
     }
+    
+    
 
     func newFromLocation(location: CLLocationCoordinate2D) async throws -> LeadModel {
         let detail = try await GoogleApis.getPlaceDetailsByCoordinates(location: location)
@@ -441,9 +566,31 @@ class LeadManager: ObservableObject {
         marker.position = lead.position
         marker.userData = lead
         marker.isTappable = true
-
+        marker.groundAnchor = CGPoint(x: 0.5, y: 0.5)
+        
         marker.userData = lead
-
+        let customView = UIView(frame: CGRect(x: 0, y: 0, width: 42, height: 42))
+        let circleIconView = getUIImage(name: lead.status_id.name)
+        circleIconView.frame = CGRect(x: 5, y: 5, width: 30, height: 30)
+        
+        customView.layer.borderColor = UIColor.blue.cgColor
+        customView.layer.borderWidth = 0.0
+        
+        customView.addSubview(circleIconView)
+        
+        let circleLayer = CALayer()
+        circleLayer.bounds = circleIconView.bounds
+        circleLayer.position = CGPoint(x: circleIconView.bounds.midX + 5, y: circleIconView.bounds.midY + 5)
+        circleLayer.cornerRadius = circleIconView.bounds.width / 2
+        circleLayer.borderWidth = 0.0
+        circleLayer.borderColor = UIColor.orange.cgColor
+        
+        customView.layer.addSublayer(circleLayer)
+        
+        
+        marker.iconView = customView
+        
+        /*
         let circleIconView = getUIImage(name: lead.status_id.name)
         circleIconView.frame = CGRect(x: 120, y: 120, width: 30, height: 30)
 
@@ -458,6 +605,7 @@ class LeadManager: ObservableObject {
 
         marker.iconView = circleIconView
 
+         */
         return marker
     }
 
@@ -465,6 +613,15 @@ class LeadManager: ObservableObject {
         var markers: [GMSMarker] = []
         for lead in leads {
             markers.append(createMark(lead: lead))
+        }
+        return markers
+    }
+    
+    
+    func getMarkers2() -> [MarkerInfo] {
+        var markers: [MarkerInfo] = []
+        for lead in leads {
+            markers.append(MarkerInfo(userData: lead, position: lead.position, image: getUIImage(name: lead.status_id.name), borderColor: UIColor.black, borderWidth:0.0))
         }
         return markers
     }

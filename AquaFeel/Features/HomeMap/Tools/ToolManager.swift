@@ -9,6 +9,7 @@ import Foundation
 import GoogleMaps
 
 protocol MapTool {
+    func setMap(map: MapsProvider)
     func setMap(map: GMSMapView)
     func play()
     func stop()

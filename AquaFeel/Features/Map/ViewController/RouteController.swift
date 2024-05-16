@@ -24,8 +24,18 @@ struct RouteRequest {
     let origin: String
     let destination: String
     let waypoints: [String]
-    let mode: String = "driving"
-    let optimize = true
+    let mode: String
+    let avoid: [String]
+    let optimize: Bool
+
+    internal init(origin: String, destination: String, waypoints: [String], mode: String = "driving", avoid: [String] = [], optimize: Bool = true) {
+        self.origin = origin
+        self.destination = destination
+        self.waypoints = waypoints
+        self.mode = mode
+        self.avoid = avoid
+        self.optimize = optimize
+    }
 }
 
 class MapManager: ObservableObject {
@@ -87,15 +97,18 @@ class DirectionManager: ObservableObject {
     @Published var origin = ""
     @Published var destination = ""
     var waypoints: [String] = []
-    let apiKey = "AIzaSyA4Jqk-dU9axKNYJ6qjWcBcvQku0wTvBC4"
+    let apiKey = APIKeys.googleApiKey
 
     func search(request: RouteRequest, leads: [LeadModel]) async throws -> RouteResponse? {
         var params: [String: String] = [:]
 
         params["origin"] = request.origin
         params["destination"] = request.destination
+        params["mode"] = request.mode
+        params["key"] = apiKey
 
         var ways = request.waypoints.prefix(25).joined(separator: "|")
+        var avoid = request.avoid.joined(separator: "|")
 
         if ways != "" {
             if request.optimize {
@@ -104,10 +117,11 @@ class DirectionManager: ObservableObject {
             params["waypoints"] = ways
         }
 
-        params["mode"] = "driving"
-        params["key"] = apiKey
+        if avoid != "" {
+            params["avoid"] = avoid
+        }
 
-        let info = ApiConfig(method: "GET", host: "maps.googleapis.com", path: "/maps/api/directions/json", token: "", params: params)
+        let info = ApiConfig(scheme: "https", method: "GET", host: "maps.googleapis.com", path: "/maps/api/directions/json", token: "", params: params)
 
         do {
             var response: RouteResponse = try await fetching(config: info)
@@ -571,7 +585,7 @@ struct RouteMapsScreen: View {
                                 mapManager.lead?.makePhoneCall()
 
                             } label: {
-                                Image(systemName: "phone")
+                                Image(systemName: "phone.fill")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 20, height: 20)
@@ -586,7 +600,7 @@ struct RouteMapsScreen: View {
                             Button {
                                 mapManager.lead?.sendSMS()
                             } label: {
-                                Image(systemName: "message")
+                                Image(systemName: "message.fill")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 20, height: 20)
@@ -600,9 +614,14 @@ struct RouteMapsScreen: View {
                             .padding(10)
 
                             Button {
-                                mapManager.lead!.openGoogleMaps()
+                                if profile.mapApi == .appleMaps {
+                                    mapManager.lead!.openAppleMaps()
+                                } else {
+                                    mapManager.lead!.openGoogleMaps()
+                                }
+                                //mapManager.lead!.openGoogleMaps()
                             } label: {
-                                Image(systemName: "globe")
+                                Image(systemName: "location.fill")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 20, height: 20)

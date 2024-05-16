@@ -35,7 +35,7 @@ struct LoginScreen: View {
                     .font(.title3)
                     .padding()
 
-                if isLoading {
+                if isLoading && true {
                     ProgressView("Loading...")
 
                 } else {
