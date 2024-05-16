@@ -127,6 +127,7 @@
 		2BAEE8572B59D02900B0C16D /* TabA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAEE8562B59D02900B0C16D /* TabA.swift */; };
 		2BAEE8592B59D1AB00B0C16D /* TabB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAEE8582B59D1AB00B0C16D /* TabB.swift */; };
 		2BAEE85B2B59D1EE00B0C16D /* TabC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAEE85A2B59D1EE00B0C16D /* TabC.swift */; };
+		2BB3B5A22BF67CFF00AD9754 /* GeneralConstantsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB3B5A12BF67CFF00AD9754 /* GeneralConstantsModel.swift */; };
 		2BB966CE2B8BED73007E1442 /* PP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB966CD2B8BED73007E1442 /* PP.swift */; };
 		2BBCD9CD2BCF161200B8C282 /* AdminManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBCD9CC2BCF161200B8C282 /* AdminManager.swift */; };
 		2BBCD9D02BCF316C00B8C282 /* UsersTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBCD9CF2BCF316C00B8C282 /* UsersTool.swift */; };
@@ -298,6 +299,7 @@
 		2BAEE8562B59D02900B0C16D /* TabA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabA.swift; sourceTree = "<group>"; };
 		2BAEE8582B59D1AB00B0C16D /* TabB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabB.swift; sourceTree = "<group>"; };
 		2BAEE85A2B59D1EE00B0C16D /* TabC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabC.swift; sourceTree = "<group>"; };
+		2BB3B5A12BF67CFF00AD9754 /* GeneralConstantsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralConstantsModel.swift; sourceTree = "<group>"; };
 		2BB966CD2B8BED73007E1442 /* PP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PP.swift; sourceTree = "<group>"; };
 		2BBCD9CC2BCF161200B8C282 /* AdminManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminManager.swift; sourceTree = "<group>"; };
 		2BBCD9CF2BCF316C00B8C282 /* UsersTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersTool.swift; sourceTree = "<group>"; };
@@ -426,6 +428,7 @@
 			isa = PBXGroup;
 			children = (
 				2B204C6C2BEE7AE200928D05 /* GeneralConstants.swift */,
+				2BB3B5A12BF67CFF00AD9754 /* GeneralConstantsModel.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -1315,6 +1318,7 @@
 				2B8F1C772BF129340040EFD9 /* OfflineManager.swift in Sources */,
 				2B526FA32B7CFCDC0024A578 /* MainAppScreen.swift in Sources */,
 				2B29D7772BB8A03400E0AF5D /* HomeMapsModel.swift in Sources */,
+				2BB3B5A22BF67CFF00AD9754 /* GeneralConstantsModel.swift in Sources */,
 				2BCB1FD52BD80D45000EAA3A /* EmployeeListView.swift in Sources */,
 				2B9591382BF518290000C949 /* TestView1.swift in Sources */,
 				2B06D2E32B69749D00B401FB /* CustomTextView.swift in Sources */,
