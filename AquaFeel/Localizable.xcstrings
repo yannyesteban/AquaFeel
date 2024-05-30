@@ -54,11 +54,91 @@
     "0" : {
 
     },
+    "1 hour" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 hora"
+          }
+        }
+      }
+    },
     "1.0" : {
 
     },
+    "2 hours" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2 horas"
+          }
+        }
+      }
+    },
     "2.0" : {
 
+    },
+    "5 minutes" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5 Minutos"
+          }
+        }
+      }
+    },
+    "10 minutes" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "10minutos"
+          }
+        }
+      }
+    },
+    "20 minutes" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "20 minutos"
+          }
+        }
+      }
+    },
+    "30 minutes" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "30 minutos"
+          }
+        }
+      }
+    },
+    "45 minutes" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "45 minutos"
+          }
+        }
+      }
+    },
+    "90 minutes" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "90 minutos"
+          }
+        }
+      }
     },
     "Account" : {
       "localizations" : {
@@ -80,6 +160,29 @@
         }
       }
     },
+    "Activate Notification" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activar Notificación"
+          }
+        }
+      }
+    },
+    "Active" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activa"
+          }
+        }
+      }
+    },
+    "Active: %@" : {
+
+    },
     "Add" : {
       "localizations" : {
         "es-419" : {
@@ -96,6 +199,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Agregar Citas"
+          }
+        }
+      }
+    },
+    "Add Resource" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agregar Recurso"
+          }
+        }
+      }
+    },
+    "Add to favorites" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agregar a favorito"
           }
         }
       }
@@ -122,6 +245,26 @@
     },
     "Admin" : {
 
+    },
+    "Alarm Details" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De"
+          }
+        }
+      }
+    },
+    "Alarms" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarmas"
+          }
+        }
+      }
     },
     "All Time" : {
       "localizations" : {
@@ -199,6 +342,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Citas para Hoy"
+          }
+        }
+      }
+    },
+    "Appointment with: %@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Appointment with: %1$@ %2$@"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cita con: %1$@ %2$@"
           }
         }
       }
@@ -289,6 +448,26 @@
         }
       }
     },
+    "Are you sure you want to delete the notification?" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seguro de eliminar la notificación?"
+          }
+        }
+      }
+    },
+    "Are you sure you want to delete the resource?" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seguro de eliminar el Recurso?"
+          }
+        }
+      }
+    },
     "Are you sure you want to delete?" : {
       "localizations" : {
         "es-419" : {
@@ -312,8 +491,18 @@
         }
       }
     },
-    "Avoid" : {
+    "Avatar" : {
 
+    },
+    "Avoid" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Evitar"
+          }
+        }
+      }
     },
     "back" : {
       "localizations" : {
@@ -442,6 +631,16 @@
         }
       }
     },
+    "Choose from Library" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir de la librería"
+          }
+        }
+      }
+    },
     "City" : {
       "localizations" : {
         "es-419" : {
@@ -559,6 +758,16 @@
         }
       }
     },
+    "Created On: %@" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Creado En: %@"
+          }
+        }
+      }
+    },
     "Custom" : {
       "localizations" : {
         "es-419" : {
@@ -602,7 +811,6 @@
       }
     },
     "Date" : {
-      "extractionState" : "stale",
       "localizations" : {
         "es-419" : {
           "stringUnit" : {
@@ -652,6 +860,19 @@
         }
       }
     },
+    "Description" : {
+
+    },
+    "Description: %@" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descripción: %@"
+          }
+        }
+      }
+    },
     "Dismiss Me" : {
 
     },
@@ -664,6 +885,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Editar"
+          }
+        }
+      }
+    },
+    "Edit Alarm" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Editar Alarma"
           }
         }
       }
@@ -771,8 +1002,10 @@
     "Extra" : {
 
     },
+    "Failed to load PDF." : {
+
+    },
     "Favorites" : {
-      "extractionState" : "stale",
       "localizations" : {
         "es-419" : {
           "stringUnit" : {
@@ -836,7 +1069,25 @@
 
     },
     "From" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De"
+          }
+        }
+      }
+    },
+    "Good Morning" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buenos días"
+          }
+        }
+      }
     },
     "Google Maps" : {
       "localizations" : {
@@ -938,6 +1189,29 @@
     "Ingrese texto." : {
 
     },
+    "Interval" : {
+
+    },
+    "Interval: %lld" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intérvalo: %lld"
+          }
+        }
+      }
+    },
+    "invalid file" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "archivo inválido"
+          }
+        }
+      }
+    },
     "Language" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1012,6 +1286,16 @@
         }
       }
     },
+    "Lead for Today" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cita para Hoy"
+          }
+        }
+      }
+    },
     "Leads" : {
       "localizations" : {
         "es-419" : {
@@ -1055,6 +1339,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Claro"
+          }
+        }
+      }
+    },
+    "Loading PDF..." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cargando PDF..."
           }
         }
       }
@@ -1122,6 +1416,9 @@
     "Map Api" : {
 
     },
+    "Message" : {
+
+    },
     "Modal" : {
 
     },
@@ -1144,6 +1441,16 @@
         }
       }
     },
+    "Name" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre"
+          }
+        }
+      }
+    },
     "Name: %@ %@" : {
       "localizations" : {
         "en" : {
@@ -1153,6 +1460,9 @@
           }
         }
       }
+    },
+    "New Alarm" : {
+
     },
     "New Password" : {
       "localizations" : {
@@ -1229,6 +1539,29 @@
     },
     "Note: %@" : {
 
+    },
+    "Notification is active" : {
+
+    },
+    "Notification is inactive" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notificación está Inactiva"
+          }
+        }
+      }
+    },
+    "Notifications" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notificaciones"
+          }
+        }
+      }
     },
     "Obteniendo ubicación..." : {
 
@@ -1457,7 +1790,14 @@
       }
     },
     "record updated sucessfully" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "registro actualizado correctamente"
+          }
+        }
+      }
     },
     "Red" : {
 
@@ -1468,6 +1808,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Registrar"
+          }
+        }
+      }
+    },
+    "Repeats" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Repetir"
           }
         }
       }
@@ -1492,6 +1842,46 @@
         }
       }
     },
+    "Resource Details" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detalle"
+          }
+        }
+      }
+    },
+    "Resource Type" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tipo de Recurso"
+          }
+        }
+      }
+    },
+    "Resources" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recursos"
+          }
+        }
+      }
+    },
+    "Resources Creator" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recursos"
+          }
+        }
+      }
+    },
     "RoadMap" : {
 
     },
@@ -1506,7 +1896,14 @@
       }
     },
     "Role:" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rol:"
+          }
+        }
+      }
     },
     "Role: %@" : {
       "localizations" : {
@@ -1682,6 +2079,26 @@
         }
       }
     },
+    "Select an image" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seleccione una Imagen"
+          }
+        }
+      }
+    },
+    "Select File" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seleccione un Archivo"
+          }
+        }
+      }
+    },
     "Select Status" : {
       "localizations" : {
         "es-419" : {
@@ -1714,6 +2131,16 @@
     },
     "Selected Detent" : {
 
+    },
+    "Selected File: %@" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archivo Seleccionado: %@"
+          }
+        }
+      }
     },
     "Send SMS" : {
       "extractionState" : "stale",
@@ -1885,6 +2312,9 @@
         }
       }
     },
+    "Take Photo" : {
+
+    },
     "Texto ingresado: %@" : {
 
     },
@@ -1927,6 +2357,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Este Año"
+          }
+        }
+      }
+    },
+    "Time" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hora"
+          }
+        }
+      }
+    },
+    "Time Before" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiempo Antes"
           }
         }
       }
@@ -1987,6 +2437,19 @@
         }
       }
     },
+    "Type" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tipo"
+          }
+        }
+      }
+    },
+    "Type: %@" : {
+
+    },
     "Ubicación actual: Latitud %lf, Longitud %lf" : {
       "localizations" : {
         "en" : {
@@ -2007,6 +2470,9 @@
         }
       }
     },
+    "Unit: %@" : {
+
+    },
     "Update Profile" : {
       "localizations" : {
         "es-419" : {
@@ -2023,6 +2489,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Se actualizó el:"
+          }
+        }
+      }
+    },
+    "Updated On: %@" : {
+
+    },
+    "Upload Image" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Subir Imagen"
+          }
+        }
+      }
+    },
+    "Use Calendar App" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usar Calendario"
           }
         }
       }

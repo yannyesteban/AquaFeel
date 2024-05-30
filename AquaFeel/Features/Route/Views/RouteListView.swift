@@ -585,8 +585,9 @@ struct RouteView: View {
                 // ToolbarItemGroup(placement: .automatic){
 
                 NavigationLink {
-                    RouteMapsScreen(profile: profile, routeId: routeManager.route._id)
-                    //RouteAppleMapScreen(profile: profile, routeId: routeManager.route._id, updated: .constant(false), leadManager: LeadManager())
+                    //RouteMapsScreen(profile: profile, routeId: routeManager.route._id)
+                    /*RouteAppleMapScreen(profile: profile, routeId: routeManager.route._id, updated: .constant(false), leadManager: LeadManager())*/
+                    RouteMapScreen(profile: profile, routeId: routeManager.route._id, updated: .constant(false), leadManager: LeadManager())
                 } label: {
                     Image(systemName: "car.fill")
                 }

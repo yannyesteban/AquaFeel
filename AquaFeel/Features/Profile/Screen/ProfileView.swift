@@ -16,11 +16,24 @@ struct ProfileView: View {
     @State var showErrorMessage = false
     @State var errorMessage = ""
 
+    @State var showingImagePicker = false
+
+    @State private var selectedImage: UIImage?
+
     var body: some View {
         NavigationStack {
             Form {
-                AvatarView(imageURL: URL(string: "avatar") ?? URL(string: "defaultAvatarURL")!)
-                    .padding()
+                Section("Avatar") {
+                    HStack {
+                        AvatarView(imageURL: $loginManager.avatar)
+                            .padding()
+
+                        Button("Choose from Library") {
+                            showingImagePicker.toggle()
+                        }
+                        .padding(0)
+                    }
+                }
 
                 Text(loginManager.info.email).foregroundStyle(.teal)
                 Text(loginManager.info.role).foregroundStyle(.teal)
@@ -51,7 +64,7 @@ struct ProfileView: View {
 
                 Section {
                     NavigationLink {
-                        //PassView()
+                        // PassView()
                         PassEdit(loginManager: loginManager, completed: .constant(false))
                             .navigationTitle("Change Password")
                     } label: {
@@ -66,6 +79,14 @@ struct ProfileView: View {
             .navigationTitle("Update Profile")
             .alert(isPresented: $showErrorMessage) {
                 Alert(title: Text("Error"), message: Text(errorMessage), dismissButton: .default(Text("OK")))
+            }
+            .sheet(isPresented: $showingImagePicker) {
+                // AvatarPicker(selectedImage: $selectedImage, sourceType: .photoLibrary)
+
+                AvatarPicker(selectedImage: $selectedImage, sourceType: .photoLibrary) { image in
+
+                    loginManager.uploadAvatar(image: image)
+                }
             }
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {

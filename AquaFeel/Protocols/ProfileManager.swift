@@ -31,6 +31,7 @@ struct Profile: Codable {
     let firstName: String
     let lastName: String
     let role: String
+    let avatar: String?
 
     enum CodingKeys: String, CodingKey {
         case id = "_id"
@@ -38,6 +39,7 @@ struct Profile: Codable {
         case firstName
         case lastName
         case role
+        case avatar
     }
 }
 
@@ -73,6 +75,7 @@ class ProfileManager: LoginProtocol, ObservableObject {
     @Published var token: String = ""
     @Published var role: String = "" // ADMIN   - SELLER"
     @Published var id: String = ""
+    @Published var avatar: String = ""
 
     @Published var info: User = User()
 
@@ -86,6 +89,11 @@ class ProfileManager: LoginProtocol, ObservableObject {
     @Published var mapApi = AppMapApi.googleMaps
     @Published var offline = false
     @Published var playBackground = false
+
+    @Published var notifications = false
+    @Published var timeBefore = 60
+    @Published var useCalendar = false
+    
 
     var store: UserData = UserData()
     var saveAction: (Bool) -> Void = { _ in
@@ -105,13 +113,12 @@ class ProfileManager: LoginProtocol, ObservableObject {
             password: pass
         )
 
-        
         let path = "/auth/login"
-        let params: [String : String?]? = nil
+        let params: [String: String?]? = nil
         let method = "POST"
         let scheme = APIValues.scheme
         let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
-       // let info = ApiConfig(method: "POST", host: "api.aquafeelvirginia.com", path: "/auth/login", token: token, params: nil)
+        // let info = ApiConfig(method: "POST", host: "api.aquafeelvirginia.com", path: "/auth/login", token: token, params: nil)
 
         do {
             let response: LoginResponse = try await fetching(body: body, config: info)
@@ -128,11 +135,11 @@ class ProfileManager: LoginProtocol, ObservableObject {
             .add(.id, id)
 
         let path = "/users/details"
-        let params: [String : String?]? = query.get()
+        let params: [String: String?]? = query.get()
         let method = "GET"
         let scheme = APIValues.scheme
         let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
-        //let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/users/details", token: token, params: query.get())
+        // let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/users/details", token: token, params: query.get())
 
         do {
             let response: User = try await fetching(config: info)
@@ -174,18 +181,15 @@ class ProfileManager: LoginProtocol, ObservableObject {
                     }
 
                     if let avatar = userData.avatar {
-                        
-                        
                         var components = URLComponents()
                         components.scheme = APIValues.scheme
                         components.host = APIValues.host
                         components.path = "/uploads/" + avatar
                         components.port = Int(APIValues.port)
-                                               
-                        
+                        self.avatar = components.url?.absoluteString ?? ""
                         self.info.avatar = components.url?.absoluteString ?? ""
-                        
-                        //print(self.info.avatar, components.url?.absoluteString)
+
+                        // print(self.info.avatar, components.url?.absoluteString)
                     }
                 }
 
@@ -222,6 +226,12 @@ class ProfileManager: LoginProtocol, ObservableObject {
                 self.mapApi = self.store.mapApi
                 self.offline = self.store.offline
                 self.playBackground = self.store.playBackground
+
+                self.notifications = self.store.notifications
+                self.timeBefore = self.store.timeBefore
+                self.useCalendar = self.store.useCalendar
+                self.avatar = self.store.info.avatar ?? ""
+                
             }
 
         } catch {
@@ -238,12 +248,16 @@ class ProfileManager: LoginProtocol, ObservableObject {
             store.info = info
             store.id = id
             store.token = token
-            
+
             store.schemeMode = schemeMode
             store.language = language
             store.mapApi = mapApi
             store.offline = offline
             store.playBackground = playBackground
+
+            store.notifications = notifications
+            store.timeBefore = timeBefore
+            store.useCalendar = useCalendar
 
             try await saveFile(userData: store, name: "LoginStore1.data")
         } catch {
@@ -256,15 +270,13 @@ class ProfileManager: LoginProtocol, ObservableObject {
             self.waiting = true
         }
 
-        
         let path = "/profile/edit"
-        let params: [String : String?]? = nil
+        let params: [String: String?]? = nil
         let method = "POST"
         let scheme = APIValues.scheme
         let apiInfo = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
-        
-        
-        //let apiInfo = ApiConfig(method: "POST", host: "api.aquafeelvirginia.com", path: "/profile/edit", token: token, params: nil)
+
+        // let apiInfo = ApiConfig(method: "POST", host: "api.aquafeelvirginia.com", path: "/profile/edit", token: token, params: nil)
 
         // let info = ApiConfig(scheme: "http", method: method, host: "127.0.0.1", path: path, token: token, params: nil, port : "4000")
 
@@ -285,15 +297,14 @@ class ProfileManager: LoginProtocol, ObservableObject {
 
     func setLocation(position: CLLocationCoordinate2D) async throws {
         let body = ProfileLocation(id: userId, latitude: String(position.latitude), longitude: String(position.longitude))
-        
+
         let path = "/profile/set-location"
-        let params: [String : String?]? = nil
+        let params: [String: String?]? = nil
         let method = "PUT"
         let scheme = APIValues.scheme
         let apiInfo = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
-        
-        
-        //let apiInfo = ApiConfig(method: "PUT", host: "api.aquafeelvirginia.com", path: "/profile/set-location", token: token, params: nil)
+
+        // let apiInfo = ApiConfig(method: "PUT", host: "api.aquafeelvirginia.com", path: "/profile/set-location", token: token, params: nil)
 
         do {
             let response: ProfileLocationResponse = try await fetching(body: body, config: apiInfo)
@@ -318,14 +329,13 @@ class ProfileManager: LoginProtocol, ObservableObject {
         }
         let body = PasswordModel(email: email, oldPassword: oldPassword, newPassword: newPassword)
 
-        
         let path = "/auth/changePassword"
-        let params: [String : String?]? = nil
+        let params: [String: String?]? = nil
         let method = "POST"
         let scheme = APIValues.scheme
         let apiInfo = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
-        
-        //let apiInfo = ApiConfig(method: "POST", host: "api.aquafeelvirginia.com", path: "/auth/changePassword", token: token, params: nil)
+
+        // let apiInfo = ApiConfig(method: "POST", host: "api.aquafeelvirginia.com", path: "/auth/changePassword", token: token, params: nil)
 
         // let info = ApiConfig(scheme: "http", method: method, host: "127.0.0.1", path: path, token: token, params: nil, port : "4000")
 
@@ -355,6 +365,63 @@ class ProfileManager: LoginProtocol, ObservableObject {
         }
 
         return ""
+    }
+    
+    func uploadAvatar(image: UIImage) {
+        guard let url = URL(string: "\(APIValues.scheme)://\(APIValues.host):\(APIValues.port)/profile/upload-avatar") else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        
+        let boundary = UUID().uuidString
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        var data = Data()
+        data.append("--\(boundary)\r\n".data(using: .utf8)!)
+        data.append("Content-Disposition: form-data; name=\"file\"; filename=\"profile.jpg\"\r\n".data(using: .utf8)!)
+        data.append("Content-Type: image/jpeg\r\n\r\n".data(using: .utf8)!)
+        data.append(image.jpegData(compressionQuality: 0.8)!)
+        data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
+        
+        URLSession.shared.uploadTask(with: request, from: data) { responseData, response, error in
+            if let error = error {
+                print("Error uploading image: \(error)")
+                return
+            }
+            
+            guard let responseData = responseData else {
+                print("No data received in response")
+                return
+            }
+            
+            let decoder = JSONDecoder()
+            do {
+                let object = try decoder.decode(ProfileResponse.self, from: responseData)
+                if let avatar = object.profile.avatar {
+                    DispatchQueue.main.async {
+                        var components = URLComponents()
+                        components.scheme = APIValues.scheme
+                        components.host = APIValues.host
+                        components.path = "/uploads/" + avatar
+                        components.port = Int(APIValues.port)
+                        
+                        self.info.avatar = components.url?.absoluteString ?? ""
+                        self.avatar = components.url?.absoluteString ?? ""
+                       
+                    }
+                    
+                }
+              
+            }catch {
+                print(error.localizedDescription)
+            }
+            
+            
+            
+            if let jsonResponse = try? JSONSerialization.jsonObject(with: responseData, options: []) {
+                print("Response JSON: \(jsonResponse)")
+            }
+        }.resume()
     }
 }
 

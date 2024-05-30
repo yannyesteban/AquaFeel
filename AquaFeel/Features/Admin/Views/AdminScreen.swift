@@ -74,6 +74,13 @@ struct AdminScreen: View {
                 } header: {
                     Label("Reports", systemImage: "list.bullet")
                 }
+                
+                
+                NavigationLink {
+                    ResourceEditList(profile: profile)
+                } label: {
+                    Label("Resources Creator", systemImage: "doc.richtext.fill")
+                }
             }
             .navigationTitle("Admin")
         }

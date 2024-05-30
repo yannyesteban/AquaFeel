@@ -19,7 +19,7 @@ func date30DaysBefore() -> Date? {
     let currentDate = Date()
 
     // Create a Gregorian calendar
-    var calendar = Calendar(identifier: .gregorian)
+    let calendar = Calendar(identifier: .gregorian)
 
     // Get the date 30 days before the current date
     if let dateMinus30Days = calendar.date(byAdding: .day, value: -30, to: currentDate) {
@@ -75,7 +75,7 @@ class AppointmentManager: ObservableObject {
 
         if filterMode == .today {
             _ = q.add(.quickDate, "custom")
-            
+
                 .add(.fromDate, formatDateToString(Date()))
                 .add(.toDate, formatDateToString(Date()))
         } else if filterMode == .last30 {
@@ -83,17 +83,19 @@ class AppointmentManager: ObservableObject {
 
                 .add(.fromDate, formatDateToString(date30DaysBefore() ?? Date()))
                 .add(.toDate, formatDateToString(Date()))
+        } else if filterMode == .favorite {
+            _ = q.add(.favorite, "true")
+                .add(.field, "")
         }
 
-        let path = "/leads/get"
-        
-        
-        let params: [String : String?]? = q.get()
+        let path = "/leads/get2"
+
+        let params: [String: String?]? = q.get()
         let method = "GET"
         let scheme = APIValues.scheme
         let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: "", params: params, port: APIValues.port)
-        
-        //let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: path, token: "", params: q.get())
+
+        // let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: path, token: "", params: q.get())
 
         do {
             let response: LeadsRequest = try await fetching(config: info)
@@ -103,7 +105,6 @@ class AppointmentManager: ObservableObject {
             }
 
         } catch {
-           
             throw error
         }
     }
@@ -123,14 +124,13 @@ class AppointmentManager: ObservableObject {
         if showLeads {
             path = "/leads/get"
         }
-        
-        
-        let params: [String : String?]? = q.get()
+
+        let params: [String: String?]? = q.get()
         let method = "GET"
         let scheme = APIValues.scheme
         let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: "", params: params, port: APIValues.port)
-        
-        //let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: path, token: "", params: q.get())
+
+        // let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: path, token: "", params: q.get())
 
         do {
             let response: LeadsRequest = try await fetching(config: info)
@@ -140,7 +140,6 @@ class AppointmentManager: ObservableObject {
             }
 
         } catch {
-            
             throw error
         }
     }
@@ -149,12 +148,10 @@ class AppointmentManager: ObservableObject {
         let calendar = Calendar.current
         let components = calendar.dateComponents([.year, .month], from: myDate)
         guard let firstDateOfMonth = calendar.date(from: components) else {
-            
             return nil
         }
 
         guard let lastDateOfMonth = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: firstDateOfMonth) else {
-           
             return nil
         }
 
@@ -166,14 +163,13 @@ class AppointmentManager: ObservableObject {
         let dateStart = dateFormatter.string(from: firstDateOfMonth)
         let dateEnd = dateFormatter.string(from: lastDateAdjusted)
 
-        
         let path = "/leads/get-by-month"
-        let params: [String : String?]? = nil
+        let params: [String: String?]? = nil
         let method = "POST"
         let scheme = APIValues.scheme
         let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: "", params: params, port: APIValues.port)
-        
-        //let info = ApiConfig(method: "POST", host: "api.aquafeelvirginia.com", path: "/leads/get-by-month", token: "", params: nil)
+
+        // let info = ApiConfig(method: "POST", host: "api.aquafeelvirginia.com", path: "/leads/get-by-month", token: "", params: nil)
         let body = AppointmentRequest(user_id: userId, date_start: dateStart, date_end: dateEnd)
         do {
             let response: LeadsRequest = try await fetching(body: body, config: info)
@@ -182,7 +178,6 @@ class AppointmentManager: ObservableObject {
             return groups
 
         } catch {
-            
             throw error
         }
     }
@@ -197,12 +192,10 @@ class AppointmentManager: ObservableObject {
         let calendar = Calendar.current
         let components = calendar.dateComponents([.year, .month], from: myDate)
         guard let firstDateOfMonth = calendar.date(from: components) else {
-            
             return nil
         }
 
         guard let lastDateOfMonth = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: firstDateOfMonth) else {
-            
             return nil
         }
 
@@ -217,7 +210,7 @@ class AppointmentManager: ObservableObject {
         let q = LeadQuery()
             .add(.userId, userId)
             .add(.field, "appointment_date")
-            //.add(.statusId, "613bb4e0d6113e00169fefa9")
+            // .add(.statusId, "613bb4e0d6113e00169fefa9")
             .add(.quickDate, "custom")
 
             .add(.fromDate, dateStart)
@@ -228,15 +221,13 @@ class AppointmentManager: ObservableObject {
             .add(.limit, "1000")
         // .add(.searchValue, "jose")
 
-        
         let path = "/leads/get"
-        let params: [String : String?]? = q.get()
+        let params: [String: String?]? = q.get()
         let method = "GET"
         let scheme = APIValues.scheme
         let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: "", params: params, port: APIValues.port)
-        
-        
-        //let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/leads/get", token: "", params: q.get())
+
+        // let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/leads/get", token: "", params: q.get())
 
         do {
             let response: LeadsRequest = try await fetching(config: info)
@@ -245,7 +236,6 @@ class AppointmentManager: ObservableObject {
             return groups
 
         } catch {
-            
             throw error
         }
     }
@@ -271,7 +261,7 @@ class AppointmentManager: ObservableObject {
                 }
             }
         }
-        
+
         return groupedLeads
     }
 

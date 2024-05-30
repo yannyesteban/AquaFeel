@@ -40,7 +40,7 @@ struct UserDetailView: View {
                 if let avatar = user.avatar {
                     HStack(alignment: .center) {
                         Spacer()
-                        AvatarView(imageURL: URL(string: avatarUrl) ?? URL(string: "defaultAvatarURL")!, size: 200)
+                        //AvatarView(imageURL: URL(string: avatarUrl) ?? URL(string: "defaultAvatarURL")!, size: 200)
                         Spacer()
                     }
                 }

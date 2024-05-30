@@ -6,7 +6,9 @@
 //
 
 import CoreLocation
+import EventKit
 import SwiftUI
+import UserNotifications
 
 extension Date {
     func formattedDate() -> String {
@@ -56,10 +58,10 @@ struct HomeScreen: View {
     @State private var selectedIdentifier: Calendar.Identifier = .gregorian
     @State private var lastSelectedDate: Date?
     @State private var selectedDate2: Date?
-    //@State private var myTest = "0"
+    // @State private var myTest = "0"
     @State private var updated = false
     @State private var updated2 = false
-    
+
     @StateObject var traceManager = TraceManager()
 
     @State private var lastPick: String? = nil
@@ -68,7 +70,7 @@ struct HomeScreen: View {
             Form {
                 // Text("Role: \(profile.role)")
                 // Text("User: \(profile.userId)")
-                
+
                 HStack {
                     Text("Appointments")
 
@@ -102,15 +104,29 @@ struct HomeScreen: View {
                     NavigationLink {
                         AppointmentList(profile: profile, updated: $updated, filterMode: .today, userId: profile.info._id)
                     } label: {
-                        DayIconView(date: Date())
+                        /* DayIconView(date: Date())
+                         Text("Appointment Set Today") */
 
-                        Text("Appointment Set Today")
+                        Label("Appointment Set Today", systemImage: "clock")
                     }
 
                     NavigationLink {
                         AppointmentList(profile: profile, updated: $updated, filterMode: .last30, userId: profile.info._id)
                     } label: {
                         Label("Appointment Set Past 30 Days", systemImage: "calendar")
+                    }
+                    NavigationLink {
+                        AppointmentList(profile: profile, updated: $updated, filterMode: .favorite, userId: profile.info._id)
+                    } label: {
+                        Label("Favorites", systemImage: "heart")
+                    }
+                    
+                    
+                    
+                    NavigationLink {
+                        ResourceListView(profile: profile)
+                    } label: {
+                        Label("Resources", systemImage: "doc.richtext.fill")
                     }
                 }
 
@@ -139,10 +155,9 @@ struct HomeScreen: View {
                  }
                   */
             }
-            
-            //.navigationTitle("Home")
-          
-            
+
+            // .navigationTitle("Home")
+
             .sheet(isPresented: $showOption) {
                 SettingView(loginManager: profile)
                 // .environmentObject(store)
@@ -178,24 +193,25 @@ struct HomeScreen: View {
                         Image(systemName: "gear")
                     }
                     /*
-                    NavigationLink {
-                        CreateLead(profile: profile, lead: $lead, mode: 1, manager: manager, updated: $updated) { _ in
-                        }
-                        
-                    } label: {
-                        Image(systemName: "plus")
-                    }
-                     */
+                     NavigationLink {
+                         CreateLead(profile: profile, lead: $lead, mode: 1, manager: manager, updated: $updated) { _ in
+                         }
+
+                     } label: {
+                         Image(systemName: "plus")
+                     }
+                      */
                 }
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     // ToolbarItem(placement: .automatic) {
-                   /*
-                    Button {
-                        showOption = true
-                    } label: {
-                        Image(systemName: "gear")
-                    }
-                    */
+                    /*
+                     Button {
+                         showOption = true
+                     } label: {
+                         Image(systemName: "gear")
+                     }
+                     */
+
                     NavigationLink {
                         CreateLead(profile: profile, lead: $lead, mode: 1, manager: manager, updated: $updated) { _ in
                         }
@@ -228,32 +244,30 @@ struct HomeScreen: View {
                 }
             }
             /*
-            NavigationLink {
-                AppleMapScreen(profile: profile, updated: $updated, leadManager: manager, location: startLocation)
-                
-                
-                // .edgesIgnoringSafeArea(.all)
-            } label: {
-                VStack {
-                    Image(systemName: "map.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 30, height: 30)
-                        .foregroundColor(.blue)
-                    
-                    Text("Map")
-                        .font(.caption)
-                        .foregroundColor(.blue)
-                }
-            }
-            Spacer()
-             */
+             NavigationLink {
+                 AppleMapScreen(profile: profile, updated: $updated, leadManager: manager, location: startLocation)
+
+                 // .edgesIgnoringSafeArea(.all)
+             } label: {
+                 VStack {
+                     Image(systemName: "map.fill")
+                         .resizable()
+                         .aspectRatio(contentMode: .fit)
+                         .frame(width: 30, height: 30)
+                         .foregroundColor(.blue)
+
+                     Text("Map")
+                         .font(.caption)
+                         .foregroundColor(.blue)
+                 }
+             }
+             Spacer()
+              */
 
             HStack {
                 NavigationLink {
                     HomeMap(profile: profile, updated: $updated, leadManager: manager, location: startLocation)
-                       
-                        
+
                     // .edgesIgnoringSafeArea(.all)
                 } label: {
                     VStack {
@@ -298,9 +312,7 @@ struct HomeScreen: View {
                 Spacer()
 
                 NavigationLink {
-                    
                     LeadListScreen(profile: profile, updated: $updated)
-                        
 
                 } label: {
                     VStack {
@@ -315,13 +327,13 @@ struct HomeScreen: View {
                             .foregroundColor(.blue)
                     }
                 }
-                
+
                 if profile.role == "ADMIN" {
                     Spacer()
-                    
+
                     NavigationLink {
                         AdminScreen(profile: profile)
-                        
+
                     } label: {
                         VStack {
                             Image(systemName: "shield")
@@ -329,7 +341,7 @@ struct HomeScreen: View {
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 30, height: 30)
                                 .foregroundColor(.blue)
-                            
+
                             Text("Admin")
                                 .font(.caption)
                                 .foregroundColor(.blue)
@@ -337,10 +349,10 @@ struct HomeScreen: View {
                     }
                 } else {
                     Spacer()
-                    
+
                     NavigationLink {
                         AdminScreen2(profile: profile)
-                        
+
                     } label: {
                         VStack {
                             Image(systemName: "chart.pie.fill")
@@ -348,20 +360,28 @@ struct HomeScreen: View {
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 30, height: 30)
                                 .foregroundColor(.blue)
-                            
+
                             Text("Stats")
                                 .font(.caption)
                                 .foregroundColor(.blue)
                         }
                     }
                 }
-                
-                
             }
             .padding(.horizontal, 50)
         }
         .environmentObject(manager)
         .onAppear {
+            Task {
+                // await NotificationManager.initialize(userId: profile.userId)
+                if profile.notifications {
+                    await NotificationManager.start(userId: profile.userId, timeBefore: profile.timeBefore)
+                }
+
+                if profile.useCalendar {
+                    await CalendarManager.start(userId: profile.userId)
+                }
+            }
             placeManager.setLocation()
 
             DispatchQueue.main.async {
@@ -373,7 +393,7 @@ struct HomeScreen: View {
 
                 manager.userId = profile.userId
                 manager.role = profile.role
-                
+
                 if manager.leads.isEmpty {
                     manager.runLoad()
                 }
@@ -383,7 +403,6 @@ struct HomeScreen: View {
         }
         .onChange(of: updated) { value in
             if value {
-               
                 manager.search()
             }
             updated = false
@@ -395,17 +414,46 @@ struct HomeScreen: View {
                 self.startLocation = location
             }
         }
-        
+
         .onReceive(traceManager.$position) { position in
-            
+
             if let position {
                 Task {
                     try? await profile.setLocation(position: position)
                 }
-               
             }
-            
-            
+        }
+    }
+
+    func scheduleNotification() {
+        let content = UNMutableNotificationContent()
+        content.title = "Recordatorio"
+        content.body = "Esta es una notificación de prueba."
+        content.sound = UNNotificationSound.default
+
+        // Configurar el trigger de la notificación
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: true)
+
+        // Crear la solicitud
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+
+        // Agregar la solicitud al centro de notificaciones
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                print("Error al programar la notificación: \(error.localizedDescription)")
+            } else {
+                print("Notificación programada")
+            }
+        }
+
+        let center = UNUserNotificationCenter.current()
+        Task {
+            do {
+                // Set the badge count to 3.
+                try await center.setBadgeCount(3)
+            } catch {
+                // Handle any errors.
+            }
         }
     }
 }

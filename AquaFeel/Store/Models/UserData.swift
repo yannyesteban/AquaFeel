@@ -46,6 +46,10 @@ struct UserData:  Codable, SimplyInitializable {
     var mapApi = AppMapApi.googleMaps
     var offline = false
     var playBackground = false
+    var notifications = false
+    var timeBefore = 60
+    var useCalendar = false
+    
     
     init() {
             // Llama al inicializador principal con un valor predeterminado

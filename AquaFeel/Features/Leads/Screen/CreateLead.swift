@@ -139,7 +139,7 @@ struct CreateLead: View {
                     Section("Note") {
                         TextField("Write a note...", text: $lead.note, axis: .vertical)
                             .lineLimit(2 ... 4)
-                        /* HStack {
+                         HStack {
                              Text("Add to favorites")
                              Spacer()
                              Button(action: {
@@ -149,7 +149,7 @@ struct CreateLead: View {
                                      .font(.system(size: 20, weight: .light))
                                      .foregroundColor(lead.favorite ? .red : .gray)
                              }
-                         } */
+                         }
                     }
 
                     /*

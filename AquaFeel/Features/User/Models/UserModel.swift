@@ -241,7 +241,7 @@ func _fetching<T: Decodable>(body: Data?, config: ApiConfig) async throws -> T {
     // URL of the API endpoint for updates
     print("config.scheme ... ", config.scheme)
     var components = URLComponents()
-    components.scheme = config.scheme ?? "http"
+    components.scheme = config.scheme
     components.host = config.host
     components.path = config.path
     if let port = config.port {
@@ -272,9 +272,9 @@ func _fetching<T: Decodable>(body: Data?, config: ApiConfig) async throws -> T {
     
     print("Url begin: \(url)\n")
     let (data, response) = try await URLSession.shared.data(for: request)
-    print("Url end: \(url)\n")
-    //print(String(decoding: data, as: UTF8.self))
     
+    //print(String(decoding: data, as: UTF8.self))
+    print("Url end: \(url)\n")
     let decoder = JSONDecoder()
     
     let object = try decoder.decode(T.self, from: data)

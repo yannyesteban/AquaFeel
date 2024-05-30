@@ -106,6 +106,7 @@ enum LeadAllQuery: String, CaseIterable {
     case today
     case lastMonth = "last_month"
     case ownerId = "owner_id"
+    case favorite
 }
 
 enum ModeSave: String {

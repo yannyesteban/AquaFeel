@@ -11,6 +11,7 @@ enum LeadModeFilter {
     case all
     case today
     case last30
+    case favorite
 }
 
 func formattedTime(from text: String) -> String {
