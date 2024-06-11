@@ -76,8 +76,8 @@ class AppointmentManager: ObservableObject {
         if filterMode == .today {
             _ = q.add(.quickDate, "custom")
 
-                .add(.fromDate, formatDateToString(Date()))
-                .add(.toDate, formatDateToString(Date()))
+                .add(.fromDate, formatDateToString2(getFromDate()))
+                .add(.toDate, formatDateToString2(getToDate()))
         } else if filterMode == .last30 {
             _ = q.add(.quickDate, "custom")
 
@@ -107,6 +107,46 @@ class AppointmentManager: ObservableObject {
         } catch {
             throw error
         }
+    }
+
+    func getFromDate() -> Date {
+        let currentDate = Date()
+
+        // Crear un calendario gregoriano
+        let calendar = Calendar.current
+
+        // Obtener los componentes de la fecha actual
+        var dateComponents = calendar.dateComponents([.year, .month, .day], from: currentDate)
+
+        // Establecer la hora a las 12:00
+        dateComponents.hour = 0
+        dateComponents.minute = 0
+        dateComponents.second = 0
+
+        // Crear la fecha de inicio con la hora establecida a las 12:00
+        guard let fromDate = calendar.date(from: dateComponents) else {
+            fatalError("No se pudo crear la fecha de inicio")
+        }
+
+        return fromDate
+    }
+
+    func getToDate() -> Date {
+        let currentDate = Date()
+
+        let calendar = Calendar(identifier: .gregorian)
+
+        var dateComponents = calendar.dateComponents([.year, .month, .day], from: currentDate)
+
+        dateComponents.hour = 23
+        dateComponents.minute = 59
+        dateComponents.second = 59
+
+        guard let toDate = calendar.date(from: dateComponents) else {
+            fatalError("No se pudo crear la fecha de inicio")
+        }
+
+        return toDate
     }
 
     func listOLD() async throws {
@@ -188,6 +228,13 @@ class AppointmentManager: ObservableObject {
         return dateFormatter.string(from: date)
     }
 
+    func formatDateToString2(_ date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // Para asegurar que el formato sea en inglés (USA) y no afecte a las conversiones
+        return dateFormatter.string(from: date)
+    }
+
     func listApp(myDate: Date) async throws -> [String: [LeadModel]]? {
         let calendar = Calendar.current
         let components = calendar.dateComponents([.year, .month], from: myDate)
@@ -204,8 +251,8 @@ class AppointmentManager: ObservableObject {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
 
-        let dateStart = dateFormatter.string(from: firstDateOfMonth)
-        let dateEnd = dateFormatter.string(from: lastDateAdjusted)
+        let dateStart = formatDateToString2(firstDateOfMonth) // dateFormatter.string(from: firstDateOfMonth)
+        let dateEnd = formatDateToString2(lastDateAdjusted) // dateFormatter.string(from: lastDateAdjusted)
 
         let q = LeadQuery()
             .add(.userId, userId)
@@ -247,8 +294,14 @@ class AppointmentManager: ObservableObject {
 
         dateFormatter.dateFormat = "yyyy-MM-dd"
 
-        let isoDateFormatter = DateFormatter()
-        isoDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        // var isoDateFormatter = DateFormatter()
+        // isoDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+
+        // isoDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        // isoDateFormatter.locale = Locale(identifier: "en_US_POSIX") // Para asegurar que el formato sea en inglés (USA) y no afecte a las conversiones
+
+        let isoDateFormatter = ISO8601DateFormatter()
+        isoDateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
 
         for lead in leads {
             if let date = isoDateFormatter.date(from: lead.appointment_date) {

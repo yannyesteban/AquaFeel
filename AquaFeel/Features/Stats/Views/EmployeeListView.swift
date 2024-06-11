@@ -57,7 +57,7 @@ struct EmployeeListView: View {
                     statsManager.setProfile(profile: profile)
 
                     try? await statsManager.load()
-
+                    //try? await statsManager.load1()
                     loaded = true
                 }
             }

@@ -27,6 +27,7 @@ struct StatsItemInfo: Identifiable, Equatable {
 class StatsManager: ObservableObject {
     var profile: ProfileManager = ProfileManager()
     @Published var stats: [EmployeeStats] = []
+    @Published var stats1: [StatsModel1] = []
     @Published var count: Int?
     @Published var leads: [LeadModel] = []
     @Published var filter = StatsFilter()
@@ -67,6 +68,43 @@ class StatsManager: ObservableObject {
             throw error
         }
     }
+    
+    func load1() async throws {
+        let q = LeadQuery()
+            .add(.limit, "1000")
+            .add(.offset, "0")
+        
+        let path = "/stats/list2"
+        let params: [String : String?]? = q.get()
+        let method = "GET"
+        let scheme = APIValues.scheme
+        let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: profile.token, params: params, port: APIValues.port)
+        
+        //let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/stats/list", token: profile.token, params: q.get())
+        
+        DispatchQueue.main.async {
+            self.count = nil
+        }
+        
+        do {
+            let response: StatsResponse = try await fetching(config: info)
+            DispatchQueue.main.async {
+                
+                self.stats1 = response.data
+                self.count = response.count
+                
+                
+                //print(response.data)
+                //print(response.data)
+               
+            }
+            
+        } catch {
+            print(error.localizedDescription)
+            throw error
+        }
+    }
+    
     
     func list(query: LeadQuery? = nil, limit: Int = 2000, offset: Int = 0) async throws -> [LeadModel]{
         
@@ -225,20 +263,20 @@ class StatsManager: ObservableObject {
             if self.showAll {
                 for statusId in allStatus {
                     if let item = self.statusCounts[statusId] {
-                        self.items.append(.init(name: statusId.rawValue.uppercased(), count: item, color: self.getColor(name: statusId.rawValue)))
+                        self.items.append(.init(name: statusId.rawValue.uppercased(), count: item, color: StatsManager.getColor(name: statusId.rawValue)))
                     } else {
-                        self.items.append(.init(name: statusId.rawValue.uppercased(), count: 0, color: self.getColor(name: statusId.rawValue)))
+                        self.items.append(.init(name: statusId.rawValue.uppercased(), count: 0, color: StatsManager.getColor(name: statusId.rawValue)))
                     }
                 }
             } else {
                 for (statusId, count) in self.statusCounts {
-                    self.items.append(.init(name: statusId.rawValue.uppercased(), count: count, color: self.getColor(name: statusId.rawValue)))
+                    self.items.append(.init(name: statusId.rawValue.uppercased(), count: count, color: StatsManager.getColor(name: statusId.rawValue)))
                 }
             }
         }
     }
 
-    func getColor(name: String) -> Color {
+    static func getColor(name: String) -> Color {
         let lowercaseStatus = name.lowercased()
 
         switch lowercaseStatus {

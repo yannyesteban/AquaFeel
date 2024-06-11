@@ -40,7 +40,9 @@ struct LeadsMapsView: View {
                         }
                     }
                     .onTapGesture {
-                        clusterTool.goto(lead: filteredLeads[index])
+                        //clusterTool.goto(lead: filteredLeads[index])
+                        
+                        _ = clusterTool.highlight(id: filteredLeads[index].id)
                         presentationMode.wrappedValue.dismiss()
                     }
                

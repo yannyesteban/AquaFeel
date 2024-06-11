@@ -22,6 +22,51 @@ struct EmployeeStatsResponse: Codable, NeedStatusCode {
     var statusCode: Int?
 }
 
+struct Stats1: Codable {
+    let name: String
+    let count: Int
+}
+
+struct StatsResponse: Codable, NeedStatusCode {
+    let data: [StatsModel1]
+    let count: Int
+
+    var statusCode: Int?
+}
+
+struct StatsModel1: Codable {
+    let id: String
+    let firstName: String
+    let lastName: String
+    let role: String
+    let createdAt: String
+    let updatedAt: String
+    let stats: [Stats1]
+
+    enum CodingKeys: String, CodingKey {
+        case id = "_id"
+        case firstName
+        case lastName
+        case role
+        case createdAt
+        case updatedAt
+        case stats
+    }
+
+    var orderedStats: [Stats1] {
+        let allStatus: [StatusType] = [.uc, .ni, .ingl, .rent, .r, .appt, .demo, .win, .nho, .sm, .nm, .mycl, .r2]
+
+        let statsDict = Dictionary(uniqueKeysWithValues: stats.map { ($0.name, $0.count) })
+        return allStatus.map { status in
+            Stats1(name: status.rawValue, count: statsDict[status.rawValue.uppercased()] ?? 0)
+        }
+    }
+    
+    var totalCount: Int {
+        return stats.reduce(0) { $0 + $1.count }
+    }
+}
+
 struct EmployeeStats: Codable {
     let id: String
     let firstName: String

@@ -46,9 +46,16 @@ struct AdminScreen: View {
                 }
 
                 Section {
-                    NavigationLink {
+                    /*NavigationLink {
                         EmployeeListView()
 
+                    } label: {
+                        Label("Stats", systemImage: "chart.bar.xaxis")
+                    }*/
+                    
+                    NavigationLink {
+                        Stats1View()
+                        
                     } label: {
                         Label("Stats", systemImage: "chart.bar.xaxis")
                     }
