@@ -133,7 +133,6 @@ struct OrderFormView: View {
                 }
                 .padding()
             }
-
              */
             Section(header: Text("Buyer1 Information")) {
                 TextField("_id", text: $order._id)
