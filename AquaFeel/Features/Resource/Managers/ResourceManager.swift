@@ -73,7 +73,7 @@ class ResourceManager: ObservableObject {
         }
     }
 
-    func uploadResource(resource: ResourceModel, fileURL: URL, mode: RecordMode = .new, completion: @escaping (Result<ResourceModel, Error>) -> Void) {
+    func uploadResource(resource: ResourceModel, fileURL: URL, fileData: Data, mode: RecordMode = .new, completion: @escaping (Result<ResourceModel, Error>) -> Void) {
         let path: String
         switch mode {
         case .new:
@@ -128,10 +128,12 @@ class ResourceManager: ObservableObject {
         data.append("Content-Type: application/pdf\r\n\r\n".data(using: .utf8)!)
 
         do {
-            let fileData = try Data(contentsOf: fileURL)
+           
+            //let fileData = try Data(contentsOf: fileURL)
             data.append(fileData)
         } catch {
             print("Error reading file data: \(error)")
+            completion(.failure(error))
             return
         }
 

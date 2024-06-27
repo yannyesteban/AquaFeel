@@ -12,7 +12,7 @@ class RouteManager: ObservableObject {
     @Published var routes: [RouteModel] = []
     @Published var route: RouteModel = RouteModel()
     @Published var waiting = false
-    
+
     @Published var mapRoute: RouteResponse?
     var token = ""
 
@@ -27,16 +27,15 @@ class RouteManager: ObservableObject {
         let q = LeadQuery()
             .add(.userId, userId)
         //
-        
-        
+
         let path = "/routes/list"
-        let params: [String : String?]? = q.get()
+        let params: [String: String?]? = q.get()
         let method = "GET"
         let scheme = APIValues.scheme
         let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
-        
-        //let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/routes/list", token: "", params: q.get())
-        //let info = ApiConfig(scheme: "http", method: "GET", host: "127.0.0.1", path: "/routes/list", token: "", params: q.get(), port : "4000")
+
+        // let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/routes/list", token: "", params: q.get())
+        // let info = ApiConfig(scheme: "http", method: "GET", host: "127.0.0.1", path: "/routes/list", token: "", params: q.get(), port : "4000")
 
         do {
             let response: RouteResponse2 = try await fetching(config: info)
@@ -53,14 +52,13 @@ class RouteManager: ObservableObject {
         let q = LeadQuery()
             .add(.id, routeId)
 
-        
         let path = "/routes/details"
-        let params: [String : String?]? = q.get()
+        let params: [String: String?]? = q.get()
         let method = "GET"
         let scheme = APIValues.scheme
         let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
-        
-        //let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/routes/details", token: "", params: q.get())
+
+        // let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/routes/details", token: "", params: q.get())
 
         do {
             let response: RouteDetailResponse = try await fetching(config: info)
@@ -73,7 +71,6 @@ class RouteManager: ObservableObject {
     }
 
     func getDirection(mode: String, avoid: [String]) async throws -> RouteResponse? {
-        
         let leads = route.leads.filter { $0.isSelected }
         let request = RouteRequest(origin: route.startingAddress, destination: route.endingAddress, waypoints: leads.map({
             $0.latitude + "," + $0.longitude
@@ -91,12 +88,12 @@ class RouteManager: ObservableObject {
             .add(.id, routeId)
 
         let path = "/routes/details"
-        let params: [String : String?]? = q.get()
+        let params: [String: String?]? = q.get()
         let method = "GET"
         let scheme = APIValues.scheme
         let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
-        
-        //let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/routes/details", token: "", params: q.get())
+
+        // let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/routes/details", token: "", params: q.get())
         // let info = ApiConfig(scheme: "http", method: "GET", host: "127.0.0.1", path: "/routes/details", token: "", params: q.get(), port : "4000")
         do {
             let response: RouteDetailResponse = try await fetching(config: info)
@@ -122,13 +119,12 @@ class RouteManager: ObservableObject {
             .add(.id, routeId)
 
         let path = "/routes/details"
-        let params: [String : String?]? = q.get()
+        let params: [String: String?]? = q.get()
         let method = "GET"
         let scheme = APIValues.scheme
         let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
-        
-        
-        //let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/routes/details", token: "", params: q.get())
+
+        // let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/routes/details", token: "", params: q.get())
         // let info = ApiConfig(scheme: "http", method: "GET", host: "127.0.0.1", path: "/routes/details", token: "", params: q.get(), port : "4000")
         do {
             let response: RouteDetailResponse = try await fetching(config: info)
@@ -158,13 +154,12 @@ class RouteManager: ObservableObject {
             return
         }
 
-       
-        let params: [String : String?]? = nil
-        //let method = "GET"
+        let params: [String: String?]? = nil
+        // let method = "GET"
         let scheme = APIValues.scheme
         let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
-        
-        //let info = ApiConfig(method: method, host: "api.aquafeelvirginia.com", path: path, token: token, params: nil)
+
+        // let info = ApiConfig(method: method, host: "api.aquafeelvirginia.com", path: path, token: token, params: nil)
 
         // let info = ApiConfig(scheme: "http", method: method, host: "127.0.0.1", path: path, token: token, params: nil, port : "4000")
         DispatchQueue.main.async {
@@ -196,14 +191,13 @@ class RouteManager: ObservableObject {
         let q = LeadQuery()
             .add(.id, routeId)
 
-        
         let path = "/routes/delete"
-        let params: [String : String?]? = q.get()
+        let params: [String: String?]? = q.get()
         let method = "DELETE"
         let scheme = APIValues.scheme
         let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
-        
-        //let info = ApiConfig(method: "DELETE", host: "api.aquafeelvirginia.com", path: "/routes/delete", token: "", params: q.get())
+
+        // let info = ApiConfig(method: "DELETE", host: "api.aquafeelvirginia.com", path: "/routes/delete", token: "", params: q.get())
         // let info = ApiConfig(scheme: "http", method: "DELETE", host: "127.0.0.1", path: "/routes/delete", token: "", params: q.get(), port : "4000")
         do {
             let response: MessageResponse = try await fetching(config: info)
@@ -214,6 +208,4 @@ class RouteManager: ObservableObject {
             throw error
         }
     }
-    
-    
 }

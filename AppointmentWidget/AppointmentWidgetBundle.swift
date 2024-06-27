@@ -12,6 +12,6 @@ import SwiftUI
 struct AppointmentWidgetBundle: WidgetBundle {
     var body: some Widget {
         AppointmentWidget()
-        AppointmentWidgetLiveActivity()
+        //AppointmentWidgetLiveActivity()
     }
 }

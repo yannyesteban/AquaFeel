@@ -128,6 +128,11 @@ struct HomeScreen: View {
                     } label: {
                         Label("Resources", systemImage: "doc.richtext.fill")
                     }
+                    NavigationLink {
+                        ContractListView(/*profile: profile*/)
+                    } label: {
+                        Label("Contracts", systemImage: "book.pages")
+                    }
                 }
 
                 /*
@@ -396,6 +401,10 @@ struct HomeScreen: View {
 
                 if manager.leads.isEmpty {
                     manager.runLoad()
+                }
+                
+                if let userDefaults = UserDefaults(suiteName: "group.aquafeelvirginia.com.AquaFeel") {
+                    userDefaults.set(profile.userId, forKey: "userId")
                 }
             }
 

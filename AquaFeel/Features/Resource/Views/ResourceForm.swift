@@ -13,6 +13,7 @@ import MobileCoreServices
 
 struct FileImporterView: UIViewControllerRepresentable {
     @Binding var fileURL: URL?
+    @Binding var fileData: Data?
     @Environment(\.presentationMode) var presentationMode
 
     func makeCoordinator() -> Coordinator {
@@ -23,7 +24,7 @@ struct FileImporterView: UIViewControllerRepresentable {
         let picker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.item, .commaSeparatedText])
         picker.allowsMultipleSelection = false
         picker.delegate = context.coordinator
-        print("one 1.0")
+
         return picker
     }
 
@@ -35,18 +36,27 @@ struct FileImporterView: UIViewControllerRepresentable {
         let parent: FileImporterView
 
         init(_ parent: FileImporterView) {
-            print("one 0.0")
             self.parent = parent
         }
 
         func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-            print("one 0.2")
-            parent.fileURL = urls.first
-            parent.presentationMode.wrappedValue.dismiss()
+            guard let url = urls.first else { return }
+            // Security scoped access
+            if url.startAccessingSecurityScopedResource() {
+                defer { url.stopAccessingSecurityScopedResource() }
+                parent.fileURL = url
+                if let data = try? Data(contentsOf: url) {
+                    parent.fileData = data
+                }
+            } else {
+                print("Could not access file: \(url)")
+            }
+
+            // parent.fileURL = urls.first
+            // parent.presentationMode.wrappedValue.dismiss()
         }
 
         func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-            print("one 0.1")
             parent.presentationMode.wrappedValue.dismiss()
         }
     }
@@ -60,11 +70,12 @@ struct ResourceForm: View {
 
     @Binding var resource: ResourceModel
 
-    //@State private var description = ""
-    //@State private var type: ResourceType = .pdf
-    //@State private var active = false
-    //@State private var createdBy = ""
+    // @State private var description = ""
+    // @State private var type: ResourceType = .pdf
+    // @State private var active = false
+    // @State private var createdBy = ""
     @State private var selectedFileURL: URL?
+    @State var fileData: Data?
     @State private var showingFileImporter = false
 
     @State private var fileURL: URL?
@@ -99,7 +110,6 @@ struct ResourceForm: View {
                 Section {
                     Button(action: {
                         doDelete()
-                        
 
                     }) {
                         HStack {
@@ -119,13 +129,11 @@ struct ResourceForm: View {
 
                     } else {
                         Button {
-                            
                             if let _ = selectedFileURL {
                                 doSave()
-                            } else{
+                            } else {
                                 doEdit()
                             }
-                           
 
                         } label: {
                             Label("Save", systemImage: "externaldrive.fill")
@@ -136,9 +144,9 @@ struct ResourceForm: View {
             }
 
             .navigationTitle("Add Resource")
-           
+
             .sheet(isPresented: $showingFileImporter) {
-                FileImporterView(fileURL: $selectedFileURL)
+                FileImporterView(fileURL: $selectedFileURL, fileData: $fileData)
             }
             .onChange(of: selectedFileURL) { value in
                 DispatchQueue.main.async {
@@ -166,14 +174,18 @@ struct ResourceForm: View {
             return
         }
 
-        
+        guard let fileData = fileData else {
+            return
+        }
         guard let fileURL = selectedFileURL else {
             setAlert(title: "Message", message: String(localized: "invalid file"))
             return
         }
         isWaiting = true
         resourceManager.token = profile.token
-        resourceManager.uploadResource(resource: resource, fileURL: fileURL, mode: mode) { result in
+
+        resourceManager.uploadResource(resource: resource, fileURL: fileURL, fileData: fileData, mode: mode) { result in
+
             switch result {
             case let .success(item):
                 if mode == .new {
@@ -182,42 +194,41 @@ struct ResourceForm: View {
                         resource.id = item.id
                         resource.fileName = item.fileName
                         mode = .edit
-                 
+
                         addResource(resource: item)
                     }
                 }
 
                 setAlert(title: "Message", message: "Resource was saved correctly!")
                 DispatchQueue.main.async {
-                    
                     presentationMode.wrappedValue.dismiss()
                 }
-               
+
             case let .failure(error):
-               
+
                 print(error.localizedDescription)
                 setAlert(title: "Error", message: "Failure, the operation was not completed.")
+
                 DispatchQueue.main.async {
-                    presentationMode.wrappedValue.dismiss()
+                    // presentationMode.wrappedValue.dismiss()
                 }
             }
 
             isWaiting = false
-            Task{
+            Task {
                 try? await resourceManager.list()
             }
-           
         }
     }
-    
+
     private func doEdit() {
         let alertMessage = resource.validForm()
-        
+
         if alertMessage != "" {
             setAlert(title: "Message", message: alertMessage)
             return
         }
-        
+
         isWaiting = true
         resourceManager.token = profile.token
         Task {
@@ -233,7 +244,7 @@ struct ResourceForm: View {
                         }
                         print(item.active)
                     }
-                    
+
                     setAlert(title: "Message", message: "Resource was saved correctly!")
                     DispatchQueue.main.async {
                         presentationMode.wrappedValue.dismiss()
@@ -245,11 +256,10 @@ struct ResourceForm: View {
                         presentationMode.wrappedValue.dismiss()
                     }
                 }
-                
+
                 isWaiting = false
             }
         }
-        
     }
 
     private func doDelete() {
@@ -261,9 +271,8 @@ struct ResourceForm: View {
                 Task {
                     await resourceManager.delete(body: resource) { result in
                         switch result {
-                        case .success(_):
+                        case .success:
 
-                            
                             DispatchQueue.main.async {
                                 presentationMode.wrappedValue.dismiss()
                             }
@@ -290,9 +299,6 @@ struct ResourceForm: View {
     }
 
     private func addResource(resource: ResourceModel) {
-        
-        
-        
         DispatchQueue.main.async {
             resources.append(resource)
         }

@@ -9,7 +9,32 @@ import SwiftUI
 
 struct ContractListView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            
+            
+            Form {
+                NavigationLink {
+                    OrderListView()
+                } label: {
+                    Label("Work Order", systemImage: "scroll.fill")
+                }
+                
+                NavigationLink {
+                    Text("Credit Aplication")
+                } label: {
+                    Label("Credit Aplication", systemImage: "creditcard.fill")
+                }.disabled(true)
+                /*
+                NavigationLink {
+                    TestPDF()
+                } label: {
+                    Label("test PDF", systemImage: "creditcard.fill")
+                }
+                
+                */
+                
+            }
+        }
     }
 }
 
