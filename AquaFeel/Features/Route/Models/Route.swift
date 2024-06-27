@@ -7,6 +7,14 @@
 
 import Foundation
 
+enum RecordMode {
+    case none
+    case read
+    case new
+    case edit
+    case delete
+}
+
 struct MessageResponse: Codable, NeedStatusCode{
     let message: String
     var statusCode: Int?

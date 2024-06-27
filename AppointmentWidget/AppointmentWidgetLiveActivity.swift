@@ -71,10 +71,11 @@ extension AppointmentWidgetAttributes.ContentState {
          AppointmentWidgetAttributes.ContentState(emoji: "🤩")
      }
 }
-
+/*
 #Preview("Notification", as: .content, using: AppointmentWidgetAttributes.preview) {
    AppointmentWidgetLiveActivity()
 } contentStates: {
     AppointmentWidgetAttributes.ContentState.smiley
     AppointmentWidgetAttributes.ContentState.starEyes
 }
+*/

@@ -40,10 +40,13 @@ struct PDFViewer: UIViewRepresentable {
     let url: URL
     
     func makeUIView(context: Context) -> PDFView {
-        let pdfView = PDFView()
+        let pdfView = PDFView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         pdfView.autoScales = true
         //pdfView.displayMode = .singlePageContinuous
         pdfView.displayDirection = .vertical
+        pdfView.pageBreakMargins.top = 0.0
+        pdfView.pageBreakMargins.bottom = 0.0
+        pdfView.pageShadowsEnabled = true
         pdfView.usePageViewController(true, withViewOptions: nil)
         if let document = PDFDocument(url: url) {
             pdfView.document = document

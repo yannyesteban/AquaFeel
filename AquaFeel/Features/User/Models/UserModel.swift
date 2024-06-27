@@ -46,7 +46,7 @@ struct LeadFilter: Codable {
         var _id: String
         var name: String
         var image: String
-
+        
         init(isDisabled: Bool = false, _id: String = "", name: String = "", image: String = "") {
             self.isDisabled = isDisabled
             self._id = _id
@@ -54,7 +54,7 @@ struct LeadFilter: Codable {
             self.image = image
         }
     }
-
+    
     struct DateFilters: Codable {
         var selectedDateFilter: String
         var selectedQuickDate: String
@@ -63,7 +63,7 @@ struct LeadFilter: Codable {
         init(selectedDateFilter: String = DateFind.appointmentDate.rawValue, selectedQuickDate: String = TimeOption.allTime.rawValue, fromDate: String = "", toDate: String = "") {
             self.selectedDateFilter = selectedDateFilter
             self.selectedQuickDate = selectedQuickDate
-
+            
             if fromDate == "" {
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
@@ -75,11 +75,11 @@ struct LeadFilter: Codable {
             }
         }
     }
-
+    
     var selectedStatuses: [Status]
     var dateFilters: DateFilters
     var selectedOwner: [String]
-
+    
     init(selectedStatuses: [Status] = [], dateFilters: DateFilters = DateFilters(), selectedOwner: [String] = []) {
         self.selectedStatuses = selectedStatuses
         self.dateFilters = dateFilters
@@ -104,7 +104,7 @@ struct User: Codable {
     var latitude: Double?
     var longitude: Double?
     var avatar: String?
-
+    
     var position: CLLocationCoordinate2D {
         get {
             guard let latitude = latitude, let longitude = longitude else {
@@ -153,7 +153,7 @@ struct User: Codable {
         self.longitude = longitude
         self.avatar = avatar
     }
-
+    
     enum CodingKeys: CodingKey {
         case isBlocked
         case isVerified
@@ -173,7 +173,7 @@ struct User: Codable {
         case longitude
         case avatar
     }
-
+    
     init(from decoder: Decoder) throws {
         let container: KeyedDecodingContainer<User.CodingKeys> = try decoder.container(keyedBy: User.CodingKeys.self)
         isBlocked = try container.decodeIfPresent(Bool.self, forKey: .isBlocked) ?? false
@@ -190,7 +190,7 @@ struct User: Codable {
         email = try container.decodeIfPresent(String.self, forKey: .email) ?? ""
         firstName = try container.decode(String.self, forKey: User.CodingKeys.firstName)
         lastName = try container.decode(String.self, forKey: User.CodingKeys.lastName)
-
+        
         password = try container.decodeIfPresent(String.self, forKey: .password) ?? ""
         // self.password = try container.decode(String.self, forKey: User.CodingKeys.password)
         role = try container.decode(String.self, forKey: User.CodingKeys.role)
@@ -201,10 +201,10 @@ struct User: Codable {
         longitude = try container.decodeIfPresent(Double.self, forKey: User.CodingKeys.longitude)
         avatar = try container.decodeIfPresent(String.self, forKey: User.CodingKeys.avatar)
     }
-
+    
     func encode(to encoder: Encoder) throws {
         var container: KeyedEncodingContainer<User.CodingKeys> = encoder.container(keyedBy: User.CodingKeys.self)
-
+        
         try container.encode(isBlocked, forKey: User.CodingKeys.isBlocked)
         try container.encode(isVerified, forKey: User.CodingKeys.isVerified)
         try container.encode(assignedSellers, forKey: User.CodingKeys.assignedSellers)
@@ -225,196 +225,47 @@ struct User: Codable {
     }
 }
 
-enum APIError: Error {
-    case networkError
-    case authenticationError
-    case userDataError
-    case urlError
-    case requestError
-}
-
-protocol NeedStatusCode {
-    var statusCode: Int? {get set}
-}
-
-func _fetching<T: Decodable>(body: Data?, config: ApiConfig) async throws -> T {
-    // URL of the API endpoint for updates
-    print("config.scheme ... ", config.scheme)
-    var components = URLComponents()
-    components.scheme = config.scheme
-    components.host = config.host
-    components.path = config.path
-    if let port = config.port {
-        components.port = Int(port)
-    }
-    
-    if let params = config.params {
-        components.queryItems = params.map { URLQueryItem(name: $0.key, value: $0.value) }
-    }
-    
-    guard let url = components.url else {
-        throw APIError.urlError
-    }
-    
-    // Create URLRequest
-    var request = URLRequest(url: url)
-    request.httpMethod = config.method
-    
-    if let body = body {
-        request.httpBody = body
-    }
-    
-   
-    
-    // Add the authorization header with the Bearer token
-    request.addValue("Bearer \(config.token)", forHTTPHeaderField: "Authorization")
-    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-    
-    print("Url begin: \(url)\n")
-    let (data, response) = try await URLSession.shared.data(for: request)
-    
-    //print(String(decoding: data, as: UTF8.self))
-    print("Url end: \(url)\n")
-    let decoder = JSONDecoder()
-    
-    let object = try decoder.decode(T.self, from: data)
-     
-    
-    if var myProtocolObject = object as? NeedStatusCode {
-        
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw APIError.requestError
-        }
-        myProtocolObject.statusCode = httpResponse.statusCode
-        return myProtocolObject as! T
-        
-    }
 
 
-    /*
-     let (data, response) = try await URLSession.shared.data(for: request)
-     print(response)
-     guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-     throw APIError.authenticationError
-     }
-     */
-    //let decoder = JSONDecoder()
-    return object//try decoder.decode(T.self, from: data)
-}
 
-func fetching<T: Decodable>(config: ApiConfig) async throws -> T {
-    // URL of the API endpoint for updates
 
-    do {
-        
-        return try await _fetching(body: nil, config: config)
 
-    } catch {
-        throw error
-    }
-}
-
-func fetching<T2: Codable, T: Decodable>(body: T2, config: ApiConfig) async throws -> T {
-    // URL of the API endpoint for updates
-
-    do {
-        let jsonData = try JSONEncoder().encode(body)
-        /*
-        if let jsonString = String(data: jsonData, encoding: .utf8) {
-            print(jsonString)
-        }
-         */
-        //let httpBody = jsonData
-        return try await _fetching(body: jsonData, config: config)
-
-    } catch {
-        print(error)
-        throw error
-    }
-
-    /*
-     var components = URLComponents()
-     components.scheme = "https"
-     components.host = config.host
-     components.path = config.path
-
-     if let params = config.params {
-         components.queryItems = params.map { URLQueryItem(name: $0.key, value: $0.value) }
-     }
-
-     guard let url = components.url else {
-         throw APIError.urlError
-     }
-
-     // Create URLRequest
-     var request = URLRequest(url: url)
-     request.httpMethod = config.method
-
-     // Set the request body with model data
-     do {
-         let jsonData = try JSONEncoder().encode(body)
-         if let jsonString = String(data: jsonData, encoding: .utf8) {
-             print(jsonString)
-         }
-         request.httpBody = jsonData
-
-     } catch {
-         throw APIError.requestError
-     }
-
-     // Add the authorization header with the Bearer token
-     request.addValue("Bearer \(config.token)", forHTTPHeaderField: "Authorization")
-     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-     let (data, _) = try await URLSession.shared.data(for: request)
-
-     /*
-      let (data, response) = try await URLSession.shared.data(for: request)
-      print(response)
-      guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-          throw APIError.authenticationError
-      }
-      */
-     let decoder = JSONDecoder()
-     return try decoder.decode(T.self, from: data)
-      */
-}
 
 func fetch<T2: Codable, T: Decodable>(body: T2, config: ApiConfig, completion: @escaping (Result<T, Error>) -> Void) {
     // URL of the API endpoint for updates
-
+    
     var components = URLComponents()
     components.scheme = config.scheme ?? "https"
     components.host = config.host
     components.path = config.path
     components.port = Int(config.port ?? "80")
-
+    
     guard let url = components.url else {
         return
     }
-
+    
     print(url)
     // Create URLRequest
     var request = URLRequest(url: url)
     request.httpMethod = config.method
-
+    
     // Set the request body with model data
     do {
         let jsonData = try JSONEncoder().encode(body)
         /*if let jsonString = String(data: jsonData, encoding: .utf8) {
-            print(jsonString)
-        }*/
+         print(jsonString)
+         }*/
         request.httpBody = jsonData
-
+        
     } catch {
         completion(.failure(error))
         return
     }
-
+    
     // Add the authorization header with the Bearer token
     request.addValue("Bearer \(config.token)", forHTTPHeaderField: "Authorization")
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
+    
     // Configure URLSession task
     let task = URLSession.shared.dataTask(with: request) { data, _, error in
         // Handle API response
@@ -422,7 +273,7 @@ func fetch<T2: Codable, T: Decodable>(body: T2, config: ApiConfig, completion: @
             completion(.failure(error))
             return
         }
-
+        
         guard let data = data else {
             completion(.failure(NSError(domain: "Response data is nil", code: 0, userInfo: nil)))
             return
@@ -438,14 +289,14 @@ func fetch<T2: Codable, T: Decodable>(body: T2, config: ApiConfig, completion: @
             completion(.failure(error))
         }
     }
-
+    
     // Start the task
     task.resume()
 }
 
 func fetch<T: Decodable>(config: ApiConfig, completion: @escaping (Result<T, Error>) -> Void) -> URLSessionDataTask? {
     // URL of the API endpoint for updates
-
+    
     
     var components = URLComponents()
     components.scheme = config.scheme
@@ -456,19 +307,19 @@ func fetch<T: Decodable>(config: ApiConfig, completion: @escaping (Result<T, Err
     if let params = config.params {
         components.queryItems = params.map { URLQueryItem(name: $0.key, value: $0.value) }
     }
-
+    
     // Create URLRequest
     guard let url = components.url else {
         
         return nil
     }
-
+    
     var request = URLRequest(url: url)
     request.httpMethod = config.method
     // Add the authorization header with the Bearer token
     request.addValue("Bearer \(config.token)", forHTTPHeaderField: "Authorization")
     // request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
+    
     // Configure URLSession task
     print("begin: ", url)
     
@@ -478,12 +329,12 @@ func fetch<T: Decodable>(config: ApiConfig, completion: @escaping (Result<T, Err
             completion(.failure(error))
             return
         }
-
+        
         guard let data = data else {
             completion(.failure(NSError(domain: "Response data is nil", code: 0, userInfo: nil)))
             return
         }
-
+        
         // print(String(decoding: data, as: UTF8.self))
         print("End: ", url)
         do {
@@ -494,21 +345,21 @@ func fetch<T: Decodable>(config: ApiConfig, completion: @escaping (Result<T, Err
             completion(.failure(error))
         }
     }
-
+    
     // Start the task
     task.resume()
-
+    
     return task
 }
 
 class UserModel: ObservableObject {
     @Published var user: User = User()
-
+    
     @Published var first_name: String = ""
     @Published var last_name: String = ""
-
+    
     @Published var data: LeadModel = LeadModel()
-
+    
     @Published var leads: [LeadModel] = []
     @Published var statusList: [StatusId] = []
     @Published var mode = 0
@@ -517,7 +368,7 @@ class UserModel: ObservableObject {
         self.first_name = first_name
         self.last_name = last_name
     }
-
+    
     
     func get(query: LeadQuery) {
         
@@ -528,7 +379,7 @@ class UserModel: ObservableObject {
         let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
         
         //let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/users/details", token: token, params: query.get())
-
+        
         fetch(config: info) { (result: Result<User, Error>) in
             switch result {
             case let .success(user):
@@ -537,16 +388,16 @@ class UserModel: ObservableObject {
                     print(user)
                     self.user = user
                 }
-
+                
             case let .failure(error):
                 print("Error updating:", error)
             }
         }
     }
-
+    
     func loadAll() {
         // let param = LeadsApiParam()
-
+        
         let path = "/users/details"
         let params: [String : String?]? = [:]
         let method = "GET"
@@ -554,7 +405,7 @@ class UserModel: ObservableObject {
         let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
         
         //let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/users/details", token: token, params: [:])
-
+        
         ApiFetch<LeadsApiParam, LeadsModel>(
             info: info, parameters: nil
         ).sendRequest { data in
@@ -562,20 +413,20 @@ class UserModel: ObservableObject {
                 
                 self.leads = data.leads
             }
-
+            
             // Login successful, navigate to the Home screen
         }
     }
-
+    
     func loadAll(query: LeadQuery) {
         // Crear un diccionario usando los casos del enum como claves y asignarles valores de cadena iguales a sus nombres
         var dictionary: [LeadAllQuery: String] = [:]
-
+        
         for myCase in LeadAllQuery.allCases {
             
             dictionary[myCase] = myCase.rawValue
         }
-
+        
         let path = "/leads/list-all"
         let params: [String : String?]? = [:]
         let method = "GET"
@@ -583,7 +434,7 @@ class UserModel: ObservableObject {
         let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
         
         //let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/leads/list-all", token: token, params: [:])
-
+        
         
         print("xxxxx 55 55 555 55 5 ")
         ApiFetch<LeadsApiParam, LeadsModel>(
@@ -593,11 +444,11 @@ class UserModel: ObservableObject {
                 self.first_name = "que Cool"
                 self.leads = data.leads
             }
-
+            
             // Login successful, navigate to the Home screen
         }
     }
-
+    
     func statusAll() {
         // let param = LeadsApiParam()
         let path = "/status/list"
@@ -608,7 +459,7 @@ class UserModel: ObservableObject {
         
         
         //let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/status/list", token: token, params: [:])
-
+        
         ApiFetch<LeadsApiParam, StatusModel>(
             info: info, parameters: nil
         ).sendRequest { data in
@@ -616,14 +467,14 @@ class UserModel: ObservableObject {
                 self.first_name = "que Cool"
                 self.statusList = data.list
             }
-
+            
             // Login successful, navigate to the Home screen
         }
     }
-
+    
     func save<D: Codable>(body: D, mode: ModeSave = .edit) {
         var path: String
-
+        
         switch mode {
         case .add:
             path = "/leads/add"
@@ -634,7 +485,7 @@ class UserModel: ObservableObject {
         case .none:
             return
         }
-
+        
         
         
         let params: [String : String?]? = [:]
@@ -643,7 +494,7 @@ class UserModel: ObservableObject {
         let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
         
         //let info = ApiConfig(method: "POST", host: "api.aquafeelvirginia.com", path: path, token: token, params: [:])
-
+        
         do {
             let jsonData = try JSONEncoder().encode(body)
             if let jsonString = String(data: jsonData, encoding: .utf8) {
@@ -653,7 +504,7 @@ class UserModel: ObservableObject {
             }
         } catch {
         }
-
+        
         ApiFetch<LeadsApiParam, LeadsModel>(
             info: info, parameters: nil
         ).fetch(body: body, config: info) { result in
@@ -665,7 +516,7 @@ class UserModel: ObservableObject {
             }
         }
     }
-
+    
     func delete(query: LeadQuery) {
         
         let path = "/leads/delete"
@@ -675,7 +526,7 @@ class UserModel: ObservableObject {
         let info = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
         
         //let info = ApiConfig(method: "DELETE", host: "api.aquafeelvirginia.com", path: "/leads/delete", token: token, params: query.get())
-
+        
         ApiFetch<LeadsApiParam, LeadsModel>(
             info: info, parameters: nil
         ).fetch(config: info) { result in
@@ -687,8 +538,9 @@ class UserModel: ObservableObject {
             }
         }
     }
-
+    
     func showSatus() {
         statusAll()
     }
 }
+

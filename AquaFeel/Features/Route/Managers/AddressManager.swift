@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+
+class AddressManager: ObservableObject {
+    @Published var address = AddressModel()
+}

@@ -16,6 +16,9 @@ class AppDelegateq: NSObject, UIApplicationDelegate, UNUserNotificationCenterDel
         GMSServices.provideAPIKey(APIKeys.googleApiKey)
         
         //GMSPlacesClient.provideAPIKey(APIKeys.googleApiKey)
+        
+        //application.applicationIconBadgeNumber = 0
+        
         UNUserNotificationCenter.current().delegate = self
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
             if let error = error {

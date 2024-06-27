@@ -7,6 +7,9 @@
     " " : {
 
     },
+    "_id" : {
+
+    },
     "¡Arrastra esta vista libremente!" : {
 
     },
@@ -64,9 +67,6 @@
         }
       }
     },
-    "1.0" : {
-
-    },
     "2 hours" : {
       "localizations" : {
         "es-419" : {
@@ -76,9 +76,6 @@
           }
         }
       }
-    },
-    "2.0" : {
-
     },
     "5 minutes" : {
       "localizations" : {
@@ -243,6 +240,12 @@
         }
       }
     },
+    "Address Information" : {
+
+    },
+    "Address: %@" : {
+
+    },
     "Admin" : {
 
     },
@@ -285,6 +288,15 @@
           }
         }
       }
+    },
+    "Amount to Finance" : {
+
+    },
+    "Amount to Finance:" : {
+
+    },
+    "App central off" : {
+
     },
     "Apple Maps" : {
       "localizations" : {
@@ -382,6 +394,24 @@
         }
       }
     },
+    "Approval / Purchaser" : {
+
+    },
+    "Approval / Purchaser 1" : {
+
+    },
+    "Approval / Purchaser 2" : {
+
+    },
+    "Approved for" : {
+
+    },
+    "APR" : {
+
+    },
+    "APR:" : {
+
+    },
     "Apt / Suite" : {
       "localizations" : {
         "es-419" : {
@@ -391,9 +421,6 @@
           }
         }
       }
-    },
-    "Aquafeel" : {
-
     },
     "Aqui" : {
 
@@ -437,6 +464,9 @@
           }
         }
       }
+    },
+    "Are you sure you want to delete the contract?" : {
+
     },
     "Are you sure you want to delete the lead?" : {
       "localizations" : {
@@ -550,7 +580,43 @@
     "Bottom Sheet" : {
 
     },
+    "Brand: %@" : {
+
+    },
     "buddhist" : {
+
+    },
+    "Buyer 1 Cell" : {
+
+    },
+    "Buyer 1 Name" : {
+
+    },
+    "Buyer 1 Phone" : {
+
+    },
+    "Buyer 1: %@" : {
+
+    },
+    "Buyer 2 Cell" : {
+
+    },
+    "Buyer 2 Name" : {
+
+    },
+    "Buyer 2 Phone" : {
+
+    },
+    "Buyer 2: %@" : {
+
+    },
+    "Buyer Information" : {
+
+    },
+    "Buyer1 Information" : {
+
+    },
+    "Buyer2 Information" : {
 
     },
     "Calle: %@" : {
@@ -583,6 +649,15 @@
       }
     },
     "Cart" : {
+
+    },
+    "Cash Price" : {
+
+    },
+    "Cash Price:" : {
+
+    },
+    "Cell: %@" : {
 
     },
     "Cerrar" : {
@@ -618,6 +693,9 @@
         }
       }
     },
+    "Check" : {
+
+    },
     "choose a color" : {
 
     },
@@ -651,6 +729,9 @@
         }
       }
     },
+    "City: %@" : {
+
+    },
     "Ciudad: %@" : {
 
     },
@@ -663,6 +744,9 @@
           }
         }
       }
+    },
+    "Concret Slab" : {
+
     },
     "Confirm new Password" : {
       "localizations" : {
@@ -717,6 +801,12 @@
     "Contenido de la hoja" : {
 
     },
+    "Contracts" : {
+
+    },
+    "Contrato" : {
+
+    },
     "Country" : {
       "localizations" : {
         "es-419" : {
@@ -767,6 +857,12 @@
           }
         }
       }
+    },
+    "Credit Aplication" : {
+
+    },
+    "Credit Card" : {
+
     },
     "Custom" : {
       "localizations" : {
@@ -840,6 +936,9 @@
         }
       }
     },
+    "Date: %@" : {
+
+    },
     "Delete" : {
       "localizations" : {
         "es-419" : {
@@ -874,6 +973,12 @@
       }
     },
     "Dismiss Me" : {
+
+    },
+    "Down Payment" : {
+
+    },
+    "Down Payment:" : {
 
     },
     "Edad: %lld" : {
@@ -999,6 +1104,9 @@
     "Escribe una dirección 3.0" : {
 
     },
+    "Este es un contrato entre el cliente y la empresa." : {
+
+    },
     "Extra" : {
 
     },
@@ -1034,6 +1142,12 @@
           }
         }
       }
+    },
+    "Finance Charge" : {
+
+    },
+    "Finance Charge:" : {
+
     },
     "Find By" : {
       "localizations" : {
@@ -1077,6 +1191,9 @@
           }
         }
       }
+    },
+    "Generate PDF" : {
+
     },
     "Good Morning" : {
       "extractionState" : "stale",
@@ -1158,6 +1275,7 @@
       }
     },
     "Hola" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es-419" : {
           "stringUnit" : {
@@ -1180,6 +1298,12 @@
         }
       }
     },
+    "Ice Maker" : {
+
+    },
+    "Ice Maker: %@" : {
+
+    },
     "Info" : {
 
     },
@@ -1187,6 +1311,24 @@
 
     },
     "Ingrese texto." : {
+
+    },
+    "Installation" : {
+
+    },
+    "Installation Date" : {
+
+    },
+    "Installation Day" : {
+
+    },
+    "Installation Day: %@" : {
+
+    },
+    "Installation Information" : {
+
+    },
+    "Installation:" : {
 
     },
     "Interval" : {
@@ -1422,6 +1564,9 @@
     "Modal" : {
 
     },
+    "Model: %@" : {
+
+    },
     "Mostrar hoja" : {
 
     },
@@ -1520,6 +1665,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "no hay Citas!"
+          }
+        }
+      }
+    },
+    "No se pudo generar el código QR" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The QR code could not be generated"
           }
         }
       }
@@ -1628,6 +1784,9 @@
         }
       }
     },
+    "Order Details" : {
+
+    },
     "Owner" : {
       "localizations" : {
         "es-419" : {
@@ -1677,6 +1836,15 @@
           }
         }
       }
+    },
+    "People Involved" : {
+
+    },
+    "People: %lld" : {
+
+    },
+    "Personal Information" : {
+
     },
     "Phone Number" : {
       "localizations" : {
@@ -1748,6 +1916,12 @@
         }
       }
     },
+    "Price Information" : {
+
+    },
+    "print" : {
+
+    },
     "Profile" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1758,6 +1932,12 @@
           }
         }
       }
+    },
+    "Promotion" : {
+
+    },
+    "Promotion: %@" : {
+
     },
     "Quick Date" : {
       "localizations" : {
@@ -1789,6 +1969,9 @@
         }
       }
     },
+    "Raised" : {
+
+    },
     "record updated sucessfully" : {
       "localizations" : {
         "es-419" : {
@@ -1811,6 +1994,9 @@
           }
         }
       }
+    },
+    "Rep. of Aquafeel" : {
+
     },
     "Repeats" : {
       "localizations" : {
@@ -2206,6 +2392,12 @@
         }
       }
     },
+    "Show PDF" : {
+
+    },
+    "show QR" : {
+
+    },
     "Sign Up" : {
       "localizations" : {
         "es-419" : {
@@ -2248,6 +2440,9 @@
           }
         }
       }
+    },
+    "State: %@" : {
+
     },
     "Statistics" : {
       "localizations" : {
@@ -2302,6 +2497,30 @@
         }
       }
     },
+    "System 1 Brand" : {
+
+    },
+    "System 1 Model" : {
+
+    },
+    "System 1 Name" : {
+
+    },
+    "System 1: %@" : {
+
+    },
+    "System 2 Brand" : {
+
+    },
+    "System 2 Model" : {
+
+    },
+    "System 2 Name" : {
+
+    },
+    "System 2: %@" : {
+
+    },
     "System access was denied" : {
       "localizations" : {
         "es-419" : {
@@ -2312,10 +2531,40 @@
         }
       }
     },
+    "System Information" : {
+
+    },
+    "System Information 1" : {
+
+    },
+    "System Information 2" : {
+
+    },
     "Take Photo" : {
 
     },
+    "Taxes" : {
+
+    },
+    "Taxes:" : {
+
+    },
+    "Terms Amount" : {
+
+    },
+    "Terms Amount:" : {
+
+    },
+    "Terms or Payment Methods" : {
+
+    },
     "Texto ingresado: %@" : {
+
+    },
+    "The floor is" : {
+
+    },
+    "The QR code could not be generated" : {
 
     },
     "Theme" : {
@@ -2381,6 +2630,9 @@
         }
       }
     },
+    "Time: %lld hours" : {
+
+    },
     "Title: Slected Color %@" : {
 
     },
@@ -2404,6 +2656,18 @@
         }
       }
     },
+    "Total Cash" : {
+
+    },
+    "Total Cash Price" : {
+
+    },
+    "Total Cash Price:" : {
+
+    },
+    "Total Cash:" : {
+
+    },
     "Total Count" : {
       "localizations" : {
         "es-419" : {
@@ -2415,6 +2679,12 @@
       }
     },
     "Total Leads %lld" : {
+
+    },
+    "Total of Payments" : {
+
+    },
+    "Total of Payments:" : {
 
     },
     "Total: %lld" : {
@@ -2640,10 +2910,14 @@
         }
       }
     },
+    "Water source" : {
+
+    },
     "Week %lld" : {
 
     },
     "Welcome back" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es-419" : {
           "stringUnit" : {
@@ -2662,6 +2936,15 @@
           }
         }
       }
+    },
+    "Well" : {
+
+    },
+    "Work Order" : {
+
+    },
+    "Work Order List" : {
+
     },
     "Write a note..." : {
       "localizations" : {
@@ -2692,6 +2975,9 @@
     "You should verify that user's credentials." : {
 
     },
+    "ZIP" : {
+
+    },
     "Zip Code" : {
       "localizations" : {
         "es-419" : {
@@ -2701,6 +2987,9 @@
           }
         }
       }
+    },
+    "ZIP: %@" : {
+
     }
   },
   "version" : "1.0"
