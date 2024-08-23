@@ -120,18 +120,22 @@ struct HomeScreen: View {
                     } label: {
                         Label("Favorites", systemImage: "heart")
                     }
-                    
-                    
-                    
+
+                    /*
+                     NavigationLink {
+                         ResourceListView(profile: profile)
+                     } label: {
+                         Label("Resources", systemImage: "doc.richtext.fill")
+                     }
+                      */
                     NavigationLink {
-                        ResourceListView(profile: profile)
+                        ContractListView( /* profile: profile */ )
                     } label: {
-                        Label("Resources", systemImage: "doc.richtext.fill")
-                    }
-                    NavigationLink {
-                        ContractListView(/*profile: profile*/)
-                    } label: {
-                        Label("Contracts", systemImage: "book.pages")
+                        if #available(iOS 17.0, *) {
+                            Label("Contracts", systemImage: "book.pages")
+                        } else {
+                            Label("Contracts", systemImage: "scroll.fill")
+                        }
                     }
                 }
 
@@ -196,6 +200,12 @@ struct HomeScreen: View {
                         showOption = true
                     } label: {
                         Image(systemName: "gear")
+                    }
+
+                    NavigationLink {
+                        ResourceListView(profile: profile)
+                    } label: {
+                        Label("Resources", systemImage: "doc.richtext.fill")
                     }
                     /*
                      NavigationLink {
@@ -402,7 +412,7 @@ struct HomeScreen: View {
                 if manager.leads.isEmpty {
                     manager.runLoad()
                 }
-                
+
                 if let userDefaults = UserDefaults(suiteName: "group.aquafeelvirginia.com.AquaFeel") {
                     userDefaults.set(profile.userId, forKey: "userId")
                 }

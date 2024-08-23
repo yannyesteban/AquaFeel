@@ -7,6 +7,28 @@
 
 import SwiftUI
 
+struct MyAddress: View {
+    @State var lead: LeadModel = .init()
+    @State var name = "6632"
+    var body: some View {
+        Section("Address") {
+            TextField("Name:",  text: $name)
+            /* AddressView<LeadModel>(label: "write a address", leadAddress: $lead) */
+            AddressField<LeadModel>(label: "Address", leadAddress: $lead, withPlaceButton: true)
+            TextField("Apt / Suite", text: $lead.apt)
+            TextField("City", text: $lead.city)
+            TextField("State", text: $lead.state)
+            HStack {
+                TextField("Zip Code", text: $lead.zip)
+                TextField("Country", text: $lead.country)
+            }
+        }
+        .onAppear{
+            
+        }
+    }
+}
+
 struct AddressField<T: AddressProtocol>: View {
     public var label: String
     @State private var searchText = ""
@@ -19,6 +41,7 @@ struct AddressField<T: AddressProtocol>: View {
     @ObservedObject private var placeViewModel = PlaceViewModel()
     @State private var locationWaiting = false
     @State var withPlaceButton = true
+    
     var body: some View {
         HStack {
             TextField(label, text: $leadAddress.street_address)
@@ -36,7 +59,7 @@ struct AddressField<T: AddressProtocol>: View {
                     ModalView<T>(placeholder: label, leadAddress: $leadAddress /* , text: searchText2, leadAddress: $leadAddress */ ) {
                         isModalPresented.toggle()
                     }
-                    .presentationDetents([.large, .fraction(0.90), .medium])
+                    //.presentationDetents([.large, .fraction(0.90), .medium])
                     .presentationContentInteraction(.scrolls)
 
                     Button("Close") {
@@ -69,17 +92,17 @@ struct AddressField<T: AddressProtocol>: View {
             
 
         }.onReceive(location.$location) { newValue in
-            print("one")
+            print("one location.$location")
             
             if let place = newValue {
-                print("two")
+                print("two location.$location")
                 placeViewModel.getPlaceDetailsByCoordinates(latitude: place.latitude, longitude: place.longitude)
             }
 
         }.onReceive(placeViewModel.$selectedPlace) { newSelectedPlace in
             
             if let placeDetails = newSelectedPlace {
-                print("four")
+                print("four .onReceive(placeViewModel.$selectedPlace)")
                 locationWaiting = false
 
                 leadAddress.street_address = placeDetails.formatted_address ?? ""
@@ -193,5 +216,6 @@ struct RouteView01: View {
  }
  */
 #Preview {
-    TestCreateLead()
+    MyAddress()
+    //TestCreateLead()
 }

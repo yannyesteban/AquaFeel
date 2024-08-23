@@ -22,6 +22,7 @@ enum LeadAllQuery: String, CaseIterable {
     case today
     case lastMonth = "last_month"
     case ownerId = "owner_id"
+    case leadId
     case favorite
 }
 
@@ -81,7 +82,7 @@ func _fetching<T: Decodable>(body: Data?, config: ApiConfig) async throws -> T {
     print("Url begin: \(url)\n")
     let (data, response) = try await URLSession.shared.data(for: request)
     
-    // print(String(decoding: data, as: UTF8.self))
+    //print(String(decoding: data, as: UTF8.self))
     print("Url end: \(url)\n")
     let decoder = JSONDecoder()
     

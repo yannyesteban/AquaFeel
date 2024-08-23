@@ -1,47 +1,47 @@
 //
-//  OrderListView.swift
+//  CreditListView.swift
 //  AquaFeel
 //
-//  Created by Yanny Esteban on 19/6/24.
+//  Created by Yanny Esteban on 26/7/24.
 //
 
 import SwiftUI
 
-struct OrderListView: View {
-    @StateObject var orderManager: OrderManager = .init()
-    @State var order = OrderModel()
+struct CreditListView: View {
+    @StateObject var creditManager: CreditManager = .init()
+    @State var credit = CreditModel()
     @EnvironmentObject var profile: ProfileManager
     var body: some View {
         NavigationStack {
             List {
-                ForEach($orderManager.orders, id: \._id) { $item in
+                ForEach($creditManager.credits, id: \._id) { $item in
                     NavigationLink {
-                        OrderFormView(orderManager: orderManager, order: $item)
+                        CreditFormView(creditManager: creditManager, credit: $item)
                     } label: {
                         HStack {
                             Image(systemName: "scroll.fill")
                             VStack(alignment: .leading) {
-                                Text(item.buyer1.name)
-                                Text(item.installation.date.formattedDate())
-                                // Text(formatDateToString( item.installation.date))
+                                Text(item.applicant.firstName)
+                                //Text(item.createdOn.formattedDate())
+                                
                             }
                         }
                     }
                 }
             }
         }
-        .navigationBarTitle("Work Order List")
+        .navigationBarTitle("Credit Application List")
         
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 // ToolbarItemGroup(placement: .automatic){
-
+                
                 NavigationLink {
                     
-                   
                     
-                    OrderFormView(orderManager: orderManager, order: $order, mode: 1)
-
+                    
+                    CreditFormView(creditManager: creditManager, credit: $credit, mode: 1)
+                    
                 } label: {
                     Image(systemName: "plus")
                 }
@@ -49,14 +49,14 @@ struct OrderListView: View {
         }
         .onAppear {
             // routeManager.userId = profile.userId
-
+            
             Task {
-                await orderManager.list(userId: profile.userId)
+                await creditManager.list(userId: profile.userId)
             }
         }
     }
 }
 
 #Preview {
-    OrderListView()
+    CreditListView()
 }

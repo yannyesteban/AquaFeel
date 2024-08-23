@@ -20,10 +20,22 @@ struct ContractListView: View {
                 }
                 
                 NavigationLink {
-                    Text("Credit Aplication")
+                    CreditListView()
                 } label: {
-                    Label("Credit Aplication", systemImage: "creditcard.fill")
-                }.disabled(true)
+                   
+                    if #available(iOS 17.0, *) {
+                        Label("Credit Application", systemImage: "creditcard.trianglebadge.exclamationmark.fill")
+                    } else {
+                        Label("Credit Application", systemImage: "creditcard")
+                    }
+                }//.disabled(true)
+                
+                NavigationLink {
+                    CreditCardListView()
+                } label: {
+                    Label("Credit Card Authorization", systemImage: "creditcard.fill")
+                }//.disabled(true)
+                
                 /*
                 NavigationLink {
                     TestPDF()
@@ -32,7 +44,20 @@ struct ContractListView: View {
                 }
                 
                 */
+                /*
+                NavigationLink {
+                    BrandListView()
+                } label: {
+                    Label("Brands List", systemImage: "folder.fill.badge.plus")
+                }
                 
+                
+                NavigationLink {
+                    ModelListView()
+                } label: {
+                    Label("Models List", systemImage: "tray.full.fill")
+                }
+                */
             }
         }
     }

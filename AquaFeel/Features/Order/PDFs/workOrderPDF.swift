@@ -138,28 +138,28 @@ func workOrderPDF(order: OrderModel, url: String) -> Data {
 
         drawSectionTitle("Approval / Purchaser 1")
         drawSectionContent([
-            ("Approval / Purchaser:", order.approval1.purchaser),
+            ("Approval / Purchaser:", order.buyer1.name),
         ])
         drawText("Date:", at: CGPoint(x: 20, y: currentY))
-        let approval1DateString = formatDateToString2(order.approval1.date)
+        let approval1DateString = formatDateToString2(order.buyer1.date)
         drawText(approval1DateString, at: CGPoint(x: 150, y: currentY))
         currentY += 18
         currentY += 12
 
         drawSectionTitle("Approval / Purchaser 2")
         drawSectionContent([
-            ("Approval / Purchaser:", order.approval2.purchaser),
+            ("Approval / Purchaser:", order.buyer2.name),
         ])
         drawText("Date:", at: CGPoint(x: 20, y: currentY))
-        let approval2DateString = formatDateToString2(order.approval2.date)
+        let approval2DateString = formatDateToString2(order.buyer2.date)
         drawText(approval2DateString, at: CGPoint(x: 150, y: currentY))
         currentY += 18
         currentY += 12
 
         drawSectionTitle("Approved for")
         drawSectionContent([
-            ("Rep. of Aquafeel:", order.employee),
-            ("App central off:", order.approvedBy),
+            ("Rep. of Aquafeel:", order.employee.name),
+            ("App central off:", order.approvedBy.name),
         ])
     }
 

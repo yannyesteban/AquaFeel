@@ -47,7 +47,9 @@ struct CreateLead: View {
     @State var showAlert = false
 
     @State private var alert: Alert!
-
+    @State var order: OrderModel = OrderModel()
+    @State var credit: CreditModel = CreditModel()
+    @State var creditCard: CreditCardModel = CreditCardModel()
     // @State var alertMessage = "Error"
     private func loadDataAndProcess() {
         statusManager.statusAll()
@@ -193,6 +195,35 @@ struct CreateLead: View {
                             }
                         }
 
+                        Section {
+                            
+                            NavigationLink {
+                                LeadWorkOrder(profile: profile, lead: lead, order: $order)
+                            } label: {
+                                Label("Work Order", systemImage: "scroll.fill")
+                            }
+
+                            NavigationLink {
+                                LeadCredit(profile: profile, lead: lead, credit: $credit)
+                            } label: {
+                                  
+                                if #available(iOS 17.0, *) {
+                                    Label("Credit Application", systemImage: "creditcard.trianglebadge.exclamationmark.fill")
+                                } else {
+                                    Label("Credit Application", systemImage: "creditcard")
+                                }
+                            }
+
+                            NavigationLink {
+                                LeadCreditCard(profile: profile, lead: lead, creditCard: $creditCard)
+                            } label: {
+                                Label("Credit Card Authorization", systemImage: "creditcard.fill")
+                            }
+
+                            
+                        }
+                        
+                        
                         Section {
                             Button(action: {
                                 doDelete()

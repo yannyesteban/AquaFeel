@@ -1,47 +1,47 @@
 //
-//  OrderListView.swift
+//  ModelListView.swift
 //  AquaFeel
 //
-//  Created by Yanny Esteban on 19/6/24.
+//  Created by Yanny Esteban on 16/7/24.
 //
 
 import SwiftUI
 
-struct OrderListView: View {
-    @StateObject var orderManager: OrderManager = .init()
-    @State var order = OrderModel()
-    @EnvironmentObject var profile: ProfileManager
+struct ModelListView: View {
+    @StateObject var modelManager: ModelManager = .init()
+    @State var model = ModelModel()
+    
     var body: some View {
         NavigationStack {
             List {
-                ForEach($orderManager.orders, id: \._id) { $item in
+                ForEach($modelManager.models, id: \._id) { $item in
                     NavigationLink {
-                        OrderFormView(orderManager: orderManager, order: $item)
+                        ModelFormView(modelManager: modelManager, model: $item)
                     } label: {
                         HStack {
                             Image(systemName: "scroll.fill")
                             VStack(alignment: .leading) {
-                                Text(item.buyer1.name)
-                                Text(item.installation.date.formattedDate())
-                                // Text(formatDateToString( item.installation.date))
+                                Text(item.brand.name)
+                                Text(item.name)
+                                
                             }
                         }
                     }
                 }
             }
         }
-        .navigationBarTitle("Work Order List")
+        .navigationBarTitle("Models List")
         
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 // ToolbarItemGroup(placement: .automatic){
-
+                
                 NavigationLink {
                     
-                   
                     
-                    OrderFormView(orderManager: orderManager, order: $order, mode: 1)
-
+                    
+                    ModelFormView(modelManager: modelManager, model: $model, mode: 1)
+                    
                 } label: {
                     Image(systemName: "plus")
                 }
@@ -49,14 +49,10 @@ struct OrderListView: View {
         }
         .onAppear {
             // routeManager.userId = profile.userId
-
+            
             Task {
-                await orderManager.list(userId: profile.userId)
+                await modelManager.list(userId: "xxx")
             }
         }
     }
-}
-
-#Preview {
-    OrderListView()
 }

@@ -1,47 +1,46 @@
 //
-//  OrderListView.swift
+//  BrandListView.swift
 //  AquaFeel
 //
-//  Created by Yanny Esteban on 19/6/24.
+//  Created by Yanny Esteban on 16/7/24.
 //
 
 import SwiftUI
 
-struct OrderListView: View {
-    @StateObject var orderManager: OrderManager = .init()
-    @State var order = OrderModel()
-    @EnvironmentObject var profile: ProfileManager
+struct BrandListView: View {
+    @StateObject var brandManager: BrandManager = .init()
+    @State var brand = BrandModel()
+    
     var body: some View {
         NavigationStack {
             List {
-                ForEach($orderManager.orders, id: \._id) { $item in
+                ForEach($brandManager.brands, id: \._id) { $item in
                     NavigationLink {
-                        OrderFormView(orderManager: orderManager, order: $item)
+                        BrandFormView(brandManager: brandManager, brand: $item)
                     } label: {
                         HStack {
                             Image(systemName: "scroll.fill")
                             VStack(alignment: .leading) {
-                                Text(item.buyer1.name)
-                                Text(item.installation.date.formattedDate())
-                                // Text(formatDateToString( item.installation.date))
+                                Text(item.name)
+                                
                             }
                         }
                     }
                 }
             }
         }
-        .navigationBarTitle("Work Order List")
+        .navigationBarTitle("Brands List")
         
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 // ToolbarItemGroup(placement: .automatic){
-
+                
                 NavigationLink {
                     
-                   
                     
-                    OrderFormView(orderManager: orderManager, order: $order, mode: 1)
-
+                    
+                    BrandFormView(brandManager: brandManager, brand: $brand, mode: 1)
+                    
                 } label: {
                     Image(systemName: "plus")
                 }
@@ -49,14 +48,15 @@ struct OrderListView: View {
         }
         .onAppear {
             // routeManager.userId = profile.userId
-
+            
             Task {
-                await orderManager.list(userId: profile.userId)
+                await brandManager.list(userId: "xxx")
             }
         }
     }
 }
 
+
 #Preview {
-    OrderListView()
+    BrandListView()
 }

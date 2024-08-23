@@ -88,6 +88,20 @@ struct AdminScreen: View {
                 } label: {
                     Label("Resources Creator", systemImage: "doc.richtext.fill")
                 }
+                /*
+                NavigationLink {
+                    BrandListView()
+                } label: {
+                    Label("Brands List", systemImage: "folder.fill.badge.plus")
+                }
+                
+                
+                NavigationLink {
+                    ModelListView()
+                } label: {
+                    Label("Models List", systemImage: "tray.full.fill")
+                }
+                 */
             }
             .navigationTitle("Admin")
         }

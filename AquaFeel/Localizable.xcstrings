@@ -7,9 +7,6 @@
     " " : {
 
     },
-    "_id" : {
-
-    },
     "¡Arrastra esta vista libremente!" : {
 
     },
@@ -157,6 +154,16 @@
         }
       }
     },
+    "Account Number" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Número de Cuenta"
+          }
+        }
+      }
+    },
     "Activate Notification" : {
       "localizations" : {
         "es-419" : {
@@ -178,7 +185,14 @@
       }
     },
     "Active: %@" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activar: %@"
+          }
+        }
+      }
     },
     "Add" : {
       "localizations" : {
@@ -241,10 +255,24 @@
       }
     },
     "Address Information" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Información de la Dirección"
+          }
+        }
+      }
     },
     "Address: %@" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dirección: %@"
+          }
+        }
+      }
     },
     "Admin" : {
 
@@ -289,14 +317,41 @@
         }
       }
     },
-    "Amount to Finance" : {
+    "AMERICAN EXPRESS" : {
 
+    },
+    "Amount" : {
+
+    },
+    "Amount to Finance" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monto a financiar"
+          }
+        }
+      }
     },
     "Amount to Finance:" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monto a financiar:"
+          }
+        }
+      }
     },
-    "App central off" : {
-
+    "Amount:" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monto:"
+          }
+        }
+      }
     },
     "Apple Maps" : {
       "localizations" : {
@@ -304,6 +359,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Apple Maps"
+          }
+        }
+      }
+    },
+    "Applicant" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solicitante"
+          }
+        }
+      }
+    },
+    "Applicant Income Information" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Información sobre los Ingresos del Solicitante"
+          }
+        }
+      }
+    },
+    "Applicant Information" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Información del Solicitante"
+          }
+        }
+      }
+    },
+    "Applicant Sign %@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Applicant Sign %1$@ %2$@"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Firma del Solicitante"
           }
         }
       }
@@ -394,22 +495,50 @@
         }
       }
     },
-    "Approval / Purchaser" : {
-
+    "Approval / Purchaser %@" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aprobación / Cliente:"
+          }
+        }
+      }
     },
     "Approval / Purchaser 1" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aprobación / Cliente 1"
+          }
+        }
+      }
     },
     "Approval / Purchaser 2" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aprobación / Cliente 2"
+          }
+        }
+      }
     },
-    "Approved for" : {
-
+    "Approval / Purchaser: %@" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aprobación / Cliente:"
+          }
+        }
+      }
     },
     "APR" : {
 
     },
-    "APR:" : {
+    "APR ( % ):" : {
 
     },
     "Apt / Suite" : {
@@ -466,7 +595,14 @@
       }
     },
     "Are you sure you want to delete the contract?" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seguro de eliminar el registro?"
+          }
+        }
+      }
     },
     "Are you sure you want to delete the lead?" : {
       "localizations" : {
@@ -544,6 +680,16 @@
         }
       }
     },
+    "Bank Name" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre del Banco"
+          }
+        }
+      }
+    },
     "Basic Info" : {
       "localizations" : {
         "es-419" : {
@@ -580,44 +726,168 @@
     "Bottom Sheet" : {
 
     },
+    "Brand" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marca"
+          }
+        }
+      }
+    },
+    "Brand Name" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre de la Marca"
+          }
+        }
+      }
+    },
     "Brand: %@" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marca: %@"
+          }
+        }
+      }
+    },
+    "Brands List" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lista de Marcas"
+          }
+        }
+      }
     },
     "buddhist" : {
 
     },
+    "Business Phone" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teléfono de la Empresa"
+          }
+        }
+      }
+    },
     "Buyer 1 Cell" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teléfono"
+          }
+        }
+      }
     },
     "Buyer 1 Name" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre del 1er comprador"
+          }
+        }
+      }
     },
     "Buyer 1 Phone" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teléfono"
+          }
+        }
+      }
     },
     "Buyer 1: %@" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cliente 1: %@"
+          }
+        }
+      }
     },
     "Buyer 2 Cell" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teléfono"
+          }
+        }
+      }
     },
     "Buyer 2 Name" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre del 2do comprador"
+          }
+        }
+      }
     },
     "Buyer 2 Phone" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teléfono"
+          }
+        }
+      }
     },
     "Buyer 2: %@" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2do Cliente: %@"
+          }
+        }
+      }
     },
     "Buyer Information" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Información del Cliente"
+          }
+        }
+      }
     },
     "Buyer1 Information" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Información del 1er Cliente"
+          }
+        }
+      }
     },
     "Buyer2 Information" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Información del 2do Cliente"
+          }
+        }
+      }
     },
     "Calle: %@" : {
 
@@ -648,17 +918,58 @@
         }
       }
     },
+    "Card Information" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Información de la Tarjeta de Crédito"
+          }
+        }
+      }
+    },
     "Cart" : {
 
     },
     "Cash Price" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Precio en efectivo"
+          }
+        }
+      }
     },
     "Cash Price:" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Precio en Efectivo:"
+          }
+        }
+      }
+    },
+    "Cell Phone" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teléfono Móvil"
+          }
+        }
+      }
     },
     "Cell: %@" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Celular: %@"
+          }
+        }
+      }
     },
     "Cerrar" : {
 
@@ -696,6 +1007,9 @@
     "Check" : {
 
     },
+    "Checking" : {
+
+    },
     "choose a color" : {
 
     },
@@ -730,7 +1044,14 @@
       }
     },
     "City: %@" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ciudad: %@"
+          }
+        }
+      }
     },
     "Ciudad: %@" : {
 
@@ -745,8 +1066,51 @@
         }
       }
     },
-    "Concret Slab" : {
-
+    "Co Applicant" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Co Solicitante"
+          }
+        }
+      }
+    },
+    "Co Applicant Income Information" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Información de Ingreso del Co Solicitante"
+          }
+        }
+      }
+    },
+    "Co Applicant Information" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Información del Co Solicitante"
+          }
+        }
+      }
+    },
+    "Co Applicant Sign %@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Co Applicant Sign %1$@ %2$@"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Firma Co Solicitante%@ %@"
+          }
+        }
+      }
     },
     "Confirm new Password" : {
       "localizations" : {
@@ -802,10 +1166,37 @@
 
     },
     "Contracts" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contratos"
+          }
+        }
+      }
     },
     "Contrato" : {
 
+    },
+    "Copied" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copiado"
+          }
+        }
+      }
+    },
+    "Copy" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copiar"
+          }
+        }
+      }
     },
     "Country" : {
       "localizations" : {
@@ -859,10 +1250,65 @@
       }
     },
     "Credit Aplication" : {
-
+      "extractionState" : "stale",
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Formulario de Crédito"
+          }
+        }
+      }
+    },
+    "Credit Application" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aplicaciones de Crédito"
+          }
+        }
+      }
+    },
+    "Credit Application List" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aplicaciones de Crédito"
+          }
+        }
+      }
     },
     "Credit Card" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tarjeta de Crédito"
+          }
+        }
+      }
+    },
+    "Credit Card Authorization" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Autorización de la Tarjeta de Crédito"
+          }
+        }
+      }
+    },
+    "Credit Card Authorizations" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Autorizaciones de Pago"
+          }
+        }
+      }
     },
     "Custom" : {
       "localizations" : {
@@ -873,6 +1319,9 @@
           }
         }
       }
+    },
+    "CVC" : {
+
     },
     "Dark" : {
       "localizations" : {
@@ -926,6 +1375,16 @@
         }
       }
     },
+    "Date of Birth" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fecha de Nacimiento"
+          }
+        }
+      }
+    },
     "Date Range" : {
       "localizations" : {
         "es-419" : {
@@ -937,7 +1396,14 @@
       }
     },
     "Date: %@" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fecha: %@"
+          }
+        }
+      }
     },
     "Delete" : {
       "localizations" : {
@@ -975,11 +1441,28 @@
     "Dismiss Me" : {
 
     },
-    "Down Payment" : {
+    "DL or ID" : {
 
     },
+    "Down Payment" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Depósito"
+          }
+        }
+      }
+    },
     "Down Payment:" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Depósito:"
+          }
+        }
+      }
     },
     "Edad: %lld" : {
 
@@ -1049,6 +1532,16 @@
         }
       }
     },
+    "Employer" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Empleador"
+          }
+        }
+      }
+    },
     "Encabezado u otros contenidos" : {
 
     },
@@ -1086,7 +1579,14 @@
 
     },
     "EQ phone" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EQ teléfono"
+          }
+        }
+      }
     },
     "Error" : {
 
@@ -1107,11 +1607,38 @@
     "Este es un contrato entre el cliente y la empresa." : {
 
     },
+    "EXP Date" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EXP Fecha"
+          }
+        }
+      }
+    },
+    "EXP ID" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vencimiento del ID"
+          }
+        }
+      }
+    },
     "Extra" : {
 
     },
     "Failed to load PDF." : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se pudo cargar el PDF"
+          }
+        }
+      }
     },
     "Favorites" : {
       "localizations" : {
@@ -1144,10 +1671,24 @@
       }
     },
     "Finance Charge" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cargo financiero"
+          }
+        }
+      }
     },
     "Finance Charge:" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cargo financiero:"
+          }
+        }
+      }
     },
     "Find By" : {
       "localizations" : {
@@ -1193,7 +1734,14 @@
       }
     },
     "Generate PDF" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crear PDF"
+          }
+        }
+      }
     },
     "Good Morning" : {
       "extractionState" : "stale",
@@ -1217,7 +1765,14 @@
       }
     },
     "Green" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verde"
+          }
+        }
+      }
     },
     "Gregorian" : {
       "localizations" : {
@@ -1298,10 +1853,54 @@
         }
       }
     },
-    "Ice Maker" : {
+    "Home Phone" : {
 
     },
+    "How Long Here" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cuánto tiempo aquí?"
+          }
+        }
+      }
+    },
+    "How Long Here:" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cuánto tiempo aquí?:"
+          }
+        }
+      }
+    },
+    "Ice Maker" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hielera"
+          }
+        }
+      }
+    },
     "Ice Maker: %@" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hielera: %@"
+          }
+        }
+      }
+    },
+    "Image Size" : {
+
+    },
+    "info" : {
 
     },
     "Info" : {
@@ -1314,24 +1913,76 @@
 
     },
     "Installation" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instalación"
+          }
+        }
+      }
     },
     "Installation Date" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fecha de instalación"
+          }
+        }
+      }
     },
     "Installation Day" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Día de Instalación"
+          }
+        }
+      }
     },
     "Installation Day: %@" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Día de Instalación: %@"
+          }
+        }
+      }
     },
     "Installation Information" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Información de la Instalación"
+          }
+        }
+      }
     },
     "Installation:" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instalación:"
+          }
+        }
+      }
     },
     "Interval" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intervalo"
+          }
+        }
+      }
+    },
+    "Interval to Finance" : {
 
     },
     "Interval: %lld" : {
@@ -1475,6 +2126,9 @@
     "Leads: %@" : {
 
     },
+    "License" : {
+
+    },
     "Light" : {
       "localizations" : {
         "es-419" : {
@@ -1558,14 +2212,155 @@
     "Map Api" : {
 
     },
-    "Message" : {
+    "MASTERCARD" : {
 
+    },
+    "Message" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mensaje"
+          }
+        }
+      }
     },
     "Modal" : {
 
     },
+    "Model" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modelo"
+          }
+        }
+      }
+    },
+    "Model Name" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre del Modelo"
+          }
+        }
+      }
+    },
     "Model: %@" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Model: %@"
+          }
+        }
+      }
+    },
+    "Models List" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lista de Modelos"
+          }
+        }
+      }
+    },
+    "MONTH" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MES"
+          }
+        }
+      }
+    },
+    "Monthly Payment" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mensualidad"
+          }
+        }
+      }
+    },
+    "Monthly Payment:" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mensualidad"
+          }
+        }
+      }
+    },
+    "Mortage Company" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compañía Hipotecaria"
+          }
+        }
+      }
+    },
+    "Mortage Information" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Información sobre hipotecas"
+          }
+        }
+      }
+    },
+    "Mortaged" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hipotecada"
+          }
+        }
+      }
+    },
+    "Mortgage Company" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compañía Hipotecaria"
+          }
+        }
+      }
+    },
+    "Mortgage Information" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Información sobre hipotecas"
+          }
+        }
+      }
+    },
+    "Mortgaged" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hipotecada"
+          }
+        }
+      }
     },
     "Mostrar hoja" : {
 
@@ -1596,6 +2391,26 @@
         }
       }
     },
+    "Name as appears on the Card" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre que aparece en la Tarjeta"
+          }
+        }
+      }
+    },
+    "Name:" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre:"
+          }
+        }
+      }
+    },
     "Name: %@ %@" : {
       "localizations" : {
         "en" : {
@@ -1606,8 +2421,25 @@
         }
       }
     },
+    "Natural Soap Package" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paquete de Jabón Natural"
+          }
+        }
+      }
+    },
     "New Alarm" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nueva Alarma"
+          }
+        }
+      }
     },
     "New Password" : {
       "localizations" : {
@@ -1680,6 +2512,16 @@
         }
       }
     },
+    "No signature available" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin firma"
+          }
+        }
+      }
+    },
     "Nombre: %@" : {
 
     },
@@ -1694,10 +2536,24 @@
       }
     },
     "Note: %@" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nota: %@"
+          }
+        }
+      }
     },
     "Notification is active" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notificación activada"
+          }
+        }
+      }
     },
     "Notification is inactive" : {
       "localizations" : {
@@ -1715,6 +2571,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Notificaciones"
+          }
+        }
+      }
+    },
+    "Number of Payment" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Número de Pagos"
           }
         }
       }
@@ -1746,7 +2612,14 @@
 
     },
     "OK" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aceptar"
+          }
+        }
+      }
     },
     "Old Password" : {
       "localizations" : {
@@ -1785,7 +2658,14 @@
       }
     },
     "Order Details" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detalle de la Orden"
+          }
+        }
+      }
     },
     "Owner" : {
       "localizations" : {
@@ -1803,6 +2683,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Propietarios"
+          }
+        }
+      }
+    },
+    "Paid" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pagada"
           }
         }
       }
@@ -1838,13 +2728,54 @@
       }
     },
     "People Involved" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personas "
+          }
+        }
+      }
     },
     "People: %lld" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Habitantes: %lld"
+          }
+        }
+      }
     },
     "Personal Information" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Información Personal"
+          }
+        }
+      }
+    },
+    "Personal Reference" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Referencia Personal"
+          }
+        }
+      }
+    },
+    "Phone" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teléfono"
+          }
+        }
+      }
     },
     "Phone Number" : {
       "localizations" : {
@@ -1857,10 +2788,24 @@
       }
     },
     "Phone: %@" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teléfono: %@"
+          }
+        }
+      }
     },
     "Phone2: %@" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teléfono: %@"
+          }
+        }
+      }
     },
     "Pie de página u otros contenidos" : {
 
@@ -1895,12 +2840,32 @@
         }
       }
     },
+    "Please sign your name inside the rectangle" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Por favor firme su nombre dentro del rectángulo"
+          }
+        }
+      }
+    },
     "Please wait while we are verifying your details" : {
       "localizations" : {
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Por favor espere mientras se verifica sus datos "
+          }
+        }
+      }
+    },
+    "Position" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Posición"
           }
         }
       }
@@ -1916,11 +2881,45 @@
         }
       }
     },
+    "Previous Employer" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Empleador Anterior"
+          }
+        }
+      }
+    },
     "Price Information" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Información del Precio"
+          }
+        }
+      }
     },
     "print" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "imprimir"
+          }
+        }
+      }
+    },
+    "Products" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Productos"
+          }
+        }
+      }
     },
     "Profile" : {
       "extractionState" : "stale",
@@ -1934,10 +2933,24 @@
       }
     },
     "Promotion" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Promoción"
+          }
+        }
+      }
     },
     "Promotion: %@" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Promoción: %@"
+          }
+        }
+      }
     },
     "Quick Date" : {
       "localizations" : {
@@ -1969,9 +2982,6 @@
         }
       }
     },
-    "Raised" : {
-
-    },
     "record updated sucessfully" : {
       "localizations" : {
         "es-419" : {
@@ -1991,6 +3001,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Registrar"
+          }
+        }
+      }
+    },
+    "Relationship" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Relación"
+          }
+        }
+      }
+    },
+    "Rent" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rentada"
           }
         }
       }
@@ -2064,6 +3094,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Recursos"
+          }
+        }
+      }
+    },
+    "Retry" : {
+
+    },
+    "Reverse Osmosis" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sistema de Osmosis Inversa "
+          }
+        }
+      }
+    },
+    "Reverse Osmosis + Alkaline" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sistema de Ósmosis Inversa + Alcalino"
           }
         }
       }
@@ -2183,6 +3236,36 @@
         }
       }
     },
+    "Routing Number" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Número de Ruta"
+          }
+        }
+      }
+    },
+    "Salary" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salario"
+          }
+        }
+      }
+    },
+    "Salary:" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salario:"
+          }
+        }
+      }
+    },
     "save" : {
       "localizations" : {
         "es-419" : {
@@ -2219,6 +3302,16 @@
         }
       }
     },
+    "Saving" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ahorro"
+          }
+        }
+      }
+    },
     "search by..." : {
       "localizations" : {
         "es-419" : {
@@ -2249,11 +3342,43 @@
         }
       }
     },
+    "Searching..." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buscando..."
+          }
+        }
+      }
+    },
     "Selecciona un avatar" : {
 
     },
     "Seleccionar Avatar" : {
 
+    },
+    "select a brand..." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "seleccione una marca..."
+          }
+        }
+      }
+    },
+    "select a model..." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "seleccione un modelo..."
+          }
+        }
+      }
     },
     "Select All" : {
       "localizations" : {
@@ -2271,6 +3396,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Seleccione una Imagen"
+          }
+        }
+      }
+    },
+    "select Brand..." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "seleccione la Marca..."
           }
         }
       }
@@ -2393,10 +3528,27 @@
       }
     },
     "Show PDF" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrar PDF"
+          }
+        }
+      }
     },
     "show QR" : {
 
+    },
+    "sign" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Firmar"
+          }
+        }
+      }
     },
     "Sign Up" : {
       "localizations" : {
@@ -2411,6 +3563,16 @@
     "Some sheet container from Bottom" : {
 
     },
+    "Source of Other Income" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fuente de Otros Ingresos"
+          }
+        }
+      }
+    },
     "Spanish" : {
       "localizations" : {
         "es-419" : {
@@ -2420,6 +3582,9 @@
           }
         }
       }
+    },
+    "SS" : {
+
     },
     "Start Date" : {
       "localizations" : {
@@ -2442,7 +3607,14 @@
       }
     },
     "State: %@" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estado: %@"
+          }
+        }
+      }
     },
     "Statistics" : {
       "localizations" : {
@@ -2485,7 +3657,14 @@
       }
     },
     "Street Address: %@" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calle: %@"
+          }
+        }
+      }
     },
     "System" : {
       "localizations" : {
@@ -2497,29 +3676,36 @@
         }
       }
     },
-    "System 1 Brand" : {
-
-    },
-    "System 1 Model" : {
-
-    },
     "System 1 Name" : {
-
+      "extractionState" : "stale",
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre del Sistema"
+          }
+        }
+      }
     },
     "System 1: %@" : {
-
-    },
-    "System 2 Brand" : {
-
-    },
-    "System 2 Model" : {
-
-    },
-    "System 2 Name" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Primer Sistema: %@"
+          }
+        }
+      }
     },
     "System 2: %@" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Segundo Sistema: %@"
+          }
+        }
+      }
     },
     "System access was denied" : {
       "localizations" : {
@@ -2532,36 +3718,81 @@
       }
     },
     "System Information" : {
-
-    },
-    "System Information 1" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Información del sistema"
+          }
+        }
+      }
     },
     "System Information 2" : {
-
+      "extractionState" : "stale",
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Información del sistema 2"
+          }
+        }
+      }
     },
     "Take Photo" : {
 
     },
     "Taxes" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impuestos"
+          }
+        }
+      }
     },
     "Taxes:" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impuestos:"
+          }
+        }
+      }
     },
     "Terms Amount" : {
-
+      "extractionState" : "stale",
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Condiciones Monto"
+          }
+        }
+      }
     },
     "Terms Amount:" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Términos:"
+          }
+        }
+      }
     },
     "Terms or Payment Methods" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Términos / Métodos de pago"
+          }
+        }
+      }
     },
     "Texto ingresado: %@" : {
-
-    },
-    "The floor is" : {
 
     },
     "The QR code could not be generated" : {
@@ -2657,16 +3888,44 @@
       }
     },
     "Total Cash" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total Efectivo"
+          }
+        }
+      }
     },
     "Total Cash Price" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Precio Total en Efectivo"
+          }
+        }
+      }
     },
     "Total Cash Price:" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Precio total en efectivo:"
+          }
+        }
+      }
     },
     "Total Cash:" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total Efectivo:"
+          }
+        }
+      }
     },
     "Total Count" : {
       "localizations" : {
@@ -2682,10 +3941,24 @@
 
     },
     "Total of Payments" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total de pagos"
+          }
+        }
+      }
     },
     "Total of Payments:" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total a Pagar:"
+          }
+        }
+      }
     },
     "Total: %lld" : {
 
@@ -2721,7 +3994,14 @@
       }
     },
     "Type: %@" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tipo: %@"
+          }
+        }
+      }
     },
     "Ubicación actual: Latitud %lf, Longitud %lf" : {
       "localizations" : {
@@ -2767,7 +4047,14 @@
       }
     },
     "Updated On: %@" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actualizado: %@"
+          }
+        }
+      }
     },
     "Upload Image" : {
       "localizations" : {
@@ -2910,8 +4197,18 @@
         }
       }
     },
-    "Water source" : {
+    "VISA" : {
 
+    },
+    "Water source" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suministro del agua"
+          }
+        }
+      }
     },
     "Week %lld" : {
 
@@ -2940,11 +4237,46 @@
     "Well" : {
 
     },
+    "Whole House Aquafeel System" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sistema Aquafeel para toda la casa"
+          }
+        }
+      }
+    },
+    "Work Credit List" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lista de Créditos Laborales"
+          }
+        }
+      }
+    },
     "Work Order" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Órdenes de Trabajo"
+          }
+        }
+      }
     },
     "Work Order List" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lista de órdenes de trabajo"
+          }
+        }
+      }
     },
     "Write a note..." : {
       "localizations" : {
@@ -2961,6 +4293,26 @@
     },
     "xxxx" : {
 
+    },
+    "Years" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Años de Antigüedad"
+          }
+        }
+      }
+    },
+    "Years:" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Años de antigüedad:"
+          }
+        }
+      }
     },
     "Yesterday" : {
       "localizations" : {

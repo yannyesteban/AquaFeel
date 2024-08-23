@@ -14,23 +14,27 @@ func formatDateToString2(_ date: Date) -> String {
 }
 
 struct ApprovalModel: Codable {
-    var purchaser: String
+    var name: String
+    var signature: String
     var date: Date
 
     enum CodingKeys: String, CodingKey {
-        case purchaser, date
+        case name, signature, date
     }
 
     init(
         purchaser: String = "",
+        signature: String = "",
         date: Date = Date()) {
-        self.purchaser = purchaser
+        name = purchaser
+        self.signature = signature
         self.date = date
     }
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        purchaser = try container.decodeIfPresent(String.self, forKey: .purchaser) ?? ""
+        name = try container.decodeIfPresent(String.self, forKey: .name) ?? ""
+        signature = try container.decodeIfPresent(String.self, forKey: .signature) ?? ""
 
         if let text = try container.decodeIfPresent(String.self, forKey: .date) {
             date = realDate(text: text)
@@ -42,7 +46,9 @@ struct ApprovalModel: Codable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
 
-        try container.encode(purchaser, forKey: .purchaser)
+        try container.encode(name, forKey: .name)
+        try container.encode(signature, forKey: .signature)
+
         let dateString = formatDateToString2(date)
         try container.encode(dateString, forKey: .date)
     }
@@ -55,8 +61,11 @@ struct BuyerModel: Identifiable, Codable {
     var phone: String
     var cel: String
 
+    var signature: String
+    var date: Date
+
     enum CodingKeys: String, CodingKey {
-        case _id, id, name, phone, cel
+        case _id, id, name, phone, cel, signature, date
     }
 
     init(
@@ -64,12 +73,16 @@ struct BuyerModel: Identifiable, Codable {
         id: String = "",
         name: String = "",
         phone: String = "",
-        cel: String = "") {
+        cel: String = "",
+        signature: String = "",
+        date: Date = Date()) {
         self._id = id
         self.id = id
         self.name = name
         self.phone = phone
         self.cel = cel
+        self.signature = signature
+        self.date = date
     }
 
     init(from decoder: Decoder) throws {
@@ -79,6 +92,29 @@ struct BuyerModel: Identifiable, Codable {
         name = try container.decodeIfPresent(String.self, forKey: .name) ?? ""
         phone = try container.decodeIfPresent(String.self, forKey: .phone) ?? ""
         cel = try container.decodeIfPresent(String.self, forKey: .cel) ?? ""
+
+        signature = try container.decodeIfPresent(String.self, forKey: .signature) ?? ""
+
+        if let text = try container.decodeIfPresent(String.self, forKey: .date) {
+            date = realDate(text: text)
+        } else {
+            date = Date()
+        }
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(_id, forKey: ._id)
+        try container.encode(id, forKey: .id)
+        try container.encode(name, forKey: .name)
+        try container.encode(phone, forKey: .phone)
+        try container.encode(cel, forKey: .cel)
+
+        try container.encode(signature, forKey: .signature)
+
+        let dateString = formatDateToString2(date)
+        try container.encode(dateString, forKey: .date)
     }
 }
 
@@ -124,22 +160,33 @@ struct InstallModel: Identifiable, Codable {
     var iceMaker: Bool
     var time: Int
 
+    var s0: Bool
+    var s1: Bool
+    var s2: Bool
+    var s3: Bool
+    
+    
     init(id: String = "",
          day: String = "",
          date: Date = Date(),
          waterSource: String = "city",
          iceMaker: Bool = false,
-         time: Int = 0) {
+         time: Int = 0, s0: Bool = false, s1: Bool = false, s2: Bool = false, s3: Bool = false) {
         self.id = id
         self.day = day
         self.date = date
-        waterSouce = waterSource
+        self.waterSouce = waterSource
         self.iceMaker = iceMaker
         self.time = time
+        
+        self.s0 = s0
+        self.s1 = s1
+        self.s2 = s2
+        self.s3 = s3
     }
 
     enum CodingKeys: String, CodingKey {
-        case _id, id, day, date, waterSouce, iceMaker, time
+        case _id, id, day, date, waterSouce, iceMaker, time, s0, s1, s2, s3
     }
 
     init(from decoder: Decoder) throws {
@@ -151,7 +198,6 @@ struct InstallModel: Identifiable, Codable {
         if let text = try container.decodeIfPresent(String.self, forKey: .date) {
             date = realDate(text: text)
 
-            print("-> ... ", date)
         } else {
             date = Date()
         }
@@ -159,6 +205,12 @@ struct InstallModel: Identifiable, Codable {
         // date = try container.decodeIfPresent(Date.self, forKey: .date) ?? Date()
         iceMaker = try container.decodeIfPresent(Bool.self, forKey: .iceMaker) ?? false
         time = try container.decodeIfPresent(Int.self, forKey: .time) ?? 0
+        
+        
+        s0 = try container.decodeIfPresent(Bool.self, forKey: .s0) ?? false
+        s1 = try container.decodeIfPresent(Bool.self, forKey: .s1) ?? false
+        s2 = try container.decodeIfPresent(Bool.self, forKey: .s2) ?? false
+        s3 = try container.decodeIfPresent(Bool.self, forKey: .s3) ?? false
     }
 
     func encode(to encoder: Encoder) throws {
@@ -175,6 +227,12 @@ struct InstallModel: Identifiable, Codable {
         try container.encode(waterSouce, forKey: .waterSouce)
         try container.encode(iceMaker, forKey: .iceMaker)
         try container.encode(time, forKey: .time)
+        
+        
+        try container.encode(s0, forKey: .s0)
+        try container.encode(s1, forKey: .s1)
+        try container.encode(s2, forKey: .s2)
+        try container.encode(s3, forKey: .s3)
     }
 }
 
@@ -277,10 +335,11 @@ struct OrderModel: Identifiable, Codable {
     var creditCard: Bool
     var check: Bool
     var price: PriceModel
-    var approval1: ApprovalModel
-    var approval2: ApprovalModel
-    var employee: String
-    var approvedBy: String
+    var employee: ApprovalModel
+    var approvedBy: ApprovalModel
+    var createdBy: String
+    var lead: String
+
     init(
         _id: String = "",
         id: String = "",
@@ -300,10 +359,10 @@ struct OrderModel: Identifiable, Codable {
         creditCard: Bool = false,
         check: Bool = false,
         price: PriceModel = PriceModel(),
-        approval1: ApprovalModel = ApprovalModel(),
-        approval2: ApprovalModel = ApprovalModel(),
-        employee: String = "",
-        approvedBy: String = ""
+        employee: ApprovalModel = ApprovalModel(),
+        approvedBy: ApprovalModel = ApprovalModel(),
+        createdBy: String = "",
+        lead: String = ""
 
     ) {
         self._id = _id
@@ -323,14 +382,15 @@ struct OrderModel: Identifiable, Codable {
         self.creditCard = creditCard
         self.check = check
         self.price = price
-        self.approval1 = approval1
-        self.approval2 = approval2
+
         self.employee = employee
         self.approvedBy = approvedBy
+        self.createdBy = createdBy
+        self.lead = lead
     }
 
     enum CodingKeys: String, CodingKey {
-        case _id, id, buyer1, buyer2, address, city, state, zip, system1, system2, promotion, installation, people, floorType, creditCard, check, price, approval1, approval2, employee, approvedBy
+        case _id, id, buyer1, buyer2, address, city, state, zip, system1, system2, promotion, installation, people, floorType, creditCard, check, price, employee, approvedBy, createdBy, lead
     }
 
     init(from decoder: Decoder) throws {
@@ -353,11 +413,10 @@ struct OrderModel: Identifiable, Codable {
         check = try container.decodeIfPresent(Bool.self, forKey: .check) ?? false
         price = try container.decodeIfPresent(PriceModel.self, forKey: .price) ?? PriceModel()
 
-        approval1 = try container.decodeIfPresent(ApprovalModel.self, forKey: .approval1) ?? ApprovalModel()
-        approval2 = try container.decodeIfPresent(ApprovalModel.self, forKey: .approval2) ?? ApprovalModel()
-
-        employee = try container.decodeIfPresent(String.self, forKey: .employee) ?? ""
-        approvedBy = try container.decodeIfPresent(String.self, forKey: .approvedBy) ?? ""
+        employee = try container.decodeIfPresent(ApprovalModel.self, forKey: .employee) ?? ApprovalModel()
+        approvedBy = try container.decodeIfPresent(ApprovalModel.self, forKey: .approvedBy) ?? ApprovalModel()
+        lead = try container.decodeIfPresent(String.self, forKey: .lead) ?? ""
+        createdBy = try container.decodeIfPresent(String.self, forKey: .createdBy) ?? ""
     }
 
     func encode(to encoder: Encoder) throws {
@@ -380,9 +439,171 @@ struct OrderModel: Identifiable, Codable {
         try container.encode(creditCard, forKey: .creditCard)
         try container.encode(check, forKey: .check)
         try container.encode(price, forKey: .price)
-        try container.encode(approval1, forKey: .approval1)
-        try container.encode(approval2, forKey: .approval2)
+
         try container.encode(employee, forKey: .employee)
         try container.encode(approvedBy, forKey: .approvedBy)
+        try container.encode(lead, forKey: .lead)
+        try container.encode(createdBy, forKey: .createdBy)
     }
+}
+
+
+
+
+struct OrderModel2: Identifiable, Codable {
+    var _id: String
+    var id: String
+    var buyer1: BuyerModel2
+    var buyer2: BuyerModel2
+    /*var address: String
+    var city: String
+    var state: String
+    var zip: String
+    var system1: SystemModel
+    var system2: SystemModel
+    var promotion: String
+    var installation: InstallModel
+    var people: Int
+    var floorType: String
+    var creditCard: Bool
+    var check: Bool
+    var price: PriceModel
+    var employee: ApprovalModel
+    var approvedBy: ApprovalModel
+    var createdBy: String
+    var lead: String
+    */
+    init(
+        _id: String = "",
+        id: String = "",
+        buyer1: BuyerModel2 = BuyerModel2(),
+        buyer2: BuyerModel2 = BuyerModel2()
+        /*address: String = "",
+        city: String = "",
+        state: String = "",
+        zip: String = "",
+        system1: SystemModel = SystemModel(),
+        system2: SystemModel = SystemModel(),
+        promotion: String = "",
+        
+        installation: InstallModel = InstallModel(),
+        people: Int = 0,
+        floorType: String = "raised",
+        creditCard: Bool = false,
+        check: Bool = false,
+        price: PriceModel = PriceModel(),
+        employee: ApprovalModel = ApprovalModel(),
+        approvedBy: ApprovalModel = ApprovalModel(),
+        createdBy: String = "",
+        lead: String = ""
+         */
+        
+    ) {
+        self._id = _id
+        self.id = id
+        self.buyer1 = buyer1
+        self.buyer2 = buyer2
+        /*self.address = address
+        self.city = city
+        self.state = state
+        self.zip = zip
+        self.system1 = system1
+        self.system2 = system2
+        self.installation = installation
+        self.promotion = promotion
+        self.people = people
+        self.floorType = floorType
+        self.creditCard = creditCard
+        self.check = check
+        self.price = price
+        
+        self.employee = employee
+        self.approvedBy = approvedBy
+        self.createdBy = createdBy
+        self.lead = lead*/
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case _id, id, buyer1, buyer2
+        //, address, city, state, zip, system1, system2, promotion, installation, people, floorType, creditCard, check, price, employee, approvedBy, createdBy, lead
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        _id = try container.decodeIfPresent(String.self, forKey: ._id) ?? ""
+        id = try container.decodeIfPresent(String.self, forKey: .id) ?? ""
+        buyer1 = try container.decodeIfPresent(BuyerModel2.self, forKey: .buyer1) ?? BuyerModel2()
+        buyer2 = try container.decodeIfPresent(BuyerModel2.self, forKey: .buyer2) ?? BuyerModel2()
+        /*address = try container.decodeIfPresent(String.self, forKey: .address) ?? ""
+        city = try container.decodeIfPresent(String.self, forKey: .city) ?? ""
+        state = try container.decodeIfPresent(String.self, forKey: .state) ?? ""
+        zip = try container.decodeIfPresent(String.self, forKey: .zip) ?? ""
+        system1 = try container.decodeIfPresent(SystemModel.self, forKey: .system1) ?? SystemModel()
+        system2 = try container.decodeIfPresent(SystemModel.self, forKey: .system2) ?? SystemModel()
+        promotion = try container.decodeIfPresent(String.self, forKey: .promotion) ?? ""
+        installation = try container.decodeIfPresent(InstallModel.self, forKey: .installation) ?? InstallModel()
+        floorType = try container.decodeIfPresent(String.self, forKey: .floorType) ?? ""
+        people = try container.decodeIfPresent(Int.self, forKey: .people) ?? 0
+        creditCard = try container.decodeIfPresent(Bool.self, forKey: .creditCard) ?? false
+        check = try container.decodeIfPresent(Bool.self, forKey: .check) ?? false
+        price = try container.decodeIfPresent(PriceModel.self, forKey: .price) ?? PriceModel()
+        
+        employee = try container.decodeIfPresent(ApprovalModel.self, forKey: .employee) ?? ApprovalModel()
+        approvedBy = try container.decodeIfPresent(ApprovalModel.self, forKey: .approvedBy) ?? ApprovalModel()
+        lead = try container.decodeIfPresent(String.self, forKey: .lead) ?? ""
+        createdBy = try container.decodeIfPresent(String.self, forKey: .createdBy) ?? ""
+         */
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(_id, forKey: ._id)
+        try container.encode(id, forKey: .id)
+        try container.encode(buyer1, forKey: .buyer1)
+        try container.encode(buyer2, forKey: .buyer2)
+        /*try container.encode(address, forKey: .address)
+        try container.encode(city, forKey: .city)
+        try container.encode(state, forKey: .state)
+        try container.encode(zip, forKey: .zip)
+        try container.encode(system1, forKey: .system1)
+        try container.encode(system2, forKey: .system2)
+        try container.encode(promotion, forKey: .promotion)
+        try container.encode(installation, forKey: .installation)
+        try container.encode(people, forKey: .people)
+        try container.encode(floorType, forKey: .floorType)
+        try container.encode(creditCard, forKey: .creditCard)
+        try container.encode(check, forKey: .check)
+        try container.encode(price, forKey: .price)
+        
+        try container.encode(employee, forKey: .employee)
+        try container.encode(approvedBy, forKey: .approvedBy)
+        try container.encode(lead, forKey: .lead)
+        try container.encode(createdBy, forKey: .createdBy)
+         */
+    }
+}
+
+
+struct BuyerModel2: Identifiable, Codable {
+    var id: String
+    
+    var date: Date
+    
+    enum CodingKeys: String, CodingKey {
+        case  id,  date
+    }
+    
+    init(
+        
+        id: String = "",
+        
+        date: Date = Date()) {
+         
+            self.id = id
+     
+            self.date = date
+        }
+    
+    
 }
