@@ -40,6 +40,39 @@ struct AvatarView: View {
     }
 }
 
+struct AvatarView2: View {
+    @State var imageURL: String
+    
+    var size: CGFloat = 60
+    var body: some View {
+        
+        AsyncImage(url: URL(string: imageURL)) { phase in
+            switch phase {
+            case .empty:
+                ProgressView()
+            case let .success(image):
+                image
+                    .resizable()
+                    .scaledToFit()
+                    .scaleEffect(1.4)
+                    .frame(width: size, height: size)
+                    .clipShape(Circle())
+            case .failure:
+                Image(systemName: "person.circle.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: size, height: size)
+                    .clipShape(Circle())
+                // .foregroundColor(.gray)
+            @unknown default:
+                fatalError("Unhandled case")
+            }
+        }
+        .frame(width: size, height: size)
+        .clipShape(Circle())
+    }
+}
+
 struct SettingView: View {
     @ObservedObject var loginManager: ProfileManager
 

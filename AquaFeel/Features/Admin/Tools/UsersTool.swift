@@ -52,7 +52,9 @@ class UsersTool: NSObject, ObservableObject, MapTool, GMSMapViewDelegate {
         
         // Crear una vista para el círculo con las iniciales
         let circleView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-        circleView.backgroundColor = .blue // Puedes personalizar el color del círculo
+       
+        
+        
         circleView.layer.cornerRadius = 15 // Hacer que la vista sea un círculo
         circleView.clipsToBounds = true
         
@@ -60,8 +62,22 @@ class UsersTool: NSObject, ObservableObject, MapTool, GMSMapViewDelegate {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         label.textColor = .white // Puedes personalizar el color del texto
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 10)
+        label.font = UIFont.systemFont(ofSize: 10, weight: .bold)
         label.text = initials
+        let limit = 5
+        if let lastPosition = user.mLastConnected {
+            if lastPosition >= 0 && lastPosition <= limit {
+                circleView.backgroundColor = .green // Puedes personalizar el color del círculo
+                label.textColor = .blue
+            } else if lastPosition >= limit && lastPosition <= 100 {
+                circleView.backgroundColor = .blue // Puedes personalizar el color del círculo
+            } else {
+                circleView.backgroundColor = .red
+            }
+            
+        } else {
+            circleView.backgroundColor = .red
+        }
         
         // Agregar la etiqueta a la vista del círculo
         circleView.addSubview(label)

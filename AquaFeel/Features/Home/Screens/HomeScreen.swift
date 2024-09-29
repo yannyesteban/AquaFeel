@@ -95,6 +95,15 @@ struct HomeScreen: View {
                     .fixedSize(horizontal: false, vertical: true)
 
                 if lastPick == nil {
+                    
+                    NavigationLink {
+                        TaskListView(profile: profile, updated: $updated)
+                        
+                    } label: {
+                        Label("Task To Do", systemImage: "checklist")
+                    }
+                    
+                    
                     NavigationLink {
                         AppointmentList(profile: profile, updated: $updated, showLeads: true, filterMode: .today, userId: profile.info._id)
                     } label: {
@@ -387,6 +396,8 @@ struct HomeScreen: View {
         }
         .environmentObject(manager)
         .onAppear {
+            
+            print(".. start ..")
             Task {
                 // await NotificationManager.initialize(userId: profile.userId)
                 if profile.notifications {

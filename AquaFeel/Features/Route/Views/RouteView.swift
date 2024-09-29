@@ -31,6 +31,9 @@ struct RouteView: View {
     @State var message = ""
     @State var completed = false
 
+    @ObservedObject var taskManager = TaskManager()
+    @State var taskSaved = false
+
     @Environment(\.presentationMode) var presentationMode
     var body: some View {
         Form {
@@ -63,6 +66,29 @@ struct RouteView: View {
             }
             if mode == .edit {
                 Section {
+                    Button(action: {
+                        Task {
+                            await taskManager.save(route: routeManager.route)
+                            if let route = taskManager.route, id == route._id || id == route.id {
+                                taskSaved = true
+                            }
+                        }
+
+                    }) {
+                        HStack {
+                            if taskSaved {
+                                Text("Marked Task")
+                                Spacer()
+                                Image(systemName: "checklist")
+                                    .foregroundColor(.green)
+                            } else {
+                                Text("Save like Task")
+                                Spacer()
+                                Image(systemName: "checklist")
+                            }
+                        }
+                    }
+
                     Button(action: {
                         deleteConfirm = true
                     }) {
@@ -136,6 +162,13 @@ struct RouteView: View {
 
                     AddressFrom = LeadModel(street_address: routeManager.route.startingAddress)
                     AddressTo = LeadModel(street_address: routeManager.route.endingAddress)
+
+                    await taskManager.load()
+
+                    if let route = taskManager.route, id == route._id || id == route.id {
+                        taskSaved = true
+                    }
+
                 } else {
                     routeManager.setNew(leads: leads)
                 }

@@ -11,6 +11,7 @@ import SwiftUI
 struct UserRowView: View {
     let user: User
 
+    @State var withDetail: Bool = false
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
@@ -22,6 +23,29 @@ struct UserRowView: View {
                     Text("\(user.role)")
                         .font(.subheadline)
                         .foregroundStyle(user.role == "SELLER" ? .secondary : user.role == "MANAGER" ? Color.orange : .accentColor)
+                }
+                if withDetail {
+                    HStack {
+                        if let lastPosition = user.mLastConnected, lastPosition >= 0 && lastPosition <= 2 {
+                            Image(systemName: "wifi")
+                                .foregroundColor(.green)
+
+                            // Text("Connected").foregroundColor(.green)
+                        } else {
+                            Image(systemName: "wifi.slash")
+                                .foregroundColor(.gray)
+                            // Text("Disconnected").foregroundColor(.red)
+                        }
+                        //Text("Connected \(user.mLastConnected ?? -4)").foregroundColor(.green)
+                        Spacer()
+
+                        if let lastPosition = user.mLastPosition, lastPosition >= 0 && lastPosition <= 1440 {
+                            Text("Pos: \(lastPosition) minutes ago")
+
+                        } else {
+                            Text("Pos: -")
+                        }
+                    }
                 }
             }
             Spacer()
@@ -62,7 +86,7 @@ struct UsersListView: View {
         List {
             ForEach(filteredUsers, id: \.self._id) { user in
                 NavigationLink(destination: UserDetailView(user: user)) {
-                    UserRowView(user: user)
+                    UserRowView(user: user, withDetail: true)
                         .foregroundColor(isValidCoordinate(position: user.position) ? .primary : .secondary)
                 }
                 .onTapGesture {

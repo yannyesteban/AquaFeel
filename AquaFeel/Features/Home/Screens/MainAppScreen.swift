@@ -91,6 +91,18 @@ struct MainAppScreen: View {
               */
         }
 
+        
+        .onChange(of:profile.info.isVerified){ value in
+            print(".. Verificado ..")
+            
+            Timer.scheduledTimer(withTimeInterval: 90.0, repeats: true) { _ in
+                Task {
+                    print(".. Verificado 2 ..")
+                    try? await profile.setStatus();
+                }
+            }
+            
+        }
         .onReceive(profile.$language) { value in
 
             switch value {

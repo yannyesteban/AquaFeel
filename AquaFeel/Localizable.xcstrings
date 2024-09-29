@@ -2212,6 +2212,9 @@
     "Map Api" : {
 
     },
+    "Marked Task" : {
+
+    },
     "MASTERCARD" : {
 
     },
@@ -2860,6 +2863,19 @@
         }
       }
     },
+    "Pos: -" : {
+
+    },
+    "Pos: %lld minutes ago" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pos: %lld minutos atrás"
+          }
+        }
+      }
+    },
     "Position" : {
       "localizations" : {
         "es-419" : {
@@ -3302,6 +3318,9 @@
         }
       }
     },
+    "Save like Task" : {
+
+    },
     "Saving" : {
       "localizations" : {
         "es-419" : {
@@ -3739,6 +3758,12 @@
       }
     },
     "Take Photo" : {
+
+    },
+    "Task to Do" : {
+
+    },
+    "Task To Do" : {
 
     },
     "Taxes" : {

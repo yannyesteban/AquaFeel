@@ -9,6 +9,8 @@ import Foundation
 import MapKit
 import GoogleMaps
 
+
+
 func realDate(text: String) -> Date {
     
     let isoDateFormatter = ISO8601DateFormatter()
@@ -369,7 +371,14 @@ struct LeadModel: Codable, AddressProtocol, Equatable, Hashable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        id = try container.decode(String.self, forKey: .id)
+        
+        
+        
+        if container.contains(._id) {
+            id = try container.decode(String.self, forKey: ._id)
+        } else {
+            id = try container.decode(String.self, forKey: .id)
+        }
         business_name = try container.decodeIfPresent(String.self, forKey: .business_name) ?? ""
         first_name = try container.decodeIfPresent(String.self, forKey: .first_name) ?? ""
         last_name = try container.decodeIfPresent(String.self, forKey: .last_name) ?? ""
@@ -404,7 +413,9 @@ struct LeadModel: Codable, AddressProtocol, Equatable, Hashable {
             } catch {
                 // If it fails, try to decode status_id as a string and create an instance of StatusId
                 if let statusIdString = try? container.decode(String.self, forKey: .status_id) {
-                    status_id = StatusId(_id: statusIdString)
+                    
+                    
+                    status_id = StatusId(_id: statusIdString, name: getStatusName(id: statusIdString))
                 } else {
                     // If both options fail, rethrow the original error
                     throw error

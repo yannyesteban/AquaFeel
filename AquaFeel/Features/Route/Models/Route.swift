@@ -174,14 +174,35 @@ struct RouteModel: Codable {
         self.__v = __v
         self.leads = leads
     }
-    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        
+        id = try container.decodeIfPresent(String.self, forKey: .id) ?? ""
+        _id = try container.decodeIfPresent(String.self, forKey: ._id) ?? ""
+        name = try container.decode(String.self, forKey: .name)
+        startingAddress = try container.decode(String.self, forKey: .startingAddress)
+        endingAddress = try container.decode(String.self, forKey: .endingAddress)
+        startingAddressLong = try container.decode(String.self, forKey: .startingAddressLong)
+        startingAddressLat = try container.decode(String.self, forKey: .startingAddressLat)
+        endingAddressLong = try container.decode(String.self, forKey: .endingAddressLong)
+        endingAddressLat = try container.decode(String.self, forKey: .endingAddressLat)
+        createdBy = try container.decode(String.self, forKey: .createdBy)
+        createdOn = try container.decode(String.self, forKey: .createdOn)
+        updatedOn = try container.decode(String.self, forKey: .updatedOn)
+        userId = try container.decodeIfPresent(String.self, forKey: .userId) ?? ""
+        
+        leads = try container.decodeIfPresent([LeadModel].self, forKey: .leads) ?? []
+        
+        __v = try container.decode(Int.self, forKey: .__v)
+    }
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         //try container.encode(leads, forKey: .leads)
         
-        let leadsIds = leads.map { $0.id }
-        try container.encode(leadsIds, forKey: .leads)
-        
+        /*let leadsIds = leads.map { $0.id }
+        try container.encode(leadsIds, forKey: .leads)*/
+        try container.encode(leads, forKey: .leads)
         try container.encode(_id, forKey: .id)
         //try container.encode(_id, forKey: .id)
         try container.encode(name, forKey: .name)

@@ -80,8 +80,8 @@ struct LocationMap: View {
                     }
                 }
                 
-                var longitude = -98.5795//-122.02849058
-                var latitude = 39.8283//37.33037224
+                let longitude = -98.5795//-122.02849058
+                let latitude = 39.8283//37.33037224
                 
                 
                 

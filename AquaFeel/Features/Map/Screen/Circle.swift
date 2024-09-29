@@ -133,6 +133,39 @@ func getUIImage(name: String)->StatusUIView{
     
 }
 
+func getStatusName(id: String) -> String {
+    switch id {
+    case "613bb202d6113e00169fef86":
+        return "UC"    // Actualizado a "UC"
+    case "613bb254d6113e00169fef89":
+        return "NI"    // Actualizado a "NI"
+    case "613bb38dd6113e00169fef9e":
+        return "INGL"  // Actualizado a "INGL"
+    case "613bb40bd6113e00169fefa3":
+        return "RENT"  // Actualizado a "RENT"
+    case "613bb468d6113e00169fefa6":
+        return "R"     // Actualizado a "R"
+    case "613bb4e0d6113e00169fefa9":
+        return "APPT"  // Actualizado a "APPT"
+    case "613bb535d6113e00169fefac":
+        return "DEMO"  // Actualizado a "DEMO"
+    case "613bb5e1d6113e00169fefaf":
+        return "WIN"   // Actualizado a "WIN"
+    case "613bb64ed6113e00169fefb2":
+        return "NHO"   // Actualizado a "NHO"
+    case "613bb6b3d6113e00169fefb5":
+        return "SM"    // Actualizado a "SM"
+    case "613bb70ad6113e00169fefb8":
+        return "MYCL"  // Actualizado a "MYCL"
+    case "644bf787cea03d0f64217f19":
+        return "NM"    // Actualizado a "NM"
+    case "644d2f65cea03d0f642199b5":
+        return "R2"    // Actualizado a "R2"
+    default:
+        return "" // Retorna "Unknown" para casos no reconocidos
+    }
+}
+
 func getStatusType(from statusString: String) -> StatusType {
     let lowercaseStatus = statusString.lowercased()
     

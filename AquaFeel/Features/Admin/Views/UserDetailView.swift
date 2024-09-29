@@ -36,11 +36,12 @@ struct UserDetailView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Form {
-                Text(avatarUrl)
+                //Text(avatarUrl)
                 if let avatar = user.avatar {
                     HStack(alignment: .center) {
                         Spacer()
                         //AvatarView(imageURL: URL(string: avatarUrl) ?? URL(string: "defaultAvatarURL")!, size: 200)
+                        AvatarView2(imageURL: avatarUrl, size: 200)
                         Spacer()
                     }
                 }
@@ -56,6 +57,24 @@ struct UserDetailView: View {
                     UserText(title: "Updated at:", value: updatedAt)
                 }
 
+                
+                UserText(title: "Last Connected:", value: formatDate(user.lastConnected?.formattedDate2() ?? "") ?? "-")
+                UserText(title: "Last Position:", value: formatDate(user.lastPosition?.formattedDate2() ?? "") ?? "-")
+                
+                if let lastPosition = user.mLastConnected, lastPosition >= 0 && lastPosition <= 2 {
+                    Image(systemName: "wifi")
+                        .foregroundColor(.green)
+                    
+                    // Text("Connected").foregroundColor(.green)
+                } else {
+                    Image(systemName: "wifi.slash")
+                        .foregroundColor(.gray)
+                    // Text("Disconnected").foregroundColor(.red)
+                }
+                /*
+                if let lastPosition = formatDate(formatDate(user.lastPosition?.formattedDate2() ?? "") ?? "") {
+                    UserText(title: "Last Position:", value: lastPosition)
+                }*/
                 Section("Address") {
                     if placeManager.selectedPlace != nil {
                         Text(placeManager.selectedPlace?.formatted_address ?? "...")

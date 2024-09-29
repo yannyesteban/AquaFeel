@@ -47,6 +47,12 @@ struct ProfileLocation: Codable {
     let id: String
     let latitude: String
     let longitude: String
+    var status: String = ""
+}
+
+struct ProfileStatus: Codable {
+    let id: String
+    var status: String = ""
 }
 
 struct ProfileLocationResponse: Codable, NeedStatusCode {
@@ -93,7 +99,6 @@ class ProfileManager: LoginProtocol, ObservableObject {
     @Published var notifications = false
     @Published var timeBefore = 60
     @Published var useCalendar = false
-    
 
     var store: UserData = UserData()
     var saveAction: (Bool) -> Void = { _ in
@@ -231,7 +236,6 @@ class ProfileManager: LoginProtocol, ObservableObject {
                 self.timeBefore = self.store.timeBefore
                 self.useCalendar = self.store.useCalendar
                 self.avatar = self.store.info.avatar ?? ""
-                
             }
 
         } catch {
@@ -291,6 +295,33 @@ class ProfileManager: LoginProtocol, ObservableObject {
             DispatchQueue.main.async {
                 self.waiting = false
             }
+            throw error
+        }
+    }
+
+    func setStatus() async throws {
+        let body = ProfileStatus(id: userId, status: "connected")
+
+        let path = "/profile/set-status"
+        let params: [String: String?]? = nil
+        let method = "PUT"
+        let scheme = APIValues.scheme
+        let apiInfo = ApiConfig(scheme: scheme, method: method, host: APIValues.host, path: path, token: token, params: params, port: APIValues.port)
+
+        // let apiInfo = ApiConfig(method: "PUT", host: "api.aquafeelvirginia.com", path: "/profile/set-location", token: token, params: nil)
+
+        do {
+            let response: ProfileLocationResponse = try await fetching(body: body, config: apiInfo)
+
+            if response.statusCode == 201 {
+                DispatchQueue.main.async {
+                    self.waiting = false
+                }
+            } else {
+                print("Error in set the localization")
+            }
+
+        } catch {
             throw error
         }
     }
@@ -366,34 +397,34 @@ class ProfileManager: LoginProtocol, ObservableObject {
 
         return ""
     }
-    
+
     func uploadAvatar(image: UIImage) {
         guard let url = URL(string: "\(APIValues.scheme)://\(APIValues.host):\(APIValues.port)/profile/upload-avatar") else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        
+
         let boundary = UUID().uuidString
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        
+
         var data = Data()
         data.append("--\(boundary)\r\n".data(using: .utf8)!)
         data.append("Content-Disposition: form-data; name=\"file\"; filename=\"profile.jpg\"\r\n".data(using: .utf8)!)
         data.append("Content-Type: image/jpeg\r\n\r\n".data(using: .utf8)!)
         data.append(image.jpegData(compressionQuality: 0.8)!)
         data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
-        
-        URLSession.shared.uploadTask(with: request, from: data) { responseData, response, error in
+
+        URLSession.shared.uploadTask(with: request, from: data) { responseData, _, error in
             if let error = error {
                 print("Error uploading image: \(error)")
                 return
             }
-            
+
             guard let responseData = responseData else {
                 print("No data received in response")
                 return
             }
-            
+
             let decoder = JSONDecoder()
             do {
                 let object = try decoder.decode(ProfileResponse.self, from: responseData)
@@ -404,20 +435,16 @@ class ProfileManager: LoginProtocol, ObservableObject {
                         components.host = APIValues.host
                         components.path = "/uploads/" + avatar
                         components.port = Int(APIValues.port)
-                        
+
                         self.info.avatar = components.url?.absoluteString ?? ""
                         self.avatar = components.url?.absoluteString ?? ""
-                       
                     }
-                    
                 }
-              
-            }catch {
+
+            } catch {
                 print(error.localizedDescription)
             }
-            
-            
-            
+
             if let jsonResponse = try? JSONSerialization.jsonObject(with: responseData, options: []) {
                 print("Response JSON: \(jsonResponse)")
             }
@@ -440,6 +467,11 @@ func loadFile<T: Codable>(name: String) async throws -> T {
     }
 
     do {
+        /*
+        if let jsonString = String(data: data, encoding: .utf8) {
+            print(jsonString)
+        }
+         */
         let userData = try JSONDecoder().decode(T.self, from: data)
         return userData
     } catch {

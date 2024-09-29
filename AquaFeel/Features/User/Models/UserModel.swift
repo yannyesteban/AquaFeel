@@ -104,6 +104,11 @@ struct User: Codable {
     var latitude: Double?
     var longitude: Double?
     var avatar: String?
+    var mLastConnected: Int?
+    var mLastPosition: Int?
+    
+    var lastConnected: Date? = nil
+    var lastPosition: Date? = nil
     
     var position: CLLocationCoordinate2D {
         get {
@@ -172,6 +177,10 @@ struct User: Codable {
         case latitude
         case longitude
         case avatar
+        case mLastConnected
+        case mLastPosition
+        case lastConnected
+        case lastPosition
     }
     
     init(from decoder: Decoder) throws {
@@ -200,6 +209,24 @@ struct User: Codable {
         latitude = try container.decodeIfPresent(Double.self, forKey: User.CodingKeys.latitude)
         longitude = try container.decodeIfPresent(Double.self, forKey: User.CodingKeys.longitude)
         avatar = try container.decodeIfPresent(String.self, forKey: User.CodingKeys.avatar)
+        
+        mLastConnected = try container.decodeIfPresent(Int.self, forKey: User.CodingKeys.mLastConnected)
+        mLastPosition = try container.decodeIfPresent(Int.self, forKey: User.CodingKeys.mLastPosition)
+        
+        if let text = try container.decodeIfPresent(String.self, forKey: .lastConnected) {
+            lastConnected = realDate(text: text)
+        } else {
+            lastConnected = nil
+        }
+        
+        
+        if let text2 = try container.decodeIfPresent(String.self, forKey: .lastPosition) {
+            lastPosition = realDate(text: text2)
+        } else {
+            lastPosition = nil
+        }
+        
+        
     }
     
     func encode(to encoder: Encoder) throws {
@@ -235,7 +262,7 @@ func fetch<T2: Codable, T: Decodable>(body: T2, config: ApiConfig, completion: @
     // URL of the API endpoint for updates
     
     var components = URLComponents()
-    components.scheme = config.scheme ?? "https"
+    components.scheme = config.scheme //?? "https"
     components.host = config.host
     components.path = config.path
     components.port = Int(config.port ?? "80")

@@ -200,6 +200,22 @@ struct LeadListScreen: View {
                         .foregroundColor(.red)
                     }
                 }
+                ToolbarItemGroup(placement: .topBarTrailing) {
+                    NavigationLink {
+                        AppointmentList(profile: profile, updated: $updated, filterMode: .favorite, userId: profile.info._id)
+                        
+                    } label: {
+                        Image(systemName: "heart.fill")
+                            .foregroundColor(.red)
+                    }
+                    NavigationLink {
+                        CreateLead(profile: profile, lead: $lead, mode: 1, manager: manager, updated: $updated) { _ in
+                        }
+                        
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                }
             }
             .navigationBarTitle("Leads")
 
@@ -207,7 +223,7 @@ struct LeadListScreen: View {
                 VStack {
                     Divider()
                         .padding(.horizontal, 20)
-
+/*
                         .toolbar {
                             ToolbarItem(placement: .automatic) {
                                 // ToolbarItemGroup(placement: .automatic){
@@ -220,7 +236,7 @@ struct LeadListScreen: View {
                                     Image(systemName: "plus")
                                 }
                             }
-                        }
+                        }*/
                     // .toolbarBackground(.hidden, for: .navigationBar)
 
                     TextField("search by...", text: $manager.filter.textFilter)

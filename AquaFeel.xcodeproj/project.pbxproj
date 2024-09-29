@@ -44,6 +44,7 @@
 		2B17FACB2B7D820300445990 /* GoogleMapsCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B17FAC82B7D820200445990 /* GoogleMapsCore.xcframework */; };
 		2B1CB9262B6540A7003CE11A /* UIViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1CB9252B6540A7003CE11A /* UIViewTest.swift */; };
 		2B1CB9292B657422003CE11A /* LeadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1CB9282B657422003CE11A /* LeadModel.swift */; };
+		2B1CEAB92C91EEDF00FA440C /* TaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1CEAB82C91EEDF00FA440C /* TaskListView.swift */; };
 		2B217BFE2BABA7EC0055F1D4 /* LeadsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B217BFD2BABA7EC0055F1D4 /* LeadsManager.swift */; };
 		2B29BDCA2BCD96D30044D7E1 /* LeadHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B29BDC92BCD96D30044D7E1 /* LeadHistoryView.swift */; };
 		2B29BDCD2BCDDDCE0044D7E1 /* TraceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B29BDCC2BCDDDCE0044D7E1 /* TraceManager.swift */; };
@@ -91,6 +92,7 @@
 		2B6707B62C342CD000A56293 /* DrawingPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6707B52C342CD000A56293 /* DrawingPad.swift */; };
 		2B6707B82C347FAB00A56293 /* SignView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6707B72C347FAB00A56293 /* SignView.swift */; };
 		2B693A5C2BAA43010048B6A5 /* AquaCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B693A5B2BAA43010048B6A5 /* AquaCalendar.swift */; };
+		2B6D5E212C9B261000DCB8F7 /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D5E202C9B261000DCB8F7 /* TaskManager.swift */; };
 		2B6EE6D32B9F88DB00FAFED7 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6EE6D22B9F88DB00FAFED7 /* Route.swift */; };
 		2B6EE6D52B9F8BE800FAFED7 /* RouteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6EE6D42B9F8BE800FAFED7 /* RouteManager.swift */; };
 		2B6F02322C2DC69700C15335 /* OrderPDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6F02312C2DC69700C15335 /* OrderPDFView.swift */; };
@@ -301,6 +303,7 @@
 		2B17FAC82B7D820200445990 /* GoogleMapsCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = GoogleMapsCore.xcframework; sourceTree = "<group>"; };
 		2B1CB9252B6540A7003CE11A /* UIViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewTest.swift; sourceTree = "<group>"; };
 		2B1CB9282B657422003CE11A /* LeadModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadModel.swift; sourceTree = "<group>"; };
+		2B1CEAB82C91EEDF00FA440C /* TaskListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListView.swift; sourceTree = "<group>"; };
 		2B217BFD2BABA7EC0055F1D4 /* LeadsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadsManager.swift; sourceTree = "<group>"; };
 		2B29BDC92BCD96D30044D7E1 /* LeadHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadHistoryView.swift; sourceTree = "<group>"; };
 		2B29BDCC2BCDDDCE0044D7E1 /* TraceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraceManager.swift; sourceTree = "<group>"; };
@@ -350,6 +353,7 @@
 		2B6707B52C342CD000A56293 /* DrawingPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingPad.swift; sourceTree = "<group>"; };
 		2B6707B72C347FAB00A56293 /* SignView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignView.swift; sourceTree = "<group>"; };
 		2B693A5B2BAA43010048B6A5 /* AquaCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AquaCalendar.swift; sourceTree = "<group>"; };
+		2B6D5E202C9B261000DCB8F7 /* TaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
 		2B6EE6D22B9F88DB00FAFED7 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		2B6EE6D42B9F8BE800FAFED7 /* RouteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteManager.swift; sourceTree = "<group>"; };
 		2B6F02312C2DC69700C15335 /* OrderPDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPDFView.swift; sourceTree = "<group>"; };
@@ -743,6 +747,23 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		2B1CEAB62C91EE2300FA440C /* Task */ = {
+			isa = PBXGroup;
+			children = (
+				2B6D5E1F2C9B25F700DCB8F7 /* Managers */,
+				2B1CEAB72C91EE2A00FA440C /* Views */,
+			);
+			path = Task;
+			sourceTree = "<group>";
+		};
+		2B1CEAB72C91EE2A00FA440C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2B1CEAB82C91EEDF00FA440C /* TaskListView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		2B204C6B2BEE79F600928D05 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
@@ -977,6 +998,14 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
+		2B6D5E1F2C9B25F700DCB8F7 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				2B6D5E202C9B261000DCB8F7 /* TaskManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
 		2B6EE6CE2B9F889900FAFED7 /* Route */ = {
 			isa = PBXGroup;
 			children = (
@@ -1115,7 +1144,6 @@
 		2B8F1C732BF128ED0040EFD9 /* Offline */ = {
 			isa = PBXGroup;
 			children = (
-				2B8F1C752BF129100040EFD9 /* Models */,
 				2B8F1C742BF128FA0040EFD9 /* Managers */,
 			);
 			path = Offline;
@@ -1127,13 +1155,6 @@
 				2B8F1C762BF129340040EFD9 /* OfflineManager.swift */,
 			);
 			path = Managers;
-			sourceTree = "<group>";
-		};
-		2B8F1C752BF129100040EFD9 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		2B90D7A72C23293500778829 /* Contract */ = {
@@ -1265,6 +1286,7 @@
 		2BA8A5A72B5434B60004CDCD /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				2B1CEAB62C91EE2300FA440C /* Task */,
 				2B04F7E92C6BD9680099F03D /* CreditCard */,
 				2B5D08A42C516F9A005041D5 /* Credit */,
 				2BAB44AD2C46EB25008D08CB /* Model */,
@@ -1770,6 +1792,7 @@
 				2B4EFE8C2BBC814A0074963F /* ClusterTool.swift in Sources */,
 				2B4295AF2C545A8B00252312 /* CreditFormView.swift in Sources */,
 				2B29D7732BB89CEC00E0AF5D /* HomeMapsRepresentable.swift in Sources */,
+				2B6D5E212C9B261000DCB8F7 /* TaskManager.swift in Sources */,
 				2B4713172B842D9D0020D66F /* testUI.swift in Sources */,
 				2B75B34E2B5F24C000BDD12C /* ProfileView.swift in Sources */,
 				2BAB44A82C46DC19008D08CB /* BrandListView.swift in Sources */,
@@ -1831,6 +1854,7 @@
 				2B8160672BEA813C0045AAC4 /* AppleMapsViewController.swift in Sources */,
 				2B14113B2C21F54800CC933D /* OrderView.swift in Sources */,
 				2B31EBCC2BBB581F00F1B8F8 /* GoogleApis.swift in Sources */,
+				2B1CEAB92C91EEDF00FA440C /* TaskListView.swift in Sources */,
 				2B00AAD12C2C694000B9E919 /* workOrderPDF.swift in Sources */,
 				2BCA0B7D2B7BF026006D3993 /* FilterOption.swift in Sources */,
 				2B0008002C07D09200AA9A44 /* ResourceForm.swift in Sources */,
@@ -2114,7 +2138,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.2;
+				MARKETING_VERSION = 2.0.3;
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = aquafeelvirginia.com.AquaFeel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2163,7 +2187,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.2;
+				MARKETING_VERSION = 2.0.3;
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = aquafeelvirginia.com.AquaFeel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2194,7 +2218,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.2;
+				MARKETING_VERSION = 2.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = aquafeelvirginia.com.AquaFeel.AppointmentWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2224,7 +2248,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.2;
+				MARKETING_VERSION = 2.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = aquafeelvirginia.com.AquaFeel.AppointmentWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
