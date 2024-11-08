@@ -18,7 +18,6 @@ struct TabA: View {
                 .font(.system(size: 70, weight: .bold))
            
         }
-       
         
     }
 }
