@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -39,7 +39,6 @@
 		2B14113D2C21F7E100CC933D /* OrderFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B14113C2C21F7E100CC933D /* OrderFormView.swift */; };
 		2B15C5CA2BD873E900E55D98 /* UserManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B15C5C92BD873E900E55D98 /* UserManagerView.swift */; };
 		2B15C5CE2BD8774E00E55D98 /* UserFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B15C5CD2BD8774E00E55D98 /* UserFormView.swift */; };
-		2B17FAC92B7D820200445990 /* GoogleMaps.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B17FAC62B7D820200445990 /* GoogleMaps.xcframework */; };
 		2B17FACA2B7D820300445990 /* GoogleMapsBase.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B17FAC72B7D820200445990 /* GoogleMapsBase.xcframework */; };
 		2B17FACB2B7D820300445990 /* GoogleMapsCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B17FAC82B7D820200445990 /* GoogleMapsCore.xcframework */; };
 		2B1CB9262B6540A7003CE11A /* UIViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1CB9252B6540A7003CE11A /* UIViewTest.swift */; };
@@ -60,6 +59,7 @@
 		2B31EBCE2BBB630700F1B8F8 /* MarkTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B31EBCD2BBB630700F1B8F8 /* MarkTool.swift */; };
 		2B3502392B97A10E00190FAC /* PhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3502382B97A10E00190FAC /* PhoneView.swift */; };
 		2B3697EC2B87EDDE008B339B /* SnackbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3697EB2B87EDDE008B339B /* SnackbarView.swift */; };
+		2B36A5822CB7039F00D81E52 /* ResourcePDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B36A5812CB7039F00D81E52 /* ResourcePDFView.swift */; };
 		2B3A2C052B782596003EED04 /* LeadList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3A2C042B782596003EED04 /* LeadList.swift */; };
 		2B3BFC002B5C1F3C00069F99 /* ProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3BFBFF2B5C1F3C00069F99 /* ProfileManager.swift */; };
 		2B3EA0462BD9CE7000AF3174 /* UserListBlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3EA0452BD9CE7000AF3174 /* UserListBlockView.swift */; };
@@ -128,6 +128,9 @@
 		2BA43D1A2B5B305300960681 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA43D192B5B305300960681 /* LoginView.swift */; };
 		2BA43D1C2B5B322300960681 /* Test3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA43D1B2B5B322300960681 /* Test3.swift */; };
 		2BA484762B9A2FB300247BD0 /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA484752B9A2FB300247BD0 /* RegistrationView.swift */; };
+		2BA4D5972CAB0B6600784C76 /* GoogleMaps.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B17FAC62B7D820200445990 /* GoogleMaps.xcframework */; };
+		2BA4D59F2CAB0C0200784C76 /* GoogleMapsUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA4D59E2CAB0C0200784C76 /* GoogleMapsUtils.framework */; };
+		2BA4D5A02CAB0C0200784C76 /* GoogleMapsUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA4D59E2CAB0C0200784C76 /* GoogleMapsUtils.framework */; };
 		2BA721E92BE295FE008B4133 /* RouteAppleMapScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA721E82BE295FE008B4133 /* RouteAppleMapScreen.swift */; };
 		2BA721EB2BE2E77C008B4133 /* NewUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA721EA2BE2E77C008B4133 /* NewUserView.swift */; };
 		2BA8A5652B541C0C0004CDCD /* AquaFeelApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA8A5642B541C0C0004CDCD /* AquaFeelApp.swift */; };
@@ -184,6 +187,12 @@
 		2BB3B5A22BF67CFF00AD9754 /* GeneralConstantsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB3B5A12BF67CFF00AD9754 /* GeneralConstantsModel.swift */; };
 		2BB70DF22C10B6C4007CE741 /* Stats1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB70DF12C10B6C4007CE741 /* Stats1View.swift */; };
 		2BB966CE2B8BED73007E1442 /* PP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB966CD2B8BED73007E1442 /* PP.swift */; };
+		2BB983D82CAC823300B890A3 /* LeadResourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB983D72CAC822000B890A3 /* LeadResourceModel.swift */; };
+		2BB983DD2CAC83EE00B890A3 /* LeadResourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB983DC2CAC83EE00B890A3 /* LeadResourceManager.swift */; };
+		2BB983E02CAC879300B890A3 /* LeadResourceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB983DF2CAC879300B890A3 /* LeadResourceListView.swift */; };
+		2BB983E22CAC98A900B890A3 /* LeadResourceEditList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB983E12CAC98A900B890A3 /* LeadResourceEditList.swift */; };
+		2BB983E42CAC997E00B890A3 /* LeadResourceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB983E32CAC997E00B890A3 /* LeadResourceDetailView.swift */; };
+		2BB983E62CAC9B0F00B890A3 /* LeadResourceForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB983E52CAC9B0F00B890A3 /* LeadResourceForm.swift */; };
 		2BBCD9CD2BCF161200B8C282 /* AdminManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBCD9CC2BCF161200B8C282 /* AdminManager.swift */; };
 		2BBCD9D02BCF316C00B8C282 /* UsersTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBCD9CF2BCF316C00B8C282 /* UsersTool.swift */; };
 		2BBCD9D22BCF45E900B8C282 /* UserDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBCD9D12BCF45E900B8C282 /* UserDetailView.swift */; };
@@ -194,6 +203,8 @@
 		2BBD48D22BE3F10200633448 /* DatePickerString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBD48D12BE3F10200633448 /* DatePickerString.swift */; };
 		2BBD48D42BE3F12200633448 /* LeadStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBD48D32BE3F12200633448 /* LeadStatusView.swift */; };
 		2BBDA2F92B90FD160073F43B /* EquitableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBDA2F82B90FD160073F43B /* EquitableView.swift */; };
+		2BBEFD062CC9854400460E32 /* CustomerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBEFD052CC9854400460E32 /* CustomerModel.swift */; };
+		2BBEFD082CC985D800460E32 /* CustomerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBEFD072CC985CB00460E32 /* CustomerManager.swift */; };
 		2BC6CCED2B9F9CF600C7DA19 /* RouteListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC6CCEC2B9F9CF600C7DA19 /* RouteListView.swift */; };
 		2BC9ACA12C482F4300A59D81 /* LeadWorkOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC9ACA02C482F4300A59D81 /* LeadWorkOrder.swift */; };
 		2BCA0B7D2B7BF026006D3993 /* FilterOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCA0B7C2B7BF026006D3993 /* FilterOption.swift */; };
@@ -227,7 +238,6 @@
 		2BED59BE2B8552A20094CD7E /* AddressField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BED59BD2B8552A20094CD7E /* AddressField.swift */; };
 		2BED59C02B85549A0094CD7E /* AddressSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BED59BF2B85549A0094CD7E /* AddressSelector.swift */; };
 		2BED97C92B8CFE6A0043A6F3 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BED97C82B8CFE6A0043A6F3 /* UserManager.swift */; };
-		2BF011052B900AEF0075B629 /* GoogleMapsUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BF011042B900AEF0075B629 /* GoogleMapsUtils.framework */; };
 		2BF611312BC83C2600918F15 /* LeadLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF611302BC83C2600918F15 /* LeadLocationView.swift */; };
 		2BF6BE0C2B72C0FE0016FB39 /* PathOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF6BE0B2B72C0FE0016FB39 /* PathOptionView.swift */; };
 /* End PBXBuildFile section */
@@ -243,16 +253,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		2BA8A57C2B541CF70004CDCD /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		2BCE71C32C1A1D67009387D8 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -319,6 +319,7 @@
 		2B31EBCD2BBB630700F1B8F8 /* MarkTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkTool.swift; sourceTree = "<group>"; };
 		2B3502382B97A10E00190FAC /* PhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneView.swift; sourceTree = "<group>"; };
 		2B3697EB2B87EDDE008B339B /* SnackbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackbarView.swift; sourceTree = "<group>"; };
+		2B36A5812CB7039F00D81E52 /* ResourcePDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcePDFView.swift; sourceTree = "<group>"; };
 		2B3A2C042B782596003EED04 /* LeadList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadList.swift; sourceTree = "<group>"; };
 		2B3BFBFF2B5C1F3C00069F99 /* ProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManager.swift; sourceTree = "<group>"; };
 		2B3EA0452BD9CE7000AF3174 /* UserListBlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListBlockView.swift; sourceTree = "<group>"; };
@@ -389,6 +390,7 @@
 		2BA43D192B5B305300960681 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		2BA43D1B2B5B322300960681 /* Test3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test3.swift; sourceTree = "<group>"; };
 		2BA484752B9A2FB300247BD0 /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
+		2BA4D59E2CAB0C0200784C76 /* GoogleMapsUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMapsUtils.framework; sourceTree = "<group>"; };
 		2BA721E82BE295FE008B4133 /* RouteAppleMapScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteAppleMapScreen.swift; sourceTree = "<group>"; };
 		2BA721EA2BE2E77C008B4133 /* NewUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserView.swift; sourceTree = "<group>"; };
 		2BA8A5612B541C0C0004CDCD /* AquaFeel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AquaFeel.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -446,6 +448,12 @@
 		2BB3B5A12BF67CFF00AD9754 /* GeneralConstantsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralConstantsModel.swift; sourceTree = "<group>"; };
 		2BB70DF12C10B6C4007CE741 /* Stats1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stats1View.swift; sourceTree = "<group>"; };
 		2BB966CD2B8BED73007E1442 /* PP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PP.swift; sourceTree = "<group>"; };
+		2BB983D72CAC822000B890A3 /* LeadResourceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadResourceModel.swift; sourceTree = "<group>"; };
+		2BB983DC2CAC83EE00B890A3 /* LeadResourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadResourceManager.swift; sourceTree = "<group>"; };
+		2BB983DF2CAC879300B890A3 /* LeadResourceListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadResourceListView.swift; sourceTree = "<group>"; };
+		2BB983E12CAC98A900B890A3 /* LeadResourceEditList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadResourceEditList.swift; sourceTree = "<group>"; };
+		2BB983E32CAC997E00B890A3 /* LeadResourceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadResourceDetailView.swift; sourceTree = "<group>"; };
+		2BB983E52CAC9B0F00B890A3 /* LeadResourceForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadResourceForm.swift; sourceTree = "<group>"; };
 		2BBCD9CC2BCF161200B8C282 /* AdminManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminManager.swift; sourceTree = "<group>"; };
 		2BBCD9CF2BCF316C00B8C282 /* UsersTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersTool.swift; sourceTree = "<group>"; };
 		2BBCD9D12BCF45E900B8C282 /* UserDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailView.swift; sourceTree = "<group>"; };
@@ -456,6 +464,8 @@
 		2BBD48D12BE3F10200633448 /* DatePickerString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerString.swift; sourceTree = "<group>"; };
 		2BBD48D32BE3F12200633448 /* LeadStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadStatusView.swift; sourceTree = "<group>"; };
 		2BBDA2F82B90FD160073F43B /* EquitableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquitableView.swift; sourceTree = "<group>"; };
+		2BBEFD052CC9854400460E32 /* CustomerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerModel.swift; sourceTree = "<group>"; };
+		2BBEFD072CC985CB00460E32 /* CustomerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerManager.swift; sourceTree = "<group>"; };
 		2BC6CCEC2B9F9CF600C7DA19 /* RouteListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteListView.swift; sourceTree = "<group>"; };
 		2BC9ACA02C482F4300A59D81 /* LeadWorkOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadWorkOrder.swift; sourceTree = "<group>"; };
 		2BCA0B7C2B7BF026006D3993 /* FilterOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterOption.swift; sourceTree = "<group>"; };
@@ -491,17 +501,20 @@
 		2BED59BD2B8552A20094CD7E /* AddressField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressField.swift; sourceTree = "<group>"; };
 		2BED59BF2B85549A0094CD7E /* AddressSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSelector.swift; sourceTree = "<group>"; };
 		2BED97C82B8CFE6A0043A6F3 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
-		2BF011042B900AEF0075B629 /* GoogleMapsUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMapsUtils.framework; sourceTree = "<group>"; };
 		2BF611302BC83C2600918F15 /* LeadLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadLocationView.swift; sourceTree = "<group>"; };
 		2BF6BE0B2B72C0FE0016FB39 /* PathOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathOptionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		2B87D4E62CC00ABB00BC6F6F /* Views */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Views; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		2BA8A55E2B541C0C0004CDCD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2BF011052B900AEF0075B629 /* GoogleMapsUtils.framework in Frameworks */,
+				2BA4D59F2CAB0C0200784C76 /* GoogleMapsUtils.framework in Frameworks */,
 				2B905FDC2B66AF4B00FFED03 /* CoreTelephony.framework in Frameworks */,
 				2BA8A59E2B541DD40004CDCD /* UIKit.framework in Frameworks */,
 				2BA8A59C2B541DCB0004CDCD /* SystemConfiguration.framework in Frameworks */,
@@ -510,10 +523,10 @@
 				2BA8A5962B541DAE0004CDCD /* Metal.framework in Frameworks */,
 				2BA8A5942B541DA40004CDCD /* libz.tbd in Frameworks */,
 				2BA8A5922B541D9B0004CDCD /* libc++.tbd in Frameworks */,
-				2B17FAC92B7D820200445990 /* GoogleMaps.xcframework in Frameworks */,
-				2B17FACA2B7D820300445990 /* GoogleMapsBase.xcframework in Frameworks */,
-				2BA8A5902B541D900004CDCD /* ImageIO.framework in Frameworks */,
 				2B17FACB2B7D820300445990 /* GoogleMapsCore.xcframework in Frameworks */,
+				2B17FACA2B7D820300445990 /* GoogleMapsBase.xcframework in Frameworks */,
+				2BA4D5972CAB0B6600784C76 /* GoogleMaps.xcframework in Frameworks */,
+				2BA8A5902B541D900004CDCD /* ImageIO.framework in Frameworks */,
 				2BA8A58E2B541D820004CDCD /* GLKit.framework in Frameworks */,
 				2BA8A58C2B541D780004CDCD /* CoreText.framework in Frameworks */,
 				2BA8A5882B541D660004CDCD /* CoreLocation.framework in Frameworks */,
@@ -530,6 +543,7 @@
 			files = (
 				2BCE71B22C1A1D66009387D8 /* SwiftUI.framework in Frameworks */,
 				2BCE71B02C1A1D66009387D8 /* WidgetKit.framework in Frameworks */,
+				2BA4D5A02CAB0C0200784C76 /* GoogleMapsUtils.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1249,7 +1263,10 @@
 		2BA8A5722B541CF70004CDCD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2BF011042B900AEF0075B629 /* GoogleMapsUtils.framework */,
+				2BA4D59E2CAB0C0200784C76 /* GoogleMapsUtils.framework */,
+				2B17FAC62B7D820200445990 /* GoogleMaps.xcframework */,
+				2B17FAC72B7D820200445990 /* GoogleMapsBase.xcframework */,
+				2B17FAC82B7D820200445990 /* GoogleMapsCore.xcframework */,
 				2B905FDB2B66AF4B00FFED03 /* CoreTelephony.framework */,
 				2BA8A59D2B541DD40004CDCD /* UIKit.framework */,
 				2BA8A59B2B541DCB0004CDCD /* SystemConfiguration.framework */,
@@ -1266,9 +1283,6 @@
 				2BA8A5832B541D550004CDCD /* CoreGraphics.framework */,
 				2BA8A5812B541D4E0004CDCD /* CoreData.framework */,
 				2BA8A57F2B541D450004CDCD /* Accelerate.framework */,
-				2B17FAC62B7D820200445990 /* GoogleMaps.xcframework */,
-				2B17FAC72B7D820200445990 /* GoogleMapsBase.xcframework */,
-				2B17FAC82B7D820200445990 /* GoogleMapsCore.xcframework */,
 				2BCE71AF2C1A1D65009387D8 /* WidgetKit.framework */,
 				2BCE71B12C1A1D66009387D8 /* SwiftUI.framework */,
 			);
@@ -1286,6 +1300,8 @@
 		2BA8A5A72B5434B60004CDCD /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				2BBEFD022CC983C000460E32 /* Customer */,
+				2BB983D52CAC81AB00B890A3 /* LeadResource */,
 				2B1CEAB62C91EE2300FA440C /* Task */,
 				2B04F7E92C6BD9680099F03D /* CreditCard */,
 				2B5D08A42C516F9A005041D5 /* Credit */,
@@ -1515,6 +1531,44 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		2BB983D52CAC81AB00B890A3 /* LeadResource */ = {
+			isa = PBXGroup;
+			children = (
+				2BB983DE2CAC877A00B890A3 /* Views */,
+				2BB983DB2CAC839D00B890A3 /* Managers */,
+				2BB983D62CAC821800B890A3 /* Models */,
+			);
+			path = LeadResource;
+			sourceTree = "<group>";
+		};
+		2BB983D62CAC821800B890A3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2BB983D72CAC822000B890A3 /* LeadResourceModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		2BB983DB2CAC839D00B890A3 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				2BB983DC2CAC83EE00B890A3 /* LeadResourceManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		2BB983DE2CAC877A00B890A3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2BB983E32CAC997E00B890A3 /* LeadResourceDetailView.swift */,
+				2BB983DF2CAC879300B890A3 /* LeadResourceListView.swift */,
+				2BB983E12CAC98A900B890A3 /* LeadResourceEditList.swift */,
+				2BB983E52CAC9B0F00B890A3 /* LeadResourceForm.swift */,
+				2B36A5812CB7039F00D81E52 /* ResourcePDFView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		2BBCD9CB2BCF15FD00B8C282 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1529,6 +1583,31 @@
 				2BBCD9CF2BCF316C00B8C282 /* UsersTool.swift */,
 			);
 			path = Tools;
+			sourceTree = "<group>";
+		};
+		2BBEFD022CC983C000460E32 /* Customer */ = {
+			isa = PBXGroup;
+			children = (
+				2BBEFD042CC983E300460E32 /* Managers */,
+				2BBEFD032CC983D400460E32 /* Models */,
+			);
+			path = Customer;
+			sourceTree = "<group>";
+		};
+		2BBEFD032CC983D400460E32 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2BBEFD052CC9854400460E32 /* CustomerModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		2BBEFD042CC983E300460E32 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				2BBEFD072CC985CB00460E32 /* CustomerManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		2BCB1FCC2BD804C1000EAA3A /* Stats */ = {
@@ -1571,6 +1650,7 @@
 		2BCE71A72C1A1B5B009387D8 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				2B87D4E62CC00ABB00BC6F6F /* Views */,
 				2BCE71A82C1A1B6F009387D8 /* Fetching.swift */,
 			);
 			path = Tools;
@@ -1667,13 +1747,15 @@
 				2BA8A55D2B541C0C0004CDCD /* Sources */,
 				2BA8A55E2B541C0C0004CDCD /* Frameworks */,
 				2BA8A55F2B541C0C0004CDCD /* Resources */,
-				2BA8A57C2B541CF70004CDCD /* Embed Frameworks */,
 				2BCE71C32C1A1D67009387D8 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				2BCE71BE2C1A1D67009387D8 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				2B87D4E62CC00ABB00BC6F6F /* Views */,
 			);
 			name = AquaFeel;
 			productName = AquaFeel;
@@ -1691,6 +1773,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				2B87D4E62CC00ABB00BC6F6F /* Views */,
 			);
 			name = AppointmentWidgetExtension;
 			productName = AppointmentWidgetExtension;
@@ -1789,6 +1874,7 @@
 				2B98C2C72B9E68230024FB2D /* LeadViewModel.swift in Sources */,
 				2BA8A5A42B54327A0004CDCD /* Test.swift in Sources */,
 				2BBCD9D02BCF316C00B8C282 /* UsersTool.swift in Sources */,
+				2BB983E22CAC98A900B890A3 /* LeadResourceEditList.swift in Sources */,
 				2B4EFE8C2BBC814A0074963F /* ClusterTool.swift in Sources */,
 				2B4295AF2C545A8B00252312 /* CreditFormView.swift in Sources */,
 				2B29D7732BB89CEC00E0AF5D /* HomeMapsRepresentable.swift in Sources */,
@@ -1805,10 +1891,12 @@
 				2BAB44A62C46D6A7008D08CB /* BrandModel.swift in Sources */,
 				2BAEE8552B59CFEC00B0C16D /* MyTab.swift in Sources */,
 				2B3697EC2B87EDDE008B339B /* SnackbarView.swift in Sources */,
+				2BBEFD082CC985D800460E32 /* CustomerManager.swift in Sources */,
 				2B0F54152B9CB65400AEEAE3 /* UnknowJson.swift in Sources */,
 				2B425A5F2BF004AD0043F6EE /* StatusManager.swift in Sources */,
 				2B5DF8FD2B7686CD002ECBAC /* PlaceViewModel.swift in Sources */,
 				2B00AAD52C2C6B0000B9E919 /* generatePDF.swift in Sources */,
+				2B36A5822CB7039F00D81E52 /* ResourcePDFView.swift in Sources */,
 				2BEC721B2BB09698009BF4E0 /* RouteController.swift in Sources */,
 				2BA721EB2BE2E77C008B4133 /* NewUserView.swift in Sources */,
 				2BC9ACA12C482F4300A59D81 /* LeadWorkOrder.swift in Sources */,
@@ -1848,6 +1936,7 @@
 				2BED97C92B8CFE6A0043A6F3 /* UserManager.swift in Sources */,
 				2BD84DB12B56CDB200BC01C9 /* CreateLead.swift in Sources */,
 				2B90D7A62C231D9900778829 /* OrderListView.swift in Sources */,
+				2BB983DD2CAC83EE00B890A3 /* LeadResourceManager.swift in Sources */,
 				2BA8A5B92B5441EE0004CDCD /* LoginViewModel.swift in Sources */,
 				2BAEE8572B59D02900B0C16D /* TabA.swift in Sources */,
 				2BAE58242BB9B05D005A8949 /* LassoTool.swift in Sources */,
@@ -1858,6 +1947,7 @@
 				2B00AAD12C2C694000B9E919 /* workOrderPDF.swift in Sources */,
 				2BCA0B7D2B7BF026006D3993 /* FilterOption.swift in Sources */,
 				2B0008002C07D09200AA9A44 /* ResourceForm.swift in Sources */,
+				2BB983E02CAC879300B890A3 /* LeadResourceListView.swift in Sources */,
 				2B8DFCD22BFEB13000557EFA /* NotificationFormView.swift in Sources */,
 				2B5811002B683C9E00B48A88 /* MapViewController.swift in Sources */,
 				2BB21A532C2B1150000E3D36 /* TestPDF.swift in Sources */,
@@ -1875,6 +1965,7 @@
 				2BBD48D02BE3F0AE00633448 /* OwnerView.swift in Sources */,
 				2BA8A5652B541C0C0004CDCD /* AquaFeelApp.swift in Sources */,
 				2B04F7EE2C6BD9C40099F03D /* CreditCardModel.swift in Sources */,
+				2BB983E42CAC997E00B890A3 /* LeadResourceDetailView.swift in Sources */,
 				2B8160612BEA7EBC0045AAC4 /* AppleMapScreen.swift in Sources */,
 				2B5B39372B60253900AF65B2 /* RouteViewX.swift in Sources */,
 				2BA8A5BC2B5442380004CDCD /* LoginFetch.swift in Sources */,
@@ -1936,6 +2027,7 @@
 				2B90D7AC2C23343C00778829 /* RouteView.swift in Sources */,
 				2B29BDCA2BCD96D30044D7E1 /* LeadHistoryView.swift in Sources */,
 				2BAE4B192BE1913400A4B655 /* BasicLeadListView.swift in Sources */,
+				2BB983D82CAC823300B890A3 /* LeadResourceModel.swift in Sources */,
 				2B90D7AE2C23346C00778829 /* DateLocalView.swift in Sources */,
 				2B15C5CA2BD873E900E55D98 /* UserManagerView.swift in Sources */,
 				2B0FB8652B758AC0005FD5A8 /* AddressViewModel.swift in Sources */,
@@ -1947,9 +2039,11 @@
 				2B4421D82BC090C900294559 /* RouteMapScreen.swift in Sources */,
 				2B04F7F22C6BF8E10099F03D /* CreditCardListView.swift in Sources */,
 				2B00AACF2C2C5DF500B9E919 /* Reverse.swift in Sources */,
+				2BBEFD062CC9854400460E32 /* CustomerModel.swift in Sources */,
 				2B29BDD32BCDFF2E0044D7E1 /* LocationMap.swift in Sources */,
 				2B4421D52BC068B700294559 /* RouteTool.swift in Sources */,
 				2BCB1FD32BD806D2000EAA3A /* StatsManager.swift in Sources */,
+				2BB983E62CAC9B0F00B890A3 /* LeadResourceForm.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2118,6 +2212,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				GCC_NO_COMMON_BLOCKS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AquaFeel/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Aquafeel;
@@ -2138,8 +2233,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.3;
-				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
+				MARKETING_VERSION = 2.0.4;
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC1";
 				PRODUCT_BUNDLE_IDENTIFIER = aquafeelvirginia.com.AquaFeel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2167,6 +2262,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				GCC_NO_COMMON_BLOCKS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AquaFeel/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Aquafeel;
@@ -2187,8 +2283,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.3;
-				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
+				MARKETING_VERSION = 2.0.4;
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC1";
 				PRODUCT_BUNDLE_IDENTIFIER = aquafeelvirginia.com.AquaFeel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2208,6 +2304,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 87NW59Y36Q;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AppointmentWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AppointmentWidget;
@@ -2218,7 +2318,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.3;
+				MARKETING_VERSION = 2.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = aquafeelvirginia.com.AquaFeel.AppointmentWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2238,6 +2338,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 87NW59Y36Q;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AppointmentWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AppointmentWidget;
@@ -2248,7 +2352,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.3;
+				MARKETING_VERSION = 2.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = aquafeelvirginia.com.AquaFeel.AppointmentWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

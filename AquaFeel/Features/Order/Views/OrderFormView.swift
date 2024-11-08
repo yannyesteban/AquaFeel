@@ -14,8 +14,8 @@ extension NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 2
-        formatter.minimumFractionDigits = 2
-        formatter.minimumIntegerDigits = 1
+        formatter.minimumFractionDigits = 0
+        formatter.minimumIntegerDigits = 0
         formatter.generatesDecimalNumbers = true
         return formatter
     }
@@ -55,21 +55,19 @@ struct QRCodeView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 200, height: 200)
-            
-            //TextField("Enter text to copy", text: $textToCopy)
+
+            // TextField("Enter text to copy", text: $textToCopy)
             if !isCopied {
                 Button {
                     copyTextToClipboard()
                 } label: {
                     Label("Copy", systemImage: "rectangle.on.rectangle")
-                    
                 }
             } else {
                 Label("Copied", systemImage: "checkmark")
                     .foregroundColor(.green)
             }
-            
-           
+
         } else {
             Text("The QR code could not be generated")
         }
@@ -88,34 +86,31 @@ struct QRCodeView: View {
         }
         return nil
     }
-    
+
     private func copyTextToClipboard() {
-       
         UIPasteboard.general.string = url
         isCopied = true
-        
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             isCopied = false
         }
     }
 }
 
-
 struct OrderFormView: View {
     @ObservedObject var orderManager: OrderManager
-
+    @StateObject var customerMamanager: CustomertManager = .init()
     @Binding var order: OrderModel
     @State private var waiting = false
 
     @State var showAlert = false
-    
+
     @State private var alert: Alert!
     @Environment(\.presentationMode) var presentationMode
     @State var mode = 2
     private var url: String {
-        
         let userTimeZone = TimeZone.current.identifier
-       
+
         if APIValues.port == "" {
             return APIValues.scheme + "://" + APIValues.host + "/orders/pdf?id=\(order._id)&userTimeZone=\(userTimeZone)"
         }
@@ -132,12 +127,12 @@ struct OrderFormView: View {
     @State private var showPDFPreview = false
     @State private var pdfURL: URL?
     @State private var showActivityView = false
-    
+
     @StateObject var brandManager = BrandManager()
     @StateObject var modelManager = ModelManager()
-    
+
     @EnvironmentObject var profile: ProfileManager
-    
+
     var body: some View {
         /*
          PDFOrderView()
@@ -155,22 +150,21 @@ struct OrderFormView: View {
          */
         Form {
             /*
-            if order._id != "" {
-                VStack {
-                    /* Text(url)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding()
-                     */
-                    QRCodeView(url: url)
-                        .padding()
-                }
-                .padding()
-            }
-             */
-            
-            
+             if order._id != "" {
+                 VStack {
+                     /* Text(url)
+                         .textFieldStyle(RoundedBorderTextFieldStyle())
+                         .padding()
+                      */
+                     QRCodeView(url: url)
+                         .padding()
+                 }
+                 .padding()
+             }
+              */
+
             Section(header: Text("Buyer1 Information")) {
-                //TextField("_id", text: $order._id)
+                // TextField("_id", text: $order._id)
                 TextField("Buyer 1 Name", text: $order.buyer1.name)
                 TextField("Buyer 1 Phone", text: $order.buyer1.phone)
                 TextField("Buyer 1 Cell", text: $order.buyer1.cel)
@@ -194,62 +188,57 @@ struct OrderFormView: View {
                 Toggle("Reverse Osmosis", isOn: $order.installation.s1)
                 Toggle("Reverse Osmosis + Alkaline", isOn: $order.installation.s2)
                 Toggle("Natural Soap Package", isOn: $order.installation.s3)
-               
-                
             }
-            
-            
+
             Section(header: Text("Promotion")) {
-                
                 TextField("Promotion", text: $order.promotion)
             }
-            
+
             /*
-            Section(header: Text("System Information 1")) {
-                TextField("System 1 Name", text: $order.system1.name)
-                Picker("Brand", selection: $order.system1.brand) {
-                    Text("select a brand...").tag("")
-                    ForEach(brandManager.brands, id: \._id) { brand in
-                        Text(brand.name).tag(brand.name)
-                    }
-                    
-                }
-                Picker("Model", selection: $order.system1.model) {
-                    Text("select a model...").tag("")
-                    ForEach(modelManager.models, id: \._id) { model in
-                        Text(model.name).tag(model.name)
-                    }
-                    
-                }
-                //TextField("System 1 Brand", text: $order.system1.brand)
-                //TextField("System 1 Model", text: $order.system1.model)
-            }
+             Section(header: Text("System Information 1")) {
+                 TextField("System 1 Name", text: $order.system1.name)
+                 Picker("Brand", selection: $order.system1.brand) {
+                     Text("select a brand...").tag("")
+                     ForEach(brandManager.brands, id: \._id) { brand in
+                         Text(brand.name).tag(brand.name)
+                     }
 
-             
-            Section(header: Text("System Information 2")) {
-                TextField("System 2 Name", text: $order.system2.name)
-                
-                Picker("Brand", selection: $order.system2.brand) {
-                    Text("select a brand...").tag("")
-                    ForEach(brandManager.brands, id: \._id) { brand in
-                        Text(brand.name).tag(brand.name)
-                    }
-                    
-                }
-                Picker("Model", selection: $order.system2.model) {
-                    Text("select a model...").tag("")
-                    ForEach(modelManager.models, id: \._id) { model in
-                        Text(model.name).tag(model.name)
-                    }
-                    
-                }
-                //TextField("System 2 Brand", text: $order.system2.brand)
-                //TextField("System 2 Model", text: $order.system2.model)
+                 }
+                 Picker("Model", selection: $order.system1.model) {
+                     Text("select a model...").tag("")
+                     ForEach(modelManager.models, id: \._id) { model in
+                         Text(model.name).tag(model.name)
+                     }
 
-                TextField("Promotion", text: $order.promotion)
-            }
+                 }
+                 //TextField("System 1 Brand", text: $order.system1.brand)
+                 //TextField("System 1 Model", text: $order.system1.model)
+             }
 
-             */
+             Section(header: Text("System Information 2")) {
+                 TextField("System 2 Name", text: $order.system2.name)
+
+                 Picker("Brand", selection: $order.system2.brand) {
+                     Text("select a brand...").tag("")
+                     ForEach(brandManager.brands, id: \._id) { brand in
+                         Text(brand.name).tag(brand.name)
+                     }
+
+                 }
+                 Picker("Model", selection: $order.system2.model) {
+                     Text("select a model...").tag("")
+                     ForEach(modelManager.models, id: \._id) { model in
+                         Text(model.name).tag(model.name)
+                     }
+
+                 }
+                 //TextField("System 2 Brand", text: $order.system2.brand)
+                 //TextField("System 2 Model", text: $order.system2.model)
+
+                 TextField("Promotion", text: $order.promotion)
+             }
+
+              */
             Section(header: Text("Installation Information")) {
                 TextField("Installation Day", text: $order.installation.day)
                 DatePicker("Installation Date", selection: $order.installation.date, displayedComponents: [.date, .hourAndMinute])
@@ -262,21 +251,21 @@ struct OrderFormView: View {
                         Text("Well").tag("well")
                     }
                 }
-                //Toggle("Ice Maker", isOn: $order.installation.iceMaker)
+                // Toggle("Ice Maker", isOn: $order.installation.iceMaker)
                 // Stepper("Time (hours): \(order.installation.time)", value: $order.installation.time, in: 0 ... 24)
             }
 
             Section(header: Text("People Involved")) {
                 Stepper("People: \(order.people)", value: $order.people, in: 1 ... 20)
                 /*
-                HStack {
-                    
-                    Picker("The floor is", selection: $order.floorType) {
-                        Text("Raised").tag("raised")
-                        Text("Concret Slab").tag("concret")
-                    }
-                }
-                 */
+                 HStack {
+
+                     Picker("The floor is", selection: $order.floorType) {
+                         Text("Raised").tag("raised")
+                         Text("Concret Slab").tag("concret")
+                     }
+                 }
+                  */
             }
 
             Section(header: Text("Terms or Payment Methods")) {
@@ -290,6 +279,7 @@ struct OrderFormView: View {
                     Spacer()
                     TextField("Cash Price", value: $order.price.cashPrice, formatter: NumberFormatter.decimalFormatter)
                         .multilineTextAlignment(.trailing)
+                        .keyboardType(.decimalPad)
                         .frame(maxWidth: 150)
                 }
 
@@ -298,6 +288,7 @@ struct OrderFormView: View {
                     Spacer()
                     TextField("Installation", value: $order.price.installation, formatter: NumberFormatter.decimalFormatter)
                         .multilineTextAlignment(.trailing)
+                        .keyboardType(.decimalPad)
                         .frame(maxWidth: 150)
                 }
 
@@ -306,6 +297,7 @@ struct OrderFormView: View {
                     Spacer()
                     TextField("Taxes", value: $order.price.taxes, formatter: NumberFormatter.decimalFormatter)
                         .multilineTextAlignment(.trailing)
+                        .keyboardType(.decimalPad)
                         .frame(maxWidth: 150)
                 }
 
@@ -314,6 +306,7 @@ struct OrderFormView: View {
                     Spacer()
                     TextField("Total Cash", value: $order.price.totalCash, formatter: NumberFormatter.decimalFormatter)
                         .multilineTextAlignment(.trailing)
+                        .keyboardType(.decimalPad)
                         .frame(maxWidth: 150)
                 }
 
@@ -322,6 +315,7 @@ struct OrderFormView: View {
                     Spacer()
                     TextField("Down Payment", value: $order.price.downPayment, formatter: NumberFormatter.decimalFormatter)
                         .multilineTextAlignment(.trailing)
+                        .keyboardType(.decimalPad)
                         .frame(maxWidth: 150)
                 }
 
@@ -330,6 +324,7 @@ struct OrderFormView: View {
                     Spacer()
                     TextField("Total Cash Price", value: $order.price.totalCashPrice, formatter: NumberFormatter.decimalFormatter)
                         .multilineTextAlignment(.trailing)
+                        .keyboardType(.decimalPad)
                         .frame(maxWidth: 150)
                 }
 
@@ -338,18 +333,16 @@ struct OrderFormView: View {
                     Spacer()
                     TextField("Amount to Finance", value: $order.price.toFinance, formatter: NumberFormatter.decimalFormatter)
                         .multilineTextAlignment(.trailing)
+                        .keyboardType(.decimalPad)
                         .frame(maxWidth: 150)
                 }
-
-                
-                
-               
 
                 HStack {
                     Text("APR ( % ):")
                     Spacer()
                     TextField("APR", value: $order.price.APR, formatter: NumberFormatter.decimalFormatter)
                         .multilineTextAlignment(.trailing)
+                        .keyboardType(.decimalPad)
                         .frame(maxWidth: 150)
                 }
 
@@ -358,15 +351,16 @@ struct OrderFormView: View {
                     Spacer()
                     TextField("Finance Charge", value: $order.price.finaceCharge, formatter: NumberFormatter.decimalFormatter)
                         .multilineTextAlignment(.trailing)
+                        .keyboardType(.decimalPad)
                         .frame(maxWidth: 150)
                 }
 
-                
                 HStack {
                     Text("Total of Payments:")
                     Spacer()
                     TextField("Total of Payments", value: $order.price.totalPayments, formatter: NumberFormatter.decimalFormatter)
                         .multilineTextAlignment(.trailing)
+                        .keyboardType(.decimalPad)
                         .frame(maxWidth: 150)
                 }
             }
@@ -377,17 +371,16 @@ struct OrderFormView: View {
                     Spacer()
                     TextField("Number of Payment", value: $order.price.terms.amount, format: .number)
                         .multilineTextAlignment(.trailing)
+                        .keyboardType(.decimalPad)
                         .frame(maxWidth: 150)
                 }
                 Picker("Interval to Finance", selection: $order.price.terms.unit) {
                     Text("MONTH").tag("MONTH")
-                    
-                    
                 }
             } header: {
                 Text("Terms Amount:")
             }
-            
+
             Section {
                 Text("Approval / Purchaser \(order.buyer1.name)")
                 SignView(sign: $order.buyer1.signature)
@@ -403,27 +396,25 @@ struct OrderFormView: View {
             } header: {
                 Text("Approval / Purchaser 2")
             }
-            
-            
+
             Section {
                 Text("\(profile.info.firstName) \(profile.info.lastName)")
-                //TextField("Rep. of Aquafeel", text: $order.employee.name)
+                // TextField("Rep. of Aquafeel", text: $order.employee.name)
                 SignView(sign: $order.employee.signature)
-                
+
             } header: {
                 Text("Rep. of Aquafeel")
             }
             /*
-            Section {
-                
-                TextField("App central off", text: $order.approvedBy.name)
-                SignView(sign: $order.approvedBy.signature)
-            } header: {
-                Text("App central off")
-            }
-            
-            */
-            
+             Section {
+
+                 TextField("App central off", text: $order.approvedBy.name)
+                 SignView(sign: $order.approvedBy.signature)
+             } header: {
+                 Text("App central off")
+             }
+
+             */
 
             if order._id != "" {
                 Section {
@@ -439,7 +430,21 @@ struct OrderFormView: View {
                     }.foregroundColor(.red)
                 }
             }
-            
+            if order._id != "" {
+                Section {
+                    Button {
+                        doClose()
+                    } label: {
+                        HStack {
+                            Text("Close")
+                            Spacer()
+                            Image(systemName: "flag.2.crossed.fill")
+                                .foregroundColor(.red)
+                        }
+                    }.foregroundColor(.red)
+                }
+            }
+
             /*
              Button(action: {
                  let data = workOrderPDF(order: order, url: "https://google.com")
@@ -496,10 +501,9 @@ struct OrderFormView: View {
                                 } catch {
                                     setAlert(title: "", message: "")
                                 }
-                                
 
                             } else {
-                                //try? await orderManager.save(mode: .edit)
+                                // try? await orderManager.save(mode: .edit)
                                 do {
                                     try await orderManager.save(mode: .edit)
                                     order = orderManager.order
@@ -507,7 +511,7 @@ struct OrderFormView: View {
                                 } catch {
                                     setAlert(title: "", message: "")
                                 }
-                                //order = orderManager.order
+                                // order = orderManager.order
                             }
 
                             // Acciones adicionales si son necesarias
@@ -519,8 +523,6 @@ struct OrderFormView: View {
                 }
             }
         }
-        
-        
 
         .sheet(isPresented: $showQR) {
             QRCodeView(url: url)
@@ -565,18 +567,31 @@ struct OrderFormView: View {
         .alert(isPresented: $showAlert) {
             alert
         }
-        
-        .onAppear{
-            print(profile.userId, ",,,,,")
+
+        .onAppear {
             if mode == 1 {
                 order = OrderModel()
             }
-            
+
             Task {
-                await modelManager.list(userId:"");
-                await brandManager.list(userId:"");
+                await modelManager.list(userId: "")
+                await brandManager.list(userId: "")
             }
         }
+    }
+
+    private func isValid() -> Bool {
+        if order.price.APR <= 0 {
+            setAlert(title: "Error", message: "APR (%) is not set")
+            return false
+        }
+
+        if order.price.totalPayments <= 0 {
+            setAlert(title: "Error", message: "Total of Payments is not valid")
+            return false
+        }
+
+        return true
     }
 
     private func setAlert(title: String, message: String) {
@@ -585,7 +600,6 @@ struct OrderFormView: View {
     }
 
     private func doDelete() {
-        print("delete...")
         // resourceManager.token = profile.token
         alert = Alert(
             title: Text("Confirmation"),
@@ -607,21 +621,52 @@ struct OrderFormView: View {
         showAlert = true
     }
     
-    
+    private func doClose() {
+        // resourceManager.token = profile.token
+        alert = Alert(
+            title: Text("Confirmation"),
+            message: Text("Are you sure you want to close the contract?"),
+            primaryButton: .destructive(Text("Close")) {
+                Task {
+                    do {
+                        
+                        var customer = CustomerModel()
+                        
+                        customer.firstName = "pepe2"
+                        customer.lastName = "curtisona"
+                        customer.address = "calle 123"
+                        customer.phone = 045464445
+                        customer.dos = Date()
+                        customer.price = 500
+                        customer.installer = "pepito"
+                        customer.office = "VA"
+                        
+                        
+                        
+                        try await customerMamanager.save(customer: customer, mode: .new)
+                       
+                    } catch {
+                        setAlert(title: "Error", message: "Failure, the operation was not completed.")
+                    }
+                }
+            },
+            secondaryButton: .cancel()
+        )
+        
+        showAlert = true
+    }
 }
 
 
- struct OrderFormView_Previews: PreviewProvider {
-    
-     static var previews: some View {
-         @State var leadId: String = ""
-         @State var order:OrderModel = OrderModel()
-         
-         @StateObject var orderManager: OrderManager = .init()
-         
-         @StateObject var profile = ProfileManager()
+struct OrderFormView_Previews: PreviewProvider {
+    static var previews: some View {
+        @State var leadId: String = ""
+        @State var order: OrderModel = OrderModel()
 
-         OrderFormView(orderManager: OrderManager(), order: $order).environmentObject(profile)
-     }
- }
- 
+        @StateObject var orderManager: OrderManager = .init()
+
+        @StateObject var profile = ProfileManager()
+
+        OrderFormView(orderManager: OrderManager(), order: $order).environmentObject(profile)
+    }
+}

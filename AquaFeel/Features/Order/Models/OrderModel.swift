@@ -238,10 +238,10 @@ struct InstallModel: Identifiable, Codable {
 
 struct TermsModel: Codable {
     var _id: String = ""
-    var unit: String // month, days, weeks
+    var unit: String = ""// month, days, weeks
     var amount: Int
 
-    init(unit: String = "",
+    init(unit: String = "MONTH",
          amount: Int = 0) {
         self.unit = unit
         self.amount = amount
@@ -254,7 +254,7 @@ struct TermsModel: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         _id = try container.decodeIfPresent(String.self, forKey: ._id) ?? ""
-        unit = try container.decodeIfPresent(String.self, forKey: .unit) ?? ""
+        unit = try container.decodeIfPresent(String.self, forKey: .unit) ?? "MONTH"
         amount = try container.decodeIfPresent(Int.self, forKey: .amount) ?? 0
     }
 }

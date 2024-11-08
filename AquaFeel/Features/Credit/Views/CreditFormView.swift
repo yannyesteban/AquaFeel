@@ -110,6 +110,7 @@ struct CreditFormView: View {
                     Spacer()
                     TextField("Years", value: $credit.applicant.income.years, formatter: NumberFormatter.IntegerFormatter)
                         .multilineTextAlignment(.trailing)
+                        .keyboardType(.decimalPad)
                         .frame(maxWidth: 150)
                 }
                 
@@ -168,6 +169,7 @@ struct CreditFormView: View {
                     Spacer()
                     TextField("Years", value: $credit.applicant2.income.years, formatter: NumberFormatter.IntegerFormatter)
                         .multilineTextAlignment(.trailing)
+                        .keyboardType(.decimalPad)
                         .frame(maxWidth: 150)
                 }
                 
@@ -213,6 +215,7 @@ struct CreditFormView: View {
                     Spacer()
                     TextField("Monthly Payment", value: $credit.mortgage.monthlyPayment, formatter: NumberFormatter.decimalFormatter)
                         .multilineTextAlignment(.trailing)
+                        .keyboardType(.decimalPad)
                         .frame(maxWidth: 150)
                 }
                 

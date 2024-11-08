@@ -77,6 +77,7 @@ struct CreditCardFormView: View {
                     
                     TextField("Amount", value: $credit.amount, formatter: NumberFormatter.IntegerFormatter)
                      .multilineTextAlignment(.trailing)
+                     .keyboardType(.decimalPad)
                      .frame(maxWidth: 150)
                     
                 }

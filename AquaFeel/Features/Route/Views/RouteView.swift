@@ -145,8 +145,8 @@ struct RouteView: View {
                 } label: {
                     Image(systemName: "car.fill")
                 }
-                .disabled(routeManager.route.id?.isEmpty ?? false)
-
+                //.disabled(routeManager.route.id?.isEmpty ?? false)
+                .disabled( mode != .edit )
                 NavigationLink {
                     LeadPicker(profile: profile, selectedLeads: $routeManager.route.leads)
 

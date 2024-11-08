@@ -1,9 +1,1650 @@
 {
   "ABIRoot": {
     "kind": "Root",
-    "name": "TopLevel",
-    "printedName": "TopLevel",
+    "name": "GoogleMapsUtils",
+    "printedName": "GoogleMapsUtils",
+    "children": [
+      {
+        "kind": "Import",
+        "name": "GoogleMaps",
+        "printedName": "GoogleMaps",
+        "declKind": "Import",
+        "moduleName": "GoogleMapsUtils",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "GoogleMaps",
+        "printedName": "GoogleMaps",
+        "declKind": "Import",
+        "moduleName": "GoogleMapsUtils",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "CoreLocation",
+        "printedName": "CoreLocation",
+        "declKind": "Import",
+        "moduleName": "GoogleMapsUtils",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "MapPoint",
+        "printedName": "MapPoint",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "location",
+            "printedName": "location",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "CLLocationCoordinate2D",
+                "printedName": "CoreLocation.CLLocationCoordinate2D",
+                "usr": "c:@S@CLLocationCoordinate2D"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15GoogleMapsUtils8MapPointV8locationSo22CLLocationCoordinate2DVvp",
+            "mangledName": "$s15GoogleMapsUtils8MapPointV8locationSo22CLLocationCoordinate2DVvp",
+            "moduleName": "GoogleMapsUtils",
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "CLLocationCoordinate2D",
+                    "printedName": "CoreLocation.CLLocationCoordinate2D",
+                    "usr": "c:@S@CLLocationCoordinate2D"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15GoogleMapsUtils8MapPointV8locationSo22CLLocationCoordinate2DVvg",
+                "mangledName": "$s15GoogleMapsUtils8MapPointV8locationSo22CLLocationCoordinate2DVvg",
+                "moduleName": "GoogleMapsUtils",
+                "isFromExtension": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Function",
+            "name": "distance",
+            "printedName": "distance(to:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "usr": "s:Sd"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "MapPoint",
+                "printedName": "GoogleMapsUtils.MapPoint",
+                "usr": "s:15GoogleMapsUtils8MapPointV"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:15GoogleMapsUtils8MapPointV8distance2toSdAC_tF",
+            "mangledName": "$s15GoogleMapsUtils8MapPointV8distance2toSdAC_tF",
+            "moduleName": "GoogleMapsUtils",
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "interpolate",
+            "printedName": "interpolate(from:to:fraction:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "MapPoint",
+                "printedName": "GoogleMapsUtils.MapPoint",
+                "usr": "s:15GoogleMapsUtils8MapPointV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "MapPoint",
+                "printedName": "GoogleMapsUtils.MapPoint",
+                "usr": "s:15GoogleMapsUtils8MapPointV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "MapPoint",
+                "printedName": "GoogleMapsUtils.MapPoint",
+                "usr": "s:15GoogleMapsUtils8MapPointV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "usr": "s:Sd"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:15GoogleMapsUtils8MapPointV11interpolate4from2to8fractionA2C_ACSdtFZ",
+            "mangledName": "$s15GoogleMapsUtils8MapPointV11interpolate4from2to8fractionA2C_ACSdtFZ",
+            "moduleName": "GoogleMapsUtils",
+            "static": true,
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "s:15GoogleMapsUtils8MapPointV",
+        "mangledName": "$s15GoogleMapsUtils8MapPointV",
+        "moduleName": "GoogleMapsUtils",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "GoogleMaps",
+        "printedName": "GoogleMaps",
+        "declKind": "Import",
+        "moduleName": "GoogleMapsUtils",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "GoogleMaps",
+        "printedName": "GoogleMaps",
+        "declKind": "Import",
+        "moduleName": "GoogleMapsUtils",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "HeatMapInterpolationPoints",
+        "printedName": "HeatMapInterpolationPoints",
+        "children": [
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(givenClusterIterations:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "HeatMapInterpolationPoints",
+                "printedName": "GoogleMapsUtils.HeatMapInterpolationPoints",
+                "usr": "c:@M@GoogleMapsUtils@objc(cs)HeatMapInterpolationPoints"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "hasDefaultArg": true,
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:15GoogleMapsUtils26HeatMapInterpolationPointsC22givenClusterIterationsACSi_tcfc",
+            "mangledName": "$s15GoogleMapsUtils26HeatMapInterpolationPointsC22givenClusterIterationsACSi_tcfc",
+            "moduleName": "GoogleMapsUtils",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Function",
+            "name": "addWeightedLatLngs",
+            "printedName": "addWeightedLatLngs(latlngs:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[GoogleMapsUtils.GMUWeightedLatLng]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "GMUWeightedLatLng",
+                    "printedName": "GoogleMapsUtils.GMUWeightedLatLng",
+                    "usr": "c:objc(cs)GMUWeightedLatLng"
+                  }
+                ],
+                "usr": "s:Sa"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:15GoogleMapsUtils26HeatMapInterpolationPointsC18addWeightedLatLngs7latlngsySaySo011GMUWeightedJ3LngCG_tF",
+            "mangledName": "$s15GoogleMapsUtils26HeatMapInterpolationPointsC18addWeightedLatLngs7latlngsySaySo011GMUWeightedJ3LngCG_tF",
+            "moduleName": "GoogleMapsUtils",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "addWeightedLatLng",
+            "printedName": "addWeightedLatLng(latlng:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "GMUWeightedLatLng",
+                "printedName": "GoogleMapsUtils.GMUWeightedLatLng",
+                "usr": "c:objc(cs)GMUWeightedLatLng"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:15GoogleMapsUtils26HeatMapInterpolationPointsC17addWeightedLatLng6latlngySo011GMUWeightedjK0C_tF",
+            "mangledName": "$s15GoogleMapsUtils26HeatMapInterpolationPointsC17addWeightedLatLng6latlngySo011GMUWeightedjK0C_tF",
+            "moduleName": "GoogleMapsUtils",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "removeAllData",
+            "printedName": "removeAllData()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:15GoogleMapsUtils26HeatMapInterpolationPointsC13removeAllDatayyF",
+            "mangledName": "$s15GoogleMapsUtils26HeatMapInterpolationPointsC13removeAllDatayyF",
+            "moduleName": "GoogleMapsUtils",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "generatePoints",
+            "printedName": "generatePoints(influence:granularity:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[GoogleMapsUtils.GMUWeightedLatLng]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "GMUWeightedLatLng",
+                    "printedName": "GoogleMapsUtils.GMUWeightedLatLng",
+                    "usr": "c:objc(cs)GMUWeightedLatLng"
+                  }
+                ],
+                "usr": "s:Sa"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "usr": "s:Sd"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "hasDefaultArg": true,
+                "usr": "s:Sd"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:15GoogleMapsUtils26HeatMapInterpolationPointsC08generateG09influence11granularitySaySo17GMUWeightedLatLngCGSd_SdtKF",
+            "mangledName": "$s15GoogleMapsUtils26HeatMapInterpolationPointsC08generateG09influence11granularitySaySo17GMUWeightedLatLngCGSd_SdtKF",
+            "moduleName": "GoogleMapsUtils",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "throwing": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "HeatMapInterpolationPoints",
+                "printedName": "GoogleMapsUtils.HeatMapInterpolationPoints",
+                "usr": "c:@M@GoogleMapsUtils@objc(cs)HeatMapInterpolationPoints"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@GoogleMapsUtils@objc(cs)HeatMapInterpolationPoints(im)init",
+            "mangledName": "$s15GoogleMapsUtils26HeatMapInterpolationPointsCACycfc",
+            "moduleName": "GoogleMapsUtils",
+            "overriding": true,
+            "implicit": true,
+            "objc_name": "init",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "Override"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@GoogleMapsUtils@objc(cs)HeatMapInterpolationPoints",
+        "mangledName": "$s15GoogleMapsUtils26HeatMapInterpolationPointsC",
+        "moduleName": "GoogleMapsUtils",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment",
+          "ObjC"
+        ],
+        "superclassUsr": "c:objc(cs)NSObject",
+        "superclassNames": [
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "CoreLocation",
+        "printedName": "CoreLocation",
+        "declKind": "Import",
+        "moduleName": "GoogleMapsUtils",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "CoreLocation",
+        "printedName": "CoreLocation",
+        "declKind": "Import",
+        "moduleName": "GoogleMapsUtils",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "GoogleMaps",
+        "printedName": "GoogleMaps",
+        "declKind": "Import",
+        "moduleName": "GoogleMapsUtils",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "GMSPolygon",
+        "printedName": "GMSPolygon",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "contains",
+            "printedName": "contains(coordinate:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "CLLocationCoordinate2D",
+                "printedName": "CoreLocation.CLLocationCoordinate2D",
+                "usr": "c:@S@CLLocationCoordinate2D"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:So10GMSPolygonC15GoogleMapsUtilsE8contains10coordinateSbSo22CLLocationCoordinate2DV_tF",
+            "mangledName": "$sSo10GMSPolygonC15GoogleMapsUtilsE8contains10coordinateSbSo22CLLocationCoordinate2DV_tF",
+            "moduleName": "GoogleMapsUtils",
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "area",
+            "printedName": "area(radius:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.Double?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Double",
+                    "printedName": "Swift.Double",
+                    "usr": "s:Sd"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "hasDefaultArg": true,
+                "usr": "s:Sd"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:So10GMSPolygonC15GoogleMapsUtilsE4area6radiusSdSgSd_tF",
+            "mangledName": "$sSo10GMSPolygonC15GoogleMapsUtilsE4area6radiusSdSgSd_tF",
+            "moduleName": "GoogleMapsUtils",
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "signedArea",
+            "printedName": "signedArea(radius:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.Double?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Double",
+                    "printedName": "Swift.Double",
+                    "usr": "s:Sd"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "hasDefaultArg": true,
+                "usr": "s:Sd"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:So10GMSPolygonC15GoogleMapsUtilsE10signedArea6radiusSdSgSd_tF",
+            "mangledName": "$sSo10GMSPolygonC15GoogleMapsUtilsE10signedArea6radiusSdSgSd_tF",
+            "moduleName": "GoogleMapsUtils",
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:objc(cs)GMSPolygon",
+        "moduleName": "GoogleMaps",
+        "isOpen": true,
+        "objc_name": "GMSPolygon",
+        "declAttributes": [
+          "ObjC",
+          "Dynamic"
+        ],
+        "superclassUsr": "c:objc(cs)GMSOverlay",
+        "isExternal": true,
+        "inheritsConvenienceInitializers": true,
+        "superclassNames": [
+          "GoogleMaps.GMSOverlay",
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "GMSPolyline",
+        "printedName": "GMSPolyline",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "isOnPolyline",
+            "printedName": "isOnPolyline(coordinate:tolerance:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "CLLocationCoordinate2D",
+                "printedName": "CoreLocation.CLLocationCoordinate2D",
+                "usr": "c:@S@CLLocationCoordinate2D"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "hasDefaultArg": true,
+                "usr": "s:Sd"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:So11GMSPolylineC15GoogleMapsUtilsE12isOnPolyline10coordinate9toleranceSbSo22CLLocationCoordinate2DV_SdtF",
+            "mangledName": "$sSo11GMSPolylineC15GoogleMapsUtilsE12isOnPolyline10coordinate9toleranceSbSo22CLLocationCoordinate2DV_SdtF",
+            "moduleName": "GoogleMapsUtils",
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:objc(cs)GMSPolyline",
+        "moduleName": "GoogleMaps",
+        "isOpen": true,
+        "objc_name": "GMSPolyline",
+        "declAttributes": [
+          "ObjC",
+          "Dynamic"
+        ],
+        "superclassUsr": "c:objc(cs)GMSOverlay",
+        "isExternal": true,
+        "inheritsConvenienceInitializers": true,
+        "superclassNames": [
+          "GoogleMaps.GMSOverlay",
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "CLLocationCoordinate2D",
+        "printedName": "CLLocationCoordinate2D",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "mapPoint",
+            "printedName": "mapPoint",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "MapPoint",
+                "printedName": "GoogleMapsUtils.MapPoint",
+                "usr": "s:15GoogleMapsUtils8MapPointV"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:So22CLLocationCoordinate2DV15GoogleMapsUtilsE8mapPointAC03MapG0Vvp",
+            "mangledName": "$sSo22CLLocationCoordinate2DV15GoogleMapsUtilsE8mapPointAC03MapG0Vvp",
+            "moduleName": "GoogleMapsUtils",
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "MapPoint",
+                    "printedName": "GoogleMapsUtils.MapPoint",
+                    "usr": "s:15GoogleMapsUtils8MapPointV"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:So22CLLocationCoordinate2DV15GoogleMapsUtilsE8mapPointAC03MapG0Vvg",
+                "mangledName": "$sSo22CLLocationCoordinate2DV15GoogleMapsUtilsE8mapPointAC03MapG0Vvg",
+                "moduleName": "GoogleMapsUtils",
+                "isFromExtension": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Function",
+            "name": "distance",
+            "printedName": "distance(to:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "usr": "s:Sd"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "CLLocationCoordinate2D",
+                "printedName": "CoreLocation.CLLocationCoordinate2D",
+                "usr": "c:@S@CLLocationCoordinate2D"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:So22CLLocationCoordinate2DV15GoogleMapsUtilsE8distance2toSdAB_tF",
+            "mangledName": "$sSo22CLLocationCoordinate2DV15GoogleMapsUtilsE8distance2toSdAB_tF",
+            "moduleName": "GoogleMapsUtils",
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "heading",
+            "printedName": "heading(to:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "usr": "s:Sd"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "CLLocationCoordinate2D",
+                "printedName": "CoreLocation.CLLocationCoordinate2D",
+                "usr": "c:@S@CLLocationCoordinate2D"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:So22CLLocationCoordinate2DV15GoogleMapsUtilsE7heading2toSdAB_tF",
+            "mangledName": "$sSo22CLLocationCoordinate2DV15GoogleMapsUtilsE7heading2toSdAB_tF",
+            "moduleName": "GoogleMapsUtils",
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "offset",
+            "printedName": "offset(distance:heading:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "CLLocationCoordinate2D",
+                "printedName": "CoreLocation.CLLocationCoordinate2D",
+                "usr": "c:@S@CLLocationCoordinate2D"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "usr": "s:Sd"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "usr": "s:Sd"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:So22CLLocationCoordinate2DV15GoogleMapsUtilsE6offset8distance7headingABSd_SdtF",
+            "mangledName": "$sSo22CLLocationCoordinate2DV15GoogleMapsUtilsE6offset8distance7headingABSd_SdtF",
+            "moduleName": "GoogleMapsUtils",
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "interpolate",
+            "printedName": "interpolate(to:fraction:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "CLLocationCoordinate2D",
+                "printedName": "CoreLocation.CLLocationCoordinate2D",
+                "usr": "c:@S@CLLocationCoordinate2D"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "CLLocationCoordinate2D",
+                "printedName": "CoreLocation.CLLocationCoordinate2D",
+                "usr": "c:@S@CLLocationCoordinate2D"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "usr": "s:Sd"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:So22CLLocationCoordinate2DV15GoogleMapsUtilsE11interpolate2to8fractionA2B_SdtF",
+            "mangledName": "$sSo22CLLocationCoordinate2DV15GoogleMapsUtilsE11interpolate2to8fractionA2B_SdtF",
+            "moduleName": "GoogleMapsUtils",
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "c:@S@CLLocationCoordinate2D",
+        "moduleName": "CoreLocation",
+        "isExternal": true,
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_ObjectiveCBridgeable",
+            "printedName": "_ObjectiveCBridgeable",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "_ObjectiveCType",
+                "printedName": "_ObjectiveCType",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSValue",
+                    "printedName": "Foundation.NSValue",
+                    "usr": "c:objc(cs)NSValue"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:s21_ObjectiveCBridgeableP",
+            "mangledName": "$ss21_ObjectiveCBridgeableP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "GMSPath",
+        "printedName": "GMSPath",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "defaultToleranceInMeters",
+            "printedName": "defaultToleranceInMeters",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "usr": "s:Sd"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:So7GMSPathC15GoogleMapsUtilsE24defaultToleranceInMetersSdvpZ",
+            "mangledName": "$sSo7GMSPathC15GoogleMapsUtilsE24defaultToleranceInMetersSdvpZ",
+            "moduleName": "GoogleMapsUtils",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Double",
+                    "printedName": "Swift.Double",
+                    "usr": "s:Sd"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:So7GMSPathC15GoogleMapsUtilsE24defaultToleranceInMetersSdvgZ",
+                "mangledName": "$sSo7GMSPathC15GoogleMapsUtilsE24defaultToleranceInMetersSdvgZ",
+                "moduleName": "GoogleMapsUtils",
+                "static": true,
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "isFromExtension": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Function",
+            "name": "area",
+            "printedName": "area(radius:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "usr": "s:Sd"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "hasDefaultArg": true,
+                "usr": "s:Sd"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:So7GMSPathC15GoogleMapsUtilsE4area6radiusS2d_tF",
+            "mangledName": "$sSo7GMSPathC15GoogleMapsUtilsE4area6radiusS2d_tF",
+            "moduleName": "GoogleMapsUtils",
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "signedArea",
+            "printedName": "signedArea(radius:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "usr": "s:Sd"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "hasDefaultArg": true,
+                "usr": "s:Sd"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:So7GMSPathC15GoogleMapsUtilsE10signedArea6radiusS2d_tF",
+            "mangledName": "$sSo7GMSPathC15GoogleMapsUtilsE10signedArea6radiusS2d_tF",
+            "moduleName": "GoogleMapsUtils",
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "contains",
+            "printedName": "contains(coordinate:geodesic:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "CLLocationCoordinate2D",
+                "printedName": "CoreLocation.CLLocationCoordinate2D",
+                "usr": "c:@S@CLLocationCoordinate2D"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:So7GMSPathC15GoogleMapsUtilsE8contains10coordinate8geodesicSbSo22CLLocationCoordinate2DV_SbtF",
+            "mangledName": "$sSo7GMSPathC15GoogleMapsUtilsE8contains10coordinate8geodesicSbSo22CLLocationCoordinate2DV_SbtF",
+            "moduleName": "GoogleMapsUtils",
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "isOnPath",
+            "printedName": "isOnPath(coordinate:geodesic:tolerance:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "CLLocationCoordinate2D",
+                "printedName": "CoreLocation.CLLocationCoordinate2D",
+                "usr": "c:@S@CLLocationCoordinate2D"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "hasDefaultArg": true,
+                "usr": "s:Sd"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:So7GMSPathC15GoogleMapsUtilsE8isOnPath10coordinate8geodesic9toleranceSbSo22CLLocationCoordinate2DV_SbSdtF",
+            "mangledName": "$sSo7GMSPathC15GoogleMapsUtilsE8isOnPath10coordinate8geodesic9toleranceSbSo22CLLocationCoordinate2DV_SbSdtF",
+            "moduleName": "GoogleMapsUtils",
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "styleSpans",
+            "printedName": "styleSpans(styles:lengths:lengthKind:offset:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[GoogleMaps.GMSStyleSpan]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "GMSStyleSpan",
+                    "printedName": "GoogleMaps.GMSStyleSpan",
+                    "usr": "c:objc(cs)GMSStyleSpan"
+                  }
+                ],
+                "usr": "s:Sa"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[GoogleMaps.GMSStrokeStyle]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "GMSStrokeStyle",
+                    "printedName": "GoogleMaps.GMSStrokeStyle",
+                    "usr": "c:objc(cs)GMSStrokeStyle"
+                  }
+                ],
+                "usr": "s:Sa"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[Swift.Double]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Double",
+                    "printedName": "Swift.Double",
+                    "usr": "s:Sd"
+                  }
+                ],
+                "usr": "s:Sa"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "GMSLengthKind",
+                "printedName": "GoogleMaps.GMSLengthKind",
+                "usr": "c:@E@GMSLengthKind"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "hasDefaultArg": true,
+                "usr": "s:Sd"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:So7GMSPathC15GoogleMapsUtilsE10styleSpans6styles7lengths10lengthKind6offsetSaySo12GMSStyleSpanCGSaySo14GMSStrokeStyleCG_SaySdGSo09GMSLengthJ0VSdtF",
+            "mangledName": "$sSo7GMSPathC15GoogleMapsUtilsE10styleSpans6styles7lengths10lengthKind6offsetSaySo12GMSStyleSpanCGSaySo14GMSStrokeStyleCG_SaySdGSo09GMSLengthJ0VSdtF",
+            "moduleName": "GoogleMapsUtils",
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:objc(cs)GMSPath",
+        "moduleName": "GoogleMaps",
+        "isOpen": true,
+        "objc_name": "GMSPath",
+        "declAttributes": [
+          "ObjC",
+          "Dynamic"
+        ],
+        "superclassUsr": "c:objc(cs)NSObject",
+        "isExternal": true,
+        "inheritsConvenienceInitializers": true,
+        "superclassNames": [
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "Sequence",
+        "printedName": "Sequence",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "gmsMutablePath",
+            "printedName": "gmsMutablePath",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "GMSMutablePath",
+                "printedName": "GoogleMaps.GMSMutablePath",
+                "usr": "c:objc(cs)GMSMutablePath"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:ST15GoogleMapsUtilsSo22CLLocationCoordinate2DV7ElementRtzrlE14gmsMutablePathSo010GMSMutableI0Cvp",
+            "mangledName": "$sST15GoogleMapsUtilsSo22CLLocationCoordinate2DV7ElementRtzrlE14gmsMutablePathSo010GMSMutableI0Cvp",
+            "moduleName": "GoogleMapsUtils",
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "GMSMutablePath",
+                    "printedName": "GoogleMaps.GMSMutablePath",
+                    "usr": "c:objc(cs)GMSMutablePath"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:ST15GoogleMapsUtilsSo22CLLocationCoordinate2DV7ElementRtzrlE14gmsMutablePathSo010GMSMutableI0Cvg",
+                "mangledName": "$sST15GoogleMapsUtilsSo22CLLocationCoordinate2DV7ElementRtzrlE14gmsMutablePathSo010GMSMutableI0Cvg",
+                "moduleName": "GoogleMapsUtils",
+                "genericSig": "<τ_0_0 where τ_0_0 : Swift.Sequence, τ_0_0.Element == CoreLocation.CLLocationCoordinate2D>",
+                "sugared_genericSig": "<Self where Self : Swift.Sequence, Self.Element == CoreLocation.CLLocationCoordinate2D>",
+                "isFromExtension": true,
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Protocol",
+        "usr": "s:ST",
+        "mangledName": "$sST",
+        "moduleName": "Swift",
+        "genericSig": "<τ_0_0.Element == τ_0_0.Iterator.Element, τ_0_0.Iterator : Swift.IteratorProtocol>",
+        "sugared_genericSig": "<Self.Element == Self.Iterator.Element, Self.Iterator : Swift.IteratorProtocol>",
+        "isExternal": true,
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
+        ]
+      }
+    ],
     "json_format_version": 8
   },
-  "ConstValues": []
+  "ConstValues": [
+    {
+      "filePath": "\/Volumes\/EXT500\/Download Septiembre 26 2024\/google-maps-ios-utils-main\/src\/GeometryUtils\/GMSPath+GeometryUtils.swift",
+      "kind": "FloatLiteral",
+      "offset": 757,
+      "length": 3,
+      "value": "0.1"
+    },
+    {
+      "filePath": "\/Volumes\/EXT500\/Download Septiembre 26 2024\/google-maps-ios-utils-main\/src\/GeometryUtils\/GMSPath+GeometryUtils.swift",
+      "kind": "IntegerLiteral",
+      "offset": 8155,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Volumes\/EXT500\/Download Septiembre 26 2024\/google-maps-ios-utils-main\/src\/GeometryUtils\/GMSPath+GeometryUtils.swift",
+      "kind": "IntegerLiteral",
+      "offset": 14703,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Volumes\/EXT500\/Download Septiembre 26 2024\/google-maps-ios-utils-main\/src\/GeometryUtils\/GMSPath+GeometryUtils.swift",
+      "kind": "IntegerLiteral",
+      "offset": 14782,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Volumes\/EXT500\/Download Septiembre 26 2024\/google-maps-ios-utils-main\/src\/GeometryUtils\/GMSPath+GeometryUtils.swift",
+      "kind": "BooleanLiteral",
+      "offset": 14844,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Volumes\/EXT500\/Download Septiembre 26 2024\/google-maps-ios-utils-main\/src\/GeometryUtils\/GMSPath+GeometryUtils.swift",
+      "kind": "IntegerLiteral",
+      "offset": 14920,
+      "length": 1,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Volumes\/EXT500\/Download Septiembre 26 2024\/google-maps-ios-utils-main\/src\/GeometryUtils\/GMSPath+GeometryUtils.swift",
+      "kind": "BooleanLiteral",
+      "offset": 14940,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Volumes\/EXT500\/Download Septiembre 26 2024\/google-maps-ios-utils-main\/src\/GeometryUtils\/GMSPath+GeometryUtils.swift",
+      "kind": "IntegerLiteral",
+      "offset": 15010,
+      "length": 1,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Volumes\/EXT500\/Download Septiembre 26 2024\/google-maps-ios-utils-main\/src\/GeometryUtils\/GMSPath+GeometryUtils.swift",
+      "kind": "IntegerLiteral",
+      "offset": 15042,
+      "length": 1,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Volumes\/EXT500\/Download Septiembre 26 2024\/google-maps-ios-utils-main\/src\/GeometryUtils\/GMSPath+GeometryUtils.swift",
+      "kind": "IntegerLiteral",
+      "offset": 15061,
+      "length": 1,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Volumes\/EXT500\/Download Septiembre 26 2024\/google-maps-ios-utils-main\/src\/GeometryUtils\/GMSPath+GeometryUtils.swift",
+      "kind": "IntegerLiteral",
+      "offset": 15092,
+      "length": 1,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Volumes\/EXT500\/Download Septiembre 26 2024\/google-maps-ios-utils-main\/src\/GeometryUtils\/GMSPath+GeometryUtils.swift",
+      "kind": "BooleanLiteral",
+      "offset": 15112,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Volumes\/EXT500\/Download Septiembre 26 2024\/google-maps-ios-utils-main\/src\/GeometryUtils\/GMSPath+GeometryUtils.swift",
+      "kind": "BooleanLiteral",
+      "offset": 15177,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Volumes\/EXT500\/Download Septiembre 26 2024\/google-maps-ios-utils-main\/src\/GeometryUtils\/GMSPath+GeometryUtils.swift",
+      "kind": "IntegerLiteral",
+      "offset": 15392,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Volumes\/EXT500\/Download Septiembre 26 2024\/google-maps-ios-utils-main\/src\/GeometryUtils\/GMSPath+GeometryUtils.swift",
+      "kind": "IntegerLiteral",
+      "offset": 15417,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Volumes\/EXT500\/Download Septiembre 26 2024\/google-maps-ios-utils-main\/src\/GeometryUtils\/GMSPath+GeometryUtils.swift",
+      "kind": "BooleanLiteral",
+      "offset": 15469,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Volumes\/EXT500\/Download Septiembre 26 2024\/google-maps-ios-utils-main\/src\/GeometryUtils\/GMSPath+GeometryUtils.swift",
+      "kind": "IntegerLiteral",
+      "offset": 15555,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Volumes\/EXT500\/Download Septiembre 26 2024\/google-maps-ios-utils-main\/src\/GeometryUtils\/GMSPath+GeometryUtils.swift",
+      "kind": "IntegerLiteral",
+      "offset": 15580,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Volumes\/EXT500\/Download Septiembre 26 2024\/google-maps-ios-utils-main\/src\/GeometryUtils\/GMSPath+GeometryUtils.swift",
+      "kind": "BooleanLiteral",
+      "offset": 15633,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/Volumes\/EXT500\/Download Septiembre 26 2024\/google-maps-ios-utils-main\/src\/GeometryUtils\/GMSPath+GeometryUtils.swift",
+      "kind": "IntegerLiteral",
+      "offset": 15697,
+      "length": 1,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Volumes\/EXT500\/Download Septiembre 26 2024\/google-maps-ios-utils-main\/src\/GeometryUtils\/GMSPath+GeometryUtils.swift",
+      "kind": "BooleanLiteral",
+      "offset": 15717,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/Volumes\/EXT500\/Download Septiembre 26 2024\/google-maps-ios-utils-main\/src\/GeometryUtils\/Internal\/CatesianPoint.swift",
+      "kind": "IntegerLiteral",
+      "offset": 667,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Volumes\/EXT500\/Download Septiembre 26 2024\/google-maps-ios-utils-main\/src\/GeometryUtils\/Internal\/CatesianPoint.swift",
+      "kind": "IntegerLiteral",
+      "offset": 673,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Volumes\/EXT500\/Download Septiembre 26 2024\/google-maps-ios-utils-main\/src\/Heatmap\/HeatMapInterpolationPoints.swift",
+      "kind": "IntegerLiteral",
+      "offset": 3174,
+      "length": 3,
+      "value": "-90"
+    },
+    {
+      "filePath": "\/Volumes\/EXT500\/Download Septiembre 26 2024\/google-maps-ios-utils-main\/src\/Heatmap\/HeatMapInterpolationPoints.swift",
+      "kind": "IntegerLiteral",
+      "offset": 3203,
+      "length": 2,
+      "value": "90"
+    },
+    {
+      "filePath": "\/Volumes\/EXT500\/Download Septiembre 26 2024\/google-maps-ios-utils-main\/src\/Heatmap\/HeatMapInterpolationPoints.swift",
+      "kind": "IntegerLiteral",
+      "offset": 3232,
+      "length": 4,
+      "value": "-180"
+    },
+    {
+      "filePath": "\/Volumes\/EXT500\/Download Septiembre 26 2024\/google-maps-ios-utils-main\/src\/Heatmap\/HeatMapInterpolationPoints.swift",
+      "kind": "IntegerLiteral",
+      "offset": 3263,
+      "length": 3,
+      "value": "180"
+    },
+    {
+      "filePath": "\/Volumes\/EXT500\/Download Septiembre 26 2024\/google-maps-ios-utils-main\/src\/Heatmap\/HeatMapInterpolationPoints.swift",
+      "kind": "IntegerLiteral",
+      "offset": 3470,
+      "length": 2,
+      "value": "25"
+    },
+    {
+      "filePath": "\/Volumes\/EXT500\/Download Septiembre 26 2024\/google-maps-ios-utils-main\/src\/Heatmap\/HeatMapInterpolationPoints.swift",
+      "kind": "FloatLiteral",
+      "offset": 16307,
+      "length": 3,
+      "value": "0.1"
+    }
+  ]
 }

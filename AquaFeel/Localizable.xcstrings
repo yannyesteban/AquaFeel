@@ -16,6 +16,16 @@
     "..." : {
 
     },
+    "...Search Address" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "…Buscar Dirección"
+          }
+        }
+      }
+    },
     "(Pending)" : {
       "localizations" : {
         "es-419" : {
@@ -321,7 +331,14 @@
 
     },
     "Amount" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cantidad"
+          }
+        }
+      }
     },
     "Amount to Finance" : {
       "localizations" : {
@@ -594,6 +611,9 @@
         }
       }
     },
+    "Are you sure you want to close the contract?" : {
+
+    },
     "Are you sure you want to delete the contract?" : {
       "localizations" : {
         "es-419" : {
@@ -645,7 +665,14 @@
       }
     },
     "Are you sure you want?" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Está seguro?"
+          }
+        }
+      }
     },
     "Are you sure?" : {
       "localizations" : {
@@ -1426,7 +1453,14 @@
       }
     },
     "Description" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descripción"
+          }
+        }
+      }
     },
     "Description: %@" : {
       "localizations" : {
@@ -1494,6 +1528,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Editar Perfil"
+          }
+        }
+      }
+    },
+    "Edit Resource" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Editar Recurso"
           }
         }
       }
@@ -1898,7 +1942,14 @@
       }
     },
     "Image Size" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tamaño de la Imagem"
+          }
+        }
+      }
     },
     "info" : {
 
@@ -1983,7 +2034,14 @@
       }
     },
     "Interval to Finance" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intervalo a Financiar"
+          }
+        }
+      }
     },
     "Interval: %lld" : {
       "localizations" : {
@@ -2127,7 +2185,14 @@
 
     },
     "License" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licencia"
+          }
+        }
+      }
     },
     "Light" : {
       "localizations" : {
@@ -2213,7 +2278,14 @@
 
     },
     "Marked Task" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tarea Marcada"
+          }
+        }
+      }
     },
     "MASTERCARD" : {
 
@@ -3664,6 +3736,16 @@
     "Stop: %lld" : {
 
     },
+    "Street" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calle"
+          }
+        }
+      }
+    },
     "Street Address" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3758,10 +3840,34 @@
       }
     },
     "Take Photo" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tomar Foto"
+          }
+        }
+      }
+    },
+    "Take Photo with Camera" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tomar foto con la Cámara"
+          }
+        }
+      }
     },
     "Task to Do" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tareas que hacer"
+          }
+        }
+      }
     },
     "Task To Do" : {
 

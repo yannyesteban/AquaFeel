@@ -1,7 +1,7 @@
 framework module GoogleMapsUtils {
-  umbrella header "Google-Maps-iOS-Utils-umbrella.h"
-
+  umbrella header "GoogleMapsUtils.h"
   export *
+
   module * { export * }
 }
 

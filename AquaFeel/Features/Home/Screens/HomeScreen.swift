@@ -397,7 +397,7 @@ struct HomeScreen: View {
         .environmentObject(manager)
         .onAppear {
             
-            print(".. start ..")
+           
             Task {
                 // await NotificationManager.initialize(userId: profile.userId)
                 if profile.notifications {

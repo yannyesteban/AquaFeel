@@ -91,13 +91,34 @@ struct CreateLead: View {
                     Section("Address") {
                         /* AddressView<LeadModel>(label: "write a address", leadAddress: $lead) */
                         AddressField<LeadModel>(label: "Address", leadAddress: $lead, withPlaceButton: mode == 1)
-                        TextField("Apt / Suite", text: $lead.apt)
-                        TextField("City", text: $lead.city)
-                        TextField("State", text: $lead.state)
-                        HStack {
-                            TextField("Zip Code", text: $lead.zip)
-                            TextField("Country", text: $lead.country)
+                        TextField("Street", text: $lead.street_address).disabled(true)
+                        if lead.apt != ""{
+                            TextField("Apt / Suite", text: $lead.apt).disabled(true)
                         }
+                       
+                        TextField("City", text: $lead.city).disabled(true)
+                        TextField("State", text: $lead.state).disabled(true)
+                        HStack {
+                            TextField("Zip Code", text: $lead.zip).disabled(true)
+                            TextField("Country", text: $lead.country).disabled(true)
+                        }.disabled(true)
+                        /*
+                        //if lead.street_address != "" {
+                            Text(lead.street_address)
+                            if lead.apt != ""{
+                                TextField("Apt / Suite", text: $lead.apt)
+                            }
+                            
+                            Text(lead.city)
+                            Text(lead.state)
+                            HStack {
+                                Text(lead.zip)
+                                Spacer()
+                                Text(lead.country)
+                            }
+                        //}
+                         */
+                         
                     }
 
                     Section("Status") {
@@ -196,6 +217,13 @@ struct CreateLead: View {
                         }
 
                         Section {
+                            
+                            NavigationLink {
+                                LeadResourceEditList(profile: profile, leadId: lead.id)
+                            } label: {
+                                Label("Resources", systemImage:  "doc.richtext.fill")
+                            }
+                           
                             
                             NavigationLink {
                                 LeadWorkOrder(profile: profile, lead: lead, order: $order)

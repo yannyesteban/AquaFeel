@@ -44,7 +44,16 @@ struct AddressField<T: AddressProtocol>: View {
     
     var body: some View {
         HStack {
-            TextField(label, text: $leadAddress.street_address)
+            //Text(leadAddress.street_address)
+            Image(systemName: "magnifyingglass.circle.fill")
+                .foregroundColor(.blue)
+                .imageScale(.large)
+                .onTapGesture {
+                    isModalPresented.toggle()
+                }
+            Text("...Search Address")
+                .foregroundColor(.secondary)
+                .lineLimit(1)
                 // .padding()
                 // .textFieldStyle(RoundedBorderTextFieldStyle())
                 //.textFieldStyle(RoundedBorderTextFieldStyle())
@@ -67,7 +76,9 @@ struct AddressField<T: AddressProtocol>: View {
                     }
                     .padding()
                 }
+            Spacer()
             if withPlaceButton {
+               
                 if locationWaiting {
                     ProgressView("")
                         .padding(.leading, 14)

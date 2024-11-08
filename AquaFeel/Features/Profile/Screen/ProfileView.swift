@@ -16,7 +16,9 @@ struct ProfileView: View {
     @State var showErrorMessage = false
     @State var errorMessage = ""
 
-    @State var showingImagePicker = false
+    @State private var showingCamera = false
+    @State private var showingImagePicker = false
+    @State private var showingImagePicker2 = false
 
     @State private var selectedImage: UIImage?
 
@@ -28,10 +30,33 @@ struct ProfileView: View {
                         AvatarView(imageURL: $loginManager.avatar)
                             .padding()
 
-                        Button("Choose from Library") {
-                            showingImagePicker.toggle()
+                        /* Button("Choose from Library") {
+                             showingImagePicker.toggle()
+                         }
+                         .padding(0) */
+                    }
+                    Button(action: {
+                        showingCamera = true
+                    }) {
+                        Label("Take Photo with Camera", systemImage: "camera")
+                    }
+                    .sheet(isPresented: $showingCamera) {
+                        CameraView(image: $selectedImage) { image in
+
+                            loginManager.uploadAvatar(image: image)
                         }
-                        .padding(0)
+                    }
+
+                    Button(action: {
+                        showingImagePicker2.toggle()
+                    }) {
+                        Label("Choose from Library", systemImage: "photo")
+                    }
+                    .sheet(isPresented: $showingImagePicker2) {
+                        AvatarPicker(selectedImage: $selectedImage, sourceType: .photoLibrary) { image in
+
+                            loginManager.uploadAvatar(image: image)
+                        }
                     }
                 }
 
