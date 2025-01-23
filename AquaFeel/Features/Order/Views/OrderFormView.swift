@@ -273,16 +273,25 @@ struct OrderFormView: View {
                 Toggle("Check", isOn: $order.check)
             }
 
-            Section(header: Text("Price Information")) {
+            Section(header: Text("Cash Price")) {
                 HStack {
-                    Text("Cash Price:")
+                    Text("Price:")
                     Spacer()
-                    TextField("Cash Price", value: $order.price.cashPrice, formatter: NumberFormatter.decimalFormatter)
+                    TextField("Price", value: $order.price.cashPrice, formatter: NumberFormatter.decimalFormatter)
                         .multilineTextAlignment(.trailing)
                         .keyboardType(.decimalPad)
                         .frame(maxWidth: 150)
                 }
-
+                
+                HStack {
+                    Text("Down Payment:")
+                    Spacer()
+                    TextField("Down Payment", value: $order.price.downPayment, formatter: NumberFormatter.decimalFormatter)
+                        .multilineTextAlignment(.trailing)
+                        .keyboardType(.decimalPad)
+                        .frame(maxWidth: 150)
+                }
+                
                 HStack {
                     Text("Installation:")
                     Spacer()
@@ -291,7 +300,7 @@ struct OrderFormView: View {
                         .keyboardType(.decimalPad)
                         .frame(maxWidth: 150)
                 }
-
+                
                 HStack {
                     Text("Taxes:")
                     Spacer()
@@ -300,7 +309,37 @@ struct OrderFormView: View {
                         .keyboardType(.decimalPad)
                         .frame(maxWidth: 150)
                 }
-
+                
+            }
+            Section (header: Text("Through Financing")) {
+                
+                HStack {
+                    Text("Amount to Finance:")
+                    Spacer()
+                    TextField("Amount to Finance", value: $order.price.toFinance, formatter: NumberFormatter.decimalFormatter)
+                        .multilineTextAlignment(.trailing)
+                        .keyboardType(.decimalPad)
+                        .frame(maxWidth: 150)
+                }
+                
+                HStack {
+                    Text("Terms:")
+                    Spacer()
+                    TextField("Terms", text: $order.price.terms.terms)
+                        .multilineTextAlignment(.trailing)
+                }
+                
+                HStack {
+                    Text("APR ( % ):")
+                    Spacer()
+                    TextField("APR", value: $order.price.APR, formatter: NumberFormatter.decimalFormatter)
+                        .multilineTextAlignment(.trailing)
+                        .keyboardType(.decimalPad)
+                        .frame(maxWidth: 150)
+                }
+            }
+                /*
+                
                 HStack {
                     Text("Total Cash:")
                     Spacer()
@@ -310,14 +349,7 @@ struct OrderFormView: View {
                         .frame(maxWidth: 150)
                 }
 
-                HStack {
-                    Text("Down Payment:")
-                    Spacer()
-                    TextField("Down Payment", value: $order.price.downPayment, formatter: NumberFormatter.decimalFormatter)
-                        .multilineTextAlignment(.trailing)
-                        .keyboardType(.decimalPad)
-                        .frame(maxWidth: 150)
-                }
+                
 
                 HStack {
                     Text("Total Cash Price:")
@@ -328,23 +360,11 @@ struct OrderFormView: View {
                         .frame(maxWidth: 150)
                 }
 
-                HStack {
-                    Text("Amount to Finance:")
-                    Spacer()
-                    TextField("Amount to Finance", value: $order.price.toFinance, formatter: NumberFormatter.decimalFormatter)
-                        .multilineTextAlignment(.trailing)
-                        .keyboardType(.decimalPad)
-                        .frame(maxWidth: 150)
-                }
+                
 
-                HStack {
-                    Text("APR ( % ):")
-                    Spacer()
-                    TextField("APR", value: $order.price.APR, formatter: NumberFormatter.decimalFormatter)
-                        .multilineTextAlignment(.trailing)
-                        .keyboardType(.decimalPad)
-                        .frame(maxWidth: 150)
-                }
+               
+
+                
 
                 HStack {
                     Text("Finance Charge:")
@@ -363,23 +383,36 @@ struct OrderFormView: View {
                         .keyboardType(.decimalPad)
                         .frame(maxWidth: 150)
                 }
-            }
+            */
+            /*
+             Section {
+                 HStack {
+                     Text("Terms:")
+                     Spacer()
+                     TextField("Terms", text: $order.price.terms.terms)
+                 }
 
-            Section {
-                HStack {
+             } header: {
+                 Text("Terms:")
+             }
+              */
+            /*if order.price.terms.unit != "" {
+                Section {
+                    HStack {
+                        Text("Terms Amount:")
+                        Spacer()
+                        TextField("Number of Payment", value: $order.price.terms.amount, format: .number)
+                            .multilineTextAlignment(.trailing)
+                            .keyboardType(.decimalPad)
+                            .frame(maxWidth: 150)
+                    }
+                    Picker("Interval to Finance", selection: $order.price.terms.unit) {
+                        Text("MONTH").tag("MONTH")
+                    }
+                } header: {
                     Text("Terms Amount:")
-                    Spacer()
-                    TextField("Number of Payment", value: $order.price.terms.amount, format: .number)
-                        .multilineTextAlignment(.trailing)
-                        .keyboardType(.decimalPad)
-                        .frame(maxWidth: 150)
                 }
-                Picker("Interval to Finance", selection: $order.price.terms.unit) {
-                    Text("MONTH").tag("MONTH")
-                }
-            } header: {
-                Text("Terms Amount:")
-            }
+            }*/
 
             Section {
                 Text("Approval / Purchaser \(order.buyer1.name)")
@@ -620,7 +653,7 @@ struct OrderFormView: View {
 
         showAlert = true
     }
-    
+
     private func doClose() {
         // resourceManager.token = profile.token
         alert = Alert(
@@ -629,9 +662,8 @@ struct OrderFormView: View {
             primaryButton: .destructive(Text("Close")) {
                 Task {
                     do {
-                        
                         var customer = CustomerModel()
-                        
+
                         customer.firstName = "pepe2"
                         customer.lastName = "curtisona"
                         customer.address = "calle 123"
@@ -640,11 +672,9 @@ struct OrderFormView: View {
                         customer.price = 500
                         customer.installer = "pepito"
                         customer.office = "VA"
-                        
-                        
-                        
+
                         try await customerMamanager.save(customer: customer, mode: .new)
-                       
+
                     } catch {
                         setAlert(title: "Error", message: "Failure, the operation was not completed.")
                     }
@@ -652,11 +682,10 @@ struct OrderFormView: View {
             },
             secondaryButton: .cancel()
         )
-        
+
         showAlert = true
     }
 }
-
 
 struct OrderFormView_Previews: PreviewProvider {
     static var previews: some View {
