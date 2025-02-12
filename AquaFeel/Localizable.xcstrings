@@ -1715,6 +1715,12 @@
         }
       }
     },
+    "Final Price" : {
+
+    },
+    "Final Price:" : {
+
+    },
     "Finance Charge" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -4074,7 +4080,6 @@
       }
     },
     "Total Cash Price" : {
-      "extractionState" : "stale",
       "localizations" : {
         "es-419" : {
           "stringUnit" : {
@@ -4085,7 +4090,6 @@
       }
     },
     "Total Cash Price:" : {
-      "extractionState" : "stale",
       "localizations" : {
         "es-419" : {
           "stringUnit" : {

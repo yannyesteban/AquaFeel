@@ -310,6 +310,15 @@ struct OrderFormView: View {
                         .frame(maxWidth: 150)
                 }
                 
+                HStack {
+                    Text("Total Cash Price:")
+                    Spacer()
+                    TextField("Total Cash Price", value: $order.price.totalCashPrice, formatter: NumberFormatter.decimalFormatter)
+                        .multilineTextAlignment(.trailing)
+                        .keyboardType(.decimalPad)
+                        .frame(maxWidth: 150)
+                }
+                
             }
             Section (header: Text("Through Financing")) {
                 
@@ -333,6 +342,15 @@ struct OrderFormView: View {
                     Text("APR ( % ):")
                     Spacer()
                     TextField("APR", value: $order.price.APR, formatter: NumberFormatter.decimalFormatter)
+                        .multilineTextAlignment(.trailing)
+                        .keyboardType(.decimalPad)
+                        .frame(maxWidth: 150)
+                }
+                
+                HStack {
+                    Text("Final Price:")
+                    Spacer()
+                    TextField("Final Price", value: $order.price.totalPayments, formatter: NumberFormatter.decimalFormatter)
                         .multilineTextAlignment(.trailing)
                         .keyboardType(.decimalPad)
                         .frame(maxWidth: 150)
