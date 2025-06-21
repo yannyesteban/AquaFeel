@@ -84,7 +84,7 @@ class HomeAppleMapsViewController: UIViewController, MKMapViewDelegate {
     }
 
     func drawMarker(leads: [LeadModel]) {
-        print("drawMarker")
+     
 
         for lead in leads {
             let latitude = Double(lead.latitude) ?? 0.0
@@ -216,7 +216,7 @@ class HomeAppleMapsViewController: UIViewController, MKMapViewDelegate {
 
             marker.userData = lead
 
-            print(lead.status_id.name)
+           
             let circleIconView = getUIImage(name: lead.status_id.name)
             circleIconView.frame = CGRect(x: 120, y: 120, width: 30, height: 30)
 

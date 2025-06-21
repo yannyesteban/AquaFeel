@@ -154,7 +154,10 @@ struct AppointmentList2: View {
                     .add(.offset, "0")
                     .add(.limit, "1000")
                 // .add(.searchValue, "jose")
-                manager.list(query: leadQuery)
+                //manager.list(query: leadQuery)
+                Task {
+                    try? await manager.list(query: leadQuery)
+                }
             }
             .toolbar {
                 ToolbarItemGroup(placement: .topBarLeading) {
@@ -289,7 +292,10 @@ struct AppointmentByDate: View {
                     .add(.offset, "0")
                     .add(.limit, "1000")
                 // .add(.searchValue, "jose")
-                manager.list(query: leadQuery)
+                Task {
+                    try? await manager.list(query: leadQuery)
+                }
+                //manager.list(query: leadQuery)
             }
             .toolbar {
                 ToolbarItemGroup(placement: .topBarLeading) {

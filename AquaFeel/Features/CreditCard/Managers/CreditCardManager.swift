@@ -43,7 +43,7 @@ class CreditCardManager: ObservableObject {
             }
 
         } catch {
-            print(1247)
+          
             print(error.localizedDescription)
         }
 

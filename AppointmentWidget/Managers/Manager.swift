@@ -81,7 +81,7 @@ func loadFile<T: Codable>(name: String) async throws -> T {
         print(error)
     }
     
-    print(fileURL)
+   
     guard let data = try? Data(contentsOf: fileURL) else {
         
         throw APIError.urlError // YourErrorType.fileReadError // Reemplaza YourErrorType con el tipo de error que desees
@@ -618,7 +618,7 @@ class WidgetManager: ObservableObject {
                 
                 self.userId = self.store.userId
                 
-                print(self.token)
+              
             }
             
         } catch {
@@ -658,7 +658,7 @@ class WidgetManager: ObservableObject {
             DispatchQueue.main.async {
                 self.leads = response.leads
                 
-                print(self.leads.first?.first_name)
+               
             }
             
         } catch {

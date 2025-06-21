@@ -42,14 +42,23 @@ struct HomeMap: View {
     @StateObject var clusterTool: ClusterTool = .init()
     @StateObject var locationTool: LocationTool = .init()
     @StateObject var routeTool: RouteTool = .init()
+    @State var zoom: Float = 13.0
+    private let iniZoom: Float = 4.0 // 15.0
 
     var body: some View {
         GeometryReader { _ in
 
-            HomeMapsRepresentable(location: $location) { map in
+            HomeMapsRepresentable(location: $location, mapTheme: profile.mapTheme) { map in
+
+                DispatchQueue.main.async {
+                    clusterTool.maximumClusterZoom = profile.maximumClusterZoom
+                    clusterTool.minimumClusterSize = profile.minimumClusterSize
+                    clusterTool.setMap(map: map)
+                }
+
                 lassoTool.setMap(map: map)
                 markTool.setMap(map: map)
-                clusterTool.setMap(map: map)
+                // clusterTool.setMap(map: map)
                 locationTool.setMap(map: map)
                 routeTool.setMap(map: map)
 
@@ -74,7 +83,11 @@ struct HomeMap: View {
                     DispatchQueue.main.async {
                         markEnded = true
                         Task {
-                            self.lead = try! await leadManager.newFromLocation(location: marker.position)
+                            do {
+                                self.lead = try await leadManager.newFromLocation(location: marker.position)
+                            } catch {
+                                print("error with newFromLocation")
+                            }
                         }
                     }
                 }
@@ -86,7 +99,7 @@ struct HomeMap: View {
                 latitude = location.latitude
 
                 // map.camera = GMSCameraPosition(latitude: latitude, longitude: longitude, zoom: 18.0)
-                map.camera = GMSCameraPosition(latitude: latitude, longitude: longitude, zoom: 16.0)
+                map.camera = GMSCameraPosition(latitude: latitude, longitude: longitude, zoom: iniZoom)
                 map.settings.compassButton = true
                 map.settings.zoomGestures = true
                 map.settings.myLocationButton = true
@@ -98,7 +111,6 @@ struct HomeMap: View {
 
             .overlay(alignment: .topLeading) {
                 VStack {
-                    
                     Button {
                         showLeads.toggle()
                     } label: {
@@ -113,11 +125,11 @@ struct HomeMap: View {
                             .shadow(radius: 10)
                     }
                     .padding(10)
-                    
+
                     Button {
-                        tool.toggle(.marker, .cluster)
+                        setZoom()
                     } label: {
-                        Image(systemName: tool.mode == .marker ? "eraser.fill" : "pin.fill")
+                        Image(systemName: "viewfinder")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 25, height: 25)
@@ -127,19 +139,7 @@ struct HomeMap: View {
                             .clipShape(Circle())
                             .shadow(radius: 10)
                     }
-
-                    Button(action: {
-                        tool.toggle(.lasso, .cluster)
-                    }) {
-                        Image(systemName: tool.mode == .lasso ? "eraser.fill" : "hand.draw.fill")
-                            .resizable()
-                            .frame(width: 25, height: 25)
-                            .foregroundColor(.white)
-                            .padding(10)
-                            .background(Color.accentColor)
-                            .clipShape(Circle())
-                            .shadow(radius: 10)
-                    }.padding(10)
+                    .padding(10)
 
                     Button(action: {
                         showRoutes = true
@@ -167,6 +167,33 @@ struct HomeMap: View {
                         }
 
                     }.padding(10)
+
+                    Button {
+                        tool.toggle(.marker, .cluster)
+                    } label: {
+                        Image(systemName: tool.mode == .marker ? "eraser.fill" : "pin.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 25, height: 25)
+                            .foregroundColor(.white)
+                            .padding(10)
+                            .background(Color.accentColor)
+                            .clipShape(Circle())
+                            .shadow(radius: 10)
+                    }
+
+                    Button(action: {
+                        tool.toggle(.lasso, .cluster)
+                    }) {
+                        Image(systemName: tool.mode == .lasso ? "eraser.fill" : "hand.draw.fill")
+                            .resizable()
+                            .frame(width: 25, height: 25)
+                            .foregroundColor(.white)
+                            .padding(10)
+                            .background(Color.accentColor)
+                            .clipShape(Circle())
+                            .shadow(radius: 10)
+                    }.padding(10)
                 }
             }
         }
@@ -186,31 +213,50 @@ struct HomeMap: View {
             NavigationStack {
                 LeadsMapsView(profile: profile, manager: leadManager, clusterTool: clusterTool, updated: $updated)
             }
-          
         }
         .sheet(isPresented: $showFilter) {
             FilterOption(profile: profile, filter: $leadManager.filter, filters: $leadManager.leadFilter, statusList: leadManager.statusList, usersList: leadManager.users) {
                 // lead.reset()
                 leadManager.resetFilter()
                 leadManager.runLoad()
+                clusterTool.resetCluster()
             }
         }
 
         .sheet(isPresented: $lassoTool.ready) {
-            PathOptionView(profile: profile, leads: $leadManager.leads, path: $lassoTool.path, leadManager: leadManager, updated: $updated)
+            PathOptionView(profile: profile, leads: $leadManager.leads, path: lassoTool.path, leadManager: leadManager, updated: $updated)
                 .presentationDetents([.fraction(0.35), .medium, .large])
                 .presentationContentInteraction(.scrolls)
         }
         .sheet(isPresented: $markEnded) {
             CreateLead(profile: profile, lead: $lead, mode: 1, manager: leadManager, updated: .constant(false)) { result in
+
                 if result {
-                    // manager.leads.append(lead)
+                    
+                    DispatchQueue.main.async {
+                        var markers: [GMSMarker] = []
+                        markers.append(leadManager.createMark(lead: lead))
+                        
+                        self.clusterTool.addMarkers(markers: markers)
+                    }
                 }
             }
         }
         .sheet(isPresented: $showInfo) {
             NavigationStack {
                 CreateLead(profile: profile, lead: $lead, mode: 0, manager: leadManager, updated: $updated) { _ in
+                    DispatchQueue.main.async {
+                        // if result {
+                        self.clusterTool.deleteMarker(leadId: lead.id)
+
+                        var markers: [GMSMarker] = []
+                        markers.append(leadManager.createMark(lead: lead))
+
+                        self.clusterTool.addMarkers(markers: markers)
+
+                        // manager.leads.append(lead)
+                        // }
+                    }
                 }
             }
 
@@ -238,43 +284,99 @@ struct HomeMap: View {
         .onAppear {
             DispatchQueue.main.async {
                 leadManager.initFilter { _, _ in
-
-                    print("completation loadStatus")
                 }
             }
         }
+        .task {
+            leadManager.autoLoad = true
 
-        .onReceive(leadManager.$leads) { _ in
+            clusterTool.resetCluster()
+            leadManager.handleFilterChange()
+        }
+
+        .onReceive(leadManager.$newLeads) { _ in
 
             DispatchQueue.main.async {
-                let markers = leadManager.getMarkers()
+                var markers: [GMSMarker] = []
+                for lead in leadManager.newLeads {
+                    markers.append(leadManager.createMark(lead: lead))
+                }
 
-                clusterTool.loadMarkers(markers: markers)
+                clusterTool.addMarkers(markers: markers)
             }
         }
         .onReceive(leadManager.$leadFilter) { filter in
 
+            clusterTool.resetCluster()
+            leadManager.handleFilterChange()
             DispatchQueue.main.async {
                 profile.info.leadFilters = filter
             }
+            // profile.info.leadFilters = filter
         }
         .onReceive(routeManager.$mapRoute) { mapRoute in
             if let mapRoute {
                 routeTool.drawRoute(routes: mapRoute.routes)
             }
         }
+        .onChange(of: leadManager.updated) { value in
+            if value {
+                Task {
+                    // await manager.loadInitialData()
+                }
+                /*
+                  clusterTool.resetCluster()
+                 leadManager.handleFilterChange()
+                 */
+            }
+
+            updated = false
+        }
+        .onChange(of: leadManager.bulkStatusLeads) { updatedLeads in
+
+            DispatchQueue.main.async {
+                for _lead in updatedLeads {
+                    clusterTool.deleteMarker(leadId: _lead.id)
+                }
+
+                var markers: [GMSMarker] = []
+                for _lead in updatedLeads {
+                    markers.append(leadManager.createMark(lead: _lead))
+                }
+
+                clusterTool.addMarkers(markers: markers)
+            }
+        }
+        .onChange(of: leadManager.bulkDeleteLeads) { updatedLeads in
+
+            DispatchQueue.main.async {
+                for _lead in updatedLeads {
+                    clusterTool.deleteMarker(leadId: _lead.id)
+                }
+            }
+        }
+    }
+
+    func setZoom() {
+        clusterTool.zoom(zoom: zoom)
+        if zoom < 13.0 {
+            zoom = 15.0
+        } else {
+            zoom -= 1.0
+        }
     }
 }
-/*
-#Preview("Home") {
-    MainAppScreenHomeScreenPreview()
-}
-*/
 
+/*
+ #Preview("Home") {
+     MainAppScreenHomeScreenPreview()
+ }
+ */
 
 #Preview("Main") {
     MainAppScreenPreview()
 }
+
 /*
  #Preview {
      HomeMap(profile: ProfileManager(), updated: .constant(false), manager: LeadManager(), location: CLLocationCoordinate2D(latitude: 40.7128, longitude: -74.0060) )

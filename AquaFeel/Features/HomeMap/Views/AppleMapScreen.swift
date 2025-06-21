@@ -55,7 +55,7 @@ struct AppleMapScreen: View {
             
             AppleMapsRepresentable(location: $location) { map in
                 
-                print(map.myTest())
+                
                 //lassoTool.setMap(map: map)
                 //markTool.setMap(map: map)
                 clusterTool.setMap(map: map)
@@ -257,16 +257,16 @@ struct AppleMapScreen: View {
             DispatchQueue.main.async {
                 leadManager.initFilter { _, _ in
                     
-                    print("completation loadStatus")
+                 
                 }
             }
         }
         
         .onReceive(leadManager.$leads) { _ in
-            print("load.......")
+        
             DispatchQueue.main.async {
                 let markers = leadManager.getMarkers2()
-                print("load.......", markers.count)
+              
                 clusterTool.addMarkers(markers: markers)
                
             }

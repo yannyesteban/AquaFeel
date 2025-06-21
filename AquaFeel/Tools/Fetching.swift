@@ -36,6 +36,12 @@ enum APIError: Error {
     case userDataError
     case urlError
     case requestError
+    case invalidURL
+    case invalidResponse
+    case statusCode(Int)
+    case encodingFailed
+    case decodingFailed
+    case unknown(Error)
 }
 
 struct ApiConfig {
@@ -45,12 +51,83 @@ struct ApiConfig {
     let path: String
     let token: String
     let params: [String: String?]?
-    var port: String? = nil
+    //var port: String? = nil
+    var port: Int?
 }
+
+// MARK: - Función Principal Optimizada
+func fetchingFinal<T: Decodable>(
+    body: (some Encodable)? = nil,
+    config: ApiConfig
+) async throws -> T {
+    // 1. Construcción de URL
+    var components = URLComponents()
+    components.scheme = config.scheme
+    components.host = config.host
+    components.path = config.path
+    components.port = config.port
+    
+    if let params = config.params {
+        components.queryItems = params.map { URLQueryItem(name: $0.key, value: $0.value) }
+    }
+    
+    guard let url = components.url else {
+        throw APIError.invalidURL
+    }
+    
+    // 2. Preparación de la Request
+    var request = URLRequest(url: url)
+    request.httpMethod = config.method
+    request.addValue("Bearer \(config.token)", forHTTPHeaderField: "Authorization")
+    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+    
+    // 3. Codificación del Body (si existe)
+    if let body = body {
+        do {
+            request.httpBody = try JSONEncoder().encode(body)
+        } catch {
+            throw APIError.encodingFailed
+        }
+    }
+    
+    // 4. Ejecución de la Request
+    let (data, response): (Data, URLResponse)
+    do {
+        (data, response) = try await URLSession.shared.data(for: request)
+    } catch {
+        throw APIError.unknown(error)
+    }
+    
+    // 5. Validación de la Respuesta
+    guard let httpResponse = response as? HTTPURLResponse else {
+        throw APIError.invalidResponse
+    }
+    
+    guard (200...299).contains(httpResponse.statusCode) else {
+        throw APIError.statusCode(httpResponse.statusCode)
+    }
+    
+    // 6. Decodificación
+    do {
+        let decoder = JSONDecoder()
+        var decodedObject = try decoder.decode(T.self, from: data)
+        
+        // Si el modelo necesita el statusCode
+        if var needStatusCodeObject = decodedObject as? NeedStatusCode {
+            needStatusCodeObject.statusCode = httpResponse.statusCode
+            decodedObject = needStatusCodeObject as! T
+        }
+        
+        return decodedObject
+    } catch {
+        throw APIError.decodingFailed
+    }
+}
+
 
 func _fetching<T: Decodable>(body: Data?, config: ApiConfig) async throws -> T {
     // URL of the API endpoint for updates
-    print("config.scheme ... ", config.scheme)
+    
     var components = URLComponents()
     components.scheme = config.scheme
     components.host = config.host
@@ -75,8 +152,12 @@ func _fetching<T: Decodable>(body: Data?, config: ApiConfig) async throws -> T {
         request.httpBody = body
     }
     
-    // Add the authorization header with the Bearer token
-    request.addValue("Bearer \(config.token)", forHTTPHeaderField: "Authorization")
+    
+    if config.token != "" {
+        // Add the authorization header with the Bearer token
+        request.addValue("Bearer \(config.token)", forHTTPHeaderField: "Authorization")
+    }
+    
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     
     print("Url begin: \(url)\n")
@@ -114,6 +195,8 @@ func fetching<T: Decodable>(config: ApiConfig) async throws -> T {
         return try await _fetching(body: nil, config: config)
         
     } catch {
+        
+        
         throw error
     }
 }

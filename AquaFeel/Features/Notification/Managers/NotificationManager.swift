@@ -27,7 +27,7 @@ class NotificationManager: ObservableObject {
         
         
         guard let leads = try? await getLeads(userId: userId) else {
-            print("no leads")
+           
             return
         }
 
@@ -64,14 +64,14 @@ class NotificationManager: ObservableObject {
 
         guard lead.appointment_date != "",
               let appointmentDate = dateFormatter.date(from: lead.appointment_date) else {
-            print("no valid date: \(lead.id)")
+        
             return
         }
 
         // Calcular la fecha y hora de la notificación según la configuración
         let notificationDate = appointmentDate.addingTimeInterval(-timeBefore)
 
-        print(lead.appointment_date, notificationDate)
+        
         // Crear el trigger
         let triggerDate = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: notificationDate)
         let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
@@ -124,7 +124,7 @@ class NotificationManager: ObservableObject {
                     var dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: config.datetime)
 
                     if config.type == .time {
-                        print(config.datetime)
+                     
                         dateComponents = Calendar.current.dateComponents([.hour, .minute, .second], from: config.datetime)
                     }
 
@@ -136,7 +136,7 @@ class NotificationManager: ObservableObject {
 
                     do {
                         try await UNUserNotificationCenter.current().add(request)
-                        print("Notification: \(config.id)")
+                    
                     } catch {
                         print("Error: \(error.localizedDescription)")
                     }

@@ -29,7 +29,7 @@ struct UserDetailView: View {
         components.scheme = APIValues.scheme
         components.host = APIValues.host
         components.path = "/uploads/" + (user.avatar ?? "")
-        components.port = Int(APIValues.port)
+        components.port = APIValues.port
         
         return components.url?.absoluteString ?? ""
     }

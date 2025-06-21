@@ -63,7 +63,7 @@ struct TaskListView: View {
                     
                     await taskManager.load()
                         
-                    print(taskManager.route?.id)
+                  
                     
                     if let route = taskManager.route {
                         id = route._id

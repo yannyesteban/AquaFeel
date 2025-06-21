@@ -129,7 +129,7 @@ struct ModalView<T: AddressProtocol>: View {
                     }
                 }
 
-                print(leadAddress)
+               
             }
         }
     }
@@ -252,7 +252,7 @@ struct AddressView<T: AddressProtocol>: View {
                         }
                     }
 
-                    print(leadAddress)
+                  
                 }
             }
 

@@ -99,6 +99,10 @@ class ProfileManager: LoginProtocol, ObservableObject {
     @Published var notifications = false
     @Published var timeBefore = 60
     @Published var useCalendar = false
+    
+    @Published var mapTheme = MapTheme.user
+    @Published var maximumClusterZoom:UInt = 13
+    @Published var minimumClusterSize:UInt = 10
 
     var store: UserData = UserData()
     var saveAction: (Bool) -> Void = { _ in
@@ -190,7 +194,7 @@ class ProfileManager: LoginProtocol, ObservableObject {
                         components.scheme = APIValues.scheme
                         components.host = APIValues.host
                         components.path = "/uploads/" + avatar
-                        components.port = Int(APIValues.port)
+                        components.port = APIValues.port
                         self.avatar = components.url?.absoluteString ?? ""
                         self.info.avatar = components.url?.absoluteString ?? ""
 
@@ -236,6 +240,11 @@ class ProfileManager: LoginProtocol, ObservableObject {
                 self.timeBefore = self.store.timeBefore
                 self.useCalendar = self.store.useCalendar
                 self.avatar = self.store.info.avatar ?? ""
+                
+                
+                self.mapTheme = self.store.mapTheme
+                self.maximumClusterZoom = self.store.maximumClusterZoom
+                self.minimumClusterSize = self.store.minimumClusterSize
             }
 
         } catch {
@@ -263,6 +272,12 @@ class ProfileManager: LoginProtocol, ObservableObject {
             store.timeBefore = timeBefore
             store.useCalendar = useCalendar
 
+            store.mapTheme = mapTheme
+            store.maximumClusterZoom = maximumClusterZoom
+            store.minimumClusterSize = minimumClusterSize
+            
+            
+            
             try await saveFile(userData: store, name: "LoginStore1.data")
         } catch {
             print(error)
@@ -341,7 +356,7 @@ class ProfileManager: LoginProtocol, ObservableObject {
             let response: ProfileLocationResponse = try await fetching(body: body, config: apiInfo)
 
             if response.statusCode == 201 {
-                print(path, "is correct")
+               
                 DispatchQueue.main.async {
                     self.waiting = false
                 }
@@ -434,7 +449,7 @@ class ProfileManager: LoginProtocol, ObservableObject {
                         components.scheme = APIValues.scheme
                         components.host = APIValues.host
                         components.path = "/uploads/" + avatar
-                        components.port = Int(APIValues.port)
+                        components.port = APIValues.port
 
                         self.info.avatar = components.url?.absoluteString ?? ""
                         self.avatar = components.url?.absoluteString ?? ""

@@ -440,7 +440,7 @@ struct CreateLead: View {
 
                                         isWaiting = false
 
-                                        print("showSaveOk: A", ok)
+                                       
                                         if ok, let newLead = newLead {
                                             startMessage()
                                             alertMessage = "record was saved correctly!"
@@ -539,7 +539,7 @@ struct CreateLead: View {
 
             isWaiting = false
 
-            print("showSaveOk: A", ok)
+        
             if ok, let newLead = newLead {
                 // showErrorMessage = true
                 // alertMessage = "record was saved correctly!"
@@ -633,7 +633,7 @@ struct TestCreateLead: View {
     )
     var body: some View {
         CreateLead(profile: ProfileManager(), lead: $lead, mode: 2, manager: manager, updated: $updated) { result in
-            print(result)
+            
         }
         .onAppear {
             // manager.mode = 2

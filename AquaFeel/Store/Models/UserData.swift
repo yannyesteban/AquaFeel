@@ -7,6 +7,18 @@
 
 import Foundation
 
+
+
+enum MapTheme:Int, Codable {
+    case user = 0
+    case light = 1
+    case dark = 2
+    case silver = 3
+    case retro = 4
+    case night = 5
+    case aubergine = 6
+    
+}
 enum SchemeMode:Int, Codable {
     case user = 0
     case light = 1
@@ -38,7 +50,7 @@ struct UserData:  Codable, SimplyInitializable {
     var isBlocked: Bool
     var isVerified: Bool
     var auth: Bool
-    var test:String = "yanny Nuñez TEST One"
+    var test:String = "Object Test!"
     var info: User = User()
     
     var schemeMode = SchemeMode.user
@@ -49,6 +61,9 @@ struct UserData:  Codable, SimplyInitializable {
     var notifications = false
     var timeBefore = 60
     var useCalendar = false
+    var mapTheme = MapTheme.user
+    var maximumClusterZoom:UInt = 13
+    var minimumClusterSize:UInt = 10
     
     
     init() {

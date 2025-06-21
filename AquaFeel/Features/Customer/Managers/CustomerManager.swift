@@ -75,14 +75,14 @@ class CustomertManager: ObservableObject {
             } else {
                 /*DispatchQueue.main.async {
                  self.order = OrderModel()
-                 print("ONE")
+              
                  }*/
             }
             
         } catch {
             DispatchQueue.main.async {
                 self.credit = CreditModel()
-                print("Two")
+               
             }
             
             print(error.localizedDescription)
@@ -95,7 +95,7 @@ class CustomertManager: ObservableObject {
         //"mongodb://pepe2:12345678@localhost:27017/aquasoft?retryWrites=true&w=majority",//mongodb://pepe:12345678@localhost:27017/aquasoft
         let host = "localhost"
         let scheme = "http"
-        let port = "8000"
+        let port = 8000
         
         var params: [String: String?]?
         

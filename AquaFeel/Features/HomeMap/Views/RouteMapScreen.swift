@@ -117,7 +117,10 @@ struct RouteMapScreen: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .topLeading) {
-                HomeMapsRepresentable(location: $location) { map in
+                HomeMapsRepresentable(
+                    location: $location,
+                    mapTheme: profile.mapTheme
+                ) { map in
                     lassoTool.setMap(map: map)
                     markTool.setMap(map: map)
                     // clusterTool.setMap(map: map)

@@ -77,14 +77,14 @@ class OrderManager: ObservableObject {
             } else {
                 /*DispatchQueue.main.async {
                     self.order = OrderModel()
-                    print("ONE")
+        
                 }*/
             }
             
         } catch {
             DispatchQueue.main.async {
                 self.order = OrderModel()
-                print("Two")
+               
             }
             
             print(error.localizedDescription)

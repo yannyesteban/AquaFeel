@@ -72,13 +72,13 @@ struct Stats1DetailView: View {
     @Environment(\.colorScheme) var colorScheme
 
     var orderedStats: [Stats1] {
-        print("yanny")
+      
 
         let allStatus: [StatusType] = [.uc, .ni, .ingl, .rent, .r, .appt, .demo, .win, .nho, .sm, .nm, .mycl, .r2]
 
         // Create a dictionary from the existing stats for quick lookup
         let statsDict = Dictionary(uniqueKeysWithValues: employee.stats.map { ($0.name, $0.count) })
-        print(" -- ", statsDict)
+       
         // Create an ordered array using allStatus and filling with zero if the status does not exist
         let x: [Stats1] = allStatus.map { status in
             Stats1(name: status.rawValue, count: statsDict[status.rawValue] ?? 0)

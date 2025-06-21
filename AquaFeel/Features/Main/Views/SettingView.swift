@@ -12,7 +12,6 @@ struct AvatarView: View {
 
     var size: CGFloat = 60
     var body: some View {
-        
         AsyncImage(url: URL(string: imageURL)) { phase in
             switch phase {
             case .empty:
@@ -42,10 +41,9 @@ struct AvatarView: View {
 
 struct AvatarView2: View {
     @State var imageURL: String
-    
+
     var size: CGFloat = 60
     var body: some View {
-        
         AsyncImage(url: URL(string: imageURL)) { phase in
             switch phase {
             case .empty:
@@ -63,7 +61,7 @@ struct AvatarView2: View {
                     .scaledToFit()
                     .frame(width: size, height: size)
                     .clipShape(Circle())
-                // .foregroundColor(.gray)
+            // .foregroundColor(.gray)
             @unknown default:
                 fatalError("Unhandled case")
             }
@@ -218,7 +216,6 @@ struct SettingView: View {
                         }
                     }
 
-                    
                     HStack {
                         Image(systemName: "antenna.radiowaves.left.and.right.slash")
                             .font(.system(size: 20, weight: .light))
@@ -226,13 +223,54 @@ struct SettingView: View {
                             Text("Offline")
                         }
                     }
-
+                    /*
                     HStack {
                         Image(systemName: "link")
                             .font(.system(size: 20, weight: .light))
                         Toggle(isOn: $loginManager.playBackground) {
                             Text("Play in background")
                         }
+                    }
+                     */
+                }
+
+                Section(header: Text("Map Settings")) {
+                    HStack {
+                        Image(systemName: "paintpalette")
+                            .font(.system(size: 20, weight: .light))
+                        Picker("Map Theme", selection: $loginManager.mapTheme) {
+                            Text("System").tag(MapTheme.user)
+                            Text("Light").tag(MapTheme.light)
+                            Text("Dark").tag(MapTheme.dark)
+                            Text("Silver").tag(MapTheme.silver)
+                            Text("Night").tag(MapTheme.night)
+                            Text("Aubergine").tag(MapTheme.aubergine)
+                        }
+                    }
+
+                    HStack {
+                        Image(systemName: "arrow.up.left.and.arrow.down.right")
+                            .font(.system(size: 20, weight: .light))
+                        Stepper("Max Cluster Zoom: \(loginManager.maximumClusterZoom)", value: $loginManager.maximumClusterZoom, in: 0 ... 22)
+                    }
+
+                    HStack {
+                        Image(systemName: "circle.grid.2x2")
+                            .font(.system(size: 20, weight: .light))
+                        Stepper("Min Cluster Size: \(loginManager.minimumClusterSize)", value: $loginManager.minimumClusterSize, in: 1 ... 100)
+                    }
+                    Button(action: {
+                        // Reset to default values
+                        loginManager.mapTheme = .user
+                        loginManager.maximumClusterZoom = 13
+                        loginManager.minimumClusterSize = 10
+                    }) {
+                        HStack {
+                            Image(systemName: "arrow.counterclockwise")
+                                .font(.system(size: 20, weight: .light))
+                            Text("Reset Map Configuration")
+                        }
+                        .foregroundColor(.blue)
                     }
                 }
 
@@ -243,10 +281,7 @@ struct SettingView: View {
                         Label("Alarms", systemImage: "alarm")
                     }
                 }
-                
-                
 
-                
                 HStack {
                     Text("Log out")
                     Spacer()

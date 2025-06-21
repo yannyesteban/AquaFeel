@@ -14,7 +14,8 @@ class MultiMark {
     var circle: GMSCircle = .init()
     var paths: [GMSMutablePath] = []
     var polylines: [GMSPolyline] = []
-
+    var center: CLLocationCoordinate2D = .init()
+    var radio: CLLocationDistance = .init()
     func reset() {
     }
 
@@ -29,8 +30,13 @@ class MultiMark {
             paths[i].removeAllCoordinates()
         }
     }
-
+    func draw(map: GMSMapView, manager: GMUClusterManager) {
+        draw(center: center, radio: radio, map: map, manager: manager)
+        
+    }
     func draw(center: CLLocationCoordinate2D, radio: CLLocationDistance, map: GMSMapView, manager: GMUClusterManager) {
+        self.center = center
+        self.radio = radio
         // circle = GMSCircle(position: center, radius: radio)
         circle.radius = radio
         circle.position = center

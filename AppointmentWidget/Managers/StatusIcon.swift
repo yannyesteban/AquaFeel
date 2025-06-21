@@ -68,7 +68,7 @@ func getIconInfo3(status: StatusType) -> IconInfo {
 }
 
 func ColorFromHex3(_ hex: String) -> Color {
-    print(hex)
+    
     let scanner = Scanner(string: hex)
     scanner.currentIndex = scanner.string.startIndex
     var rgbValue: UInt64 = 0

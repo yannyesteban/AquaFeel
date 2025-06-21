@@ -253,7 +253,7 @@ struct LeadDeleteResponse: Codable {
     // Define las propiedades de la respuesta de la API, si es necesario
 }
 
-struct LeadModel: Codable, AddressProtocol, Equatable, Hashable {
+struct LeadModel: Codable, AddressProtocol, Equatable, Hashable, Identifiable {
     var id: String
     var business_name: String
     var first_name: String
@@ -820,7 +820,7 @@ struct ApiFetch<M: Codable, T: Decodable> {
         components.scheme = info.scheme
         components.host = info.host
         components.path = info.path
-        components.port = Int(info.port ?? "80")
+        components.port = info.port ?? 80
         
         components.queryItems = [URLQueryItem(name: "limit", value: "2500"), URLQueryItem(name: "offset", value: "0")]
         for (key, value) in query {
@@ -888,7 +888,7 @@ struct ApiFetch<M: Codable, T: Decodable> {
         components.scheme = info.scheme
         components.host = info.host
         components.path = info.path
-        components.port = Int(info.port ?? "80")
+        components.port = info.port ?? 80
         
         components.queryItems = [URLQueryItem(name: "limit", value: "2500"), URLQueryItem(name: "offset", value: "0")]
         
@@ -1007,7 +1007,7 @@ struct ApiFetch<M: Codable, T: Decodable> {
         components.scheme = config.scheme
         components.host = config.host
         components.path = config.path
-        components.port = Int(config.port ?? "80")
+        components.port = config.port ?? 80
         
         guard let url = components.url else {
             return
@@ -1069,7 +1069,7 @@ struct ApiFetch<M: Codable, T: Decodable> {
         components.scheme = config.scheme
         components.host = config.host
         components.path = config.path
-        components.port = Int(config.port ?? "80")
+        components.port = config.port ?? 80
         
         if let params = config.params {
             components.queryItems = params.map { URLQueryItem(name: $0.key, value: $0.value) }

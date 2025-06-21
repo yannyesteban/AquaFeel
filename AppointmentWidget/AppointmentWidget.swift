@@ -26,7 +26,7 @@ struct Provider: TimelineProvider {
                 var userId = ""
                 if let userDefaults = UserDefaults(suiteName: "group.aquafeelvirginia.com.AquaFeel") {
                     userId = userDefaults.string(forKey: "userId") ?? ""
-                    print(userId)
+                  
                 }
                 //userId = "DD2EMns3y"
                 manager.userId = userId

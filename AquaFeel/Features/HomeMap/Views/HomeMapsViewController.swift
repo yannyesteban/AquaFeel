@@ -20,7 +20,7 @@ class MapsCluster: NSObject {
         let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
         let renderer = GMUDefaultClusterRenderer(mapView: map, clusterIconGenerator: iconGenerator)
         renderer.maximumClusterZoom = 15
-        
+
         clusterManager = GMUClusterManager(map: map, algorithm: algorithm, renderer: renderer)
 
         // clusterManager?.setDelegate(self, mapDelegate: self)
@@ -44,7 +44,6 @@ class MapsCluster: NSObject {
         if let clusterManager = clusterManager {
             clusterManager.add(marker)
 
-            
             let coordinate = truncateCoordinatesStr(marker.position, toDecimals: 6)
 
             if groups[coordinate] != nil {
@@ -89,7 +88,7 @@ class HomeMapsViewController: UIViewController {
     let map = GMSMapView()
 
     var location: CLLocationCoordinate2D?
-    
+    var mapTheme = MapTheme.user
     var markerDictionary: [Int: GMSMarker] = [:]
     var lastMarker: Int?
 
@@ -98,23 +97,30 @@ class HomeMapsViewController: UIViewController {
     var clusterManager: GMUClusterManager!
 
     var markers: [GMSMarker] = []
-    
-    init(location: CLLocationCoordinate2D){
+
+    init(location: CLLocationCoordinate2D, mapTheme: MapTheme = MapTheme.user) {
         self.location = location
+        self.mapTheme = mapTheme
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+   
+    override func viewWillAppear(_ animated: Bool) {
+       super.viewWillAppear(animated)
+       // Primera vez que aparece, asegúrate de aplicar el estilo correcto
+       overrideUserInterfaceStyle = (mapTheme == .dark || mapTheme == .night || mapTheme == .aubergine) ? .dark : .light
+       setNeedsStatusBarAppearanceUpdate()
+     }
     override func loadView() {
         super.loadView()
-        
-        
+
         var longitude = -74.0060 // -74.0060 // -122.008972 //-122.008972
         var latitude = 40.7128 // 40.7128 // 39.2750209// 37.33464379999999
-        
+
         if let location = location {
             longitude = location.longitude
             latitude = location.latitude
@@ -123,31 +129,72 @@ class HomeMapsViewController: UIViewController {
         map.camera = GMSCameraPosition(latitude: latitude, longitude: longitude, zoom: 16.0)
         map.settings.compassButton = true
         map.settings.zoomGestures = true
-        //map.settings.myLocationButton = true
+        // map.settings.myLocationButton = true
         map.isMyLocationEnabled = true
-        
-        
-        view = map
+        // Apply map theme based on user settings
+        applyTheme()
 
-        
+        view = map
+        setNeedsStatusBarAppearanceUpdate()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // _ = initCluster()
-        
+
         let iconGenerator = GMUDefaultClusterIconGenerator()
         let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
         let renderer = GMUDefaultClusterRenderer(mapView: map, clusterIconGenerator: iconGenerator)
-        
+
         clusterManager = GMUClusterManager(map: map, algorithm: algorithm, renderer: renderer)
-        
+
         // clusterManager.setDelegate(self, mapDelegate: self)
-        
+
         clusterManager.cluster()
     }
-    
+
+    // Helper method to determine theme name based on the MapTheme enum
+    private func getThemeName(from mapTheme: MapTheme) -> String? {
+        switch mapTheme {
+        case .user:
+            // Use system theme
+            return UITraitCollection.current.userInterfaceStyle == .dark ? "mapDark" : "mapStandard"
+        case .light:
+            return "mapStandard" // Ensure you have this JSON file
+        case .dark:
+            return "mapDark"
+        case .silver:
+            return "mapSilver" // Ensure you have this JSON file
+        case .retro:
+            return "mapRetro"
+        case .night:
+            return "mapNight"
+        case .aubergine:
+            return "mapAubergine"
+        }
+    }
+
+    // Apply theme to a map based on ProfileManager settings
+    private func applyTheme() {
+        let themeName = getThemeName(from: mapTheme)
+
+        if let themeName = themeName {
+            do {
+                if let styleURL = Bundle.main.url(forResource: themeName, withExtension: "json") {
+                    map.mapStyle = try GMSMapStyle(contentsOfFileURL: styleURL)
+                } else {
+                    NSLog("Unable to find \(themeName).json")
+                }
+            } catch {
+                NSLog("Failed to load map style. \(error)")
+            }
+        } else {
+            // Reset to default style if no theme is specified
+            map.mapStyle = nil
+        }
+    }
+
     func setCluster(name: String, cluster: MapsCluster) {
         clusters[name] = cluster
     }
@@ -359,7 +406,6 @@ class HomeMapsViewController: UIViewController {
 
             marker.userData = lead
 
-            print(lead.status_id.name)
             let circleIconView = getUIImage(name: lead.status_id.name)
             circleIconView.frame = CGRect(x: 120, y: 120, width: 30, height: 30)
 

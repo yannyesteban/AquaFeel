@@ -1173,7 +1173,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate,  GMUClusterRender
         
         if let marker = object as? GMSMarker {
             
-            print(55555555)
+          
             // Devuelve un marcador personalizado si el objeto es un marcador
             let customMarker = GMSMarker()
             customMarker.position = marker.position
@@ -1318,7 +1318,7 @@ struct LeadMap: View {
             .edgesIgnoringSafeArea(.all)
             // .environmentObject($lead.leads)
             .sheet(isPresented: $aqua.mode) {
-                PathOptionView(profile: profile, leads: $manager.leads, path: $aqua.path, leadManager: manager, updated: $updated)
+                PathOptionView(profile: profile, leads: $manager.leads, path: aqua.path, leadManager: manager, updated: $updated)
                     .presentationDetents([.fraction(0.35), .medium, .large])
                     .presentationContentInteraction(.scrolls)
             }

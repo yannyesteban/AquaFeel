@@ -174,6 +174,16 @@
         }
       }
     },
+    "Actions" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acciones"
+          }
+        }
+      }
+    },
     "Activate Notification" : {
       "localizations" : {
         "es-419" : {
@@ -205,6 +215,7 @@
       }
     },
     "Add" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es-419" : {
           "stringUnit" : {
@@ -675,6 +686,7 @@
       }
     },
     "Are you sure?" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es-419" : {
           "stringUnit" : {
@@ -683,6 +695,9 @@
           }
         }
       }
+    },
+    "Aubergine" : {
+
     },
     "Avatar" : {
 
@@ -1338,6 +1353,9 @@
         }
       }
     },
+    "CSV" : {
+
+    },
     "Custom" : {
       "localizations" : {
         "es-419" : {
@@ -1499,6 +1517,16 @@
         }
       }
     },
+    "Download File" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descargar Archivo"
+          }
+        }
+      }
+    },
     "Edad: %lld" : {
 
     },
@@ -1652,6 +1680,9 @@
     "Este es un contrato entre el cliente y la empresa." : {
 
     },
+    "Excel" : {
+
+    },
     "EXP Date" : {
       "localizations" : {
         "es-419" : {
@@ -1668,6 +1699,19 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vencimiento del ID"
+          }
+        }
+      }
+    },
+    "Export Leads" : {
+
+    },
+    "Export Options" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opciones de Exportación"
           }
         }
       }
@@ -1773,6 +1817,9 @@
         }
       }
     },
+    "Format" : {
+
+    },
     "Formulario SwiftUI" : {
 
     },
@@ -1782,6 +1829,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "De"
+          }
+        }
+      }
+    },
+    "Generate Export" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generar Exportación"
           }
         }
       }
@@ -1844,12 +1901,6 @@
 
     },
     "Hello, github!" : {
-
-    },
-    "Hello, OptionA!" : {
-
-    },
-    "Hello, OptionB!" : {
 
     },
     "Hello, World!" : {
@@ -1964,6 +2015,9 @@
 
     },
     "Info" : {
+
+    },
+    "Information" : {
 
     },
     "Ingrese texto" : {
@@ -2287,6 +2341,12 @@
     "Map Api" : {
 
     },
+    "Map Settings" : {
+
+    },
+    "Map Theme" : {
+
+    },
     "Marked Task" : {
       "localizations" : {
         "es-419" : {
@@ -2300,6 +2360,9 @@
     "MASTERCARD" : {
 
     },
+    "Max Cluster Zoom: %llu" : {
+
+    },
     "Message" : {
       "localizations" : {
         "es-419" : {
@@ -2309,6 +2372,9 @@
           }
         }
       }
+    },
+    "Min Cluster Size: %llu" : {
+
     },
     "Modal" : {
 
@@ -2546,6 +2612,9 @@
           }
         }
       }
+    },
+    "Night" : {
+
     },
     "No Data" : {
       "localizations" : {
@@ -2898,6 +2967,7 @@
 
     },
     "Play in background" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es-419" : {
           "stringUnit" : {
@@ -3165,6 +3235,9 @@
         }
       }
     },
+    "Reset Map Configuration" : {
+
+    },
     "Resource Details" : {
       "localizations" : {
         "es-419" : {
@@ -3374,6 +3447,7 @@
       }
     },
     "save" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es-419" : {
           "stringUnit" : {
@@ -3607,6 +3681,16 @@
     "Shape Type" : {
 
     },
+    "Share Link" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compartir Enlace"
+          }
+        }
+      }
+    },
     "Show Address" : {
       "localizations" : {
         "es-419" : {
@@ -3648,7 +3732,24 @@
       }
     },
     "show QR" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrar QR"
+          }
+        }
+      }
+    },
+    "Show QR Code" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrar QR"
+          }
+        }
+      }
     },
     "sign" : {
       "localizations" : {
@@ -3669,6 +3770,9 @@
           }
         }
       }
+    },
+    "Silver" : {
+
     },
     "Some sheet container from Bottom" : {
 
@@ -4262,6 +4366,7 @@
       }
     },
     "User" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es-419" : {
           "stringUnit" : {

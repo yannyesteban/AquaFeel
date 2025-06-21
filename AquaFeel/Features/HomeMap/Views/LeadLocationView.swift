@@ -32,7 +32,10 @@ struct LeadLocationView: View {
     var body: some View {
         GeometryReader { _ in
 
-            HomeMapsRepresentable(location: $location) { map in
+            HomeMapsRepresentable(
+                location: $location,
+                mapTheme: profile.mapTheme
+            ) { map in
 
                 let position = location
                 /* lassoTool.setMap(map: map)
@@ -48,7 +51,7 @@ struct LeadLocationView: View {
                  tool.initTool(mode: .route, tool: routeTool)
                  */
 
-                print(lead.position)
+             
 
                 // let longitude = lead.position.longitude
                 // let latitude = lead.position.latitude

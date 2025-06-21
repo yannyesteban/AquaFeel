@@ -137,7 +137,7 @@ struct ModelFormView: View {
     }
 
     private func doDelete() {
-        print("delete...")
+        
         // resourceManager.token = profile.token
         alert = Alert(
             title: Text("Confirmation"),

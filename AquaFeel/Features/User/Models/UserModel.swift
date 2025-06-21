@@ -265,7 +265,7 @@ func fetch<T2: Codable, T: Decodable>(body: T2, config: ApiConfig, completion: @
     components.scheme = config.scheme //?? "https"
     components.host = config.host
     components.path = config.path
-    components.port = Int(config.port ?? "80")
+    components.port = config.port
     
     guard let url = components.url else {
         return
@@ -306,7 +306,7 @@ func fetch<T2: Codable, T: Decodable>(body: T2, config: ApiConfig, completion: @
             return
         }
         //print("JSON: ")
-        print(String(decoding: data, as: UTF8.self))
+        //print(String(decoding: data, as: UTF8.self))
         //print(";\n")
         do {
             // Decode the API response
@@ -329,7 +329,7 @@ func fetch<T: Decodable>(config: ApiConfig, completion: @escaping (Result<T, Err
     components.scheme = config.scheme
     components.host = config.host
     components.path = config.path
-    components.port = Int(config.port ?? "80")
+    components.port = config.port
     
     if let params = config.params {
         components.queryItems = params.map { URLQueryItem(name: $0.key, value: $0.value) }
@@ -463,7 +463,7 @@ class UserModel: ObservableObject {
         //let info = ApiConfig(method: "GET", host: "api.aquafeelvirginia.com", path: "/leads/list-all", token: token, params: [:])
         
         
-        print("xxxxx 55 55 555 55 5 ")
+      
         ApiFetch<LeadsApiParam, LeadsModel>(
             info: info, parameters: nil
         ).sendGet(query: query.get()) { data in

@@ -15,7 +15,7 @@ class ResourceManager: ObservableObject {
     @Published var token: String = ""
 
     func list() async throws {
-        print("yanny esteban 1.0")
+      
 
         let q = LeadQuery()
             .add(.userId, userId)
@@ -82,7 +82,7 @@ class ResourceManager: ObservableObject {
             path = "\(APIValues.scheme)://\(APIValues.host):\(APIValues.port)/resources/edit"
         }
 
-        print(path, "path")
+     
         guard let url = URL(string: path) else {
             return
         }
@@ -111,7 +111,7 @@ class ResourceManager: ObservableObject {
         data.append("Content-Disposition: form-data; name=\"type\"\r\n\r\n".data(using: .utf8)!)
         data.append("\(resource.type)\r\n".data(using: .utf8)!)
 
-        print("resource.active ... ", resource.active)
+        
         // Append active
         data.append("--\(boundary)\r\n".data(using: .utf8)!)
         data.append("Content-Disposition: form-data; name=\"active\"\r\n\r\n".data(using: .utf8)!)

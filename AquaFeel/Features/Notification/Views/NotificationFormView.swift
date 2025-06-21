@@ -179,7 +179,7 @@ struct NotificationFormView: View {
                             
                             presentationMode.wrappedValue.dismiss()
                         case let .failure(error):
-                            print("Error al guardar la notificación: \(error.localizedDescription)")
+                        
                             setAlert(title: "Error", message: "Failure, the operation was not completed.")
                         }
                     }

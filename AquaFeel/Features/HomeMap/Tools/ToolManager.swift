@@ -8,6 +8,7 @@
 import Foundation
 import GoogleMaps
 
+@MainActor
 protocol MapTool {
     func setMap(map: MapsProvider)
     func setMap(map: GMSMapView)

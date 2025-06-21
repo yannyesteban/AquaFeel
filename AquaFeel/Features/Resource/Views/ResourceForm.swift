@@ -153,7 +153,7 @@ struct ResourceForm: View {
 
             case let .failure(error):
 
-                print(error.localizedDescription)
+        
                 setAlert(title: "Error", message: "Failure, the operation was not completed.")
 
                 DispatchQueue.main.async {
@@ -189,7 +189,7 @@ struct ResourceForm: View {
                             resource.fileName = item.fileName
                             mode = .edit
                         }
-                        print(item.active)
+                     
                     }
 
                     setAlert(title: "Message", message: "Resource was saved correctly!")

@@ -23,6 +23,9 @@ class GoogleApis {
     static func getPlaceDetailsByCoordinates(location: CLLocationCoordinate2D) async throws -> PlaceDetails? {
         var params: [String: String] = [:]
 
+        print("... /maps/api/directions/json 2")
+        
+        
         params["latlng"] = "\(location.latitude),\(location.longitude)"
         params["key"] = apiKey
 
@@ -43,6 +46,10 @@ class GoogleApis {
     }
 
     static func doRoute(request: RouteRequest, leads: [LeadModel]) async throws -> RouteResponse? {
+        
+        print("... /maps/api/directions/json")
+        
+        
         var params: [String: String] = [:]
 
         params["origin"] = request.origin
@@ -62,10 +69,11 @@ class GoogleApis {
 
         let info = ApiConfig(scheme: "https", method: "GET", host: "maps.googleapis.com", path: "/maps/api/directions/json", token: "", params: params)
 
+        
         do {
             var response: RouteResponse = try await fetching(config: info)
 
-            print("result.status:", response.status)
+            print(".... .... result.status:", response.status)
 
             for i in response.routes.indices {
                 for j in response.routes[i].waypointOrder {

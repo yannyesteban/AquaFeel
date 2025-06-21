@@ -50,7 +50,10 @@ struct LocationMap: View {
     var body: some View {
         GeometryReader { _ in
             
-            HomeMapsRepresentable(location: $location) { map in
+            HomeMapsRepresentable(
+                location: $location,
+                mapTheme: profile.mapTheme
+            ) { map in
                
                 locationTool.setMap(map: map)
                 usersTool.setMap(map: map)
@@ -200,7 +203,7 @@ struct LocationMap: View {
             if let user, user.position.latitude != -180.0 {
                 DispatchQueue.main.async {
                     showUsers.toggle()
-                    print("latitude", user.position.latitude)
+                  
                     
                     self.usersTool.goto(position: user.position)
                 }

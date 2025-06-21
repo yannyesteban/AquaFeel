@@ -182,7 +182,7 @@ class StatsManager: ObservableObject {
                 .add(.ownerId, filter.selectedOwner.joined(separator: ","))
         }
         
-        print("TOKEN 2.0", profile.role, profile.userId)
+      
         
         var path = "/leads/get"
         

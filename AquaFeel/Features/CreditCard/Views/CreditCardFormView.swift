@@ -19,14 +19,27 @@ struct CreditCardFormView: View {
     @Environment(\.presentationMode) var presentationMode
     @State var mode = 2
     private var url: String {
+        var components = URLComponents()
+            components.scheme = APIValues.scheme
+            components.host = APIValues.host
+            components.port = APIValues.port
+            components.path = "/creditcard/pdf"
+            components.queryItems = [
+                URLQueryItem(name: "id", value: credit._id),
+                URLQueryItem(name: "userTimeZone", value: TimeZone.current.identifier)
+            ]
+            return components.url?.absoluteString ?? ""
         
-        let userTimeZone = TimeZone.current.identifier
+        
+        /*
+         let userTimeZone = TimeZone.current.identifier
         
         
         if APIValues.port == "" {
             return APIValues.scheme + "://" + APIValues.host + "/creditcard/pdf?id=\(credit._id)&userTimeZone=\(userTimeZone)"
         }
         return APIValues.scheme + "://" + APIValues.host + ":\(APIValues.port)" + "/creditcard/pdf?id=\(credit._id)&userTimeZone=\(userTimeZone)"
+         */
     }
     
     let formatter: NumberFormatter = {
@@ -289,7 +302,7 @@ struct CreditCardFormView: View {
     }
     
     private func doDelete() {
-        print("delete...")
+       
         // resourceManager.token = profile.token
         alert = Alert(
             title: Text("Confirmation"),

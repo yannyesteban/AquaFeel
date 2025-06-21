@@ -178,7 +178,7 @@ class RouteTool: NSObject, ObservableObject, MapTool, GMSMapViewDelegate {
 
               */
 
-            print("lead.position", lead.position.latitude)
+           
             let marker = GMSMarker(position: lead.position)
 
             markerDictionary[lead.routeOrder] = marker

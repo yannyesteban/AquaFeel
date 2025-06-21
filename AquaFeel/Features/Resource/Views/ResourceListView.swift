@@ -93,7 +93,7 @@ struct ResourceDetailView2: View {
 
     private func loadPDF() {
         guard let pdfURL = URL(string: resource.fileURL) else { return }
-        print("pdfURL             ...", pdfURL)
+      
         downloadPDF(from: pdfURL) { localURL in
             if let localURL = localURL {
                 DispatchQueue.main.async {

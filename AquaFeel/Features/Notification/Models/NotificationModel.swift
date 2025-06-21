@@ -148,7 +148,7 @@ struct NotificationModel: Identifiable, Codable {
         if let date = isoDateFormatter.date(from: text) {
             datetime = date
         } else {
-            print("gran error de fecha")
+         
             datetime = Date()
         }
 

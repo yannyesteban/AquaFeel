@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+/*
 struct LeadList1: View {
     @Binding var leads: [LeadModel]
     @State var filter: String = ""
@@ -59,7 +59,7 @@ struct LeadList1: View {
         }
     }
 }
-
+*/
 struct LeadListScreen: View {
     var profile: ProfileManager
     @Binding var updated: Bool
@@ -142,7 +142,10 @@ struct LeadListScreen: View {
                     .foregroundColor(.black)
                     .foregroundColor(.red)
                     .onAppear {
-                        manager.list()
+                        Task {
+                            try? await manager.list()
+                        }
+                        
                     }
             }
 
@@ -170,7 +173,7 @@ struct LeadListScreen: View {
              } */
 
             .onAppear {
-                print("onAppear...")
+                print("onAppear   ...")
                 manager.initFilter(completion: { _, _ in
 
                 })
@@ -255,7 +258,10 @@ struct LeadListScreen: View {
                                     .add(.searchValue, newSearchText)
                                 // lead2.loadAll(query:leadQuery)
 
-                                manager.search()
+                                //manager.search()
+                                Task {
+                                    try? await manager.list()
+                                }
                             }
 
                         })
@@ -289,7 +295,7 @@ struct LeadListScreen: View {
 
         }.sheet(isPresented: $isFilterModalPresented) {
             FilterOption(profile: profile, filter: $manager.filter, filters: $manager.leadFilter, statusList: manager.statusList, usersList: manager.users) {
-                print("reseteando")
+                
                 manager.reset()
             }
             .onAppear {
@@ -300,7 +306,7 @@ struct LeadListScreen: View {
                 // Acción para mostrar la ventana modal con filtros
                 isFilterModalPresented.toggle()
             }) {
-                Text("Close")
+                
                 /* Image(systemName: "slider.horizontal.3") // Icono de sistema para filtros
                  .foregroundColor(.blue)
                  .font(.system(size: 20)) */

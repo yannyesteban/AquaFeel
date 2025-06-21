@@ -129,7 +129,7 @@ struct DateFilter2View: View {
 
                             waiting = false
 
-                            print(items.count)
+                          
                         }
                     }) {
                         HStack {

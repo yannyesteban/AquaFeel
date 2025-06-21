@@ -114,7 +114,7 @@ class UserManager: ObservableObject {
                 DispatchQueue.main.async {
                     if data.users.count > 0 {
                         if self.resetData {
-                            print("reset users")
+                            
                             self.users = data.users
                             self.resetData = false
                         } else {
@@ -211,7 +211,7 @@ class UserManager: ObservableObject {
             switch result {
             case let .success(result):
                 DispatchQueue.main.async {
-                    print(result)
+                  
 
                     completion(true, result)
                 }
@@ -282,7 +282,7 @@ class UserManager: ObservableObject {
     func loadLeadsContinuously() {
         DispatchQueue.global(qos: .background).async { [weak self] in
             guard let self = self else { return }
-            print("\(self.users.count) < \(self.maxLoads) : ", self.users.count < self.maxLoads)
+           
             while self.users.count < self.maxLoads {
                 self.list()
             }

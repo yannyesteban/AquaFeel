@@ -15,7 +15,7 @@ class CalendarManager: ObservableObject {
         
         
         guard let leads = try? await NotificationManager.getLeads(userId: userId) else {
-            print("no leads")
+            
             return
         }
         
@@ -81,7 +81,7 @@ class CalendarManager: ObservableObject {
             
             guard lead.appointment_date != "",
                   let appointmentDate = dateFormatter.date(from: lead.appointment_date) else {
-                print("no valid date: \(lead.id)")
+               
                 return
             }
             
@@ -90,22 +90,8 @@ class CalendarManager: ObservableObject {
                 event.endDate = appointmentDate.addingTimeInterval(3600) // Duration of one hour
             //}
             
-            print("calendar: ", event.startDate, event.endDate)
-            /*
-            
-            if let startDate = dateFormatter.date(from: "2024-05-25 10:00"),
-               let endDate = dateFormatter.date(from: "2024-05-25 11:00") {
-                addEventToCalendar(title: "Reunión con el Lead", startDate: startDate, endDate: endDate) { success, error in
-                    if success {
-                        print("Evento agregado al calendario")
-                    } else {
-                        if let error = error {
-                            print("Error al agregar el evento: \(error)")
-                        }
-                    }
-                }
-            }
-             */
+        
+           
             
             // Save the event to the calendar
             do {

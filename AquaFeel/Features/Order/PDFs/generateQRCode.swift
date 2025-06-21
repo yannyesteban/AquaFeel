@@ -18,5 +18,6 @@ func generateQRCode(from string: String) -> UIImage? {
             return UIImage(ciImage: output)
         }
     }
+    
     return nil
 }

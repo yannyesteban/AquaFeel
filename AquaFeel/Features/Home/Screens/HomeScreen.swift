@@ -48,7 +48,8 @@ struct HomeScreen: View {
     @State private var isDateSelected = false
     // @State private var selectedDate = Date()
 
-    @StateObject var manager = LeadManager(autoLoad: true, limit: 2000, maxLoads: 2000)
+    //@StateObject var manager = LeadManager(autoLoad: true, limit: 2000, maxLoads: 2000)
+    @StateObject var manager = LeadManager(autoLoad: false, limit: 2000, maxLoads: 3000)
 
     // @State var manager = LeadManager()
     var placeManager = PlaceManager()
@@ -238,6 +239,7 @@ struct HomeScreen: View {
 
                     NavigationLink {
                         CreateLead(profile: profile, lead: $lead, mode: 1, manager: manager, updated: $updated) { _ in
+                            
                         }
 
                     } label: {
@@ -433,9 +435,14 @@ struct HomeScreen: View {
         }
         .onChange(of: updated) { value in
             if value {
-                manager.search()
+                Task {
+                    //await manager.loadInitialData()
+                }
+                //manager.handleFilterChange()
+                //manager.search()
             }
             updated = false
+            
         }
 
         .onReceive(placeManager.$location) { newValue in
@@ -488,17 +495,7 @@ struct HomeScreen: View {
     }
 }
 
-struct OptionA: View {
-    var body: some View {
-        Text("Hello, OptionA!")
-    }
-}
 
-struct OptionB: View {
-    var body: some View {
-        Text("Hello, OptionB!")
-    }
-}
 
 #Preview("Home") {
     MainAppScreenHomeScreenPreview()

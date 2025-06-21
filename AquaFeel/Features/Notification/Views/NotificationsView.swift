@@ -92,7 +92,7 @@ struct NotificationsView: View {
                 await notificationManager.save(body: notification, mode: .delete) { result in
                     switch result {
                     case let .success(notification):
-                        print("Notificación eliminada: \(notification)")
+                       
                         // notificationManager.notifications.remove(atOffsets: offsets)
                         DispatchQueue.main.async {
                             if let index = notificationManager.notifications.firstIndex(where: { $0.id == notification.id }) {
@@ -101,7 +101,7 @@ struct NotificationsView: View {
                         }
 
                     case let .failure(error):
-                        print("Error al eliminar la notificación: \(error.localizedDescription)")
+                    
                         setAlert(title: "Error", message: "Failure, the operation was not completed.")
                         return
                     }

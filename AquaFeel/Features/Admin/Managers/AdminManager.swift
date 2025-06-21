@@ -7,17 +7,23 @@
 
 import Foundation
 
+@MainActor
 class AdminManager: ObservableObject {
     var userId: String = ""
     var token: String = ""
     var role: String = ""
 
     @Published var allSellers: [User] = []
-
     @Published var user: User?
 
+    init(userId: String = "", token: String = "", role: String = "") {
+        self.userId = userId
+        self.token = token
+        self.role = role
+    }
+
     func getUsers() async throws {
-        print("/users/list-all-sellers token: ", token)
+       
 
         let path = "/users/list-all-sellers"
         let params: [String: String?]? = nil
@@ -30,9 +36,8 @@ class AdminManager: ObservableObject {
             let response: AllSellersResponse = try await fetching(config: info)
 
             if response.statusCode == 200 {
-                DispatchQueue.main.async {
-                    self.allSellers = response.users.filter { $0.role != "ADMIN" } // response.users
-                }
+                allSellers = response.users.filter { $0.role != "ADMIN" } // response.users
+
             } else {
                 print("Error in list sellers")
             }

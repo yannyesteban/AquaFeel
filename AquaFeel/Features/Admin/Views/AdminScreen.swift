@@ -78,6 +78,13 @@ struct AdminScreen: View {
                     } label: {
                         Label("Appointments by Dates", systemImage: "list.bullet")
                     }
+                    
+                    NavigationLink {
+                        FilterExportView(profile: profile, statusList: [], usersList: [])
+
+                    } label: {
+                        Label("Export Leads", systemImage: "square.and.arrow.down.fill")
+                    }
                 } header: {
                     Label("Reports", systemImage: "list.bullet")
                 }

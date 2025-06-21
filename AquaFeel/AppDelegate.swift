@@ -53,19 +53,19 @@ class AppDelegateq: NSObject, UIApplicationDelegate, UNUserNotificationCenterDel
         // TODO: Add any intialization steps here.
        // GMSServices.provideAPIKey(APIKeys.googleApiKey)
         //GMSServices.setMetalRendererEnabled(true)
-        print("Application started up!")
+       
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
-        print("my notificactions!")
+       
         completionHandler([/*.alert,*/	 .badge, .sound])
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         // Manejar la respuesta a la notificación
         let userInfo = response.notification.request.content.userInfo
-        print("Notificación recibida: \(userInfo)")
+        
         completionHandler()
     }
     

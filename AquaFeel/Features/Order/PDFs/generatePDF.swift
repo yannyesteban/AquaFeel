@@ -14,7 +14,7 @@ func generatePDF(data: Data, name: String, completion: @escaping (URL) -> Void) 
 
     do {
         try data.write(to: url)
-        print("PDF: \(url)")
+        
         completion(url)
     } catch {
         print("PDF: \(error)")

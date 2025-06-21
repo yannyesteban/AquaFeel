@@ -12,12 +12,12 @@ import SwiftUI
 
 struct HomeMapsRepresentable: UIViewControllerRepresentable {
     @Binding var location: CLLocationCoordinate2D
-   
+    var mapTheme: MapTheme
     var mapsCluster = MapsCluster()
 
     var onInit: ((GMSMapView) -> Void)?
     func makeUIViewController(context: Context) -> HomeMapsViewController {
-        let uiViewController = HomeMapsViewController(location: location)
+        let uiViewController = HomeMapsViewController(location: location, mapTheme: mapTheme)
 
         onInit?(uiViewController.map)
 

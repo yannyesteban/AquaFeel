@@ -39,10 +39,20 @@ struct LeadResourceForm: View {
 
     let compressionQuality = 0.5
     private var url: String {
+        var components = URLComponents()
+        components.scheme = APIValues.scheme
+        components.host = APIValues.host
+        components.port = APIValues.port
+        components.path = "/uploads/\(resource.fileName)"
+
+        return components.url?.absoluteString ?? ""
+        
+        /*
         if APIValues.port == "" {
             return APIValues.scheme + "://" + APIValues.host + "/uploads/\(resource.fileName)"
         }
         return APIValues.scheme + "://" + APIValues.host + ":\(APIValues.port)" + "/uploads/\(resource.fileName)"
+         */
     }
 
     var onSave: (ResourceModel, RecordMode) -> Void
@@ -297,7 +307,7 @@ struct LeadResourceForm: View {
                             resource.fileName = item.fileName
                             mode = .edit
                         }
-                        print(item.active)
+                      
                     }
 
                     setAlert(title: "Message", message: "Resource was saved correctly!")

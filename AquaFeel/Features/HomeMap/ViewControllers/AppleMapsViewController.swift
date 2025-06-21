@@ -29,7 +29,7 @@ class AppleMapsDraw: NSObject, MapDraw, MKMapViewDelegate {
     var color: UIColor = UIColor.purple
 
     init(map: MKMapView) {
-        print("INIT MapDraw")
+        
         mapView = map
 
         super.init()
@@ -133,7 +133,7 @@ class AppleMapsDraw: NSObject, MapDraw, MKMapViewDelegate {
 
         case .ended:
 
-            print("......ended")
+           
             if drawing {
                 bye()
 
@@ -142,10 +142,9 @@ class AppleMapsDraw: NSObject, MapDraw, MKMapViewDelegate {
                 // onPath?(path)
             }
             drawing = false
-            print("......ended 2")
+          
             mapView.removeOverlay(polyline)
-            // path = GMSMutablePath(path: draw.path2)
-            // newPath = GMSMutablePath(path: draw.path2)
+   
 
         default:
             break
@@ -269,7 +268,7 @@ class AppleMapsViewController: UIViewController, MKMapViewDelegate, MapsProvider
     }
 
     func addMarker(info: MarkerInfo) {
-        print("xxxx1", info.userData.first_name)
+     
         let annotation = MapItem(info: info)
         // annotation.coordinate = info.position
         // annotations.append(annotation)
@@ -291,7 +290,7 @@ class AppleMapsViewController: UIViewController, MKMapViewDelegate, MapsProvider
     }
 
     func setCluster() {
-        print("return")
+  
         return
 
         var annotations: [MKPointAnnotation] = [
@@ -310,17 +309,17 @@ class AppleMapsViewController: UIViewController, MKMapViewDelegate, MapsProvider
         // 2. Agrupa las anotaciones en un MKClusterAnnotation
         // let cluster = MKClusterAnnotation(memberAnnotations: annotations)
 
-        print("xxxx2")
+        
 
         // 3. Agrega el cluster al mapa
         mapView.addAnnotation(cluster)
-        print("xxxx3")
+        
     }
 
     @objc func handleTapGesture(_ sender: UITapGestureRecognizer) {
         let tapLocation = sender.location(in: mapView)
         let coordinates = mapView.convert(tapLocation, toCoordinateFrom: mapView)
-        print("aaaaaa", coordinates)
+        
         // let annotation = MyCustomAnnotation(coordinate: coordinates)
         // mapView.addAnnotation(annotation)
     }
@@ -340,7 +339,7 @@ class AppleMapsViewController: UIViewController, MKMapViewDelegate, MapsProvider
 
         switch gesture.state {
         case .began:
-            print(".began1")
+          
 
             let tapPoint = gesture.location(in: mapView)
             let coordinate = mapView.convert(tapPoint, toCoordinateFrom: mapView)
@@ -361,7 +360,7 @@ class AppleMapsViewController: UIViewController, MKMapViewDelegate, MapsProvider
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("xxxx1")
+       
         // mapView.delegate = self
         // setCluster()
 
@@ -449,7 +448,7 @@ class AppleMapsViewController: UIViewController, MKMapViewDelegate, MapsProvider
     }
 
     func drawMarker(leads: [LeadModel]) {
-        print("drawMarker")
+        
 
         for lead in leads {
             let latitude = Double(lead.latitude) ?? 0.0
@@ -581,7 +580,7 @@ class AppleMapsViewController: UIViewController, MKMapViewDelegate, MapsProvider
 
             marker.userData = lead
 
-            print(lead.status_id.name)
+          
             let circleIconView = getUIImage(name: lead.status_id.name)
             circleIconView.frame = CGRect(x: 120, y: 120, width: 30, height: 30)
 
@@ -727,17 +726,17 @@ class AppleMapsViewController: UIViewController, MKMapViewDelegate, MapsProvider
 
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         // Seleccionado una anotación
-        print(4444444)
+       
         if let annotation = view.annotation {
-            print("Se seleccionó la anotación: \(annotation.title ?? "")")
+           
             // Aquí puedes realizar cualquier acción que desees cuando se seleccione una anotación
         }
     }
 
     func mapView(_ mapView: MKMapView, didTapAt coordinate: CLLocationCoordinate2D) {
-        print(4444444)
+       
         // Realizado un toque en el mapa (fuera de cualquier anotación)
-        print("Se realizó un toque en el mapa en la ubicación: \(coordinate)")
+        
         // Aquí puedes realizar cualquier acción que desees cuando se toque el mapa
     }
 

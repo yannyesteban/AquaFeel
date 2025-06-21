@@ -85,7 +85,9 @@ struct LeadPicker: View {
                     .foregroundColor(.black)
                     .foregroundColor(.red)
                     .onAppear {
-                        manager.list()
+                        Task {
+                            try? await manager.list()
+                        }
                     }
             }
 

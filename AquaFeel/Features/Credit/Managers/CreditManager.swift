@@ -71,14 +71,14 @@ class CreditManager: ObservableObject {
             } else {
                 /*DispatchQueue.main.async {
                  self.order = OrderModel()
-                 print("ONE")
+                
                  }*/
             }
             
         } catch {
             DispatchQueue.main.async {
                 self.credit = CreditModel()
-                print("Two")
+              
             }
             
             print(error.localizedDescription)

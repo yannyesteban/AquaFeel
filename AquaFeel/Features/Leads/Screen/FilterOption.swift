@@ -184,7 +184,7 @@ struct FilterOption: View {
                 if filters.dateFilters.selectedQuickDate == TimeOption.custom.rawValue {
                     Section(header: Text("Date Range")) {
                         DatePickerStringLite(title: "From Date", text: $filters.dateFilters.fromDate)
-                        DatePickerStringLite(title: "From Date", text: $filters.dateFilters.toDate)
+                        DatePickerStringLite(title: "To Date", text: $filters.dateFilters.toDate)
                     }
                     .disabled(filters.dateFilters.selectedQuickDate != TimeOption.custom.rawValue)
                 }
@@ -293,7 +293,7 @@ struct FilterOption: View {
     }
 }
 
-struct TestFilterOptionView: View {
+struct TestFilterOptionView3: View {
     //@StateObject private var lead2 = LeadViewModel(first_name: "Juan", last_name: "")
     @StateObject private var statusManager = StatusManager()
     @StateObject var lead = LeadManager()

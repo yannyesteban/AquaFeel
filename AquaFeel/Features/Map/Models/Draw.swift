@@ -35,7 +35,7 @@ class Draw: MapDraw {
     var color: UIColor = UIColor.orange
 
     init(map: GMSMapView) {
-        print("INIT MapDraw")
+       
         mapView = map
 
         poly.path = path
@@ -205,7 +205,7 @@ class Draw: MapDraw {
         // polygon.strokeColor = .yellow
 
         if mapView.mapCapabilities.contains(.spritePolylines) {
-            //print(".......... SIIII")
+           
         }
 
         // polygon.spans = [GMSStyleSpan(style: solidRed)]

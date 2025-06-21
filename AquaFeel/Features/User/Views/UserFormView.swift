@@ -161,7 +161,7 @@ struct UserFormView: View {
         .alert("User Record was modified Successfully", isPresented: $ok) {
             Button("Ok") {
                 completed = true
-                print(completed)
+               
                 // print(store.userData.auth)
             }
         } message: {

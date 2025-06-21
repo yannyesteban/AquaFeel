@@ -64,7 +64,7 @@ struct TestPDF: View {
             Button(action: {
                 generatePDF(name: name, email: email) { url in
                     DispatchQueue.main.async {
-                        print(url)
+                      
                         self.pdfURL = url
                         self.showPDFPreview = true
                     }
