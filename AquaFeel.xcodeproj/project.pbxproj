@@ -119,6 +119,7 @@
 		2B8160612BEA7EBC0045AAC4 /* AppleMapScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8160602BEA7EBC0045AAC4 /* AppleMapScreen.swift */; };
 		2B8160672BEA813C0045AAC4 /* AppleMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8160662BEA813C0045AAC4 /* AppleMapsViewController.swift */; };
 		2B8160692BEA81DD0045AAC4 /* AppleMapsRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8160682BEA81DD0045AAC4 /* AppleMapsRepresentable.swift */; };
+		2B876F2E2E2A99520089C0F3 /* GoogleMapsUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 2B876F2D2E2A99520089C0F3 /* GoogleMapsUtils */; };
 		2B8A8E592B582EAA00E8533F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B8A8E582B582EAA00E8533F /* Launch Screen.storyboard */; };
 		2B8C52D42C06772300A19A79 /* AvatarPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8C52D32C06772300A19A79 /* AvatarPicker.swift */; };
 		2B8DFCD02BFEB0E500557EFA /* NotificationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8DFCCF2BFEB0E500557EFA /* NotificationRow.swift */; };
@@ -495,6 +496,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		2B0425D92EB17EF500F3DE37 /* Widgets */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Widgets; sourceTree = "<group>"; };
 		2B87D4E62CC00ABB00BC6F6F /* Views */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Views; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -503,6 +505,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B876F2E2E2A99520089C0F3 /* GoogleMapsUtils in Frameworks */,
 				2B4140152DBD3A1600C0DEDF /* GoogleMapsUtils in Frameworks */,
 				2B41400C2DBD384E00C0DEDF /* GoogleMapsUtils in Frameworks */,
 			);
@@ -1251,6 +1254,7 @@
 		2BA8A5A72B5434B60004CDCD /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				2B0425D92EB17EF500F3DE37 /* Widgets */,
 				2BC8335A2D9D9C2B00DF855C /* Export */,
 				2BBEFD022CC983C000460E32 /* Customer */,
 				2BB983D52CAC81AB00B890A3 /* LeadResource */,
@@ -1726,6 +1730,7 @@
 				2BCE71BE2C1A1D67009387D8 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
+				2B0425D92EB17EF500F3DE37 /* Widgets */,
 				2B87D4E62CC00ABB00BC6F6F /* Views */,
 			);
 			name = AquaFeel;
@@ -1782,7 +1787,7 @@
 			);
 			mainGroup = 2BA8A5582B541C0C0004CDCD;
 			packageReferences = (
-				2B4140132DBD3A1600C0DEDF /* XCLocalSwiftPackageReference "../google-maps-ios-utils" */,
+				2B876F2C2E2A99520089C0F3 /* XCLocalSwiftPackageReference "../google-maps-ios-utils" */,
 			);
 			productRefGroup = 2BA8A5622B541C0C0004CDCD /* Products */;
 			projectDirPath = "";
@@ -2385,7 +2390,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		2B4140132DBD3A1600C0DEDF /* XCLocalSwiftPackageReference "../google-maps-ios-utils" */ = {
+		2B876F2C2E2A99520089C0F3 /* XCLocalSwiftPackageReference "../google-maps-ios-utils" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "../google-maps-ios-utils";
 		};
@@ -2397,6 +2402,10 @@
 			productName = GoogleMapsUtils;
 		};
 		2B4140142DBD3A1600C0DEDF /* GoogleMapsUtils */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = GoogleMapsUtils;
+		};
+		2B876F2D2E2A99520089C0F3 /* GoogleMapsUtils */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = GoogleMapsUtils;
 		};

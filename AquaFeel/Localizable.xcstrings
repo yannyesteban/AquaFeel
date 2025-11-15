@@ -437,6 +437,37 @@
         }
       }
     },
+    "Applicant's Date of Birth is required." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fecha de Nacimiento del Solicitante es requerido"
+          }
+        }
+      }
+    },
+    "Applicant's ID Expiration is required." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fecha de Vencimiento del ID es requerido"
+          }
+        }
+      }
+    },
+    "Applicant's Name is required." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombres del Solicitante es Requerido"
+          }
+        }
+      }
+    },
     "Appointment / Callback time" : {
       "localizations" : {
         "es-419" : {
@@ -1155,6 +1186,15 @@
         }
       }
     },
+    "Co-Applicant must sign and date." : {
+
+    },
+    "Co-Applicant's Date of Birth is required." : {
+
+    },
+    "Co-Applicant's ID Expiration is required." : {
+
+    },
     "Confirm new Password" : {
       "localizations" : {
         "es-419" : {
@@ -1495,6 +1535,9 @@
 
     },
     "DL or ID" : {
+
+    },
+    "Done" : {
 
     },
     "Down Payment" : {
@@ -2376,6 +2419,16 @@
     "Min Cluster Size: %llu" : {
 
     },
+    "Missing Information" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Información Faltante / Errónea"
+          }
+        }
+      }
+    },
     "Modal" : {
 
     },
@@ -2996,6 +3049,9 @@
           }
         }
       }
+    },
+    "Please select a date" : {
+
     },
     "Please sign your name inside the rectangle" : {
       "localizations" : {

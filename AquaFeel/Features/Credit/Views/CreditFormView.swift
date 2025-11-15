@@ -54,6 +54,13 @@ struct CreditFormView: View {
     @StateObject var brandManager = BrandManager()
     @StateObject var modelManager = ModelManager()
 
+    @State private var dob1IsSet = false // Applicant DOB
+    @State private var dob2IsSet = true // Co-Applicant DOB
+    @State private var idExp1IsSet = false // Applicant EXP ID
+    @State private var idExp2IsSet = true // Co-Applicant EXP ID
+    @State private var signDate1IsSet = true // Applicant signature date
+    @State private var signDate2IsSet = true // Co-Applicant signature date
+
     @EnvironmentObject var profile: ProfileManager
 
     var body: some View {
@@ -93,9 +100,23 @@ struct CreditFormView: View {
 
                 TextField("SS", text: $credit.applicant.ss)
 
-                DatePicker("Date of Birth", selection: $credit.applicant.dateOfBirth, displayedComponents: .date)
+                SimpleDatePickerRequired(
+                    label: NSLocalizedString("Date of Birth", comment: ""),
+                    // placeholder: "Select date...",
+                    date: $credit.applicant.dateOfBirth,
+                    isSet: $dob1IsSet
+                )
+
+                // DatePicker("Date of Birth", selection: $credit.applicant.dateOfBirth, displayedComponents: .date)
                 TextField("DL or ID", text: $credit.applicant.id)
-                DatePicker("EXP ID", selection: $credit.applicant.idExp, displayedComponents: .date)
+
+                SimpleDatePickerRequired(
+                    label: NSLocalizedString("EXP ID", comment: ""),
+                    // placeholder: "Select date...",
+                    date: $credit.applicant.idExp,
+                    isSet: $idExp1IsSet
+                )
+                // DatePicker("EXP ID", selection: $credit.applicant.idExp, displayedComponents: .date)
 
                 TextField("Cell Phone", text: $credit.applicant.cel)
                 TextField("Home Phone", text: $credit.applicant.phone)
@@ -351,6 +372,7 @@ struct CreditFormView: View {
                     }
 
                     Button {
+                        guard validateForm() else { return }
                         Task {
                             credit.createdBy = profile.userId
                             creditManager.credit = credit
@@ -432,6 +454,19 @@ struct CreditFormView: View {
         .onAppear {
             if mode == 1 {
                 credit = CreditModel()
+                dob1IsSet = false
+                dob2IsSet = true
+                idExp1IsSet = false
+                idExp2IsSet = true
+                signDate1IsSet = true
+                signDate2IsSet = true
+            } else {
+                dob1IsSet = true
+                dob2IsSet = true
+                idExp1IsSet = true
+                idExp2IsSet = true
+                signDate1IsSet = true
+                signDate2IsSet = true
             }
 
             Task {
@@ -447,7 +482,6 @@ struct CreditFormView: View {
     }
 
     private func doDelete() {
-        
         // resourceManager.token = profile.token
         alert = Alert(
             title: Text("Confirmation"),
@@ -467,5 +501,42 @@ struct CreditFormView: View {
         )
 
         showAlert = true
+    }
+
+    private func validateForm() -> Bool {
+        var errors: [String] = []
+
+        
+        
+        if !dob1IsSet {
+            errors.append(NSLocalizedString("Applicant's Date of Birth is required.", comment: ""))
+        }
+        if !idExp1IsSet {
+            errors.append(NSLocalizedString("Applicant's ID Expiration is required.", comment: ""))
+        }
+
+        // 2. Co-applicant: solo si tiene nombre
+        if !credit.applicant2.firstName.isEmpty || !credit.applicant2.lastName.isEmpty {
+            if !dob2IsSet {
+                errors.append(NSLocalizedString("Co-Applicant's Date of Birth is required.", comment: ""))
+            }
+            if !idExp2IsSet {
+                errors.append(NSLocalizedString("Co-Applicant's ID Expiration is required.", comment: ""))
+            }
+            /*if !signDate2IsSet {
+                errors.append(NSLocalizedString("Co-Applicant must sign and date.", comment: ""))
+            }*/
+        }
+
+        
+
+        // Si hay errores
+        if !errors.isEmpty {
+            let message = errors.joined(separator: "\n")
+            setAlert(title: NSLocalizedString("Missing Information", comment: ""), message: message)
+            return false
+        }
+
+        return true
     }
 }
